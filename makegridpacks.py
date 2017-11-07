@@ -113,7 +113,8 @@ class MCSample(object):
   @property
   def queue(self):
     if self.productionmode == "ggH": return "1nh"
-    return "2nd"
+    if self.productionmode == "ZH": return "1nw"
+    return "1nd"
 
   @property
   def makegridpackcommand(self):
