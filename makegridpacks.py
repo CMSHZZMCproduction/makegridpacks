@@ -90,7 +90,7 @@ class MCSample(object):
   def cvmfstarball(self):
     folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2", self.powhegprocess+"_NNPDF31_13TeV")
     tarballname = os.path.basename(self.powhegcard).replace(".input", ".tgz")
-    return os.path.join(folder, "v{}".format(self.tarballversion, tarballname))
+    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
 
   @property
   def eostarball(self):
