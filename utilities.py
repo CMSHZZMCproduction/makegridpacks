@@ -36,6 +36,9 @@ def mkdtemp(**kwargs):
       kwargs["dir"] = "/pool/lsf/hroskes/{}/".format(LSB_JOBID())
   return tempfile.mkdtemp(**kwargs)
 
+def LSB_JOBID():
+  return os.environ.get("LSB_JOBID", None)
+
 class KeepWhileOpenFile(object):
   def __init__(self, name, message=None):
     logging.debug("creating KeepWhileOpenFile {}".format(name))
