@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import csv, glob, os, random, re, shutil, subprocess, sys, urllib
+import contextlib, csv, glob, os, random, re, shutil, subprocess, sys, urllib
 
 from utilities import cache, cd, KeepWhileOpenFile, LSB_JOBID, mkdir_p, mkdtemp, TFile
 
@@ -154,6 +154,43 @@ class MCSample(object):
       shutil.move(self.tmptarball, self.foreostarball)
       shutil.rmtree(os.path.dirname(self.tmptarball))
       return "tarball is created and moved to this folder, to be copied to eos"
+
+  @property
+  @cache
+  def olddatasetname(self):
+    p = self.productionmode
+    if p == "VBF": p = "VBFH"
+    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/miniAOD_80X/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
+      reader = csv.DictReader(f)
+      for row in reader:
+        if row["identifier"] == "{}{}".format(p, self.mass):
+          dataset = row["dataset"]
+          result = re.sub(r"^/([^/]*)/[^/]*/[^/]*$", r"\1", dataset)
+          assert result != dataset and "/" not in result, result
+          return result
+    raise ValueError("Nothing for {}{}".format(p, self.mass))
+
+  @property
+  def csvline(self):
+    print "Getting csv line for", self
+    return {
+      "dataset name": self.datasetname,
+      "xsec [pb]": 1,
+      "total events": self.nevents,
+      "time per event [s]": self.timeperevent,
+      "size per event [kb]": self.sizeperevent,
+      "generator": self.generators,
+      "match efficiency": self.matchefficiency*self.filterefficiency,
+      "match efficiency error": ((self.matchefficiencyerror*self.filterefficiency)**2 + (self.matchefficiency*self.filterefficiencyerror)**2)**.5,
+      "pwg": "HIG",
+      "campaign": "RunIIFall17wmLHEGS",
+      "gridpack location": self.cvmfstarball,
+      "cards url": self.cardsurl,
+      "fragment name": "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_{:d}p_LHE_pythia8_cff.py".format(self.nfinalparticles),
+      "fragment tag": "010f5ddb7587ad615ead76ffddf03aca514a8bf3",
+      "mcm tag": "HZZ",
+      "mcdbid": 0,
+    }
 
 @cache
 def makecards(folder):
