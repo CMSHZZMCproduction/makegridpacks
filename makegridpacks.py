@@ -135,20 +135,22 @@ class MCSample(object):
 
     workdir = os.path.dirname(self.tmptarball)
     mkdir_p(workdir)
-    with cd(workdir), KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
+    with cd(workdir), KeepWhileOpenFile(self.tmptarball+".tmp", message=LSB_JOBID()) as kwof:
       if not kwof: return "job to make the tarball is already running"
 
-      output = subprocess.check_output(self.makegridpackcommand)
-      print output
-      waitids = []
-      for line in output.split("\n"):
-        if "is submitted to" in line:
-          waitids.append(int(line.split("<")[1].split(">")[0]))
-      assert waitids
-      subprocess.check_call(["bsub", "-q", "cmsinter", "-I", "-J", "wait for "+str(self), "-w", " && ".join("ended({})".format(_) for _ in waitids), "echo", "done"])
+      if not os.path.exists(self.tmptarball):
+        if not LSB_JOBID(): return "please run on a queue"
+        output = subprocess.check_output(self.makegridpackcommand)
+        print output
+        waitids = []
+        for line in output.split("\n"):
+          if "is submitted to" in line:
+            waitids.append(int(line.split("<")[1].split(">")[0]))
+        assert waitids
+        subprocess.check_call(["bsub", "-q", "cmsinter", "-I", "-J", "wait for "+str(self), "-w", " && ".join("ended({})".format(_) for _ in waitids), "echo", "done"])
       mkdir_p(os.path.dirname(self.foreostarball))
       shutil.move(self.tmptarball, self.foreostarball)
-      os.rmtree(os.path.dirname(self.tmptarball))
+      shutil.rmtree(os.path.dirname(self.tmptarball))
       return "tarball is created and moved to this folder, to be copied to eos"
 
 @cache
@@ -165,7 +167,8 @@ def getmasses(productionmode):
 def makegridpacks():
   for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
     for mass in getmasses(productionmode):
-      print MCSample(productionmode, mass).makegridpack()
+      sample = MCSample(productionmode, mass)
+      print sample, sample.makegridpack()
 
 if __name__ == "__main__":
   makegridpacks()
