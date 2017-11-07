@@ -112,6 +112,7 @@ class MCSample(object):
 
   @property
   def queue(self):
+    if self.productionmode == "ggH": return "1nh"
     return "2nd"
 
   @property
