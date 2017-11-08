@@ -141,13 +141,13 @@ class MCSample(object):
       if not kwof: return "job to make the tarball is already running"
 
       if not os.path.exists(self.tmptarball):
-        if not LSB_JOBID(): return "please run on a queue"
         for _ in os.listdir("."):
           if not _.endswith(".tmp"):
             try:
               os.remove(_)
             except OSError:
               shutil.rmtree(_)
+        if not LSB_JOBID(): return "please run on a queue"
         output = subprocess.check_output(self.makegridpackcommand)
         print output
         waitids = []
