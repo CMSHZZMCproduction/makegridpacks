@@ -138,7 +138,34 @@ class MCSample(object):
     workdir = os.path.dirname(self.tmptarball)
     mkdir_p(workdir)
     with cd(workdir), KeepWhileOpenFile(self.tmptarball+".tmp", message=LSB_JOBID()) as kwof:
-      if not kwof: return "job to make the tarball is already running"
+      if not kwof:
+        with open(self.tmptarball+".tmp") as f:
+          jobid = int(f.read().strip())
+        try:
+          bjobsout = subprocess.check_output(["bjobs", str(jobid)], stderr=subprocess.STDOUT)
+          if re.match("Job <[0-9]*> is not found", bjobsout.strip()):
+            raise subprocess.CalledProcessError(None, None, None)
+          lines = bjobsout.strip().split("\n")
+          if len(lines) == 2 and lines[1].split()[2] == "EXIT":
+            raise subprocess.CalledProcessError(None, None, None)
+        except subprocess.CalledProcessError:    #job died
+          try:
+            bjobsout = subprocess.check_output(["bjobs", "-J", "full_"+os.path.basename(self.powhegcard).replace(".input", "")], stderr=subprocess.STDOUT)
+            if re.match("Job <.*> is not found", bjobsout.strip()):
+              raise subprocess.CalledProcessError(None, None, None)
+          except subprocess.CalledProcessError:  #that job died or ended too
+            for _ in os.listdir("."):            #--> delete everything in the folder, except the tarball if that exists
+              if os.path.basename(_) != os.path.basename(self.tmptarball) and os.path.basename(_) != os.path.basename(self.tmptarball)+".tmp":
+                try:
+                  os.remove(_)
+                except OSError:
+                  shutil.rmtree(_)
+            os.remove(os.path.basename(self.tmptarball)+".tmp") #remove that last
+            return "job died, cleaned it up.  run makegridpacks.py again."
+          else:
+            return "job to make the tarball is already running (but the original one died)"
+        else:
+          return "job to make the tarball is already running"
 
       if not os.path.exists(self.tmptarball):
         for _ in os.listdir("."):
