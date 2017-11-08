@@ -181,8 +181,16 @@ class MCSample(object):
         for line in output.split("\n"):
           if "is submitted to" in line:
             waitids.append(int(line.split("<")[1].split(">")[0]))
-        assert waitids
-        subprocess.check_call(["bsub", "-q", "cmsinter", "-I", "-J", "wait for "+str(self), "-w", " && ".join("ended({})".format(_) for _ in waitids), "echo", "done"])
+        if waitids:
+          subprocess.check_call(["bsub", "-q", "cmsinter", "-I", "-J", "wait for "+str(self), "-w", " && ".join("ended({})".format(_) for _ in waitids), "echo", "done"])
+        else:
+          for _ in os.listdir("."):
+            if not _.endswith(".tmp"):
+              try:
+                os.remove(_)
+              except OSError:
+                shutil.rmtree(_)
+          return "job submission failed"
       mkdir_p(os.path.dirname(self.foreostarball))
       shutil.move(self.tmptarball, self.foreostarball)
       shutil.rmtree(os.path.dirname(self.tmptarball))
