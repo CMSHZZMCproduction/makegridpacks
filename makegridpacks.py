@@ -131,7 +131,13 @@ class MCSample(object):
     return [os.path.join(genproductions, "bin", "Powheg", "run_pwg.py")] + sum(([k, v] for k, v in args.iteritems()), [])
 
   def makegridpack(self):
-    if os.path.exists(self.cvmfstarball): return "exists on cvmfs"
+    if os.path.exists(self.cvmfstarball):
+      if os.path.exists(self.foreostarball):
+        if filecmp.cmp(self.cvmfstarball, self.foreostarball):
+          os.remove(self.foreostarball)
+        else:
+          return "exists on cvmfs, but it's wrong!"
+      return "exists on cvmfs"
     if os.path.exists(self.eostarball): return "exists on eos, not yet copied to cvmfs"
     if os.path.exists(self.foreostarball): return "exists in this folder, to be copied to eos"
 
