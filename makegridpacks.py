@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import contextlib, csv, glob, os, random, re, shutil, subprocess, sys, urllib
+import contextlib, csv, filecmp, glob, os, random, re, shutil, subprocess, sys, urllib
 
 from utilities import cache, cd, KeepWhileOpenFile, LSB_JOBID, mkdir_p, mkdtemp, TFile
 
@@ -17,20 +17,21 @@ if not os.path.exists(genproductions) or os.environ["CMSSW_VERSION"] != cmsswver
 here = os.path.dirname(os.path.abspath(__file__))
 
 class MCSample(object):
-  def __init__(self, productionmode, mass):
+  def __init__(self, productionmode, decaymode, mass):
     self.productionmode = productionmode
+    self.decaymode = decaymode
     self.mass = int(str(mass))
 
   def __eq__(self, other):
-    return self.productionmode == other.productionmode and self.mass == other.mass
+    return self.productionmode == other.productionmode and self.decaymode == other.decaymode and self.mass == other.mass
   def __ne__(self, other):
     return not (self == other)
   def __hash__(self):
     return hash((self.productionmode, self.mass))
   def __str__(self):
-    return "{} {}".format(self.productionmode, self.mass)
+    return "{} {} {}".format(self.productionmode, self.decaymode, self.mass)
   def __repr__(self):
-    return "{}({!r}, {!r})".format(type(self).__name__, self.productionmode, self.mass)
+    return "{}({!r}, {!r}, {!r})".format(type(self).__name__, self.productionmode, self.decaymode, self.mass)
 
   @property
   def powhegprocess(self):
@@ -59,6 +60,7 @@ class MCSample(object):
 
   @property
   def filter4L(self):
+    if self.decaymode != "4l": return False
     if self.productionmode in ("ggH", "VBF", "WplusH", "WminusH"): return False
     if self.productionmode in ("ZH", "ttH"): return True
     raise ValueError("Unknown productionmode "+self.productionmode)
@@ -71,13 +73,27 @@ class MCSample(object):
   def JHUGencard(self):
     folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "decay")
 
-    filename = "ZZ4l" if self.filter4L else "ZZ2l2any"
-    filename += "_withtaus"
-    if self.reweightdecay: filename += "_reweightdecay_CPS"
-    filename += ".input"
+    if self.decaymode == "4l":
+      filename = "ZZ4l" if self.filter4L else "ZZ2l2any"
+      filename += "_withtaus"
+      if self.reweightdecay: filename += "_reweightdecay_CPS"
+      filename += ".input"
+    elif self.decaymode == "2l2nu":
+      if self.reweightdecay:
+        filename = "ZZ2l2nu_notaus_reweightdecay_CPS.input"
+    elif self.decaymode == "2l2q":
+      if self.mass == 125:
+        if self.productionmode == "ggH":
+          filename = "ZZ2l2q_withtaus.input"
+        elif self.productionmode in ("VBF", "WplusH", "WminusH", "bbH", "tqH"):
+          filename = "ZZ2l2any_withtaus.input"
+        elif self.productionmode in ("ZH", "ttH"):
+          filename = "ZZany_filter2lOSSF.input"
+      elif self.reweightdecay:
+        filename = "ZZ2l2q_notaus_reweightdecay_CPS.input"
 
     card = os.path.join(folder, filename)
-    
+
     if not os.path.exists(card):
       raise IOError(card+" does not exist")
     return card
@@ -90,6 +106,11 @@ class MCSample(object):
   def cvmfstarball(self):
     folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2", self.powhegprocess+"_NNPDF31_13TeV")
     tarballname = os.path.basename(self.powhegcard).replace(".input", ".tgz")
+    if self.decaymode != "4l":
+      decaymode = self.decaymode
+      if "ZZ2l2any_withtaus.input" in self.JHUGencard: decaymode == "2l2X"
+      elif "ZZany_filter2lOSSF.input" in self.JHUGencard: decaymode = "_filter2l"
+      tarballname = tarballname.replace("NNPDF31", "ZZ"+self.decaymode+"_NNPDF31")
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
 
   @property
@@ -113,7 +134,7 @@ class MCSample(object):
   @property
   def queue(self):
     if self.productionmode == "ggH": return "1nh"
-    if self.productionmode == "ZH": return "1nw"
+    if self.productionmode in ("ZH", "ttH"): return "1nw"
     return "1nd"
 
   @property
@@ -244,16 +265,28 @@ def makecards(folder):
   with cd(folder):
     subprocess.check_call(["./makecards.py"])
 
-def getmasses(productionmode):
-  if productionmode in ("ggH", "VBF", "WplusH", "WminusH", "ZH"):
-    return 115, 120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 190, 200, 210, 230, 250, 270, 300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000
-  if productionmode == "ttH":
-    return 115, 120, 124, 125, 126, 130, 135, 140, 145
+def getmasses(productionmode, decaymode):
+  if decaymode == "4l":
+    if productionmode in ("ggH", "VBF", "WplusH", "WminusH", "ZH"):
+      return 115, 120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 190, 200, 210, 230, 250, 270, 300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000
+    if productionmode == "ttH":
+      return 115, 120, 124, 125, 126, 130, 135, 140, 145
+  if decaymode == "2l2nu":
+    if productionmode in ("ggH", "VBF"):
+      return 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000
+    if productionmode in ("WplusH", "WminusH", "ZH", "ttH"):
+      return ()
+  if decaymode == "2l2q":
+    if productionmode in ("ggH", "VBF"):
+      return 125, 200, 250, 300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000
+    if productionmode in ("WplusH", "WminusH", "ZH", "ttH"):
+      return 125,
 
 def makegridpacks():
   for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
-    for mass in getmasses(productionmode):
-      sample = MCSample(productionmode, mass)
+    for decaymode in "4l", "2l2nu", "2l2q":
+     for mass in getmasses(productionmode, decaymode):
+      sample = MCSample(productionmode, decaymode, mass)
       print sample, sample.makegridpack()
 
 if __name__ == "__main__":
