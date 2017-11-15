@@ -133,7 +133,7 @@ class MCSample(object):
 
   @property
   def queue(self):
-    if self.productionmode == "ggH": return "1nh"
+    if self.productionmode == "ggH": return "8nh"
     if self.productionmode in ("ZH", "ttH"): return "1nw"
     return "1nd"
 
