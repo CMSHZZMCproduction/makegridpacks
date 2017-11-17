@@ -128,8 +128,8 @@ class MCSample(object):
 
   @property
   def tmptarball(self):
-    return os.path.join(here, "workdir", os.path.basename(self.powhegcard).replace(".input", ""),
-             self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+os.path.basename(self.powhegcard).replace(".input", ".tgz"))
+    return os.path.join(here, "workdir", os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode),
+             self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode+".tgz"))
 
   @property
   def queue(self):
@@ -144,7 +144,7 @@ class MCSample(object):
       "-i": self.powhegcard,
       "-g": self.JHUGencard,
       "-m": self.powhegprocess,
-      "-f": os.path.basename(self.powhegcard).replace(".input", ""),
+      "-f": os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode),
       "-q": self.queue,
       "-n": "10",
     }
@@ -167,7 +167,10 @@ class MCSample(object):
     with cd(workdir), KeepWhileOpenFile(self.tmptarball+".tmp", message=LSB_JOBID()) as kwof:
       if not kwof:
         with open(self.tmptarball+".tmp") as f:
-          jobid = int(f.read().strip())
+          try:
+            jobid = int(f.read().strip())
+          except ValueError:
+            return "try running again, probably you just got really bad timing"
         try:
           bjobsout = subprocess.check_output(["bjobs", str(jobid)], stderr=subprocess.STDOUT)
           if re.match("Job <[0-9]*> is not found", bjobsout.strip()):
@@ -235,11 +238,16 @@ class MCSample(object):
           dataset = row["dataset"]
           result = re.sub(r"^/([^/]*)/[^/]*/[^/]*$", r"\1", dataset)
           assert result != dataset and "/" not in result, result
-          return result
-    raise ValueError("Nothing for {}{}".format(p, self.mass))
+          if self.decaymode == "4l":
+            return result
+          elif self.decaymode == "2l2q":
+            return result.replace("4L", "2L2Q")
+          elif self.decaymode == "2l2nu":
+            return result.replace("4L", "2L2Nu")
+    raise ValueError("Nothing for {}".format(self))
 
   @property
-  def csvline(self):
+  def csvline(self, useprepid=False):
     print "Getting csv line for", self
     return {
       "dataset name": self.datasetname,
