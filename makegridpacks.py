@@ -149,7 +149,7 @@ class MCSample(object):
       "-n": "10",
     }
 
-    return [os.path.join(genproductions, "bin", "Powheg", "run_pwg.py")] + sum(([k, v] for k, v in args.iteritems()), [])
+    return ["./run_pwg.py"] + sum(([k, v] for k, v in args.iteritems()), [])
 
   def makegridpack(self):
     if os.path.exists(self.cvmfstarball):
@@ -205,6 +205,9 @@ class MCSample(object):
             except OSError:
               shutil.rmtree(_)
         if not LSB_JOBID(): return "please run on a queue"
+        for filename in glob.iglob(os.path.join(genproductions, "bin", "Powheg", "*")):
+          if (filename.endswith(".py") or filename.endswith(".sh") or filename == "patches") and not os.path.exists(os.path.basename(filename)):
+            os.symlink(filename, os.path.basename(filename))
         output = subprocess.check_output(self.makegridpackcommand)
         print output
         waitids = []
