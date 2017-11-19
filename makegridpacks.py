@@ -243,16 +243,76 @@ class MCSample(object):
           assert result != dataset and "/" not in result, result
           if self.decaymode == "4l":
             return result
-          elif self.decaymode == "2l2q":
-            return result.replace("4L", "2L2Q")
-          elif self.decaymode == "2l2nu":
-            return result.replace("4L", "2L2Nu")
     raise ValueError("Nothing for {}".format(self))
+
+  @property
+  def datasetname(self):
+    if self.decaymode == "2l2nu":
+      result = MCSample(self.productionmode, self.mass, "4l").datasetname.replace("4L", "2L2Nu")
+    elif self.decaymode == "2l2q":
+      result = MCSample(self.productionmode, self.mass, "4l").datasetname.replace("4L", "2L2Q")
+      if self.mass == 125:
+        if self.productionmode in ("VBF", "WplusH", "WminusH", "bbH", "tqH"): result = result.replace("2L2Q", "2L2X")
+        if self.productionmode == "ZH": result = "ZH_HToZZ_2LFilter_M125_13TeV_powheg2-minlo-HZJ_JHUGenV709_pythia8"
+        if self.productionmode == "ttH": result = "ttH_HToZZ_2LOSSFFilter_M125_13TeV_powheg2_JHUGenV709_pythia8"
+    elif self.productionmode in ("WplusH", "WminusH", "ZH") and self.mass > 230:
+      result = MCSample(self.productionmode, self.mass, self.decaymode).datasetname.replace("M230", "M{:d}".format(self.mass))
+    else:
+      result = self.olddatasetname.replace("JHUgenV6", "JHUGenV709")
+
+    dm = self.decaymode.upper().replace("NU", "Nu")
+    if self.decaymode == "2l2q" and self.mass == "125":
+      if self.productionmode in ("VBF", "WplusH", "WminusH", "bbH", "tqH"): dm = "2L2X"
+      if self.productionmode in ("ZH", "ttH"): dm = "Filter"
+    searchfor = [self.productionmode, dm, "M{:d}".format(self.mass), "JHUGenV709"]
+    if any(_ not in result.lower() for _ in searchfor):
+      raise ValueError("Dataset name doesn't make sense:\n{}\n{}".format(result, self))
+
+    return result
+
+  @property
+  def nevents(self):
+    if self.decaymode == "4l":
+      if self.productionmode == "ggH":
+        if 124 <= self.mass <= 126: return 1000000
+        return 500000
+      elif self.productionmode in ("VBF", "ZH", "ttH", "bbH"):
+        if 124 <= self.mass <= 126 or self.mass >= 1500: return 500000
+        return 200000
+      elif self.productionmode == "WplusH":
+        if 124 <= self.mass <= 126: return 300000
+        return 180000
+      elif self.productionmode == "WminusH":
+        if 124 <= self.mass <= 126: return 200000
+        return 120000
+      elif self.productionmode == "tqH":
+        if self.mass == 125: return 1000000
+    elif self.decaymode == "2l2nu":
+      if self.productionmode in ("ggH", "VBF"):
+        if 200 <= self.mass <= 1000: return 250000
+        elif self.mass > 1000: return 500000
+    elif self.decaymode == "2l2q":
+      if self.productionmode == "ggH":
+        if self.mass == 125: return 1000000
+        elif 200 <= self.mass <= 1000: return 200000
+        elif self.mass > 1000: return 500000
+      elif self.productionmode == "VBF":
+        if self.mass == 125: return 500000
+        elif 200 <= self.mass <= 1000: return 100000
+        elif self.mass > 1000: return 500000
+      elif self.productionmode in ("ZH", "ttH", "bbH", "tqH"):
+        if self.mass == 125: return 500000
+      elif self.productionmode == "WplusH":
+        if self.mass == 125: return 300000
+      elif self.productionmode == "WminusH":
+        if self.mass == 125: return 200000
+
+    raise ValueError("No nevents for {}".format(self))
 
   @property
   def csvline(self, useprepid=False):
     print "Getting csv line for", self
-    return {
+    result = {
       "dataset name": self.datasetname,
       "xsec [pb]": 1,
       "total events": self.nevents,
@@ -270,6 +330,8 @@ class MCSample(object):
       "mcm tag": "HZZ",
       "mcdbid": 0,
     }
+    if useprepid: result["prepid"] = self.prepid
+    return result
 
 @cache
 def makecards(folder):
