@@ -99,6 +99,7 @@ class MCSample(JsonDict):
 
   @property
   def tarballversion(self):
+    if self.decaymode == "4l": return 2  #v1 messed up the JHUGen decay card
     return 1
 
   @property
