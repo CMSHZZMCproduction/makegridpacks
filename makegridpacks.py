@@ -181,8 +181,7 @@ class MCSample(JsonDict):
                     subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
                     with open("powheg.input") as f:
                       powheginput = f.read()
-                    powheginput = re.sub("pdfreweight *1", "pdfreweight 0", powheginput)
-                    powheginput = re.sub("storeinfo_rwgt *1", "storeinfo_rwgt 0", powheginput)
+                    powheg.input = re.sub("^(rwl_|lhapdf6maxsets)", r"#\1", powheginput)
                     with open("powheg.input", "w") as f:
                       f.write(powheginput)
                     subprocess.check_call(["./runcmsgrid.sh", "10000", str(hash(self)+i), "1"])
@@ -382,6 +381,12 @@ class MCSample(JsonDict):
       subprocess.check_call(["python", "makecards.py"])
       with open(powhegcard) as f:
         powheggitcard = f.read()
+        powheggitcardlines = [re.sub(" *([#!].*)?$", "", line) for line in powheggitcard.split("\n")]
+        powheggitcardlines = [re.sub("iseed *", "iseed ", line) for line in powheggitcardlines
+                              if line and all(_ not in line for _ in
+                              ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets")
+                              )]
+        powheggitcard = "\n".join(line for line in powheggitcardlines)
       with contextlib.closing(urllib.urlopen(JHUGencard)) as f:
         JHUGengitcard = f.read()
 
@@ -389,6 +394,12 @@ class MCSample(JsonDict):
       subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
       with open("powheg.input") as f:
         powhegcard = f.read()
+        powhegcardlines = [re.sub(" *([#!].*)?$", "", line) for line in powhegcard.split("\n")]
+        powhegcardlines = [re.sub("iseed *", "iseed ", line) for line in powhegcardlines
+                           if line and all(_ not in line for _ in
+                           ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets")
+                           )]
+        powhegcard = "\n".join(line for line in powhegcardlines)
       with open("JHUGen.input") as f:
         JHUGencard = f.read()
 
