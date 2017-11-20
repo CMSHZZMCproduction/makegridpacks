@@ -176,7 +176,6 @@ class JsonDict(object):
 
   @classmethod
   def getdict(cls, trycache=True):
-    import globals
     if cls.__dictscache[cls] is None or not trycache:
       try:
         with open(cls.dictfile) as f:
