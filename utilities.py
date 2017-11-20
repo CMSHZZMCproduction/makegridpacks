@@ -99,6 +99,23 @@ class KeepWhileOpenFile(object):
   def __nonzero__(self):
     return self.bool
 
+class OneAtATime(KeepWhileOpenFile):
+  def __init__(self, name, delay, message=None, task="doing this"):
+    super(OneAtATime, self).__init__(name)
+    self.delay = delay
+    if message is None:
+      message = "Another process is already {task}!  Waiting {delay} seconds."
+    message = message.format(delay=delay, task=task)
+    self.__message = message
+
+  def __enter__(self):
+    while True:
+      result = super(OneAtATime, self).__enter__()
+      if result:
+        return result
+      print self.__message
+      time.sleep(self.delay)
+
 def cache(function):
   cache = {}
   @functools.wraps(function)
@@ -116,3 +133,119 @@ def cache(function):
 def wget(url):
   with contextlib.closing(urllib.urlopen(url)) as f, open(os.path.basename(url), "w") as newf:
     newf.write(f.read())
+
+class JsonDict(object):
+  __metaclass__ = abc.ABCMeta
+
+  @abc.abstractproperty
+  def keys(self): pass
+
+  @property
+  def default(self):
+    return JsonDict.__nodefault
+
+  @abc.abstractmethod
+  def dictfile(self):
+    """should be a member, not a method"""
+
+
+
+
+
+  __nodefault = object()
+  __dictscache = collections.defaultdict(lambda: None)
+
+  def setvalue(self, value):
+    self.setnesteddictvalue(self.getdict(), *self.keys, value=value)
+    assert self.value == value
+
+  def getvalue(self):
+    try:
+      return self.getnesteddictvalue(self.getdict(), *self.keys, default=self.default)
+    except:
+      print "Error while getting value of\n{!r}".format(self)
+      raise
+
+  @property
+  def value(self):
+    return self.getvalue()
+
+  @value.setter
+  def value(self, value):
+    self.setvalue(value)
+
+  @classmethod
+  def getdict(cls, trycache=True):
+    import globals
+    if cls.__dictscache[cls] is None or not trycache:
+      try:
+        with open(cls.dictfile) as f:
+          jsonstring = f.read()
+      except IOError:
+        try:
+          os.makedirs(os.path.dirname(cls.dictfile))
+        except OSError:
+          pass
+        with open(cls.dictfile, "w") as f:
+          f.write("{}\n")
+          jsonstring = "{}"
+      cls.__dictscache[cls] = json.loads(jsonstring)
+    return cls.__dictscache[cls]
+
+  @classmethod
+  def writedict(cls):
+    dct = cls.getdict()
+    jsonstring = json.dumps(dct, sort_keys=True, indent=4, separators=(',', ': '))
+    with open(cls.dictfile, "w") as f:
+      f.write(jsonstring)
+
+  @classmethod
+  def getnesteddictvalue(cls, thedict, *keys, **kwargs):
+    hasdefault = False
+    for kw, kwarg in kwargs.iteritems():
+      if kw == "default":
+        if kwarg is not JsonDict.__nodefault:
+          hasdefault = True
+          default = kwarg
+      else:
+        raise TypeError("Unknown kwarg {}={}".format(kw, kwarg))
+
+    if len(keys) == 0:
+      return thedict
+
+    if hasdefault and keys[0] not in thedict:
+      if len(keys) == 1:
+        thedict[keys[0]] = default
+      else:
+        thedict[keys[0]] = {}
+
+    return cls.getnesteddictvalue(thedict[keys[0]], *keys[1:], **kwargs)
+
+  @classmethod
+  def setnesteddictvalue(cls, thedict, *keys, **kwargs):
+    for kw, kwarg in kwargs.iteritems():
+      if kw == "value":
+        value = kwarg
+      else:
+        raise TypeError("Unknown kwarg {}={}".format(kw, kwarg))
+
+    try:
+      value
+    except NameError:
+      raise TypeError("Didn't provide value kwarg!")
+
+    if len(keys) == 1:
+      thedict[keys[0]] = value
+      return
+
+    if keys[0] not in thedict:
+      thedict[keys[0]] = {}
+
+    return cls.setnesteddictvalue(thedict[keys[0]], *keys[1:], **kwargs)
+
+  @classmethod
+  @contextlib.contextmanager
+  def writingdict(cls):
+    with OneAtATime(cls.dictfile+".tmp", 5, task="writing the dict for {}".format(type(cls).__name__)):
+      yield
+      cls.writedict()

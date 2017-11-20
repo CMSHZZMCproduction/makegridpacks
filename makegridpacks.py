@@ -16,7 +16,7 @@ if not os.path.exists(genproductions) or os.environ["CMSSW_VERSION"] != cmsswver
 
 here = os.path.dirname(os.path.abspath(__file__))
 
-class MCSample(object):
+class MCSample(JsonDict):
   def __init__(self, productionmode, decaymode, mass):
     self.productionmode = productionmode
     self.decaymode = decaymode
@@ -74,8 +74,7 @@ class MCSample(object):
     folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "decay")
 
     if self.decaymode == "4l":
-      filename = "ZZ4l" if self.filter4L else "ZZ2l2any"
-      filename += "_withtaus"
+      filename = "ZZ2l2any_withtaus_filter4l" if self.filter4L else "ZZ4l_withtaus"
       if self.reweightdecay: filename += "_reweightdecay_CPS"
       filename += ".input"
     elif self.decaymode == "2l2nu":
@@ -151,18 +150,69 @@ class MCSample(object):
 
     return ["./run_pwg.py"] + sum(([k, v] for k, v in args.iteritems()), [])
 
-  def makegridpack(self):
+  def makegridpack(self, requestqueue=None):
+    workdir = os.path.dirname(self.tmptarball)
     if os.path.exists(self.cvmfstarball):
       if os.path.exists(self.foreostarball):
         if filecmp.cmp(self.cvmfstarball, self.foreostarball):
           os.remove(self.foreostarball)
         else:
-          return "exists on cvmfs, but it's wrong!"
-      return "exists on cvmfs"
-    if os.path.exists(self.eostarball): return "exists on eos, not yet copied to cvmfs"
-    if os.path.exists(self.foreostarball): return "exists in this folder, to be copied to eos"
+          return "gridpack exists on cvmfs, but it's wrong!"
 
-    workdir = os.path.dirname(self.tmptarball)
+      self.cardsurl #if the cards are wrong, catch it now!
+      if self.matchefficiency is None or self.matchefficiencyerror is None:
+        #figure out the filter efficiency
+        if "filter" not in self.JHUGencard.lower():
+          self.matchefficiency, self.matchefficiencyerror = 1, 0
+        else:
+          mkdir_p(workdir)
+          jobsrunning = False
+          eventsprocessed = eventsaccepted = 0
+          with cd(workdir):
+            for i in range(20):
+              mkdir_p(str(i))
+              with cd(str(i)), KeepWhileOpenFile("cmsgrid_final.lhe.tmp", message=LSB_JOBID()) as kwof:
+                if not kwof:
+                  jobsrunning = True
+                  continue
+                if not os.path.exists("cmsgrid_final.lhe"):
+                  if not LSB_JOBID(): return "need to figure out filter efficiency, please run on a queue"
+                  with cd(mktemp()):
+                    subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
+                    with open("powheg.input") as f:
+                      powheginput = f.read()
+                    powheginput = re.sub("pdfreweight *1", "pdfreweight 0", powheginput)
+                    powheginput = re.sub("storeinfo_rwgt *1", "storeinfo_rwgt 0", powheginput)
+                    with open("powheg.input", "w") as f:
+                      f.write(powheginput)
+                    subprocess.check_call(["./runcmsgrid.sh", "10000", str(hash(self)+i), "1"])
+                    shutil.move("cmsgrid_final.lhe", os.path.join(workdir, str(i)))
+                with open("cmsgrid_final.lhe") as f:
+                  for line in f:
+                    if "events processed:" in line: eventsprocessed += int(line.split()[-1])
+                    if "events accepted:" in line: eventsaccepted += int(line.split()[-1])
+
+            if jobsrunning: return "some filter efficiency jobs are still running"
+            self.matchefficiency = 1.0*eventsaccepted / eventsprocessed
+            self.matchefficiencyerror = (eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed-eventsaccepted**3) ** .5
+            return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
+          
+      if not requestqueue:
+        if self.matchefficiency != 1:
+          return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
+        else:
+          return "gridpack exists on cvmfs"
+
+      if self.prepid is None:
+        self.getprepid()
+        if self.prepid is None:
+          #need to make the request
+          requestqueue.makerequest(self)
+          return "will send the request to McM, run again to proceed"
+
+    if os.path.exists(self.eostarball): return "gridpack exists on eos, not yet copied to cvmfs"
+    if os.path.exists(self.foreostarball): return "gridpack exists in this folder, to be copied to eos"
+
     mkdir_p(workdir)
     with cd(workdir), KeepWhileOpenFile(self.tmptarball+".tmp", message=LSB_JOBID()) as kwof:
       if not kwof:
@@ -191,7 +241,7 @@ class MCSample(object):
                 except OSError:
                   shutil.rmtree(_)
             os.remove(os.path.basename(self.tmptarball)+".tmp") #remove that last
-            return "job died, cleaned it up.  run makegridpacks.py again."
+            return "gridpack job died, cleaned it up.  run makegridpacks.py again."
           else:
             return "job to make the tarball is already running (but the original one died)"
         else:
@@ -204,7 +254,7 @@ class MCSample(object):
               os.remove(_)
             except OSError:
               shutil.rmtree(_)
-        if not LSB_JOBID(): return "please run on a queue"
+        if not LSB_JOBID(): return "need to create the gridpack, please run on a queue"
         for filename in glob.iglob(os.path.join(genproductions, "bin", "Powheg", "*")):
           if (filename.endswith(".py") or filename.endswith(".sh") or filename == "patches") and not os.path.exists(os.path.basename(filename)):
             os.symlink(filename, os.path.basename(filename))
@@ -223,7 +273,7 @@ class MCSample(object):
                 os.remove(_)
               except OSError:
                 shutil.rmtree(_)
-          return "job submission failed"
+          return "gridpack job submission failed"
       mkdir_p(os.path.dirname(self.foreostarball))
       shutil.move(self.tmptarball, self.foreostarball)
       shutil.rmtree(os.path.dirname(self.tmptarball))
@@ -248,15 +298,15 @@ class MCSample(object):
   @property
   def datasetname(self):
     if self.decaymode == "2l2nu":
-      result = MCSample(self.productionmode, self.mass, "4l").datasetname.replace("4L", "2L2Nu")
+      result = MCSample(self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Nu")
     elif self.decaymode == "2l2q":
-      result = MCSample(self.productionmode, self.mass, "4l").datasetname.replace("4L", "2L2Q")
+      result = MCSample(self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Q")
       if self.mass == 125:
         if self.productionmode in ("VBF", "WplusH", "WminusH", "bbH", "tqH"): result = result.replace("2L2Q", "2L2X")
         if self.productionmode == "ZH": result = "ZH_HToZZ_2LFilter_M125_13TeV_powheg2-minlo-HZJ_JHUGenV709_pythia8"
         if self.productionmode == "ttH": result = "ttH_HToZZ_2LOSSFFilter_M125_13TeV_powheg2_JHUGenV709_pythia8"
     elif self.productionmode in ("WplusH", "WminusH", "ZH") and self.mass > 230:
-      result = MCSample(self.productionmode, self.mass, self.decaymode).datasetname.replace("M230", "M{:d}".format(self.mass))
+      result = MCSample(self.productionmode, self.decaymode, self.mass).datasetname.replace("M230", "M{:d}".format(self.mass))
     else:
       result = self.olddatasetname.replace("JHUgenV6", "JHUGenV709")
 
@@ -314,6 +364,7 @@ class MCSample(object):
     return r"powheg\ {} JHUGen v7.0.9".format(self.powhegprocess)
 
   @property
+  @cache
   def cardsurl(self):
     powhegdir, powhegcard = os.path.split(self.powhegcard)
     powhegscript = os.path.join(powhegdir, "makecards.py")
@@ -352,6 +403,52 @@ class MCSample(object):
       raise ValueError("JHUGencard != JHUGengitcard\n{}\n{}\n{}".format(self, JHUGencard, JHUGengitcard))
 
     return result
+
+  #these things should all be calculated once.
+  #they are stored in McMsampleproperties.json in this folder.
+  #see JsonDict in utilities for how that works
+  @property
+  def keys(self):
+    return self.productionmode, self.decaymode, str(self.mass)
+  dictfile = "McMsampleproperties.json"
+  @property
+  def default(self): return {}
+
+  @property
+  def prepid(self): return self.value.get("prepid")
+  @prepid.setter
+  def prepid(self, value):
+    with self.writingdict():
+      self.value["prepid"] = value
+  @property
+  def timeperevent(self): return self.value.get("timeperevent", 100)
+  @timeperevent.setter
+  def timeperevent(self, value):
+    with self.writingdict():
+      self.value["timeperevent"] = value
+  @property
+  def sizeperevent(self): return self.value.get("sizeperevent", 100)
+  @sizeperevent.setter
+  def sizeperevent(self, value):
+    with self.writingdict():
+      self.value["sizeperevent"] = value
+  @property
+  def matchefficiency(self): return self.value.get("matchefficiency", 1)
+  @matchefficiency.setter
+  def matchefficiency(self, value):
+    with self.writingdict():
+      self.value["matchefficiency"] = value
+  @property
+  def matchefficiencyerror(self): return self.value.get("matchefficiencyerror", 0)
+  @matchefficiencyerror.setter
+  def matchefficiencyerror(self, value):
+    with self.writingdict():
+      self.value["matchefficiencyerror"] = value
+
+  @property
+  def filterefficiency(self): return 1
+  @property
+  def filterefficiencyerror(self): return 0
 
   @property
   def csvline(self, useprepid=False):
