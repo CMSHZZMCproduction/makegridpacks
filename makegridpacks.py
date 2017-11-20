@@ -179,7 +179,7 @@ class MCSample(JsonDict):
                   continue
                 if not os.path.exists("cmsgrid_final.lhe"):
                   if not LSB_JOBID(): return "need to figure out filter efficiency, please run on a queue"
-                  with cd(mktemp()):
+                  with cd(mkdtemp()):
                     subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
                     with open("powheg.input") as f:
                       powheginput = f.read()
@@ -446,13 +446,13 @@ class MCSample(JsonDict):
     with self.writingdict():
       self.value["sizeperevent"] = value
   @property
-  def matchefficiency(self): return self.value.get("matchefficiency", 1)
+  def matchefficiency(self): return self.value.get("matchefficiency")
   @matchefficiency.setter
   def matchefficiency(self, value):
     with self.writingdict():
       self.value["matchefficiency"] = value
   @property
-  def matchefficiencyerror(self): return self.value.get("matchefficiencyerror", 0)
+  def matchefficiencyerror(self): return self.value.get("matchefficiencyerror")
   @matchefficiencyerror.setter
   def matchefficiencyerror(self, value):
     with self.writingdict():
