@@ -310,6 +310,50 @@ class MCSample(object):
     raise ValueError("No nevents for {}".format(self))
 
   @property
+  def generators(self):
+    return r"powheg\ {} JHUGen v7.0.9".format(self.powhegprocess)
+
+  @property
+  def cardsurl(self):
+    powhegdir, powhegcard = os.path.split(self.powhegcard)
+    powhegscript = os.path.join(powhegdir, "makecards.py")
+    commit = "118144fc626bc493af2dac01c57ff51ea56562c7"
+    powhegscript = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, powhegscript.split("genproductions/")[1])
+    JHUGencard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.JHUGencard.split("genproductions/")[1])
+
+    result = (       powhegscript + "\n"
+            + "#    " + powhegcard + "\n"
+            + "# " + JHUGencard)
+
+    with cd(mkdtemp()):
+      wget(powhegscript)
+      wget(os.path.join(os.path.dirname(powhegscript), powhegcard.replace("M{}".format(self.mass), "template"))
+      subprocess.check_call(["./makecards.py"])
+      with open(powhegcard) as f:
+        powheggitcard = f.read()
+      with contextlib.closing(urllib.urlopen(JHUGencard)) as f:
+        JHUGengitcard = f.read()
+
+    with cd(mkdtemp()):
+      subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
+      with open("powheg.input") as f:
+        powhegcard = f.read()
+      with open("JHUGen.input") as f:
+        JHUGencard = f.read()
+
+    if powhegcard != powheggitcard:
+      with cd(here):
+        with open("powhegcard", "w") as f:
+          f.write(powhegcard)
+        with open("powheggitcard", "w") as f:
+          f.write(powheggitcard)
+      raise ValueError("powhegcard != powheggitcard\n{}\nSee ./powhegcard and ./powheggitcard".format(self))
+    if JHUGencard != JHUGengitcard:
+      raise ValueError("JHUGencard != JHUGengitcard\n{}\n{}\n{}".format(self, JHUGencard, JHUGengitcard))
+
+    return result
+
+  @property
   def csvline(self, useprepid=False):
     print "Getting csv line for", self
     result = {
@@ -326,7 +370,7 @@ class MCSample(object):
       "gridpack location": self.cvmfstarball,
       "cards url": self.cardsurl,
       "fragment name": "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_{:d}p_LHE_pythia8_cff.py".format(self.nfinalparticles),
-      "fragment tag": "010f5ddb7587ad615ead76ffddf03aca514a8bf3",
+      "fragment tag": "118144fc626bc493af2dac01c57ff51ea56562c7",
       "mcm tag": "HZZ",
       "mcdbid": 0,
     }

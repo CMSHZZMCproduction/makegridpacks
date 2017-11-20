@@ -1,4 +1,4 @@
-import contextlib, errno, functools, itertools, logging, os, tempfile
+import contextlib, errno, functools, itertools, logging, os, tempfile, urllib
 
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""
@@ -112,3 +112,7 @@ def cache(function):
       cache[args, tuple(sorted(kwargs.iteritems()))] = function(*args, **kwargs)
       return newfunction(*args, **kwargs)
   return newfunction
+
+def wget(url):
+  with contextlib.closing(urllib.urlopen(url)) as f, open(os.path.basename(url), "w") as newf:
+    newf.write(f.read())
