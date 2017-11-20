@@ -1,4 +1,4 @@
-import contextlib, errno, functools, itertools, logging, os, tempfile, urllib
+import abc, collections, contextlib, errno, functools, itertools, json, logging, os, tempfile, urllib
 
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""

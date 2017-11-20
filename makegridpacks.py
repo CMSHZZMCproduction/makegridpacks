@@ -2,7 +2,7 @@
 
 import contextlib, csv, filecmp, glob, os, random, re, shutil, subprocess, sys, urllib
 
-from utilities import cache, cd, KeepWhileOpenFile, LSB_JOBID, mkdir_p, mkdtemp, TFile
+from utilities import cache, cd, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, mkdtemp, TFile, wget
 
 #do not change these once you've started making tarballs!
 #they are included in the tarball name and the script
@@ -369,8 +369,8 @@ class MCSample(JsonDict):
     powhegdir, powhegcard = os.path.split(self.powhegcard)
     powhegscript = os.path.join(powhegdir, "makecards.py")
     commit = "118144fc626bc493af2dac01c57ff51ea56562c7"
-    powhegscript = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, powhegscript.split("genproductions/")[1])
-    JHUGencard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.JHUGencard.split("genproductions/")[1])
+    powhegscript = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, powhegscript.split("genproductions/")[-1])
+    JHUGencard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.JHUGencard.split("genproductions/")[-1])
 
     result = (       powhegscript + "\n"
             + "#    " + powhegcard + "\n"
@@ -378,8 +378,8 @@ class MCSample(JsonDict):
 
     with cd(mkdtemp()):
       wget(powhegscript)
-      wget(os.path.join(os.path.dirname(powhegscript), powhegcard.replace("M{}".format(self.mass), "template"))
-      subprocess.check_call(["./makecards.py"])
+      wget(os.path.join(os.path.dirname(powhegscript), powhegcard.replace("M{}".format(self.mass), "template")))
+      subprocess.check_call(["python", "makecards.py"])
       with open(powhegcard) as f:
         powheggitcard = f.read()
       with contextlib.closing(urllib.urlopen(JHUGencard)) as f:
