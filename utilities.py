@@ -246,5 +246,6 @@ class JsonDict(object):
   @contextlib.contextmanager
   def writingdict(cls):
     with OneAtATime(cls.dictfile+".tmp", 5, task="writing the dict for {}".format(type(cls).__name__)):
+      cls.getdict(trycache=False)
       yield
       cls.writedict()
