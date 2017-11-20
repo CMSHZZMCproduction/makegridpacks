@@ -100,6 +100,7 @@ class MCSample(JsonDict):
   @property
   def tarballversion(self):
     if self.decaymode == "4l": return 2  #v1 messed up the JHUGen decay card
+    if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 2500: return 2  #v1 is corrupted
     return 1
 
   @property
@@ -392,7 +393,7 @@ class MCSample(JsonDict):
         JHUGengitcard = f.read()
 
     with cd(mkdtemp()):
-      subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
+      subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
       with open("powheg.input") as f:
         powhegcard = f.read()
         powhegcardlines = [re.sub(" *([#!].*)?$", "", line) for line in powhegcard.split("\n")]
