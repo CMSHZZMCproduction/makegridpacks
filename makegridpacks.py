@@ -196,6 +196,7 @@ class MCSample(JsonDict):
             if jobsrunning: return "some filter efficiency jobs are still running"
             self.matchefficiency = 1.0*eventsaccepted / eventsprocessed
             self.matchefficiencyerror = (eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed-eventsaccepted**3) ** .5
+            shutil.rmtree(workdir)
             return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
           
       if not requestqueue:
@@ -209,7 +210,9 @@ class MCSample(JsonDict):
         if self.prepid is None:
           #need to make the request
           requestqueue.makerequest(self)
-          return "will send the request to McM, run again to proceed"
+          return "will send the request to McM, run again to proceed further"
+        else:
+          return "found prepid: {}".format(self.prepid)
 
     if os.path.exists(self.eostarball): return "gridpack exists on eos, not yet copied to cvmfs"
     if os.path.exists(self.foreostarball): return "gridpack exists in this folder, to be copied to eos"
@@ -486,6 +489,24 @@ class MCSample(JsonDict):
     }
     if useprepid: result["prepid"] = self.prepid
     return result
+
+  def getprepid(self):
+    output = subprocess.check_output(["McMScripts/getRequests.py", "dataset_name={}&prepid=HIG-RunIIFall17wmLHEGS-*".format(self.datasetname), "-bw"])
+    lines = {_ for _ in output.split("\n") if "HIG-" in _ and "&prepid=HIG-" not in _}
+    try:
+      line = lines.pop()
+    except KeyError:
+      return None
+    if lines:
+      raise RuntimeError("Don't know what to do with this output:\n\n"+output)
+    prepids = set(line.split(","))
+    if len(prepids) != 1:
+      raise RuntimeError("Multiple prepids for {} (dataset_name={}&prepid=HIG-RunIIFall17wmLHEGS-*)".format(self, self.datasetname))
+    assert len(prepids) == 1, prepids
+    self.prepid = prepids.pop()
+    assert False
+
+
 
 @cache
 def makecards(folder):
