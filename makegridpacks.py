@@ -27,7 +27,7 @@ class MCSample(JsonDict):
   def __ne__(self, other):
     return not (self == other)
   def __hash__(self):
-    return hash((self.productionmode, self.mass))
+    return hash((self.productionmode, self.decaymode, self.mass))
   def __str__(self):
     return "{} {} {}".format(self.productionmode, self.decaymode, self.mass)
   def __repr__(self):
