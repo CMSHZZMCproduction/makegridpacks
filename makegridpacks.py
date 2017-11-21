@@ -183,7 +183,7 @@ class MCSample(JsonDict):
                     subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
                     with open("powheg.input") as f:
                       powheginput = f.read()
-                    powheginput = re.sub("^(rwl_|lhapdf6maxsets)", r"#\1", powheginput)
+                    powheginput = re.sub("^(rwl_|lhapdf6maxsets)", r"#\1", powheginput, flags=re.MULTILINE)
                     with open("powheg.input", "w") as f:
                       f.write(powheginput)
                     subprocess.check_call(["./runcmsgrid.sh", "10000", str(hash(self)+i), "1"])
