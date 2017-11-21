@@ -548,6 +548,10 @@ class RequestQueue(object):
     if request.prepid is not None:
       raise RuntimeError("Request {} is already made!".format(request))
     self.csvlines.append(request.csvline(**kwargs))
+    try:
+      output = subprocess.check_output(["voms-proxy-info"])
+    except subprocess.CalledProcessError:
+      raise RuntimeError("have to do voms-proxy-init!")
   def __exit__(self, *errorstuff):
     keylists = {frozenset(line.keys()) for line in self.csvlines}
     for keys in keylists:
