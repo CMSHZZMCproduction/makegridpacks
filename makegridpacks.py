@@ -215,6 +215,8 @@ class MCSample(JsonDict):
         else:
           return "found prepid: {}".format(self.prepid)
 
+      return "prepid is {}".format(self.prepid)
+
     if os.path.exists(self.eostarball): return "gridpack exists on eos, not yet copied to cvmfs"
     if os.path.exists(self.foreostarball): return "gridpack exists in this folder, to be copied to eos"
 
