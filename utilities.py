@@ -39,11 +39,17 @@ class TFile(object):
   def __exit__(self, *err):
     self.__tfile.Close()
 
-def mkdtemp(**kwargs):
-  if "dir" not in kwargs:
-    if LSB_JOBID() is not None:
-      kwargs["dir"] = "/pool/lsf/hroskes/{}/".format(LSB_JOBID())
-  return tempfile.mkdtemp(**kwargs)
+def tempfilewrapper(function):
+  @functools.wraps(function)
+  def newfunction(**kwargs):
+    if "dir" not in kwargs:
+      if LSB_JOBID() is not None:
+        kwargs["dir"] = "/pool/lsf/hroskes/{}/".format(LSB_JOBID())
+    return function(**kwargs)
+  return newfunction
+
+mkdtemp = tempfilewrapper(tempfile.mkdtemp)
+NamedTemporaryFile = tempfilewrapper(tempfile.NamedTemporaryFile)
 
 @contextlib.contextmanager
 def cdtemp(**kwargs):

@@ -2,7 +2,8 @@
 
 import contextlib, csv, filecmp, glob, os, random, re, shutil, subprocess, sys, urllib
 
-from utilities import cache, cd, cdtemp, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, mkdtemp, TFile, wget
+from utilities import cache, cd, cdtemp, rm_f, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, \
+                      mkdtemp, NamedTemporaryFile, TFile, wget
 
 #do not change these once you've started making tarballs!
 #they are included in the tarball name and the script
@@ -314,12 +315,13 @@ class MCSample(JsonDict):
     else:
       result = self.olddatasetname.replace("JHUgenV6", "JHUGenV709")
 
+    pm = self.productionmode.replace("gg", "GluGlu")
     dm = self.decaymode.upper().replace("NU", "Nu")
     if self.decaymode == "2l2q" and self.mass == "125":
       if self.productionmode in ("VBF", "WplusH", "WminusH", "bbH", "tqH"): dm = "2L2X"
       if self.productionmode in ("ZH", "ttH"): dm = "Filter"
-    searchfor = [self.productionmode, dm, "M{:d}".format(self.mass), "JHUGenV709"]
-    if any(_ not in result.lower() for _ in searchfor):
+    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV709"]
+    if any(_ not in result for _ in searchfor):
       raise ValueError("Dataset name doesn't make sense:\n{}\n{}".format(result, self))
 
     return result
@@ -466,8 +468,14 @@ class MCSample(JsonDict):
   @property
   def filterefficiencyerror(self): return 0
 
+  @property
+  def nfinalparticles(self):
+    if self.productionmode == "ggH": return 1
+    if self.productionmode in ("VBF", "ttH"): return 3
+    if self.productionmode in ("ZH", "WplusH", "WminusH"): return 2
+    assert False, self.productionmode
+
   def csvline(self, useprepid):
-    print "Getting csv line for", self
     result = {
       "dataset name": self.datasetname,
       "xsec [pb]": 1,
