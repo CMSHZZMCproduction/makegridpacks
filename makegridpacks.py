@@ -319,7 +319,7 @@ class MCSample(JsonDict):
 
     pm = self.productionmode.replace("gg", "GluGlu")
     dm = self.decaymode.upper().replace("NU", "Nu")
-    if self.decaymode == "2l2q" and self.mass == "125":
+    if self.decaymode == "2l2q" and self.mass == 125:
       if self.productionmode in ("VBF", "WplusH", "WminusH", "bbH", "tqH"): dm = "2L2X"
       if self.productionmode in ("ZH", "ttH"): dm = "Filter"
     searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV709"]
