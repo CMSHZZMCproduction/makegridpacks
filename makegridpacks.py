@@ -558,14 +558,22 @@ class RequestQueue(object):
           if frozenset(line.keys()) == keys:
             writer.writerow(line)
         rm_f(os.path.expanduser("~/private/prod-cookie.txt"))
-        subprocess.check_call(["McMScripts/manageRequests.py", "--pwg", "HIG", "-c", "RunIIFall17wmLHEGS", f.name])
+        try:
+          output = subprocess.check_output(["McMScripts/manageRequests.py", "--pwg", "HIG", "-c", "RunIIFall17wmLHEGS", f.name])
+        except subprocess.CalledProcessError as e:
+          output = e.output
+          raise
+        finally:
+          print output,
+        if "failed to be created" in output:
+          raise RuntimeError("Failed to create request for {}".format(self))
     del self.csvlines
 
 def makegridpacks():
   for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
     for decaymode in "4l", "2l2nu", "2l2q":
-      with RequestQueue() as queue:
-        for mass in getmasses(productionmode, decaymode):
+      for mass in getmasses(productionmode, decaymode):
+        with RequestQueue() as queue:
           sample = MCSample(productionmode, decaymode, mass)
           print sample, sample.makegridpack(queue)
 
