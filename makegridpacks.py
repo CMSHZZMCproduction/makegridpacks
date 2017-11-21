@@ -548,7 +548,7 @@ class RequestQueue(object):
     self.csvlines = []
     return self
   def addrequest(self, request, **kwargs):
-    if request.prepid is not None:
+    if request.prepid is not None and not kwargs.get("useprepid"):
       raise RuntimeError("Request {} is already made!".format(request))
     self.csvlines.append(request.csvline(**kwargs))
     if not os.path.exists(os.path.expanduser("~/private/prod-cookie.txt")):
@@ -563,10 +563,14 @@ class RequestQueue(object):
           if frozenset(line.keys()) == keys:
             writer.writerow(line)
         try:
-          output = subprocess.check_output(["McMScripts/manageRequests.py", "--pwg", "HIG", "-c", "RunIIFall17wmLHEGS", f.name])
+          command = ["McMScripts/manageRequests.py", "--pwg", "HIG", "-c", "RunIIFall17wmLHEGS", f.name]
+          if "prepid" in keys: command.append("-m")
+          output = subprocess.check_output(command)
         except subprocess.CalledProcessError as e:
           output = e.output
           raise
+        except:
+          output = ""
         finally:
           print output,
         if "failed to be created" in output:
