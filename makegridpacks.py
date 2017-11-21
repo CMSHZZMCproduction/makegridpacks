@@ -369,7 +369,7 @@ class MCSample(JsonDict):
 
   @property
   def generators(self):
-    return r"powheg\ {} JHUGen v7.0.9".format(self.powhegprocess)
+    return r"powheg\ {} JHUGen\ v7.0.9".format(self.powhegprocess)
 
   @property
   @cache
