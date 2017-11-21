@@ -313,7 +313,7 @@ class MCSample(JsonDict):
         if self.productionmode == "ZH": result = "ZH_HToZZ_2LFilter_M125_13TeV_powheg2-minlo-HZJ_JHUGenV709_pythia8"
         if self.productionmode == "ttH": result = "ttH_HToZZ_2LOSSFFilter_M125_13TeV_powheg2_JHUGenV709_pythia8"
     elif self.productionmode in ("WplusH", "WminusH", "ZH") and self.mass > 230:
-      result = MCSample(self.productionmode, self.decaymode, self.mass).datasetname.replace("M230", "M{:d}".format(self.mass))
+      result = MCSample(self.productionmode, self.decaymode, 230).datasetname.replace("M230", "M{:d}".format(self.mass))
     else:
       result = self.olddatasetname.replace("JHUgenV6", "JHUGenV709")
 
@@ -574,9 +574,9 @@ class RequestQueue(object):
     del self.csvlines
 
 def makegridpacks():
-  for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
-    for decaymode in "4l", "2l2nu", "2l2q":
-      with RequestQueue() as queue:
+  with RequestQueue() as queue:
+    for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
+      for decaymode in "4l", "2l2nu", "2l2q":
         for mass in getmasses(productionmode, decaymode):
           sample = MCSample(productionmode, decaymode, mass)
           print sample, sample.makegridpack(queue)
