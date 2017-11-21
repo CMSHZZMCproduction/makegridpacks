@@ -563,6 +563,11 @@ class RequestQueue(object):
             writer.writerow(line)
         rm_f(os.path.expanduser("~/private/prod-cookie.txt"))
         try:
+          subprocess.check_call("cern-get-sso-cookie -u https://cms-pdmv.cern.ch/mcm/ -o ~/private/prod-cookie.txt --krb --reprocess".split())
+        except subprocess.CalledProcessError as e:
+          print "\n\nTry starting a new session and running\n  cern-get-sso-cookie -u https://cms-pdmv.cern.ch/mcm/ -o ~/private/prod-cookie.txt --krb --reprocess\nprior to doing cmsenv\n\n"
+          raise
+        try:
           output = subprocess.check_output(["McMScripts/manageRequests.py", "--pwg", "HIG", "-c", "RunIIFall17wmLHEGS", f.name])
         except subprocess.CalledProcessError as e:
           output = e.output
