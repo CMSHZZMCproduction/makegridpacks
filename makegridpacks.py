@@ -500,6 +500,8 @@ class MCSample(JsonDict):
 
   def getprepid(self):
     output = subprocess.check_output(["McMScripts/getRequests.py", "dataset_name={}&prepid=HIG-RunIIFall17wmLHEGS-*".format(self.datasetname), "-bw"])
+    if "Traceback (most recent call last):" in output:
+      raise RuntimeError(output)
     lines = {_ for _ in output.split("\n") if "HIG-" in _ and "&prepid=HIG-" not in _}
     try:
       line = lines.pop()
