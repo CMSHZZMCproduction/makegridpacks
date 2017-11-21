@@ -162,12 +162,12 @@ class MCSample(JsonDict):
         else:
           return "gridpack exists on cvmfs, but it's wrong!"
 
-      self.cardsurl #if the cards are wrong, catch it now!
       if self.matchefficiency is None or self.matchefficiencyerror is None:
         #figure out the filter efficiency
         if "filter" not in self.JHUGencard.lower():
           self.matchefficiency, self.matchefficiencyerror = 1, 0
         else:
+          self.cardsurl #if the cards are wrong, catch it now!
           mkdir_p(workdir)
           jobsrunning = False
           eventsprocessed = eventsaccepted = 0
@@ -324,7 +324,7 @@ class MCSample(JsonDict):
       if self.productionmode in ("ZH", "ttH"): dm = "Filter"
     searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV709"]
     if any(_ not in result for _ in searchfor):
-      raise ValueError("Dataset name doesn't make sense:\n{}\n{}".format(result, self))
+      raise ValueError("Dataset name doesn't make sense:\n{}\n{}\n{}".format(result, searchfor, self))
 
     return result
 
