@@ -514,7 +514,6 @@ class MCSample(JsonDict):
       raise RuntimeError("Multiple prepids for {} (dataset_name={}&prepid=HIG-RunIIFall17wmLHEGS-*)".format(self, self.datasetname))
     assert len(prepids) == 1, prepids
     self.prepid = prepids.pop()
-    assert False
 
 
 
