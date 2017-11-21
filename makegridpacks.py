@@ -2,7 +2,7 @@
 
 import contextlib, csv, filecmp, glob, os, random, re, shutil, subprocess, sys, urllib
 
-from utilities import cache, cd, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, mkdtemp, TFile, wget
+from utilities import cache, cd, cdtemp, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, mkdtemp, TFile, wget
 
 #do not change these once you've started making tarballs!
 #they are included in the tarball name and the script
@@ -179,7 +179,7 @@ class MCSample(JsonDict):
                   continue
                 if not os.path.exists("cmsgrid_final.lhe"):
                   if not LSB_JOBID(): return "need to figure out filter efficiency, please run on a queue"
-                  with cd(mkdtemp()):
+                  with cdtemp():
                     subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
                     with open("powheg.input") as f:
                       powheginput = f.read()
@@ -377,7 +377,7 @@ class MCSample(JsonDict):
             + "#    " + powhegcard + "\n"
             + "# " + JHUGencard)
 
-    with cd(mkdtemp()):
+    with cdtemp():
       wget(powhegscript)
       wget(os.path.join(os.path.dirname(powhegscript), powhegcard.replace("M{}".format(self.mass), "template").replace("Wplus", "W").replace("Wminus", "W")))
       subprocess.check_call(["python", "makecards.py"])
@@ -392,7 +392,7 @@ class MCSample(JsonDict):
       with contextlib.closing(urllib.urlopen(JHUGencard)) as f:
         JHUGengitcard = f.read()
 
-    with cd(mkdtemp()):
+    with cdtemp():
       subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
       with open("powheg.input") as f:
         powhegcard = f.read()

@@ -1,0 +1,898 @@
+{
+    "VBF": {
+        "2l2nu": {
+            "1000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "1500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "200": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "300": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "3000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "400": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "600": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "700": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "800": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "900": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            }
+        },
+        "2l2q": {
+            "1000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "125": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "1500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "200": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "250": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "300": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "3000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "350": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "400": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "450": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "550": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "600": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "700": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "750": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "800": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "900": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            }
+        },
+        "4l": {
+            "1000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "115": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "120": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "124": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "125": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "126": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "130": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "135": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "140": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "145": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "150": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "1500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "155": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "160": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "165": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "170": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "175": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "180": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "190": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "200": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "210": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "230": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "250": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "270": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "300": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "3000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "350": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "400": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "450": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "550": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "600": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "700": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "750": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "800": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "900": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            }
+        }
+    },
+    "WminusH": {
+        "2l2q": {
+            "125": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            }
+        },
+        "4l": {
+            "1000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "115": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "120": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "124": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "125": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "126": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "130": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "135": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "140": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "145": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "150": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "1500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "155": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "160": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "165": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "170": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "175": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "180": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "190": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "200": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "210": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "230": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "250": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "270": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "300": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "3000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "350": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "400": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "450": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "550": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "600": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "700": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "750": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "800": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "900": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            }
+        }
+    },
+    "WplusH": {
+        "2l2q": {
+            "125": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            }
+        },
+        "4l": {
+            "1000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "115": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "120": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "124": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "125": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "126": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "130": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "135": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "140": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "145": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "150": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "1500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "155": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "160": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "165": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "170": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "175": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "180": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "190": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "200": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "210": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "230": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "250": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "270": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "300": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "3000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "350": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "400": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "450": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "550": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "600": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "700": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "750": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "800": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "900": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            }
+        }
+    },
+    "ggH": {
+        "2l2nu": {
+            "1000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "1500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "200": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "300": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "3000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "400": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "600": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "700": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "800": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "900": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            }
+        },
+        "2l2q": {
+            "1000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "125": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "1500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "200": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "250": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "300": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "3000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "350": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "400": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "450": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "550": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "600": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "700": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "750": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "800": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "900": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            }
+        },
+        "4l": {
+            "1000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "115": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "120": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "124": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "125": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "126": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "130": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "135": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "140": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "145": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "150": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "1500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "155": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "160": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "165": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "170": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "175": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "180": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "190": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "200": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "210": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "230": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "250": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "2500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "270": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "300": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "3000": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "350": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "400": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "450": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "500": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "550": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "600": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "700": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "750": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "800": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            },
+            "900": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0
+            }
+        }
+    }
+}

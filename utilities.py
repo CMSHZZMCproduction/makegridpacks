@@ -1,4 +1,4 @@
-import abc, collections, contextlib, errno, functools, itertools, json, logging, os, tempfile, urllib
+import abc, collections, contextlib, errno, functools, itertools, json, logging, os, shutil, tempfile, urllib
 
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""
@@ -35,6 +35,17 @@ def mkdtemp(**kwargs):
     if LSB_JOBID() is not None:
       kwargs["dir"] = "/pool/lsf/hroskes/{}/".format(LSB_JOBID())
   return tempfile.mkdtemp(**kwargs)
+
+@contextlib.contextmanager
+def cdtemp(**kwargs):
+  deleteafter = kwargs.pop("deleteafter", True)
+  tmpdir = mkdtemp(**kwargs)
+  try:
+    with cd(tmpdir):
+      yield
+  finally:
+    if deleteafter:
+      shutil.rmtree(tmpdir)
 
 def LSB_JOBID():
   return os.environ.get("LSB_JOBID", None)
@@ -247,5 +258,7 @@ class JsonDict(object):
   def writingdict(cls):
     with OneAtATime(cls.dictfile+".tmp", 5, task="writing the dict for {}".format(type(cls).__name__)):
       cls.getdict(trycache=False)
-      yield
-      cls.writedict()
+      try:
+        yield
+      finally:
+        cls.writedict()
