@@ -548,10 +548,8 @@ class RequestQueue(object):
     if request.prepid is not None:
       raise RuntimeError("Request {} is already made!".format(request))
     self.csvlines.append(request.csvline(**kwargs))
-    try:
-      output = subprocess.check_output(["voms-proxy-info"])
-    except subprocess.CalledProcessError:
-      raise RuntimeError("have to do voms-proxy-init!")
+    if not os.path.exists(os.path.expanduser("~/private/prod-cookie.txt")):
+      raise RuntimeError("Have to run\n  source /afs/cern.ch/cms/PPD/PdmV/tools/McM/getCookie.sh\nprior to doing cmsenv")
   def __exit__(self, *errorstuff):
     keylists = {frozenset(line.keys()) for line in self.csvlines}
     for keys in keylists:
@@ -561,12 +559,6 @@ class RequestQueue(object):
         for line in self.csvlines:
           if frozenset(line.keys()) == keys:
             writer.writerow(line)
-        rm_f(os.path.expanduser("~/private/prod-cookie.txt"))
-        try:
-          subprocess.check_call("cern-get-sso-cookie -u https://cms-pdmv.cern.ch/mcm/ -o ~/private/prod-cookie.txt --krb --reprocess".split())
-        except subprocess.CalledProcessError as e:
-          print "\n\nTry starting a new session and running\n  cern-get-sso-cookie -u https://cms-pdmv.cern.ch/mcm/ -o ~/private/prod-cookie.txt --krb --reprocess\nprior to doing cmsenv\n\n"
-          raise
         try:
           output = subprocess.check_output(["McMScripts/manageRequests.py", "--pwg", "HIG", "-c", "RunIIFall17wmLHEGS", f.name])
         except subprocess.CalledProcessError as e:
@@ -581,8 +573,8 @@ class RequestQueue(object):
 def makegridpacks():
   for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
     for decaymode in "4l", "2l2nu", "2l2q":
-      for mass in getmasses(productionmode, decaymode):
-        with RequestQueue() as queue:
+      with RequestQueue() as queue:
+        for mass in getmasses(productionmode, decaymode):
           sample = MCSample(productionmode, decaymode, mass)
           print sample, sample.makegridpack(queue)
 
