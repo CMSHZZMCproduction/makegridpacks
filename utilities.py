@@ -10,6 +10,15 @@ def mkdir_p(path):
     else:
       raise
 
+def rm_f(path):
+  try:
+    os.remove(path)
+  except OSError as exc:
+    if exc.errno == errno.ENOENT:
+      pass
+    else:
+      raise
+
 @contextlib.contextmanager
 def cd(newdir):
   """http://stackoverflow.com/a/24176022/5228524"""

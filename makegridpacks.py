@@ -209,7 +209,7 @@ class MCSample(JsonDict):
         self.getprepid()
         if self.prepid is None:
           #need to make the request
-          requestqueue.makerequest(self)
+          requestqueue.addrequest(self, useprepid=False)
           return "will send the request to McM, run again to proceed further"
         else:
           return "found prepid: {}".format(self.prepid)
@@ -437,13 +437,13 @@ class MCSample(JsonDict):
     with self.writingdict():
       self.value["prepid"] = value
   @property
-  def timeperevent(self): return self.value.get("timeperevent", 100)
+  def timeperevent(self): return self.value.get("timeperevent")
   @timeperevent.setter
   def timeperevent(self, value):
     with self.writingdict():
       self.value["timeperevent"] = value
   @property
-  def sizeperevent(self): return self.value.get("sizeperevent", 100)
+  def sizeperevent(self): return self.value.get("sizeperevent")
   @sizeperevent.setter
   def sizeperevent(self, value):
     with self.writingdict():
@@ -466,15 +466,12 @@ class MCSample(JsonDict):
   @property
   def filterefficiencyerror(self): return 0
 
-  @property
-  def csvline(self, useprepid=False):
+  def csvline(self, useprepid):
     print "Getting csv line for", self
     result = {
       "dataset name": self.datasetname,
       "xsec [pb]": 1,
       "total events": self.nevents,
-      "time per event [s]": self.timeperevent,
-      "size per event [kb]": self.sizeperevent,
       "generator": self.generators,
       "match efficiency": self.matchefficiency*self.filterefficiency,
       "match efficiency error": ((self.matchefficiencyerror*self.filterefficiency)**2 + (self.matchefficiency*self.filterefficiencyerror)**2)**.5,
@@ -488,6 +485,9 @@ class MCSample(JsonDict):
       "mcdbid": 0,
     }
     if useprepid: result["prepid"] = self.prepid
+    if self.timeperevent: result["time per event [s]"] = self.timeperevent
+    if self.sizeperevent: result["size per event [kb]"] = self.sizeperevent
+
     return result
 
   def getprepid(self):
@@ -530,12 +530,36 @@ def getmasses(productionmode, decaymode):
     if productionmode in ("WplusH", "WminusH", "ZH", "ttH"):
       return 125,
 
+class RequestQueue(object):
+  def __init__(self):
+    pass
+  def __enter__(self):
+    self.csvlines = []
+    return self
+  def addrequest(self, request, **kwargs):
+    if request.prepid is not None:
+      raise RuntimeError("Request {} is already made!".format(request))
+    self.csvlines.append(request.csvline(**kwargs))
+  def __exit__(self, *errorstuff):
+    keylists = {frozenset(line.keys()) for line in self.csvlines}
+    for keys in keylists:
+      with contextlib.closing(NamedTemporaryFile(bufsize=0)) as f:
+        writer = csv.DictWriter(f, keys)
+        writer.writeheader()
+        for line in self.csvlines:
+          if frozenset(line.keys()) == keys:
+            writer.writerow(line)
+        rm_f(os.path.expanduser("~/private/prod-cookie.txt"))
+        subprocess.check_call(["McMScripts/manageRequests.py", "--pwg", "HIG", "-c", "RunIIFall17wmLHEGS", f.name])
+    del self.csvlines
+
 def makegridpacks():
   for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
     for decaymode in "4l", "2l2nu", "2l2q":
-     for mass in getmasses(productionmode, decaymode):
-      sample = MCSample(productionmode, decaymode, mass)
-      print sample, sample.makegridpack()
+      with RequestQueue() as queue:
+        for mass in getmasses(productionmode, decaymode):
+          sample = MCSample(productionmode, decaymode, mass)
+          print sample, sample.makegridpack(queue)
 
 if __name__ == "__main__":
   makegridpacks()
