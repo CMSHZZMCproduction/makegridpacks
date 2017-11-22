@@ -225,8 +225,7 @@ class MCSample(JsonDict):
             with open(self.prepid) as f:
               testjob = f.read()
             with open(self.prepid, "w") as newf:
-              assert testjob[0] == testjob[-1] == '"'
-              newf.write(testjob[1:-1])
+              newf.write(eval(testjob))
             os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
             output = subprocess.check_output(["./"+self.prepid], stderr=subprocess.STDOUT)
             print output
