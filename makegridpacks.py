@@ -227,13 +227,19 @@ class MCSample(JsonDict):
             with open(self.prepid, "w") as newf:
               newf.write(eval(testjob))
             os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
-            output = subprocess.check_output(["./"+self.prepid], stderr=subprocess.STDOUT)
-            print output
-            for line in output.split("\n"):
-              match = re.match("Size/event: ([0-9.]*)", line)
-              if match: self.sizeperevent = match.group(1)
-              match = re.match('    <Metric Name="AvgEventTime" Value="([0-9.]*)"/>', line)
-              if match: self.timeperevent = match.group(1)
+            subprocess.check_call(["./"+self.prepid], stderr=subprocess.STDOUT)
+            with open(self.prepid+"_rt.xml") as f:
+              nevents = totalsize = None
+              for line in f:
+                line = line.strip()
+                match = re.match('<TotalEvents>([0-9]*)</TotalEvents>', line)
+                if match: nevents = int(match.group(1))
+                match = re.match('<Metric Name="Timing-tstoragefile-write-totalMegabytes" Value="([0-9.]*)"/>', line)
+                if match: totalsize = float(match.group(1))
+                match = re.match('<Metric Name="AvgEventTime" Value="([0-9.]*)"/>', line)
+                if match: self.timeperevent = float(match.group(1))
+              if nevents is not None is not totalsize:
+                self.sizeperevent = totalsize * 1024 / nevents
 
         shutil.rmtree(workdir)
 
@@ -493,6 +499,18 @@ class MCSample(JsonDict):
     if self.productionmode in ("ZH", "WplusH", "WminusH"): return 2
     assert False, self.productionmode
 
+  @property
+  def defaulttimeperevent(self):
+    if self.productionmode in ("ggH", "VBF"): return 30
+    if self.productionmode in ("WplusH", "WminusH"): return 50
+    if self.productionmode == "ZH":
+      if self.decaymode == "4l": return 120
+      if self.decaymode == "2l2q": return 140
+    if self.productionmode == "ttH":
+      if self.decaymode == "4l": return 30 #?
+      if self.decaymode == "2l2q": return 60
+    assert False
+
   def csvline(self, useprepid):
     result = {
       "dataset name": self.datasetname,
@@ -509,10 +527,10 @@ class MCSample(JsonDict):
       "fragment tag": "118144fc626bc493af2dac01c57ff51ea56562c7",
       "mcm tag": "HZZ",
       "mcdbid": 0,
+      "time per event [s]": self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent,
+      "size per event [kb]": self.timeperevent if self.timeperevent is not None else 600,
     }
     if useprepid: result["prepid"] = self.prepid
-    if self.timeperevent: result["time per event [s]"] = self.timeperevent
-    if self.sizeperevent: result["size per event [kb]"] = self.sizeperevent
 
     return result
 
