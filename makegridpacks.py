@@ -172,9 +172,9 @@ class MCSample(JsonDict):
           jobsrunning = False
           eventsprocessed = eventsaccepted = 0
           with cd(workdir):
-            for i in range(20):
+            for i in range(100):
               mkdir_p(str(i))
-              with cd(str(i)), KeepWhileOpenFile("cmsgrid_final.lhe.tmp", message=LSB_JOBID()) as kwof:
+              with cd(str(i)), KeepWhileOpenFile("cmsgrid_final.lhe.tmp", message=LSB_JOBID(), deleteifjobdied=True) as kwof:
                 if not kwof:
                   jobsrunning = True
                   continue
@@ -187,7 +187,7 @@ class MCSample(JsonDict):
                     powheginput = re.sub("^(rwl_|lhapdf6maxsets)", r"#\1", powheginput, flags=re.MULTILINE)
                     with open("powheg.input", "w") as f:
                       f.write(powheginput)
-                    subprocess.check_call(["./runcmsgrid.sh", "10000", str(hash(self)+i), "1"])
+                    subprocess.check_call(["./runcmsgrid.sh", "1000", str(abs(hash(self))%2147483647 + i), "1"])
                     shutil.move("cmsgrid_final.lhe", os.path.join(workdir, str(i)))
                 with open("cmsgrid_final.lhe") as f:
                   for line in f:
@@ -228,19 +228,8 @@ class MCSample(JsonDict):
             jobid = int(f.read().strip())
           except ValueError:
             return "try running again, probably you just got really bad timing"
-        try:
-          bjobsout = subprocess.check_output(["bjobs", str(jobid)], stderr=subprocess.STDOUT)
-          if re.match("Job <[0-9]*> is not found", bjobsout.strip()):
-            raise subprocess.CalledProcessError(None, None, None)
-          lines = bjobsout.strip().split("\n")
-          if len(lines) == 2 and lines[1].split()[2] == "EXIT":
-            raise subprocess.CalledProcessError(None, None, None)
-        except subprocess.CalledProcessError:    #job died
-          try:
-            bjobsout = subprocess.check_output(["bjobs", "-J", "full_"+os.path.basename(self.powhegcard).replace(".input", "")], stderr=subprocess.STDOUT)
-            if re.match("Job <.*> is not found", bjobsout.strip()):
-              raise subprocess.CalledProcessError(None, None, None)
-          except subprocess.CalledProcessError:  #that job died or ended too
+        if jobended(str(jobid)):
+          if jobended("-J", "full_"+os.path.basename(self.powhegcard).replace(".input", "")):
             for _ in os.listdir("."):            #--> delete everything in the folder, except the tarball if that exists
               if os.path.basename(_) != os.path.basename(self.tmptarball) and os.path.basename(_) != os.path.basename(self.tmptarball)+".tmp":
                 try:

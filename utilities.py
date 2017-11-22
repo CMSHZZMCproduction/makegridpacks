@@ -66,13 +66,14 @@ def LSB_JOBID():
   return os.environ.get("LSB_JOBID", None)
 
 class KeepWhileOpenFile(object):
-  def __init__(self, name, message=None):
+  def __init__(self, name, message=None, deleteifjobdied=False):
     logging.debug("creating KeepWhileOpenFile {}".format(name))
     self.filename = name
     self.__message = message
     self.pwd = os.getcwd()
     self.fd = self.f = None
     self.bool = False
+    self.deleteifjobdied = deleteifjobdied
 
   def __enter__(self):
     logging.debug("entering KeepWhileOpenFile {}".format(self.filename))
@@ -83,6 +84,17 @@ class KeepWhileOpenFile(object):
         self.fd = os.open(self.filename, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
       except OSError:
         logging.debug("failed: it already exists")
+        if self.deleteifjobdied and self.jobdied():
+          logging.debug("but the job died")
+          try:
+            with cd(self.pwd):
+              logging.debug("trying to remove")
+              os.remove(self.filename)
+              logging.debug("removed")
+          except OSError:
+            logging.debug("failed")
+            pass #ignore it
+
         return None
       else:
         logging.debug("succeeded: it didn't exist")
@@ -124,6 +136,13 @@ class KeepWhileOpenFile(object):
 
   def __nonzero__(self):
     return self.bool
+
+  def jobdied(self):
+    try:
+      jobid = int(f.read().strip())
+    except ValueError:
+      return False
+    return jobended(str(jobid))
 
 class OneAtATime(KeepWhileOpenFile):
   def __init__(self, name, delay, message=None, task="doing this"):
@@ -277,3 +296,17 @@ class JsonDict(object):
         yield
       finally:
         cls.writedict()
+
+def jobended(*bjobsargs):
+  try:
+    bjobsout = subprocess.check_output(["bjobs"]+list(bjobsargs), stderr=subprocess.STDOUT)
+  except subprocess.CalledProcessError:
+    return True
+  if re.match("Job <[0-9]*> is not found", bjobsout.strip()):
+    return True
+  lines = bjobsout.strip().split("\n")
+  if len(lines) == 2 and lines[1].split()[2] == "EXIT":
+    return True
+
+  return False
+
