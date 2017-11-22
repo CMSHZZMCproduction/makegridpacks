@@ -457,34 +457,44 @@ class MCSample(JsonDict):
   def default(self): return {}
 
   @property
-  def prepid(self): return self.value.get("prepid")
+  def prepid(self):
+    with cd(here):
+      return self.value.get("prepid")
   @prepid.setter
   def prepid(self, value):
-    with self.writingdict():
+    with cd(here), self.writingdict():
       self.value["prepid"] = value
   @property
-  def timeperevent(self): return self.value.get("timeperevent")
+  def timeperevent(self):
+    with cd(here):
+      return self.value.get("timeperevent")
   @timeperevent.setter
   def timeperevent(self, value):
-    with self.writingdict():
+    with cd(here), self.writingdict():
       self.value["timeperevent"] = value
   @property
-  def sizeperevent(self): return self.value.get("sizeperevent")
+  def sizeperevent(self):
+    with cd(here):
+      return self.value.get("sizeperevent")
   @sizeperevent.setter
   def sizeperevent(self, value):
-    with self.writingdict():
+    with cd(here), self.writingdict():
       self.value["sizeperevent"] = value
   @property
-  def matchefficiency(self): return self.value.get("matchefficiency")
+  def matchefficiency(self):
+    with cd(here):
+      return self.value.get("matchefficiency")
   @matchefficiency.setter
   def matchefficiency(self, value):
-    with self.writingdict():
+    with cd(here), self.writingdict():
       self.value["matchefficiency"] = value
   @property
-  def matchefficiencyerror(self): return self.value.get("matchefficiencyerror")
+  def matchefficiencyerror(self):
+    with cd(here):
+      return self.value.get("matchefficiencyerror")
   @matchefficiencyerror.setter
   def matchefficiencyerror(self, value):
-    with self.writingdict():
+    with cd(here), self.writingdict():
       self.value["matchefficiencyerror"] = value
 
   @property
