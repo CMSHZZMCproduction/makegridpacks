@@ -1,4 +1,4 @@
-import abc, collections, contextlib, errno, functools, itertools, json, logging, os, shutil, tempfile, urllib
+import abc, collections, contextlib, errno, functools, itertools, json, logging, os, re, shutil, subprocess, tempfile, urllib
 
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""
@@ -139,10 +139,14 @@ class KeepWhileOpenFile(object):
 
   def jobdied(self):
     try:
-      jobid = int(f.read().strip())
-    except ValueError:
+      with open(self.filename) as f:
+        try:
+          jobid = int(f.read().strip())
+        except ValueError:
+          return False
+        return jobended(str(jobid))
+    except IOError:
       return False
-    return jobended(str(jobid))
 
 class OneAtATime(KeepWhileOpenFile):
   def __init__(self, name, delay, message=None, task="doing this"):

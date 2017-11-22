@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import contextlib, csv, filecmp, glob, os, random, re, shutil, subprocess, sys, urllib
+import contextlib, csv, filecmp, glob, os, random, re, shutil, stat, subprocess, sys, urllib
 
 from utilities import cache, cd, cdtemp, rm_f, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, \
                       mkdtemp, NamedTemporaryFile, TFile, wget
@@ -199,7 +199,7 @@ class MCSample(JsonDict):
             self.matchefficiencyerror = (eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed-eventsaccepted**3) ** .5
             shutil.rmtree(workdir)
             return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
-          
+
       if not requestqueue:
         if self.matchefficiency != 1:
           return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
@@ -215,7 +215,35 @@ class MCSample(JsonDict):
         else:
           return "found prepid: {}".format(self.prepid)
 
-      return "prepid is {}".format(self.prepid)
+      if not (self.sizeperevent and self.timeperevent):
+        if not LSB_JOBID(): return "need to get time and size per event, please run on a queue"
+        mkdir_p(workdir)
+        with KeepWhileOpenFile(os.path.join(workdir, self.prepid+".tmp")) as kwof:
+          if not kwof: return "job to get the size and time is already running"
+          with cdtemp():
+            wget("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/"+self.prepid)
+            with open(self.prepid) as f:
+              testjob = f.read()
+            with open(self.prepid, "w") as newf:
+              assert testjob[0] == testjob[-1] == '"'
+              newf.write(testjob[1:-1])
+            os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
+            output = subprocess.check_output(["./"+self.prepid], stderr=subprocess.STDOUT)
+            print output
+            for line in output.split("\n"):
+              match = re.match("Size/event: ([0-9.]*)", line)
+              if match: self.sizeperevent = match.group(1)
+              match = re.match('    <Metric Name="AvgEventTime" Value="([0-9.]*)"/>', line)
+              if match: self.timeperevent = match.group(1)
+
+        shutil.rmtree(workdir)
+
+        if not (self.sizeperevent and self.timeperevent):
+          return "failed to get the size and time"
+        requestqueue.addrequest(self, useprepid=True)
+        return "size and time per event are found to be {} and {}, will send it to McM".format(self.sizeperevent, self.timeperevent)
+
+      return "prepid is {} and the size and time are set".format(self.prepid)
 
     if os.path.exists(self.eostarball): return "gridpack exists on eos, not yet copied to cvmfs"
     if os.path.exists(self.foreostarball): return "gridpack exists in this folder, to be copied to eos"
