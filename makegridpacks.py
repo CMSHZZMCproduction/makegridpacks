@@ -218,7 +218,7 @@ class MCSample(JsonDict):
       if not (self.sizeperevent and self.timeperevent):
         if not LSB_JOBID(): return "need to get time and size per event, please run on a queue"
         mkdir_p(workdir)
-        with KeepWhileOpenFile(os.path.join(workdir, self.prepid+".tmp")) as kwof:
+        with KeepWhileOpenFile(os.path.join(workdir, self.prepid+".tmp"), message=LSB_JOBID(), deleteifjobdied=True) as kwof:
           if not kwof: return "job to get the size and time is already running"
           with cdtemp():
             wget("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/"+self.prepid)
