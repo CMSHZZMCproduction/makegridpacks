@@ -100,8 +100,10 @@ class MCSample(JsonDict):
 
   @property
   def tarballversion(self):
+    if self.productionmode == "ggH" and self.decaymode == "4l" and self.mass == 300: return 3
     if self.decaymode == "4l": return 2  #v1 messed up the JHUGen decay card
     if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 2500: return 2  #v1 is corrupted
+    if self.productionmode == "ggH" and self.decaymode == "2l2q" and self.mass == 800: return 2  #same
     return 1
 
   @property
@@ -423,6 +425,8 @@ class MCSample(JsonDict):
 
     with cdtemp():
       subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
+      if glob.glob("core.*"):
+        raise ValueError("There is a core dump in the tarball\n{}".format(self))
       with open("powheg.input") as f:
         powhegcard = f.read()
         powhegcardlines = [re.sub(" *([#!].*)?$", "", line) for line in powhegcard.split("\n")]
@@ -521,6 +525,15 @@ class MCSample(JsonDict):
       if self.decaymode == "2l2q": return 60
     assert False
 
+  @property
+  def tags(self):
+    result = ["HZZ"]
+    if self.productionmode in ("ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH") and self.decaymode == "4l" and self.mass in (120, 125, 130):
+      result.append("Fall17P1S")
+    else:
+      result.append("Fall17P2A")
+    return result
+
   def csvline(self, useprepid):
     result = {
       "dataset name": self.datasetname,
@@ -535,7 +548,7 @@ class MCSample(JsonDict):
       "cards url": self.cardsurl,
       "fragment name": "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_{:d}p_LHE_pythia8_cff.py".format(self.nfinalparticles),
       "fragment tag": "118144fc626bc493af2dac01c57ff51ea56562c7",
-      "mcm tag": "HZZ",
+      "mcm tag": self.tags,
       "mcdbid": 0,
       "time per event [s]": self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent,
       "size per event [kb]": self.timeperevent if self.timeperevent is not None else 600,
