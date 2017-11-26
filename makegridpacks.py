@@ -519,8 +519,7 @@ class MCSample(JsonDict):
   @property
   def nfinalparticles(self):
     if self.productionmode == "ggH": return 1
-    if self.productionmode in ("VBF", "ttH"): return 3
-    if self.productionmode in ("ZH", "WplusH", "WminusH"): return 2
+    if self.productionmode in ("VBF", "ZH", "WplusH", "WminusH", "ttH"): return 3
     assert False, self.productionmode
 
   @property
@@ -542,7 +541,7 @@ class MCSample(JsonDict):
       result.append("Fall17P1S")
     else:
       result.append("Fall17P2A")
-    return result
+    return " ".join(result)
 
   def csvline(self, useprepid):
     result = {
