@@ -140,7 +140,7 @@ class MCSample(JsonDict):
 
   @property
   def queue(self):
-    if self.productionmode == "ggH": return "8nh"
+    if self.productionmode == "ggH": return "1nd"
     if self.productionmode in ("ZH", "ttH"): return "1nw"
     return "1nd"
 
@@ -167,12 +167,19 @@ class MCSample(JsonDict):
         else:
           return "gridpack exists on cvmfs, but it's wrong!"
 
+      try:
+        self.cardsurl #if the cards are wrong, catch it now!
+      except Exception as e:
+        if str(self) in str(e):
+          return str(e).replace(str(self), "").strip()
+        else:
+          raise
+
       if self.matchefficiency is None or self.matchefficiencyerror is None:
         #figure out the filter efficiency
         if "filter" not in self.JHUGencard.lower():
           self.matchefficiency, self.matchefficiencyerror = 1, 0
         else:
-          self.cardsurl #if the cards are wrong, catch it now!
           mkdir_p(workdir)
           jobsrunning = False
           eventsprocessed = eventsaccepted = 0
