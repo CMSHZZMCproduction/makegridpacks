@@ -2,7 +2,7 @@
 
 import contextlib, csv, filecmp, glob, os, random, re, shutil, stat, subprocess, sys, urllib
 
-from utilities import cache, cd, cdtemp, rm_f, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, \
+from utilities import cache, cd, cdtemp, rm_f, jobended, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, \
                       mkdtemp, NamedTemporaryFile, TFile, wget
 
 #do not change these once you've started making tarballs!
