@@ -8,6 +8,6 @@ if __name__ == "__main__":
       for decaymode in "4l", "2l2nu", "2l2q":
         for mass in getmasses(productionmode, decaymode):
           sample = MCSample(productionmode, decaymode, mass)
-          if sample.prepid:
+          if sample.prepid and os.path.exists(sample.cvmfstarball):
             queue.addrequest(sample, useprepid=True)
 

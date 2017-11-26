@@ -349,14 +349,14 @@ class MCSample(JsonDict):
     elif self.productionmode in ("WplusH", "WminusH", "ZH") and self.mass > 230:
       result = MCSample(self.productionmode, self.decaymode, 230).datasetname.replace("M230", "M{:d}".format(self.mass))
     else:
-      result = self.olddatasetname.replace("JHUgenV6", "JHUGenV709")
+      result = self.olddatasetname.replace("JHUgenV698", "JHUGenV709").replace("JHUgenV6", "JHUGenV709")
 
     pm = self.productionmode.replace("gg", "GluGlu")
     dm = self.decaymode.upper().replace("NU", "Nu")
     if self.decaymode == "2l2q" and self.mass == 125:
       if self.productionmode in ("VBF", "WplusH", "WminusH", "bbH", "tqH"): dm = "2L2X"
       if self.productionmode in ("ZH", "ttH"): dm = "Filter"
-    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV709"]
+    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV709_"]
     if any(_ not in result for _ in searchfor):
       raise ValueError("Dataset name doesn't make sense:\n{}\n{}\n{}".format(result, searchfor, self))
 
