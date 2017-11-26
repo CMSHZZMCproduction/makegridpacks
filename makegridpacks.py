@@ -560,7 +560,7 @@ class MCSample(JsonDict):
       "mcm tag": self.tags,
       "mcdbid": 0,
       "time per event [s]": self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent,
-      "size per event [kb]": self.timeperevent if self.timeperevent is not None else 600,
+      "size per event [kb]": self.sizeperevent if self.sizeperevent is not None else 600,
     }
     if useprepid: result["prepid"] = self.prepid
 
