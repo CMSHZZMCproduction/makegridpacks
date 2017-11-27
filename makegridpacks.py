@@ -673,6 +673,7 @@ class RequestQueue(object):
 def makegridpacks():
   with RequestQueue() as queue:
     for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
+      if productionmode != "ZH": continue
       for decaymode in "4l", "2l2nu", "2l2q":
         for mass in getmasses(productionmode, decaymode):
           sample = MCSample(productionmode, decaymode, mass)

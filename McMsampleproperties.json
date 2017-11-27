@@ -1045,7 +1045,8 @@
         "4l": {
             "115": {
                 "matchefficiency": 0.14958,
-                "matchefficiencyerror": 0.0014381470645544207
+                "matchefficiencyerror": 0.0014381470645544207,
+                "prepid": "HIG-RunIIFall17wmLHEGS-00280"
             },
             "120": {
                 "matchefficiency": 0.15133,
@@ -1054,7 +1055,8 @@
             },
             "124": {
                 "matchefficiency": 0.15023,
-                "matchefficiencyerror": 0.0014423708565805282
+                "matchefficiencyerror": 0.0014423708565805282,
+                "prepid": "HIG-RunIIFall17wmLHEGS-00282"
             },
             "125": {
                 "matchefficiency": 0.14855
@@ -1069,12 +1071,15 @@
             "1000": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00102"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00102",
+                "sizeperevent": 679.9733333333334
             },
             "1500": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00103"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00103",
+                "sizeperevent": 678.384,
+                "timeperevent": 45.9954
             },
             "200": {
                 "matchefficiency": 1,
@@ -1268,7 +1273,9 @@
             "750": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00118"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00118",
+                "sizeperevent": 815.5253333333334,
+                "timeperevent": 59.903
             },
             "800": {
                 "matchefficiency": 1,
@@ -1289,7 +1296,9 @@
             "1000": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00089"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00089",
+                "sizeperevent": 658.9493333333334,
+                "timeperevent": 91.6174
             },
             "115": {
                 "matchefficiency": 1,
@@ -1364,7 +1373,9 @@
             "1500": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00090"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00090",
+                "sizeperevent": 732.2613333333334,
+                "timeperevent": 97.7102
             },
             "155": {
                 "matchefficiency": 1,
@@ -1425,7 +1436,9 @@
             "2000": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00091"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00091",
+                "sizeperevent": 726.784,
+                "timeperevent": 66.7965
             },
             "210": {
                 "matchefficiency": 1,
@@ -1451,7 +1464,9 @@
             "2500": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00092"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00092",
+                "sizeperevent": 721.408,
+                "timeperevent": 75.2286
             },
             "270": {
                 "matchefficiency": 1,
@@ -1470,7 +1485,8 @@
             "3000": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00093"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00093",
+                "timeperevent": 68.5776
             },
             "350": {
                 "matchefficiency": 1,
@@ -1510,7 +1526,9 @@
             "600": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00084"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00084",
+                "sizeperevent": 661.6853333333333,
+                "timeperevent": 47.7896
             },
             "700": {
                 "matchefficiency": 1,
