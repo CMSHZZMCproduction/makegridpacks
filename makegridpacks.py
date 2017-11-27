@@ -209,8 +209,8 @@ class MCSample(JsonDict):
 
             if jobsrunning: return "some filter efficiency jobs are still running"
             self.matchefficiency = 1.0*eventsaccepted / eventsprocessed
-            self.matchefficiencyerror = (eventsaccepted * (eventsprocessed-eventsaccepted) / (eventsprocessed-eventsaccepted)**3) ** .5
-            shutil.rmtree(workdir)
+            self.matchefficiencyerror = 1.0*(eventsaccepted * (eventsprocessed-eventsaccepted) / (eventsprocessed-eventsaccepted)**3) ** .5
+            #shutil.rmtree(workdir)
             return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
 
       if not requestqueue:
