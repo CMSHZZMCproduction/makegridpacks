@@ -210,7 +210,7 @@ class MCSample(JsonDict):
 
             if jobsrunning: return "some filter efficiency jobs are still running"
             self.matchefficiency = 1.0*eventsaccepted / eventsprocessed
-            self.matchefficiencyerror = (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / (eventsprocessed-eventsaccepted)**3) ** .5
+            self.matchefficiencyerror = (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5
             #shutil.rmtree(workdir)
             return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
 
