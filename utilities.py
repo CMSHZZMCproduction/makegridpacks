@@ -226,7 +226,7 @@ class JsonDict(object):
   @classmethod
   def getdict(cls, trycache=True, usekwof=True):
     if cls.__dictscache[cls] is None or not trycache:
-      with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(type(cls).__name__)) if usekwof else nullcontext():
+      with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(cls.__name__)) if usekwof else nullcontext():
         try:
           with open(cls.dictfile) as f:
             jsonstring = f.read()
@@ -239,7 +239,7 @@ class JsonDict(object):
             f.write("{}\n")
             jsonstring = "{}"
         cls.__dictscache[cls] = json.loads(jsonstring)
-      return cls.__dictscache[cls]
+    return cls.__dictscache[cls]
 
   @classmethod
   def writedict(cls):
@@ -295,7 +295,7 @@ class JsonDict(object):
   @classmethod
   @contextlib.contextmanager
   def writingdict(cls):
-    with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(type(cls).__name__)):
+    with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(cls.__name__)):
       cls.getdict(trycache=False, usekwof=False)
       try:
         yield

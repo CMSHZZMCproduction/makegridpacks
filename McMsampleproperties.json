@@ -1474,7 +1474,9 @@
             "400": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00080"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00080",
+                "sizeperevent": 644.8373333333333,
+                "timeperevent": 37.6151
             },
             "450": {
                 "matchefficiency": 1,
@@ -1503,7 +1505,9 @@
             "700": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00085"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00085",
+                "sizeperevent": 681.68,
+                "timeperevent": 54.017
             },
             "750": {
                 "matchefficiency": 1,
