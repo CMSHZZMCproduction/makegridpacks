@@ -485,6 +485,10 @@ class MCSample(JsonDict):
   def prepid(self, value):
     with cd(here), self.writingdict():
       self.value["prepid"] = value
+  @prepid.deleter
+  def prepid(self):
+    with cd(here), self.writingdict():
+      del self.value["prepid"]
   @property
   def timeperevent(self):
     with cd(here):
@@ -493,6 +497,10 @@ class MCSample(JsonDict):
   def timeperevent(self, value):
     with cd(here), self.writingdict():
       self.value["timeperevent"] = value
+  @timeperevent.deleter
+  def timeperevent(self):
+    with cd(here), self.writingdict():
+      del self.value["timeperevent"]
   @property
   def sizeperevent(self):
     with cd(here):
@@ -501,6 +509,10 @@ class MCSample(JsonDict):
   def sizeperevent(self, value):
     with cd(here), self.writingdict():
       self.value["sizeperevent"] = value
+  @sizeperevent.deleter
+  def sizeperevent(self):
+    with cd(here), self.writingdict():
+      del self.value["sizeperevent"]
   @property
   def matchefficiency(self):
     with cd(here):
@@ -509,6 +521,10 @@ class MCSample(JsonDict):
   def matchefficiency(self, value):
     with cd(here), self.writingdict():
       self.value["matchefficiency"] = value
+  @matchefficiency.deleter
+  def matchefficiency(self):
+    with cd(here), self.writingdict():
+      del self.value["matchefficiency"]
   @property
   def matchefficiencyerror(self):
     with cd(here):
@@ -517,6 +533,10 @@ class MCSample(JsonDict):
   def matchefficiencyerror(self, value):
     with cd(here), self.writingdict():
       self.value["matchefficiencyerror"] = value
+  @matchefficiencyerror.deleter
+  def matchefficiencyerror(self):
+    with cd(here), self.writingdict():
+      del self.value["matchefficiencyerror"]
 
   @property
   def filterefficiency(self): return 1
