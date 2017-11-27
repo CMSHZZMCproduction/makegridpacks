@@ -201,7 +201,7 @@ class MCSample(JsonDict):
                     with open("powheg.input", "w") as f:
                       f.write(powheginput)
                     subprocess.check_call(["./runcmsgrid.sh", "1000", str(abs(hash(self))%2147483647 + i), "1"])
-                    shutil.move("cmsgrid_final.lhe", os.path.join(workdir, str(i)))
+                    shutil.move("cmsgrid_final.lhe", os.path.join(workdir, str(i), ""))
                 with open("cmsgrid_final.lhe") as f:
                   for line in f:
                     if "events processed:" in line: eventsprocessed += int(line.split()[-1])
