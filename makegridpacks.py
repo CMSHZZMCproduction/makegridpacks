@@ -100,10 +100,11 @@ class MCSample(JsonDict):
 
   @property
   def tarballversion(self):
+    if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 400: return 3
     if self.productionmode == "ggH" and self.decaymode == "4l" and self.mass in (300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000): return 3  #core dumps in v2
     if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass in (300, 400, 1000, 1500): return 2   #core dumps in v1
     if self.productionmode == "ggH" and self.decaymode == "2l2q" and self.mass == 750: return 2   #core dumps in v1
-    if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass == 145: return 3   #core dumps in v1
+    if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass == 145: return 3   #core dumps in v2
     if self.decaymode == "4l": return 2  #v1 messed up the JHUGen decay card
     if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 2500: return 2  #v1 is corrupted
     if self.productionmode == "ggH" and self.decaymode == "2l2q" and self.mass == 800: return 2  #same
@@ -208,7 +209,7 @@ class MCSample(JsonDict):
 
             if jobsrunning: return "some filter efficiency jobs are still running"
             self.matchefficiency = 1.0*eventsaccepted / eventsprocessed
-            self.matchefficiencyerror = (eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed-eventsaccepted**3) ** .5
+            self.matchefficiencyerror = (eventsaccepted * (eventsprocessed-eventsaccepted) / (eventsprocessed-eventsaccepted)**3) ** .5
             shutil.rmtree(workdir)
             return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
 
