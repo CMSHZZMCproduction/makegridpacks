@@ -231,10 +231,10 @@ class MCSample(JsonDict):
 
       if not (self.sizeperevent and self.timeperevent):
         if self.needsupdate: return "need update before getting time and size per event, please run ./fixgridpacks.py"
-        if not LSB_JOBID(): return "need to get time and size per event, please run on a queue"
         mkdir_p(workdir)
         with KeepWhileOpenFile(os.path.join(workdir, self.prepid+".tmp"), message=LSB_JOBID(), deleteifjobdied=True) as kwof:
           if not kwof: return "job to get the size and time is already running"
+          if not LSB_JOBID(): return "need to get time and size per event, please run on a queue"
           with cdtemp():
             wget("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/"+self.prepid)
             with open(self.prepid) as f:
