@@ -437,16 +437,22 @@ class MCSample(JsonDict):
       subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
       if glob.glob("core.*"):
         raise ValueError("There is a core dump in the tarball\n{}".format(self))
-      with open("powheg.input") as f:
-        powhegcard = f.read()
-        powhegcardlines = [re.sub(" *([#!].*)?$", "", line) for line in powhegcard.split("\n")]
-        powhegcardlines = [re.sub("(iseed|ncall2|fakevirt) *", r"\1 ", line) for line in powhegcardlines
-                           if line and all(_ not in line for _ in
-                           ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets", "xgriditeration")
-                           )]
-        powhegcard = "\n".join(line for line in powhegcardlines)
-      with open("JHUGen.input") as f:
-        JHUGencard = f.read()
+      try:
+        with open("powheg.input") as f:
+          powhegcard = f.read()
+          powhegcardlines = [re.sub(" *([#!].*)?$", "", line) for line in powhegcard.split("\n")]
+          powhegcardlines = [re.sub("(iseed|ncall2|fakevirt) *", r"\1 ", line) for line in powhegcardlines
+                             if line and all(_ not in line for _ in
+                             ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets", "xgriditeration")
+                             )]
+          powhegcard = "\n".join(line for line in powhegcardlines)
+      except IOError:
+        raise ValueError("no powheg.input in the tarball\n{}".format(self))
+      try:
+        with open("JHUGen.input") as f:
+          JHUGencard = f.read()
+      except IOError:
+        raise ValueError("no JHUGen.input in the tarball\n{}".format(self))
 
     if powhegcard != powheggitcard:
       with cd(here):
