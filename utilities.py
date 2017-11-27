@@ -224,21 +224,22 @@ class JsonDict(object):
     self.setvalue(value)
 
   @classmethod
-  def getdict(cls, trycache=True):
+  def getdict(cls, trycache=True, usekwof=True):
     if cls.__dictscache[cls] is None or not trycache:
-      try:
-        with open(cls.dictfile) as f:
-          jsonstring = f.read()
-      except IOError:
+      with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(type(cls).__name__)) if usekwof else nullcontext():
         try:
-          os.makedirs(os.path.dirname(cls.dictfile))
-        except OSError:
-          pass
-        with open(cls.dictfile, "w") as f:
-          f.write("{}\n")
-          jsonstring = "{}"
-      cls.__dictscache[cls] = json.loads(jsonstring)
-    return cls.__dictscache[cls]
+          with open(cls.dictfile) as f:
+            jsonstring = f.read()
+        except IOError:
+          try:
+            os.makedirs(os.path.dirname(cls.dictfile))
+          except OSError:
+            pass
+          with open(cls.dictfile, "w") as f:
+            f.write("{}\n")
+            jsonstring = "{}"
+        cls.__dictscache[cls] = json.loads(jsonstring)
+      return cls.__dictscache[cls]
 
   @classmethod
   def writedict(cls):
@@ -294,12 +295,15 @@ class JsonDict(object):
   @classmethod
   @contextlib.contextmanager
   def writingdict(cls):
-    with OneAtATime(cls.dictfile+".tmp", 5, task="writing the dict for {}".format(type(cls).__name__)):
-      cls.getdict(trycache=False)
+    with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(type(cls).__name__)):
+      cls.getdict(trycache=False, usekwof=False)
       try:
         yield
       finally:
         cls.writedict()
+
+@contextlib.contextmanager
+def nullcontext(): yield
 
 def jobended(*bjobsargs):
   try:
