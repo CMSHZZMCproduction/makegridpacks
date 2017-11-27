@@ -1490,7 +1490,9 @@
             "500": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00082"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00082",
+                "sizeperevent": 652.9546666666666,
+                "timeperevent": 97.5581
             },
             "550": {
                 "matchefficiency": 1,

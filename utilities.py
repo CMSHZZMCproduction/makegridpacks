@@ -149,8 +149,8 @@ class KeepWhileOpenFile(object):
       return False
 
 class OneAtATime(KeepWhileOpenFile):
-  def __init__(self, name, delay, message=None, task="doing this"):
-    super(OneAtATime, self).__init__(name)
+  def __init__(self, name, delay, message=None, task="doing this", kwofmessage=None):
+    super(OneAtATime, self).__init__(name, message=kwofmessage)
     self.delay = delay
     if message is None:
       message = "Another process is already {task}!  Waiting {delay} seconds."
@@ -226,7 +226,7 @@ class JsonDict(object):
   @classmethod
   def getdict(cls, trycache=True, usekwof=True):
     if cls.__dictscache[cls] is None or not trycache:
-      with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(cls.__name__)) if usekwof else nullcontext():
+      with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(cls.__name__), kwofmessage=LSB_JOBID()) if usekwof else nullcontext():
         try:
           with open(cls.dictfile) as f:
             jsonstring = f.read()
@@ -295,7 +295,7 @@ class JsonDict(object):
   @classmethod
   @contextlib.contextmanager
   def writingdict(cls):
-    with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(cls.__name__)):
+    with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(cls.__name__), kwofmessage=LSB_JOBID()):
       cls.getdict(trycache=False, usekwof=False)
       try:
         yield

@@ -176,7 +176,7 @@ class MCSample(JsonDict):
         else:
           raise
 
-      if not (self.matchefficiency and self.matchefficiencyerror):
+      if self.matchefficiency is None or self.matchefficiencyerror is None:
         #figure out the filter efficiency
         if "filter" not in self.JHUGencard.lower():
           self.matchefficiency, self.matchefficiencyerror = 1, 0
