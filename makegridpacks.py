@@ -165,6 +165,7 @@ class MCSample(JsonDict):
       if os.path.exists(self.foreostarball):
         if filecmp.cmp(self.cvmfstarball, self.foreostarball):
           os.remove(self.foreostarball)
+          self.needsupdate = True
         else:
           return "gridpack exists on cvmfs, but it's wrong!"
 
@@ -229,6 +230,7 @@ class MCSample(JsonDict):
           return "found prepid: {}".format(self.prepid)
 
       if not (self.sizeperevent and self.timeperevent):
+        if self.needsupdate: return "need update before getting time and size per event, please run ./fixgridpacks.py"
         if not LSB_JOBID(): return "need to get time and size per event, please run on a queue"
         mkdir_p(workdir)
         with KeepWhileOpenFile(os.path.join(workdir, self.prepid+".tmp"), message=LSB_JOBID(), deleteifjobdied=True) as kwof:
@@ -497,6 +499,7 @@ class MCSample(JsonDict):
   def timeperevent(self, value):
     with cd(here), self.writingdict():
       self.value["timeperevent"] = value
+    self.needsupdate = True
   @timeperevent.deleter
   def timeperevent(self):
     with cd(here), self.writingdict():
@@ -509,6 +512,7 @@ class MCSample(JsonDict):
   def sizeperevent(self, value):
     with cd(here), self.writingdict():
       self.value["sizeperevent"] = value
+    self.needsupdate = True
   @sizeperevent.deleter
   def sizeperevent(self):
     with cd(here), self.writingdict():
@@ -521,6 +525,7 @@ class MCSample(JsonDict):
   def matchefficiency(self, value):
     with cd(here), self.writingdict():
       self.value["matchefficiency"] = value
+    self.needsupdate = True
   @matchefficiency.deleter
   def matchefficiency(self):
     with cd(here), self.writingdict():
@@ -533,10 +538,23 @@ class MCSample(JsonDict):
   def matchefficiencyerror(self, value):
     with cd(here), self.writingdict():
       self.value["matchefficiencyerror"] = value
+    self.needsupdate = True
   @matchefficiencyerror.deleter
   def matchefficiencyerror(self):
     with cd(here), self.writingdict():
       del self.value["matchefficiencyerror"]
+  @property
+  def needsupdate(self):
+    with cd(here):
+      return self.value.get("needsupdate", True)
+  @needsupdate.setter
+  def needsupdate(self, value):
+    with cd(here), self.writingdict():
+      self.value["needsupdate"] = value
+  @needsupdate.deleter
+  def needsupdate(self):
+    with cd(here), self.writingdict():
+      del self.value["needsupdate"]
 
   @property
   def filterefficiency(self): return 1
@@ -639,6 +657,7 @@ class RequestQueue(object):
     pass
   def __enter__(self):
     self.csvlines = []
+    self.requests = []
     return self
   def addrequest(self, request, **kwargs):
     if request.prepid is not None and not kwargs.get("useprepid"):
@@ -646,6 +665,7 @@ class RequestQueue(object):
     self.csvlines.append(request.csvline(**kwargs))
     if not os.path.exists(os.path.expanduser("~/private/prod-cookie.txt")):
       raise RuntimeError("Have to run\n  source /afs/cern.ch/cms/PPD/PdmV/tools/McM/getCookie.sh\nprior to doing cmsenv")
+    self.requests.append(request)
   def __exit__(self, *errorstuff):
     keylists = {frozenset(line.keys()) for line in self.csvlines}
     for keys in keylists:
@@ -668,12 +688,13 @@ class RequestQueue(object):
           print output,
         if "failed to be created" in output:
           raise RuntimeError("Failed to create request for {}".format(self))
-    del self.csvlines
+    for request in self.requests:
+      request.needsupdate = False
+    del self.csvlines[:], self.requests[:]
 
 def makegridpacks():
   with RequestQueue() as queue:
     for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
-      if productionmode != "ZH": continue
       for decaymode in "4l", "2l2nu", "2l2q":
         for mass in getmasses(productionmode, decaymode):
           sample = MCSample(productionmode, decaymode, mass)
