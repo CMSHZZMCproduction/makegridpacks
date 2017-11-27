@@ -176,7 +176,7 @@ class MCSample(JsonDict):
         else:
           raise
 
-      if self.matchefficiency is None or self.matchefficiencyerror is None:
+      if not (self.matchefficiency and self.matchefficiencyerror):
         #figure out the filter efficiency
         if "filter" not in self.JHUGencard.lower():
           self.matchefficiency, self.matchefficiencyerror = 1, 0
@@ -209,7 +209,7 @@ class MCSample(JsonDict):
 
             if jobsrunning: return "some filter efficiency jobs are still running"
             self.matchefficiency = 1.0*eventsaccepted / eventsprocessed
-            self.matchefficiencyerror = 1.0*(eventsaccepted * (eventsprocessed-eventsaccepted) / (eventsprocessed-eventsaccepted)**3) ** .5
+            self.matchefficiencyerror = (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / (eventsprocessed-eventsaccepted)**3) ** .5
             #shutil.rmtree(workdir)
             return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
 
