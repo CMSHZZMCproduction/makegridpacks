@@ -1052,16 +1052,13 @@
                 "matchefficiencyerror": 0.0014495181765347644
             },
             "124": {
-                "matchefficiency": 0.15023,
-                "matchefficiencyerror": 0.0
+                "matchefficiency": 0.15023
             },
             "125": {
-                "matchefficiency": 0.14855,
-                "matchefficiencyerror": 0.0
+                "matchefficiency": 0.14855
             },
             "126": {
-                "matchefficiency": 0.15081,
-                "matchefficiencyerror": 0.0
+                "matchefficiency": 0.15081
             }
         }
     },
