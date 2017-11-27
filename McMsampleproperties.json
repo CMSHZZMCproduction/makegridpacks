@@ -1049,10 +1049,12 @@
             },
             "120": {
                 "matchefficiency": 0.15133,
-                "matchefficiencyerror": 0.0014495181765347644
+                "matchefficiencyerror": 0.0014495181765347644,
+                "prepid": "HIG-RunIIFall17wmLHEGS-00281"
             },
             "124": {
-                "matchefficiency": 0.15023
+                "matchefficiency": 0.15023,
+                "matchefficiencyerror": 0.0014423708565805282
             },
             "125": {
                 "matchefficiency": 0.14855
@@ -1098,7 +1100,9 @@
             "300": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00095"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00095",
+                "sizeperevent": 603.52,
+                "timeperevent": 55.3566
             },
             "3000": {
                 "matchefficiency": 1,
@@ -1269,7 +1273,9 @@
             "800": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00119"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00119",
+                "sizeperevent": 801.6640000000001,
+                "timeperevent": 93.3132
             },
             "900": {
                 "matchefficiency": 1,
@@ -1516,7 +1522,9 @@
             "750": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00086"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00086",
+                "sizeperevent": 720.5173333333333,
+                "timeperevent": 49.541
             },
             "800": {
                 "matchefficiency": 1,
@@ -1528,7 +1536,9 @@
             "900": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00088"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00088",
+                "sizeperevent": 695.136,
+                "timeperevent": 53.5402
             }
         }
     }
