@@ -629,6 +629,10 @@ class MCSample(JsonDict):
     assert len(prepids) == 1, prepids
     self.prepid = prepids.pop()
 
+  @cache
+  def fullinfo(self):
+    if not self.prepid: raise ValueError("Can only call fullinfo once the prepid has been set")
+    return subprocess.check_output(["McMScripts/getRequests.py", "prepid="+prepid, "-listattr", "5", "-bw"])
 
 
 @cache
