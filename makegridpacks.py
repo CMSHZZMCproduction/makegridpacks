@@ -629,10 +629,17 @@ class MCSample(JsonDict):
     assert len(prepids) == 1, prepids
     self.prepid = prepids.pop()
 
+  @property
   @cache
   def fullinfo(self):
     if not self.prepid: raise ValueError("Can only call fullinfo once the prepid has been set")
-    return subprocess.check_output(["McMScripts/getRequests.py", "prepid="+prepid, "-listattr", "5", "-bw"])
+    return subprocess.check_output(["McMScripts/getRequests.py", "prepid="+self.prepid, "-listattr", "5", "-bw"])
+
+  def gettimepereventfromMcM(self):
+    if self.timeperevent is None: return
+    needsupdate = self.needsupdate
+    self.timeperevent = float(self.fullinfo.split("Time Event=")[1].split(",")[0].strip(" []"))
+    self.needsupdate = needsupdate #don't need to reupdate on McM, unless that was already necessary
 
 
 @cache
