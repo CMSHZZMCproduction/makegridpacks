@@ -612,6 +612,7 @@ class MCSample(JsonDict):
     return result
 
   def getprepid(self):
+    if LSB_JOBID(): return
     output = subprocess.check_output(["McMScripts/getRequests.py", "dataset_name={}&prepid=HIG-RunIIFall17wmLHEGS-*".format(self.datasetname), "-bw"])
     if "Traceback (most recent call last):" in output:
       raise RuntimeError(output)
