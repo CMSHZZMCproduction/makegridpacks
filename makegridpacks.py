@@ -699,6 +699,7 @@ def makegridpacks():
         for mass in getmasses(productionmode, decaymode):
           sample = MCSample(productionmode, decaymode, mass)
           print sample, sample.makegridpack(queue)
+          sys.stdout.flush()
 
 if __name__ == "__main__":
   makegridpacks()
