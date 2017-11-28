@@ -667,6 +667,7 @@ class RequestQueue(object):
       raise RuntimeError("Have to run\n  source /afs/cern.ch/cms/PPD/PdmV/tools/McM/getCookie.sh\nprior to doing cmsenv")
     self.requests.append(request)
   def __exit__(self, *errorstuff):
+    if LSB_JOBID(): return
     keylists = {frozenset(line.keys()) for line in self.csvlines}
     for keys in keylists:
       with contextlib.closing(NamedTemporaryFile(bufsize=0)) as f:

@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-for a in {301..400}; do
+for a in {1..200}; do
   waitids=
-  for b in {1..4}; do
+  for b in {1..8}; do
     if [ $b -gt 1 ]; then
       waitids="$(bjobs -J gridpacks_${a}_$(expr $b - 1) | waitids.py)"
     fi
