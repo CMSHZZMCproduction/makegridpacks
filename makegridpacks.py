@@ -638,8 +638,10 @@ class MCSample(JsonDict):
   def gettimepereventfromMcM(self):
     if self.timeperevent is None: return
     needsupdate = self.needsupdate
-    self.timeperevent = float(self.fullinfo.split("Time Event=")[1].split(",")[0].strip(" []"))
-    self.needsupdate = needsupdate #don't need to reupdate on McM, unless that was already necessary
+    timeperevent = float(self.fullinfo.split("Time Event=")[1].split(",")[0].strip(" []"))
+    if timeperevent != self.defaulttimeperevent:
+      self.timeperevent = timeperevent
+      self.needsupdate = needsupdate #don't need to reupdate on McM, unless that was already necessary
 
 
 @cache
