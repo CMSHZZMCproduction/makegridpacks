@@ -1,12 +1,18 @@
 #!/usr/bin/env python
 
+if __name__ == "__main__":
+  import argparse
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--set-efficiencies", action="store_true")
+  args = parser.parse_args()
+
 import array, ROOT, style
 
 from makegridpacks import *
 
-c = ROOT.TCanvas()
+def makeplots(p, settoaverage=False):
+  c = ROOT.TCanvas()
 
-for p in "ZH", "ttH":
   print p
   print
   x = array.array('d', getmasses(p, "4l"))
@@ -25,3 +31,11 @@ for p in "ZH", "ttH":
   print
   for ext in "png", "pdf":
     c.SaveAs("~/www/TEST/"+p+"."+ext)
+
+  if settoaverage:
+    for m in getmasses(p, "4l"):
+      MCSample(p, "4l", m).matchefficiency, MCSample(p, "4l", m).matchefficiencyerror = f.GetParameter(0), f.GetParError(0)
+
+if __name__ == "__main__":
+  for p in "ZH", "ttH":
+    makeplots(p, args.set_efficiencies)
