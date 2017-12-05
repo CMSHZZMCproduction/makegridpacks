@@ -36,17 +36,16 @@ class MCSampleFix(MCSample):
       with cdtemp():
         oldtarball = self.cvmfstarball
         oldtarball = re.sub("(/v)([0-9]*)(/)", lambda match: match.group(1) + str(int(match.group(2))-1) + match.group(3), oldtarball)
-        subprocess.check_call(["tar", "xvzf"])
+        subprocess.check_output(["tar", "xvzf", oldtarball])
         os.remove("JHUGen")
         shutil.copy(jhugen, "JHUGen")
         subprocess.check_call(["tar", "cvzf", self.foreostarball]+os.listdir("."))
-        shutil.rmtree(os.getcwd())
     return "fixed JHUGen version"
 
 if __name__ == "__main__":
   with JHUGen() as jhugen:
     for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
-      for decaymode in "4l",:
+      for decaymode in "4l", "2l2q", "2l2nu":
         for mass in getmasses(productionmode, decaymode):
           sample = MCSampleFix(productionmode, decaymode, mass)
           print sample, sample.fixgridpack(jhugen)
