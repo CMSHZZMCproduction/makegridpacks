@@ -102,6 +102,7 @@ class MCSample(JsonDict):
   def tarballversion(self):
     v = 1
 
+    v+=1 #JHUGen version
     if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 400: v+=1
     if self.productionmode == "ggH" and self.decaymode == "4l" and self.mass in (300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000): v+=1  #core dumps in v2
     if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass in (300, 400, 1000, 1500): v+=1   #core dumps in v1
