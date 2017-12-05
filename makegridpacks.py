@@ -716,7 +716,6 @@ def makegridpacks():
     for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
       for decaymode in "4l", "2l2nu", "2l2q":
         for mass in getmasses(productionmode, decaymode):
-          if productionmode != "ZH" or mass not in (145, 3000): continue
           sample = MCSample(productionmode, decaymode, mass)
           print sample, sample.makegridpack(queue)
           sys.stdout.flush()
