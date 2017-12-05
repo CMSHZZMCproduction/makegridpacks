@@ -706,8 +706,8 @@ class RequestQueue(object):
           output = ""
         finally:
           print output,
-        if "failed to be created" in output:
-          raise RuntimeError("Failed to create request for {}".format(self))
+        if "failed to be created" in output or "failed to be modified" in output:
+          raise RuntimeError("Failed to create/modify request")
     for request in self.requests:
       request.needsupdate = False
     del self.csvlines[:], self.requests[:]
