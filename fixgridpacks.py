@@ -33,6 +33,7 @@ class MCSampleFix(MCSample):
             if version == "v7.0.9": return "increment the version number"
             return "Unknown version "+version
 
+      self.needsupdate = True
       with cdtemp():
         oldtarball = self.cvmfstarball
         oldtarball = re.sub("(/v)([0-9]*)(/)", lambda match: match.group(1) + str(int(match.group(2))-1) + match.group(3), oldtarball)
