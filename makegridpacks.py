@@ -610,6 +610,7 @@ class MCSample(JsonDict):
       "mcdbid": 0,
       "time per event [s]": self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent,
       "size per event [kb]": self.sizeperevent if self.sizeperevent is not None else 600,
+      "Sequences nThreads": 1,
     }
     if useprepid: result["prepid"] = self.prepid
 
