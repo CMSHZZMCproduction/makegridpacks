@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-for a in {2..2}; do
+for a in {1..120}; do
   waitids=
   for b in {1..2}; do
     if [ $b -gt 1 ]; then
