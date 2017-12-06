@@ -12,4 +12,3 @@ with RequestQueue() as q, MCSample.writingdict() as f:
         if not s.needsupdate and "timeperevent" in s.value:
           del s.value["timeperevent"]
         s.value["resettimeperevent"] = True
-        q.addrequest(MCSample(p, d, m), useprepid=True)
