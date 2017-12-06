@@ -1,4 +1,4 @@
-import abc, collections, contextlib, errno, functools, itertools, json, logging, os, re, shutil, subprocess, tempfile, time, urllib
+import abc, collections, contextlib, errno, functools, itertools, json, logging, os, re, shutil, subprocess, sys, tempfile, time, urllib
 
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""
@@ -318,3 +318,8 @@ def jobended(*bjobsargs):
 
   return False
 
+@cache
+def restful(usedev=False):
+  sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
+  from rest import restful # Load class to access McM
+  return restful(dev=usedev)

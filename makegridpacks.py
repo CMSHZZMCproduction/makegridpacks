@@ -3,7 +3,7 @@
 import contextlib, csv, filecmp, glob, os, random, re, shutil, stat, subprocess, sys, urllib
 
 from utilities import cache, cd, cdtemp, rm_f, jobended, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, \
-                      mkdtemp, NamedTemporaryFile, TFile, wget
+                      mkdtemp, NamedTemporaryFile, restful, TFile, wget
 
 #do not change these once you've started making tarballs!
 #they are included in the tarball name and the script
@@ -508,6 +508,22 @@ class MCSample(JsonDict):
   def timeperevent(self):
     with cd(here), self.writingdict():
       del self.value["timeperevent"]
+    self.resettimeperevent = True
+  @property
+  def resettimeperevent(self):
+    with cd(here):
+      return self.value.get("resettimeperevent", False)
+  @resettimeperevent.setter
+  def resettimeperevent(self, value):
+    if value:
+      with cd(here), self.writingdict():
+        self.value["resettimeperevent"] = True
+    else:
+      del self.resettimeperevent
+  @resettimeperevent.deleter
+  def resettimeperevent(self):
+    with cd(here), self.writingdict():
+      del self.value["resettimeperevent"]
   @property
   def sizeperevent(self):
     with cd(here):
@@ -638,12 +654,17 @@ class MCSample(JsonDict):
   @cache
   def fullinfo(self):
     if not self.prepid: raise ValueError("Can only call fullinfo once the prepid has been set")
-    return subprocess.check_output(["McMScripts/getRequests.py", "prepid="+self.prepid, "-listattr", "5", "-bw"])
+    result = restful().getA("requests", query="prepid="+self.prepid)
+    if len(result) == 0:
+      raise ValueError("mcm query for prepid="+self.prepid+" returned nothing!")
+    if len(result) > 1:
+      raise ValueError("mcm query for prepid="+self.prepid+" returned multiple results!")
+    return result[0]
 
   def gettimepereventfromMcM(self):
-    if self.timeperevent is None: return
+    if self.timeperevent is None or self.resettimeperevent: return
     needsupdate = self.needsupdate
-    timeperevent = float(self.fullinfo.split("Time Event=")[1].split(",")[0].strip(" []"))
+    timeperevent = self.fullinfo["time_event"][0]
     if timeperevent != self.defaulttimeperevent:
       self.timeperevent = timeperevent
       self.needsupdate = needsupdate #don't need to reupdate on McM, unless that was already necessary
@@ -710,6 +731,7 @@ class RequestQueue(object):
           raise RuntimeError("Failed to create/modify request")
     for request in self.requests:
       request.needsupdate = False
+      request.resettimeperevent = False
     del self.csvlines[:], self.requests[:]
 
 def makegridpacks():
