@@ -1,5 +1,9 @@
 import abc, contextlib, glob, os, re, subprocess, urllib
 
+from utilities import cache, cd, cdtemp, cmsswversion, here, scramarch, wget
+
+from mcsamplebase import MCSampleBase
+
 class POWHEGJHUGenMCSample(MCSampleBase):
   @abc.abstractproperty
   def powhegprocess(self): pass

@@ -1,5 +1,9 @@
 import abc, os
 
+from utilities import genproductions
+
+from mcsamplebase import MCSampleBase
+
 class MassScanMCSample(MCSampleBase):
   def __init__(self, productionmode, decaymode, mass):
     self.productionmode = productionmode

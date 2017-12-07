@@ -1,5 +1,7 @@
 import abc, filecmp, glob, os, re, shutil, stat, subprocess
 
+from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, restful, wget
+
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
   def __init__(self): pass

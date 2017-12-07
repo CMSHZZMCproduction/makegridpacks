@@ -1,5 +1,10 @@
 import contextlib, csv, os, re, subprocess, urllib
 
+from utilities import cache, cd, genproductions
+
+from massscanmcsample import MassScanMCSample
+from powhegjhugenmcsample import POWHEGJHUGenMCSample
+
 class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def powhegprocess(self):
