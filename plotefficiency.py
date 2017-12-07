@@ -16,9 +16,9 @@ def makeplots(p, settoaverage=False):
   print p
   print
   x = array.array('d', getmasses(p, "4l"))
-  y = array.array('d', [MCSample(p, "4l", m).matchefficiency for m in getmasses(p, "4l")])
+  y = array.array('d', [POWHEGJHUGenMassScanMCSample(p, "4l", m).matchefficiency for m in getmasses(p, "4l")])
   ex = array.array('d', [0 for m in x])
-  ey = array.array('d', [MCSample(p, "4l", m).matchefficiencyerror for m in getmasses(p, "4l")])
+  ey = array.array('d', [POWHEGJHUGenMassScanMCSample(p, "4l", m).matchefficiencyerror for m in getmasses(p, "4l")])
   g = ROOT.TGraphErrors(len(x), x, y, ex, ey)
   g.Draw("AP")
   f = ROOT.TF1("constant", "[0]", min(x), max(x))
@@ -34,7 +34,7 @@ def makeplots(p, settoaverage=False):
 
   if settoaverage:
     for m in getmasses(p, "4l"):
-      MCSample(p, "4l", m).matchefficiency, MCSample(p, "4l", m).matchefficiencyerror = f.GetParameter(0), f.GetParError(0)
+      POWHEGJHUGenMassScanMCSample(p, "4l", m).matchefficiency, POWHEGJHUGenMassScanMCSample(p, "4l", m).matchefficiencyerror = f.GetParameter(0), f.GetParError(0)
 
 if __name__ == "__main__":
   for p in "ZH", "ttH":

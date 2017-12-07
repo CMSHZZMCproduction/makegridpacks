@@ -18,7 +18,7 @@ def JHUGen():
       with cd(originaldir):
         yield filename
 
-class MCSampleFix(MCSample):
+class MCSampleFix(POWHEGJHUGenMassScanMCSample):
   def fixgridpack(self, jhugen):
     mkdir_p(os.path.dirname(self.foreostarball))
     with KeepWhileOpenFile(self.foreostarball+".tmp", message=LSB_JOBID()) as kwof:
