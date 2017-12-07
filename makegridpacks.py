@@ -626,7 +626,7 @@ class POWHEGJHUGenMCSample(MCSampleBase):
 
   @property
   def generators(self):
-    return r"powheg\ {} JHUGen\ v7.0.9".format(self.powhegprocess)
+    return r"powheg\ {} JHUGen\ v7.0.11".format(self.powhegprocess)
 
 class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
@@ -716,19 +716,19 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
       result = type(self)(self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Q")
       if self.mass == 125:
         if self.productionmode in ("VBF", "WplusH", "WminusH"): result = result.replace("2L2Q", "2L2X")
-        if self.productionmode == "ZH": result = "ZH_HToZZ_2LFilter_M125_13TeV_powheg2-minlo-HZJ_JHUGenV709_pythia8"
-        if self.productionmode == "ttH": result = "ttH_HToZZ_2LOSSFFilter_M125_13TeV_powheg2_JHUGenV709_pythia8"
+        if self.productionmode == "ZH": result = "ZH_HToZZ_2LFilter_M125_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8"
+        if self.productionmode == "ttH": result = "ttH_HToZZ_2LOSSFFilter_M125_13TeV_powheg2_JHUGenV7011_pythia8"
     elif self.productionmode in ("WplusH", "WminusH", "ZH") and self.mass > 230:
       result = type(self)(self.productionmode, self.decaymode, 230).datasetname.replace("M230", "M{:d}".format(self.mass))
     else:
-      result = self.olddatasetname.replace("JHUgenV698", "JHUGenV709").replace("JHUgenV6", "JHUGenV709")
+      result = self.olddatasetname.replace("JHUgenV698", "JHUGenV7011").replace("JHUgenV6", "JHUGenV7011")
 
     pm = self.productionmode.replace("gg", "GluGlu")
     dm = self.decaymode.upper().replace("NU", "Nu")
     if self.decaymode == "2l2q" and self.mass == 125:
       if self.productionmode in ("VBF", "WplusH", "WminusH"): dm = "2L2X"
       if self.productionmode in ("ZH", "ttH"): dm = "Filter"
-    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV709_"]
+    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV7011_"]
     if any(_ not in result for _ in searchfor):
       raise ValueError("Dataset name doesn't make sense:\n{}\n{}\n{}".format(result, searchfor, self))
 
