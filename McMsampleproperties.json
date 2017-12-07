@@ -1542,9 +1542,8 @@
             "200": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
+                "needsupdate": false,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00094",
-                "resettimeperevent": true,
                 "sizeperevent": 579.5146666666667,
                 "timeperevent": 27.2221
             },
@@ -1721,7 +1720,7 @@
             "450": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
+                "needsupdate": false,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00113",
                 "sizeperevent": 755.477333333,
                 "timeperevent": 34.7002
@@ -1843,7 +1842,7 @@
             "135": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
+                "needsupdate": false,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00062",
                 "sizeperevent": 608.469333333,
                 "timeperevent": 63.64
@@ -1932,7 +1931,7 @@
             "190": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
+                "needsupdate": false,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00072",
                 "sizeperevent": 615.498666667,
                 "timeperevent": 25.4716
@@ -1940,9 +1939,8 @@
             "200": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
+                "needsupdate": false,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00073",
-                "resettimeperevent": true,
                 "sizeperevent": 615.7922191780822,
                 "timeperevent": 24.7547
             },
@@ -1957,9 +1955,8 @@
             "210": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
+                "needsupdate": false,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00074",
-                "resettimeperevent": true,
                 "sizeperevent": 632.5804053537286,
                 "timeperevent": 25.5587
             },
@@ -2054,7 +2051,7 @@
             "600": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
+                "needsupdate": false,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00084",
                 "sizeperevent": 699.541333333,
                 "timeperevent": 42.7323

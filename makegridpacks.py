@@ -200,7 +200,7 @@ class MCSample(JsonDict):
                   jobsrunning = True
                   continue
                 if not os.path.exists("cmsgrid_final.lhe"):
-                  if not LSB_JOBID(): return "need to figure out filter efficiency, please run on a queue"
+                  if not LSB_JOBID(): requestqueue.submitLSF(self); return "need to figure out filter efficiency, submitting to LSF"
                   with cdtemp():
                     subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
                     with open("powheg.input") as f:
@@ -242,7 +242,7 @@ class MCSample(JsonDict):
         mkdir_p(workdir)
         with KeepWhileOpenFile(os.path.join(workdir, self.prepid+".tmp"), message=LSB_JOBID(), deleteifjobdied=True) as kwof:
           if not kwof: return "job to get the size and time is already running"
-          if not LSB_JOBID(): return "need to get time and size per event, please run on a queue"
+          if not LSB_JOBID(): requestqueue.submitLSF(self); return "need to get time and size per event, submitting to LSF"
           with cdtemp():
             wget("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/"+self.prepid)
             with open(self.prepid) as f:
@@ -328,7 +328,7 @@ class MCSample(JsonDict):
               os.remove(_)
             except OSError:
               shutil.rmtree(_)
-        if not LSB_JOBID(): return "need to create the gridpack, please run on a queue"
+        if not LSB_JOBID(): requestqueue.submitLSF(self); return "need to create the gridpack, submitting to LSF"
         for filename in glob.iglob(os.path.join(genproductions, "bin", "Powheg", "*")):
           if (filename.endswith(".py") or filename.endswith(".sh") or filename == "patches") and not os.path.exists(os.path.basename(filename)):
             os.symlink(filename, os.path.basename(filename))
@@ -732,6 +732,7 @@ class RequestQueue(object):
     self.csvlines = []
     self.requests = []
     self.requeststoapprove = collections.defaultdict(list)
+    self.nLSFjobs = 0
     return self
   def addrequest(self, request, **kwargs):
     if request.prepid is not None and not kwargs.get("useprepid"):
@@ -746,8 +747,20 @@ class RequestQueue(object):
     self.requeststoapprove[2].append(request)
   def reset(self, request):
     self.requeststoapprove[0].append(request)
+  def submitLSF(self, request):
+    self.nLSFjobs += 1
   def __exit__(self, *errorstuff):
     if LSB_JOBID(): return
+
+    print
+    print "submitting {} jobs to the queue".format(self.nLSFjobs)
+    for i in range(self.nLSFjobs):
+      job = "cd "+os.getcwd()+" && eval $(scram ru -sh) && ./makegridpacks.py"
+      pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
+      subprocess.check_call(["bsub", "-q", "1nd", "-J", "makegridpacks_{}".format(i)], stdin=pipe.stdout)
+
+    print
+    print "modifying requests on McM"
     keylists = {frozenset(line.keys()) for line in self.csvlines}
     for keys in keylists:
       with contextlib.closing(NamedTemporaryFile(bufsize=0)) as f:
@@ -774,10 +787,19 @@ class RequestQueue(object):
       request.resettimeperevent = False
     del self.csvlines[:], self.requests[:]
 
+    print
+    print "approving and resetting requests on McM"
     for level, requests in self.requeststoapprove.iteritems():
       for request in requests:
+        print approveverb(level), request, "({})".format(request.prepid)
         restful().approve("requests", request.prepid, level)
     self.requeststoapprove.clear()
+
+def approveverb(level):
+  if level == 0: return "resetting"
+  if level == 1: return "validating"
+  if level == 2: return "defining"
+  assert False, level
 
 def makegridpacks():
   with RequestQueue() as queue:
