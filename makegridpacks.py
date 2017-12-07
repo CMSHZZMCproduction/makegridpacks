@@ -163,6 +163,16 @@ class MCSample(JsonDict):
 
     return ["./run_pwg.py"] + sum(([k, v] for k, v in args.iteritems()), [])
 
+  @cache
+  def checkcardsurl(self):
+    try:
+      self.cardsurl
+    except Exception as e:
+      if str(self) in str(e):
+        return str(e).replace(str(self), "").strip()
+      else:
+        raise
+
   def makegridpack(self, requestqueue=None):
     workdir = os.path.dirname(self.tmptarball)
     if os.path.exists(self.cvmfstarball):
@@ -173,15 +183,8 @@ class MCSample(JsonDict):
         else:
           return "gridpack exists on cvmfs, but it's wrong!"
 
-      try:
-        self.cardsurl #if the cards are wrong, catch it now!
-      except Exception as e:
-        if str(self) in str(e):
-          return str(e).replace(str(self), "").strip()
-        else:
-          raise
-
       if self.matchefficiency is None or self.matchefficiencyerror is None:
+        if self.checkcardsurl(): return self.checkcardsurl() #if the cards are wrong, catch it now!
         #figure out the filter efficiency
         if "filter" not in self.JHUGencard.lower():
           self.matchefficiency, self.matchefficiencyerror = 1, 0
@@ -219,6 +222,7 @@ class MCSample(JsonDict):
             return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
 
       if not requestqueue:
+        if self.checkcardsurl(): return self.checkcardsurl() #if the cards are wrong, catch it now!
         if self.matchefficiency != 1:
           return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
         else:
