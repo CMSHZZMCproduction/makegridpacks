@@ -38,6 +38,9 @@ class MCSampleBase(JsonDict):
   @abc.abstractproperty
   def genproductionscommit(self): pass
 
+  @abc.abstractproperty
+  def allsamples(self): pass
+
   def __eq__(self, other):
     return self.keys == other.keys
   def __ne__(self, other):

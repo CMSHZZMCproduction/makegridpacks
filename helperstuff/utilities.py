@@ -335,4 +335,14 @@ genproductions = os.path.join(os.environ["CMSSW_BASE"], "src", "genproductions")
 if not os.path.exists(genproductions) or os.environ["CMSSW_VERSION"] != cmsswversion or os.environ["SCRAM_ARCH"] != scramarch:
   raise RuntimeError("Need to cmsenv in a " + cmsswversion + " " + scramarch + " release that contains genproductions")
 
+def recursivesubclasses(cls):
+  result = [cls]
+  for subcls in cls.__subclasses__():
+    result += recursivesubclasses(subcls)
+  return result
+
+@cache
+def makecards(folder):
+  with cd(folder):
+    subprocess.check_call(["./makecards.py"])
 

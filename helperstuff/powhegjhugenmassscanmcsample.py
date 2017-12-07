@@ -1,6 +1,6 @@
 import contextlib, csv, os, re, subprocess, urllib
 
-from utilities import cache, cd, genproductions
+from utilities import cache, cd, genproductions, makecards
 
 from massscanmcsample import MassScanMCSample
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
@@ -145,25 +145,27 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   def genproductionscommit(self):
     return "118144fc626bc493af2dac01c57ff51ea56562c7"
 
+  @classmethod
+  def getmasses(cls, productionmode, decaymode):
+    if decaymode == "4l":
+      if productionmode in ("ggH", "VBF", "WplusH", "WminusH", "ZH"):
+        return 115, 120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 190, 200, 210, 230, 250, 270, 300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000
+      if productionmode == "ttH":
+        return 115, 120, 124, 125, 126, 130, 135, 140, 145
+    if decaymode == "2l2nu":
+      if productionmode in ("ggH", "VBF"):
+        return 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000
+      if productionmode in ("WplusH", "WminusH", "ZH", "ttH"):
+        return ()
+    if decaymode == "2l2q":
+      if productionmode in ("ggH", "VBF"):
+        return 125, 200, 250, 300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000
+      if productionmode in ("WplusH", "WminusH", "ZH", "ttH"):
+        return 125,
 
-@cache
-def makecards(folder):
-  with cd(folder):
-    subprocess.check_call(["./makecards.py"])
-
-def getmasses(productionmode, decaymode):
-  if decaymode == "4l":
-    if productionmode in ("ggH", "VBF", "WplusH", "WminusH", "ZH"):
-      return 115, 120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 190, 200, 210, 230, 250, 270, 300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000
-    if productionmode == "ttH":
-      return 115, 120, 124, 125, 126, 130, 135, 140, 145
-  if decaymode == "2l2nu":
-    if productionmode in ("ggH", "VBF"):
-      return 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000
-    if productionmode in ("WplusH", "WminusH", "ZH", "ttH"):
-      return ()
-  if decaymode == "2l2q":
-    if productionmode in ("ggH", "VBF"):
-      return 125, 200, 250, 300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000
-    if productionmode in ("WplusH", "WminusH", "ZH", "ttH"):
-      return 125,
+  @classmethod
+  def allsamples(cls):
+    for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
+      for decaymode in "4l", "2l2q", "2l2nu":
+        for mass in cls.getmasses(productionmode, decaymode):
+          yield cls(productionmode, decaymode, mass)
