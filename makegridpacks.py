@@ -540,7 +540,7 @@ class MCSample(JsonDict):
     if value:
       with cd(here), self.writingdict():
         self.value["resettimeperevent"] = True
-    else:
+    elif self.resettimeperevent:
       del self.resettimeperevent
   @resettimeperevent.deleter
   def resettimeperevent(self):
