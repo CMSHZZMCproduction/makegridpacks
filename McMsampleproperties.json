@@ -2168,9 +2168,8 @@
             "145": {
                 "matchefficiency": 0.15411950306736202,
                 "matchefficiencyerror": 0.0003805893835507585,
-                "needsupdate": true,
+                "needsupdate": false,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00326",
-                "resettimeperevent": true,
                 "sizeperevent": 974.810074074074,
                 "timeperevent": 5.0542
             }
