@@ -323,3 +323,5 @@ def restful(usedev=False):
   sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
   from rest import restful # Load class to access McM
   return restful(dev=usedev)
+
+here = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
