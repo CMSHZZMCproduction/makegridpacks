@@ -187,7 +187,6 @@ class MCSampleBase(JsonDict):
         return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
 
   def getsizeandtime(self):
-    if self.needsupdate: return "need update before getting time and size per event, please run ./fixgridpacks.py"
     mkdir_p(self.workdir)
     with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), message=LSB_JOBID(), deleteifjobdied=True) as kwof:
       if not kwof: return "job to get the size and time is already running"
@@ -252,6 +251,9 @@ class MCSampleBase(JsonDict):
         return "found prepid: {}".format(self.prepid)
 
     if not (self.sizeperevent and self.timeperevent):
+      if self.needsupdate:
+        requestqueue.addrequest(self, useprepid=True)
+        return "need update before getting time and size per event, sending the request to McM"
       return self.getsizeandtime()
 
     if LSB_JOBID():
