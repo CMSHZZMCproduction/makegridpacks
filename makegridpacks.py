@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import contextlib, csv, filecmp, glob, os, random, re, shutil, stat, subprocess, sys, urllib
+import contextlib, collections, csv, filecmp, glob, os, random, re, shutil, stat, subprocess, sys, urllib
 
 from utilities import cache, cd, cdtemp, rm_f, jobended, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, \
                       mkdtemp, NamedTemporaryFile, restful, TFile, wget
@@ -267,7 +267,29 @@ class MCSample(JsonDict):
         requestqueue.addrequest(self, useprepid=True)
         return "size and time per event are found to be {} and {}, will send it to McM".format(self.sizeperevent, self.timeperevent)
 
-      return "prepid is {} and the size and time are set".format(self.prepid)
+      if LSB_JOBID():
+        return "please run locally to check and/or advance the status".format(self.prepid)
+
+      if (self.approval, self.status) == ("none", "new"):
+        if self.needsupdate:
+          requestqueue.addrequest(self, useprepid=True)
+          return "needs update on McM, sending it there"
+        requestqueue.validate(self)
+        return "starting the validation"
+      if (self.approval, self.status) == ("validation", "new"):
+        return "validation is running"
+      if (self.approval, self.status) == ("validation", "validation"):
+        if self.needsupdate:
+          requestqueue.reset(self)
+          return "needs update on McM, resetting the request"
+        requestqueue.define(self)
+        return "defining the request"
+      if (self.approval, self.status) == ("define", "defined"):
+        if self.needsupdate:
+          requestqueue.reset(self)
+          return "needs update on McM, resetting the request"
+        return "request is defined"
+      return "Unknown approval "+self.approval+" and status "+self.status
 
     if os.path.exists(self.eostarball): return "gridpack exists on eos, not yet copied to cvmfs"
     if os.path.exists(self.foreostarball): return "gridpack exists in this folder, to be copied to eos"
@@ -669,6 +691,13 @@ class MCSample(JsonDict):
       self.timeperevent = timeperevent
       self.needsupdate = needsupdate #don't need to reupdate on McM, unless that was already necessary
 
+  @property
+  def approval(self):
+    return self.fullinfo["approval"]
+  @property
+  def status(self):
+    return self.fullinfo["status"]
+
 
 @cache
 def makecards(folder):
@@ -698,6 +727,7 @@ class RequestQueue(object):
   def __enter__(self):
     self.csvlines = []
     self.requests = []
+    self.requeststoapprove = collections.defaultdict(list)
     return self
   def addrequest(self, request, **kwargs):
     if request.prepid is not None and not kwargs.get("useprepid"):
@@ -706,6 +736,12 @@ class RequestQueue(object):
     if not os.path.exists(os.path.expanduser("~/private/prod-cookie.txt")):
       raise RuntimeError("Have to run\n  source /afs/cern.ch/cms/PPD/PdmV/tools/McM/getCookie.sh\nprior to doing cmsenv")
     self.requests.append(request)
+  def validate(self, request):
+    self.requeststoapprove[1].append(request)
+  def define(self, request):
+    self.requeststoapprove[2].append(request)
+  def reset(self, request):
+    self.requeststoapprove[0].append(request)
   def __exit__(self, *errorstuff):
     if LSB_JOBID(): return
     keylists = {frozenset(line.keys()) for line in self.csvlines}
@@ -733,6 +769,11 @@ class RequestQueue(object):
       request.needsupdate = False
       request.resettimeperevent = False
     del self.csvlines[:], self.requests[:]
+
+    for level, requests in self.requeststoapprove.iteritems():
+      for request in requests:
+        restful().approve("requests", request.prepid, level)
+    self.requeststoapprove.clear()
 
 def makegridpacks():
   with RequestQueue() as queue:
