@@ -12,7 +12,7 @@ class JHUGenJHUGenMCSample(MCSampleBase):
   @property
   def tmptarball(self):
     return os.path.join(here, "workdir", os.path.basename(self.productioncard).replace(".input", "_"+self.decaymode),
-             "JHUGen_"+self.shortname+scramarch+"_"+cmsswversion+".tgz")
+             "JHUGen_"+self.shortname+"_"+scramarch+"_"+cmsswversion+".tgz")
   @property
   def shortname(self):
     return re.sub(r"\W", "", str(self))
@@ -30,7 +30,7 @@ class JHUGenJHUGenMCSample(MCSampleBase):
     return ["./install.py"] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
   @property
   def makinggridpacksubmitsjob(self):
-    return "full_"+os.path.basename(self.powhegcard).replace(".input", "")
+    return None
 
   @property
   @cache

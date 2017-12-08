@@ -131,10 +131,10 @@ class MCSampleBase(JsonDict):
                   shutil.rmtree(_)
             return "gridpack job submission failed"
 
-    mkdir_p(os.path.dirname(self.foreostarball))
-    shutil.move(self.tmptarball, self.foreostarball)
-    shutil.rmtree(os.path.dirname(self.tmptarball))
-    return "tarball is created and moved to this folder, to be copied to eos"
+      mkdir_p(os.path.dirname(self.foreostarball))
+      shutil.move(self.tmptarball, self.foreostarball)
+      shutil.rmtree(os.path.dirname(self.tmptarball))
+      return "tarball is created and moved to this folder, to be copied to eos"
 
   def findmatchefficiency(self):
     if self.checkcardsurl(): return self.checkcardsurl() #if the cards are wrong, catch it now!
