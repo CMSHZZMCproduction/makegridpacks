@@ -88,7 +88,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     pm = self.productionmode
     dm = self.decaymode.upper().replace("NU", "Nu")
     if self.decaymode == "2l2q" and self.mass == 125:
-      if self.productionmode in ("bbH", "tqH""): dm = "2L2X"
+      if self.productionmode in ("bbH", "tqH"): dm = "2L2X"
     searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV7011_"]
     shouldntbethere = ["powheg"]
     if any(_ not in result for _ in searchfor) or any(_.lower() in result.lower() for _ in shouldntbethere):
