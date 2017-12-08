@@ -7,15 +7,6 @@ from jhugenjhugenmcsample import JHUGenJHUGenMCSample
 
 class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   @property
-  def jhugenprocess(self):
-    if self.productionmode == "ggH": return "gg_H_quark-mass-effects"
-    if self.productionmode == "VBF": return "VBF_H"
-    if self.productionmode == "ZH": return "HZJ"
-    if self.productionmode in ("WplusH", "WminusH"): return "HWJ"
-    if self.productionmode == "ttH": return "ttH"
-    raise ValueError("Unknown productionmode "+self.productionmode)
-
-  @property
   def productioncard(self):
     folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "2017", "13TeV", self.productionmode+"_NNPDF31_13TeV")
     makecards(folder)
@@ -121,16 +112,18 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     if decaymode == "4l":
       if productionmode == "bbH":
         return 115, 120, 124, 125, 126, 130, 135, 140, 145
+      if productionmode == "tqH":
+        return 125,
     if decaymode == "2l2q":
-      if productionmode == "bbH":
+      if productionmode in ("bbH", "tqH"):
         return 125,
     if decaymode == "2l2nu":
-      if productionmode == "bbH":
+      if productionmode in ("bbH", "tqH"):
         return ()
 
   @classmethod
   def allsamples(cls):
-    for productionmode in "bbH",:
+    for productionmode in "bbH", "tqH":
       for decaymode in "4l", "2l2q", "2l2nu":
         for mass in cls.getmasses(productionmode, decaymode):
           yield cls(productionmode, decaymode, mass)
