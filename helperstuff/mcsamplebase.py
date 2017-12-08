@@ -259,6 +259,7 @@ class MCSampleBase(JsonDict):
       if self.needsupdate:
         requestqueue.reset(self)
         return "needs update on McM, resetting the request"
+      self.gettimepereventfromMcM()
       requestqueue.define(self)
       return "defining the request"
     if (self.approval, self.status) == ("define", "defined"):
