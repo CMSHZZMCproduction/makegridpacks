@@ -338,7 +338,9 @@ if not os.path.exists(genproductions) or os.environ["CMSSW_VERSION"] != cmsswver
 def recursivesubclasses(cls):
   result = [cls]
   for subcls in cls.__subclasses__():
-    result += recursivesubclasses(subcls)
+    for subsubcls in recursivesubclasses(subcls):
+      if subsubcls not in result:
+        result.append(subsubcls)
   return result
 
 @cache
