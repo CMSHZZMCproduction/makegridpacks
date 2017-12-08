@@ -37,9 +37,11 @@ class MCSampleBase(JsonDict):
   def fragmentname(self): pass
   @abc.abstractproperty
   def genproductionscommit(self): pass
-
   @abc.abstractproperty
-  def allsamples(self): pass
+  def makegridpackscriptstolink(self): pass
+
+  @abc.abstractmethod
+  def allsamples(self): "should be a classmethod"
 
   def __eq__(self, other):
     return self.keys == other.keys
@@ -109,9 +111,8 @@ class MCSampleBase(JsonDict):
             except OSError:
               shutil.rmtree(_)
         if not LSB_JOBID(): requestqueue.submitLSF(self); return "need to create the gridpack, submitting to LSF"
-        for filename in glob.iglob(os.path.join(genproductions, "bin", "Powheg", "*")):
-          if (filename.endswith(".py") or filename.endswith(".sh") or filename == "patches") and not os.path.exists(os.path.basename(filename)):
-            os.symlink(filename, os.path.basename(filename))
+        for filename in self.makegridpackscriptstolink:
+          os.symlink(filename, os.path.basename(filename))
         output = subprocess.check_output(self.makegridpackcommand)
         print output
         if self.makinggridpacksubmitsjob:

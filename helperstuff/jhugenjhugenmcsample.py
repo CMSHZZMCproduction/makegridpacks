@@ -1,6 +1,6 @@
 import abc, contextlib, glob, os, re, subprocess, urllib
 
-from utilities import cache, cd, cdtemp, cmsswversion, here, makecards, scramarch, wget
+from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
 
 from mcsamplebase import MCSampleBase
 
@@ -27,7 +27,7 @@ class JHUGenJHUGenMCSample(MCSampleBase):
       "-n": "10",
     }
     if self.linkmela: args["--link-mela"] = None
-    return ["./run_pwg.py"] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
+    return ["./install.py"] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
   @property
   def makinggridpacksubmitsjob(self):
     return "full_"+os.path.basename(self.powhegcard).replace(".input", "")
@@ -100,3 +100,9 @@ class JHUGenJHUGenMCSample(MCSampleBase):
   @property
   def fragmentname(self):
     return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py"
+
+  @property
+  def makegridpackscriptstolink(self):
+    for filename in glob.iglob(os.path.join(genproductions, "bin", "JHUGen", "*")):
+      if (filename.endswith(".py") or filename.endswith(".sh") or filename == "patches") and not os.path.exists(os.path.basename(filename)):
+        yield filename

@@ -1,6 +1,6 @@
 import abc, contextlib, glob, os, re, subprocess, urllib
 
-from utilities import cache, cd, cdtemp, cmsswversion, here, makecards, scramarch, wget
+from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
 
 from mcsamplebase import MCSampleBase
 
@@ -99,3 +99,9 @@ class POWHEGJHUGenMCSample(MCSampleBase):
   @property
   def fragmentname(self):
     return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_{:d}p_LHE_pythia8_cff.py".format(self.nfinalparticles)
+
+  @property
+  def makegridpackscriptstolink(self):
+    for filename in glob.iglob(os.path.join(genproductions, "bin", "Powheg", "*")):
+      if (filename.endswith(".py") or filename.endswith(".sh") or filename == "patches") and not os.path.exists(os.path.basename(filename)):
+        yield filename
