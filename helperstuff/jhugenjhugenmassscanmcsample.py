@@ -9,7 +9,8 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   @property
   def productioncard(self):
     folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "2017", "13TeV", self.productionmode+"_NNPDF31_13TeV")
-    makecards(folder)
+    if os.path.exists(os.path.join(folder, "makecards.py")):
+      makecards(folder)
 
     cardbase = self.productionmode
     card = os.path.join(folder, cardbase+"_NNPDF31_13TeV_M{:d}.input".format(self.mass))
