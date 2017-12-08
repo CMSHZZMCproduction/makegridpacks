@@ -36,6 +36,12 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     return self.mass >= 200
 
   @property
+  def queue(self):
+    if self.productionmode == "ggH": return "1nd"
+    if self.productionmode in ("ZH", "ttH"): return "1nw"
+    return "1nd"
+
+  @property
   def filter4L(self):
     if self.decaymode != "4l": return False
     if self.productionmode in ("ggH", "VBF", "WplusH", "WminusH"): return False
@@ -138,9 +144,6 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
       result.append("Fall17P2A")
     return " ".join(result)
 
-  @property
-  def fragmentname(self):
-    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_{:d}p_LHE_pythia8_cff.py".format(self.nfinalparticles)
   @property
   def genproductionscommit(self):
     return "118144fc626bc493af2dac01c57ff51ea56562c7"
