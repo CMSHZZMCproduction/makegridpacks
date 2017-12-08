@@ -74,7 +74,7 @@ class MCSampleBase(JsonDict):
   def workdir(self):
     return os.path.dirname(self.tmptarball)
 
-  def createtarball(self):
+  def createtarball(self, requestqueue):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
 
     mkdir_p(self.workdir)
@@ -211,7 +211,7 @@ class MCSampleBase(JsonDict):
     if not os.path.exists(self.cvmfstarball):
       if not os.path.exists(self.eostarball):
         if not os.path.exists(self.foreostarball):
-          return self.createtarball()
+          return self.createtarball(requestqueue)
         return "gridpack exists in this folder, to be copied to eos"
       return "gridpack exists on eos, not yet copied to cvmfs"
 

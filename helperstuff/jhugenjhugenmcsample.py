@@ -7,28 +7,27 @@ from mcsamplebase import MCSampleBase
 class JHUGenJHUGenMCSample(MCSampleBase):
   @abc.abstractproperty
   def productioncard(self): pass
-  @abc.abstractproperty
-  def linkmela(self): pass
   @property
   def hasfilter(self): return "filter" in self.decaycard.lower()
   @property
   def tmptarball(self):
-    return os.path.join(here, "workdir", os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode),
-             self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode+".tgz"))
+    return os.path.join(here, "workdir", os.path.basename(self.productioncard).replace(".input", "_"+self.decaymode),
+             "JHUGen_"+self.shortname+scramarch+"_"+cmsswversion+".tgz")
   @property
   def shortname(self):
     return re.sub(r"\W", "", str(self))
+  @property
+  def linkmela(self): return False
   @property
   def makegridpackcommand(self):
     args = {
       "--card": self.productioncard,
       "--decay-card": self.decaycard,
       "--name": self.shortname,
-      "-f": os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode),
-      "-q": self.queue,
       "-n": "10",
     }
-    return ["./run_pwg.py"] + sum(([k, v] for k, v in args.iteritems()), [])
+    if self.linkmela: args["--link-mela"] = None
+    return ["./run_pwg.py"] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
   @property
   def makinggridpacksubmitsjob(self):
     return "full_"+os.path.basename(self.powhegcard).replace(".input", "")

@@ -6,6 +6,6 @@ def allsamples():
   import jhugenjhugenmassscanmcsample, powhegjhugenmassscanmcsample
 
   for subcls in recursivesubclasses(MCSampleBase):
-    if subcls.__abstractmethods__: continue
+    if "allsamples" in subcls.__abstractmethods__: continue
     for sample in subcls.allsamples():
       yield sample
