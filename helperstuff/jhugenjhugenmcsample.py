@@ -25,6 +25,7 @@ class JHUGenJHUGenMCSample(MCSampleBase):
       "--decay-card": self.decaycard,
       "--name": self.shortname,
       "-n": "10",
+      "-s": str(hash(self) % 2147483647),
     }
     if self.linkmela: args["--link-mela"] = None
     return ["./install.py"] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])

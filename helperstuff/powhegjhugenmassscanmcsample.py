@@ -131,8 +131,8 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
       if self.decaymode == "4l": return 120
       if self.decaymode == "2l2q": return 140
     if self.productionmode == "ttH":
-      if self.decaymode == "4l": return 30 #?
-      if self.decaymode == "2l2q": return 60
+      if self.decaymode == "4l": return 10
+      if self.decaymode == "2l2q": return 10
     assert False
 
   @property

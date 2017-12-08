@@ -394,7 +394,7 @@ class MCSampleBase(JsonDict):
       "fragment tag": self.genproductionscommit,
       "mcm tag": self.tags,
       "mcdbid": 0,
-      "time per event [s]": self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent,
+      "time per event [s]": (self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent) / self.matchefficiency,
       "size per event [kb]": self.sizeperevent if self.sizeperevent is not None else 600,
       "Sequences nThreads": 1,
     }
@@ -436,7 +436,7 @@ class MCSampleBase(JsonDict):
     needsupdate = self.needsupdate
     timeperevent = self.fullinfo["time_event"][0]
     if timeperevent != self.defaulttimeperevent:
-      self.timeperevent = timeperevent
+      self.timeperevent = timeperevent * self.matchefficiency
       self.needsupdate = needsupdate #don't need to reupdate on McM, unless that was already necessary
 
   @property
