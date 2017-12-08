@@ -104,5 +104,5 @@ class JHUGenJHUGenMCSample(MCSampleBase):
   @property
   def makegridpackscriptstolink(self):
     for filename in glob.iglob(os.path.join(genproductions, "bin", "JHUGen", "*")):
-      if (filename.endswith(".py") or filename.endswith(".sh") or filename == "patches") and not os.path.exists(os.path.basename(filename)):
+      if (filename.endswith(".py") or filename.endswith(".sh") or filename.endswith("patches")) and not os.path.exists(os.path.basename(filename)):
         yield filename
