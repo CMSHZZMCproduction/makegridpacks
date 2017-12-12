@@ -39,7 +39,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
   @property
   def cvmfstarball(self):
-    folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V7011", self.productionmode+"_NNPDF31_13TeV")
+    folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V7011", self.productionmode+"_ZZ_NNPDF31_13TeV")
     tarballname = os.path.basename(self.productioncard).replace(".input", ".tgz")
     decaymode = self.decaymode
     if "ZZ2l2any_withtaus.input" in self.decaycard: decaymode == "2l2X"

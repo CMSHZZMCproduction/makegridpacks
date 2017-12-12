@@ -66,7 +66,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def cvmfstarball(self):
-    folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2", self.powhegprocess+"_NNPDF31_13TeV")
+    folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2", self.powhegprocess+"_ZZ_NNPDF31_13TeV")
     tarballname = os.path.basename(self.powhegcard).replace(".input", ".tgz")
     if self.decaymode != "4l":
       decaymode = self.decaymode
