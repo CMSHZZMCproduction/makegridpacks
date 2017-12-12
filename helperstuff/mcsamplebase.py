@@ -39,6 +39,8 @@ class MCSampleBase(JsonDict):
   def genproductionscommit(self): pass
   @abc.abstractproperty
   def makegridpackscriptstolink(self): pass
+  @abc.abstractproperty
+  def keepoutput(self): pass
 
   @abc.abstractmethod
   def allsamples(self): "should be a classmethod"
@@ -397,6 +399,7 @@ class MCSampleBase(JsonDict):
       "time per event [s]": (self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent) / self.matchefficiency,
       "size per event [kb]": self.sizeperevent if self.sizeperevent is not None else 600,
       "Sequences nThreads": 1,
+      "Keep output": bool(self.keepoutput),
     }
     if useprepid: result["prepid"] = self.prepid
 
