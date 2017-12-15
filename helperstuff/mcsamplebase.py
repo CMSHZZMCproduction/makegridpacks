@@ -1,5 +1,7 @@
 import abc, filecmp, glob, os, re, shutil, stat, subprocess
 
+from McMScripts.manageRequests import createLHEProducer
+
 from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, restful, wget
 
 class MCSampleBase(JsonDict):
@@ -78,7 +80,7 @@ class MCSampleBase(JsonDict):
   def workdir(self):
     return os.path.dirname(self.tmptarball)
 
-  def createtarball(self, requestqueue):
+  def createtarball(self):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
 
     mkdir_p(self.workdir)
@@ -112,7 +114,7 @@ class MCSampleBase(JsonDict):
               os.remove(_)
             except OSError:
               shutil.rmtree(_)
-        if not LSB_JOBID(): requestqueue.submitLSF(self); return "need to create the gridpack, submitting to LSF"
+        if not LSB_JOBID(): self.submitLSF(); return "need to create the gridpack, submitting to LSF"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))
         output = subprocess.check_output(self.makegridpackcommand)
@@ -156,7 +158,7 @@ class MCSampleBase(JsonDict):
               jobsrunning = True
               continue
             if not os.path.exists("cmsgrid_final.lhe"):
-              if not LSB_JOBID(): requestqueue.submitLSF(self); return "need to figure out filter efficiency, submitting to LSF"
+              if not LSB_JOBID(): self.submitLSF(); return "need to figure out filter efficiency, submitting to LSF"
               with cdtemp():
                 subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
                 with open("powheg.input") as f:
@@ -181,7 +183,7 @@ class MCSampleBase(JsonDict):
     mkdir_p(self.workdir)
     with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), message=LSB_JOBID(), deleteifjobdied=True) as kwof:
       if not kwof: return "job to get the size and time is already running"
-      if not LSB_JOBID(): requestqueue.submitLSF(self); return "need to get time and size per event, submitting to LSF"
+      if not LSB_JOBID(): self.submitLSF(); return "need to get time and size per event, submitting to LSF"
       with cdtemp():
         wget("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/"+self.prepid)
         with open(self.prepid) as f:
@@ -207,14 +209,14 @@ class MCSampleBase(JsonDict):
 
     if not (self.sizeperevent and self.timeperevent):
       return "failed to get the size and time"
-    requestqueue.addrequest(self, useprepid=True)
-    return "size and time per event are found to be {} and {}, will send it to McM".format(self.sizeperevent, self.timeperevent)
+    self.updaterequest()
+    return "size and time per event are found to be {} and {}, sent it to McM".format(self.sizeperevent, self.timeperevent)
 
-  def makegridpack(self, requestqueue=None):
+  def makegridpack(self):
     if not os.path.exists(self.cvmfstarball):
       if not os.path.exists(self.eostarball):
         if not os.path.exists(self.foreostarball):
-          return self.createtarball(requestqueue)
+          return self.createtarball()
         return "gridpack exists in this folder, to be copied to eos"
       return "gridpack exists on eos, not yet copied to cvmfs"
 
@@ -228,22 +230,18 @@ class MCSampleBase(JsonDict):
     if self.matchefficiency is None or self.matchefficiencyerror is None:
       return self.findmatchefficiency()
 
-    if not requestqueue:
-      if self.checkcardsurl(): return self.checkcardsurl() #if the cards are wrong, catch it now!
-      return "gridpack exists on cvmfs, and the match efficiency is {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
-
     if self.prepid is None:
       self.getprepid()
       if self.prepid is None:
         #need to make the request
-        requestqueue.addrequest(self, useprepid=False)
+        self.createrequest()
         return "will send the request to McM, run again to proceed further"
       else:
         return "found prepid: {}".format(self.prepid)
 
     if not (self.sizeperevent and self.timeperevent):
       if self.needsupdate:
-        requestqueue.addrequest(self, useprepid=True)
+        self.updaterequest()
         return "need update before getting time and size per event, sending the request to McM"
       return self.getsizeandtime()
 
@@ -252,22 +250,22 @@ class MCSampleBase(JsonDict):
 
     if (self.approval, self.status) == ("none", "new"):
       if self.needsupdate:
-        requestqueue.addrequest(self, useprepid=True)
+        self.updaterequest()
         return "needs update on McM, sending it there"
-      requestqueue.validate(self)
+      self.validate()
       return "starting the validation"
     if (self.approval, self.status) == ("validation", "new"):
       return "validation is running"
     if (self.approval, self.status) == ("validation", "validation"):
       if self.needsupdate:
-        requestqueue.reset(self)
+        self.reset()
         return "needs update on McM, resetting the request"
       self.gettimepereventfromMcM()
-      requestqueue.define(self)
+      self.define()
       return "defining the request"
     if (self.approval, self.status) == ("define", "defined"):
       if self.needsupdate:
-        requestqueue.reset(self)
+        self.reset()
         return "needs update on McM, resetting the request"
       return "request is defined"
     return "Unknown approval "+self.approval+" and status "+self.status
@@ -380,30 +378,45 @@ class MCSampleBase(JsonDict):
   @property
   def filterefficiencyerror(self): return 0
 
-  def csvline(self, useprepid):
-    result = {
-      "dataset name": self.datasetname,
-      "xsec [pb]": 1,
-      "total events": self.nevents,
-      "generator": self.generators,
-      "match efficiency": self.matchefficiency*self.filterefficiency,
-      "match efficiency error": ((self.matchefficiencyerror*self.filterefficiency)**2 + (self.matchefficiency*self.filterefficiencyerror)**2)**.5,
-      "pwg": "HIG",
-      "campaign": "RunIIFall17wmLHEGS",
-      "gridpack location": self.cvmfstarball,
-      "cards url": self.cardsurl,
-      "fragment name": self.fragmentname,
-      "fragment tag": self.genproductionscommit,
-      "mcm tag": self.tags,
-      "mcdbid": 0,
-      "time per event [s]": (self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent) / self.matchefficiency,
-      "size per event [kb]": self.sizeperevent if self.sizeperevent is not None else 600,
-      "Sequences nThreads": 1,
-      "Keep output": bool(self.keepoutput),
+  def updaterequest(self):
+    mcm = restful()
+    req = mcm.getA("requests", self.prepid)
+    req["dataset_name"] = self.datasetname
+    req["mcdb_id"] = 0
+    req["total_events"] = self.nevents
+    req["fragment"] = createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommit)
+    req["time_event"] = (self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent) / self.matchefficiency
+    req["size_event"] = self.sizeperevent if self.sizeperevent is not None else 600
+    req["generators"] = self.generators
+    req["generator_parameters"] = {
+      "match_efficiency_error": self.matchefficiencyerror,
+      "match_efficiency": self.matchefficiency,
+      "filter_efficiency": self.filterefficiencyerror,
+      "filter_efficiency_error": self.filterefficiency,
+      "cross_section": 1.0,
     }
-    if useprepid: result["prepid"] = self.prepid
-
-    return result
+    req["sequences"][0]["nThreads"] = 1
+    req["keep_output"][0] = bool(self.keepoutput)
+    req["tags"] = self.tags
+    req["memory"] = 2300
+    answer = mcm.updateA('requests', req)
+    if not (answer and answer.get("results")):
+      raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
+  def createrequest(self):
+    mcm = restful()
+    req = {
+      "pwg": "HIG",
+      "member_of_campaign": "RunIIFall17wmLHEGS",
+      "mcdb_id": 0,
+      "dataset_name": self.datasetname,
+    }
+    mcm.putA("requests", req)
+    if not (answer and answer.get("results")):
+      raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
+    self.getprepid()
+    if self.prepid != answer["prepid"]:
+      raise RuntimeError("Wrong prepid?? {} {}".format(self.prepid, answer["prepid"]))
+    self.updaterequest()
 
   def getprepid(self):
     if LSB_JOBID(): return
@@ -448,3 +461,8 @@ class MCSampleBase(JsonDict):
   @property
   def status(self):
     return self.fullinfo["status"]
+
+  def approve(self, level): restful().approve("requests", self.prepid, level)
+  def reset(self): self.approve(0)
+  def validate(self): self.approve(1)
+  def define(self): self.approve(2)

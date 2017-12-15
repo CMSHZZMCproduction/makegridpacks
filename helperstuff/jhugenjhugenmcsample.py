@@ -96,7 +96,7 @@ class JHUGenJHUGenMCSample(MCSampleBase):
 
   @property
   def generators(self):
-    return r"JHUGen\ v7.0.11".format(self.powhegprocess)
+    return ["JHUGen v7.0.11"]
 
   @property
   def fragmentname(self):
