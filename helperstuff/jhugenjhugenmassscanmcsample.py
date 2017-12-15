@@ -101,8 +101,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
   @property
   def tags(self):
-    result = ["HZZ", "Fall17P2A"]
-    return " ".join(result)
+    return ["HZZ", "Fall17P2A"]
 
   @property
   def genproductionscommit(self):

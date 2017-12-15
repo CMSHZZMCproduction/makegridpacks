@@ -142,7 +142,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
       result.append("Fall17P1S")
     else:
       result.append("Fall17P2A")
-    return " ".join(result)
+    return result
 
   @property
   def genproductionscommit(self):

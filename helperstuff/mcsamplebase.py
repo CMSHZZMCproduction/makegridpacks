@@ -385,16 +385,16 @@ class MCSampleBase(JsonDict):
     req["mcdb_id"] = 0
     req["total_events"] = self.nevents
     req["fragment"] = createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommit)
-    req["time_event"] = (self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent) / self.matchefficiency
-    req["size_event"] = self.sizeperevent if self.sizeperevent is not None else 600
+    req["time_event"] = [(self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent) / self.matchefficiency]
+    req["size_event"] = [self.sizeperevent if self.sizeperevent is not None else 600]
     req["generators"] = self.generators
-    req["generator_parameters"] = {
+    req["generator_parameters"] = [{
       "match_efficiency_error": self.matchefficiencyerror,
       "match_efficiency": self.matchefficiency,
       "filter_efficiency": self.filterefficiencyerror,
       "filter_efficiency_error": self.filterefficiency,
       "cross_section": 1.0,
-    }
+    }]
     req["sequences"][0]["nThreads"] = 1
     req["keep_output"][0] = bool(self.keepoutput)
     req["tags"] = self.tags
@@ -402,6 +402,8 @@ class MCSampleBase(JsonDict):
     answer = mcm.updateA('requests', req)
     if not (answer and answer.get("results")):
       raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
+    self.needsupdate = False
+
   def createrequest(self):
     mcm = restful()
     req = {
@@ -410,7 +412,7 @@ class MCSampleBase(JsonDict):
       "mcdb_id": 0,
       "dataset_name": self.datasetname,
     }
-    mcm.putA("requests", req)
+    answer = mcm.putA("requests", req)
     if not (answer and answer.get("results")):
       raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
     self.getprepid()
