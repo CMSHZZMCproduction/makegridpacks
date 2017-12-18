@@ -1,4 +1,4 @@
-import abc, filecmp, glob, os, re, shutil, stat, subprocess
+import abc, filecmp, glob, os, pycurl, re, shutil, stat, subprocess
 
 from McMScripts.manageRequests import createLHEProducer
 
@@ -230,6 +230,9 @@ class MCSampleBase(JsonDict):
     if self.matchefficiency is None or self.matchefficiencyerror is None:
       return self.findmatchefficiency()
 
+    if self.badprepid:
+      return "please delete the bad prepid {} before proceeding".format(self.badprepid)
+
     if self.prepid is None:
       self.getprepid()
       if self.prepid is None:
@@ -242,11 +245,14 @@ class MCSampleBase(JsonDict):
     if not (self.sizeperevent and self.timeperevent):
       if self.needsupdate:
         self.updaterequest()
-        return "need update before getting time and size per event, sending the request to McM"
+        return "need update before getting time and size per event, updated the request on McM"
       return self.getsizeandtime()
 
     if LSB_JOBID():
       return "please run locally to check and/or advance the status".format(self.prepid)
+
+    if self.badprepid:
+      return "please delete the bad prepid {} before proceeding".format(self.badprepid)
 
     if (self.approval, self.status) == ("none", "new"):
       if self.needsupdate:
@@ -288,6 +294,8 @@ class MCSampleBase(JsonDict):
   def prepid(self, value):
     with cd(here), self.writingdict():
       self.value["prepid"] = value
+    if self.badprepid:
+      del self.badprepid
   @prepid.deleter
   def prepid(self):
     with cd(here), self.writingdict():
@@ -363,15 +371,38 @@ class MCSampleBase(JsonDict):
   @property
   def needsupdate(self):
     with cd(here):
-      return self.value.get("needsupdate", True)
+      return self.value.get("needsupdate", False)
   @needsupdate.setter
   def needsupdate(self, value):
-    with cd(here), self.writingdict():
-      self.value["needsupdate"] = value
+    if value:
+      with cd(here), self.writingdict():
+        self.value["needsupdate"] = True
+    elif self.needsupdate:
+      del self.needsupdate
   @needsupdate.deleter
   def needsupdate(self):
     with cd(here), self.writingdict():
       del self.value["needsupdate"]
+  @property
+  def badprepid(self):
+    with cd(here):
+      result = self.value.get("badprepid", None)
+      if result:
+        if restful().getA("requests", query="prepid="+result):
+          return result
+        else:
+          del self.badprepid
+  @badprepid.setter
+  def badprepid(self, value):
+    if value:
+      with cd(here), self.writingdict():
+        self.value["badprepid"] = value
+    elif self.badprepid:
+      del self.badprepid
+  @badprepid.deleter
+  def badprepid(self):
+    with cd(here), self.writingdict():
+      del self.value["badprepid"]
 
   @property
   def filterefficiency(self): return 1
@@ -402,7 +433,15 @@ class MCSampleBase(JsonDict):
     req["keep_output"][0] = bool(self.keepoutput)
     req["tags"] = self.tags
     req["memory"] = 2300
-    answer = mcm.updateA('requests', req)
+    try:
+      answer = mcm.updateA('requests', req)
+    except pycurl.error as e:
+      if e[0] == 52 and e[1] == "Empty reply from server":
+        self.badprepid = self.prepid
+        del self.prepid
+        return
+      else:
+        raise
     if not (answer and answer.get("results")):
       raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
     self.needsupdate = False
@@ -446,6 +485,8 @@ class MCSampleBase(JsonDict):
   def fullinfo(self):
     if not self.prepid: raise ValueError("Can only call fullinfo once the prepid has been set")
     result = restful().getA("requests", query="prepid="+self.prepid)
+    if not result:
+      raise ValueError("mcm query for prepid="+self.prepid+" returned None!")
     if len(result) == 0:
       raise ValueError("mcm query for prepid="+self.prepid+" returned nothing!")
     if len(result) > 1:
