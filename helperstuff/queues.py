@@ -14,6 +14,7 @@ class ApprovalQueue(object):
   def __exit__(self, *err):
     for level, prepids in self.approvals.iteritems():
       print "approving", len(prepids), "requests to level", level
+      for prepid in sorted(prepids): print " ", prepid
       restful().approve("requests", ",".join(prepids), level)
 
 class BadRequestQueue(object):
@@ -25,6 +26,6 @@ class BadRequestQueue(object):
     return "please delete the bad prepid {} before proceeding".format(request.badprepid)
   def __exit__(self, *err):
     if self.badprepids:
-      print "Please delete the following prepids:"
+      print "Please delete the following bad prepids:"
       for prepid in sorted(self.badprepids):
         print " ", prepid
