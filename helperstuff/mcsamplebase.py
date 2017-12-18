@@ -212,7 +212,7 @@ class MCSampleBase(JsonDict):
     self.updaterequest()
     return "size and time per event are found to be {} and {}, sent it to McM".format(self.sizeperevent, self.timeperevent)
 
-  def makegridpack(self):
+  def makegridpack(self, approvalqueue, badrequestqueue):
     if not os.path.exists(self.cvmfstarball):
       if not os.path.exists(self.eostarball):
         if not os.path.exists(self.foreostarball):
@@ -231,7 +231,7 @@ class MCSampleBase(JsonDict):
       return self.findmatchefficiency()
 
     if self.badprepid:
-      return "please delete the bad prepid {} before proceeding".format(self.badprepid)
+      return badrequestqueue.add(self)
 
     if self.prepid is None:
       self.getprepid()
@@ -252,26 +252,28 @@ class MCSampleBase(JsonDict):
       return "please run locally to check and/or advance the status".format(self.prepid)
 
     if self.badprepid:
-      return "please delete the bad prepid {} before proceeding".format(self.badprepid)
+      return badrequestqueue.add(self)
 
     if (self.approval, self.status) == ("none", "new"):
       if self.needsupdate:
         self.updaterequest()
+        if self.badprepid:
+          return badrequestqueue.add(self)
         return "needs update on McM, sending it there"
-      self.validate()
+      approvalqueue.validate(self)
       return "starting the validation"
     if (self.approval, self.status) == ("validation", "new"):
       return "validation is running"
     if (self.approval, self.status) == ("validation", "validation"):
       if self.needsupdate:
-        self.reset()
+        approvalqueue.reset(self)
         return "needs update on McM, resetting the request"
       self.gettimepereventfromMcM()
-      self.define()
+      approvalqueue.define(self)
       return "defining the request"
     if (self.approval, self.status) == ("define", "defined"):
       if self.needsupdate:
-        self.reset()
+        approvalqueue.reset(self)
         return "needs update on McM, resetting the request"
       return "request is defined"
     return "Unknown approval "+self.approval+" and status "+self.status
@@ -507,8 +509,3 @@ class MCSampleBase(JsonDict):
   @property
   def status(self):
     return self.fullinfo["status"]
-
-  def approve(self, level): restful().approve("requests", self.prepid, level)
-  def reset(self): self.approve(0)
-  def validate(self): self.approve(1)
-  def define(self): self.approve(2)
