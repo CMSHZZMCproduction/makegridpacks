@@ -1,4 +1,4 @@
-def allsamples():
+def allsamples(filter=lambda sample: True):
   from mcsamplebase import MCSampleBase
   from utilities import recursivesubclasses
 
@@ -8,4 +8,5 @@ def allsamples():
   for subcls in recursivesubclasses(MCSampleBase):
     if "allsamples" in subcls.__abstractmethods__: continue
     for sample in subcls.allsamples():
-      yield sample
+      if filter(sample):
+        yield sample
