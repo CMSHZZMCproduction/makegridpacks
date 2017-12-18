@@ -389,7 +389,7 @@ class MCSampleBase(JsonDict):
     req["size_event"] = [self.sizeperevent if self.sizeperevent is not None else 600]
     req["generators"] = self.generators
     req["generator_parameters"] = [{
-      "match_efficiency_error": self.matchefficiencyerror,
+      "match_efficiency_error": max(self.matchefficiencyerror, 0.1),
       "match_efficiency": self.matchefficiency,
       "filter_efficiency": self.filterefficiencyerror,
       "filter_efficiency_error": self.filterefficiency,
