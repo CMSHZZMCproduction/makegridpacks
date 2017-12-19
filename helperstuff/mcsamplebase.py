@@ -508,3 +508,10 @@ class MCSampleBase(JsonDict):
   @property
   def status(self):
     return self.fullinfo["status"]
+
+  @staticmethod
+  def submitLSF():
+    with cd(here):
+      job = "cd "+here+" && eval $(scram ru -sh) && ./makegridpacks.py"
+      pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
+      subprocess.check_call(["bsub", "-q", "1nd", "-J", "makegridpacks"], stdin=pipe.stdout)
