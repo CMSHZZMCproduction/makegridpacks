@@ -1,4 +1,4 @@
-import abc, collections, contextlib, errno, functools, itertools, json, logging, os, re, shutil, subprocess, sys, tempfile, time, urllib
+import abc, collections, contextlib, errno, functools, getpass, itertools, json, logging, os, re, shutil, subprocess, sys, tempfile, time, urllib
 
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""
@@ -44,7 +44,7 @@ def tempfilewrapper(function):
   def newfunction(**kwargs):
     if "dir" not in kwargs:
       if LSB_JOBID() is not None:
-        kwargs["dir"] = "/pool/lsf/hroskes/{}/".format(LSB_JOBID())
+        kwargs["dir"] = "/pool/lsf/{}/{}/".format(getpass.getuser(), LSB_JOBID())
     return function(**kwargs)
   return newfunction
 

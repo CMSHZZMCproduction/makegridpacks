@@ -430,9 +430,6 @@ class MCSampleBase(JsonDict):
       "filter_efficiency_error": self.filterefficiencyerror,
       "cross_section": 1.0,
     })
-    ############
-    if "negative_weights_fraction" not in req["generator_parameters"][0]: req["generator_parameters"][0].update({'submission_details': {u'author_email': u'jroskes1@jhu.edu', u'submission_date': u'2017-11-29-12-09', u'author_username': u'hroskes', u'author_name': u'Heshy Roskes'}, u'negative_weights_fraction': -1})
-    ############
     req["sequences"][0]["nThreads"] = 1
     req["keep_output"][0] = bool(self.keepoutput)
     req["tags"] = self.tags
