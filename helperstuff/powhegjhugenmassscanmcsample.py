@@ -172,3 +172,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
       for decaymode in "4l", "2l2q", "2l2nu":
         for mass in cls.getmasses(productionmode, decaymode):
           yield cls(productionmode, decaymode, mass)
+
+  @property
+  def responsible(self):
+    return "hroskes"

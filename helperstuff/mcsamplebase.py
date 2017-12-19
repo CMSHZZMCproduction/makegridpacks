@@ -43,6 +43,8 @@ class MCSampleBase(JsonDict):
   def makegridpackscriptstolink(self): pass
   @abc.abstractproperty
   def keepoutput(self): pass
+  @abc.abstractproperty
+  def responsible(self): "put the lxplus username of whoever makes these gridpacks"
 
   @abc.abstractmethod
   def allsamples(self): "should be a classmethod"
