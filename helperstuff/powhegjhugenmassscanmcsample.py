@@ -17,14 +17,16 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def powhegcard(self):
-    folder = os.path.join(genproductions, "bin", "Powheg", "production", "2017", "13TeV", self.powhegprocess+"_NNPDF31_13TeV")
+    folder = os.path.join(genproductions, "bin", "Powheg", "production", "2017", "13TeV", self.powhegprocess+"_ZZ_NNPDF31_13TeV")
+    folder = folder.replace("quark-mass-effects_ZZ", "ZZ_quark-mass-effects")
     makecards(folder)
 
-    cardbase = self.powhegprocess
-    if self.productionmode == "ZH": cardbase = "HZJ_HanythingJ"
-    if self.productionmode == "WplusH": cardbase = "HWplusJ_HanythingJ"
-    if self.productionmode == "WminusH": cardbase = "HWminusJ_HanythingJ"
-    if self.productionmode == "ttH": cardbase = "ttH_inclusive"
+    cardbase = self.powhegprocess+"_ZZ"
+    cardbase = cardbase.replace("quark-mass-effects_ZZ", "ZZ_quark-mass-effects")
+    if self.productionmode == "ZH": cardbase = "HZJ_HanythingJ_ZZ"
+    if self.productionmode == "WplusH": cardbase = "HWplusJ_HanythingJ_ZZ"
+    if self.productionmode == "WminusH": cardbase = "HWminusJ_HanythingJ_ZZ"
+    if self.productionmode == "ttH": cardbase = "ttH_inclusive_ZZ"
     card = os.path.join(folder, cardbase+"_NNPDF31_13TeV_M{:d}.input".format(self.mass))
 
     if not os.path.exists(card):
@@ -67,7 +69,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def cvmfstarball(self):
     folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2", self.powhegprocess+"_ZZ_NNPDF31_13TeV")
-    tarballname = os.path.basename(self.powhegcard).replace(".input", ".tgz")
+    tarballname = os.path.basename(self.powhegcard.replace("_ZZ", "")).replace(".input", ".tgz")
     if self.decaymode != "4l":
       decaymode = self.decaymode
       if "ZZ2l2any_withtaus.input" in self.decaycard: decaymode == "2l2X"
@@ -146,7 +148,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def genproductionscommit(self):
-    return "118144fc626bc493af2dac01c57ff51ea56562c7"
+    return "fadbc79637b695403f65181454f48aee1e28bbc9"
 
   @classmethod
   def getmasses(cls, productionmode, decaymode):
