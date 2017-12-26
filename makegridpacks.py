@@ -7,7 +7,7 @@ from helperstuff.queues import ApprovalQueue, BadRequestQueue
 
 def makegridpacks(dryrun):
   with ApprovalQueue() as approvalqueue, BadRequestQueue() as badrequestqueue:
-    for sample in allsamples(lambda _: "ZH" not in str(_)):
+    for sample in allsamples():
       print sample, sample.makegridpack(approvalqueue, badrequestqueue)
       sys.stdout.flush()
 
