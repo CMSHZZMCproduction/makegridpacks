@@ -11,7 +11,7 @@ class JHUGenJHUGenMCSample(MCSampleBase):
   def hasfilter(self): return "filter" in self.decaycard.lower()
   @property
   def tmptarball(self):
-    return os.path.join(here, "workdir", os.path.basename(self.productioncard).replace(".input", "_"+self.decaymode),
+    return os.path.join(here, "workdir",self.productionmode+"_"+self.decaymode, os.path.basename(self.productioncard).replace(".input", ""),
              "JHUGen_"+self.shortname+"_"+scramarch+"_"+cmsswversion+".tgz")
   @property
   def shortname(self):
