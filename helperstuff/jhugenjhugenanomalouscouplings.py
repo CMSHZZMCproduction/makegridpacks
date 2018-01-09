@@ -36,17 +36,11 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
     tarballname = self.datasetname+".tgz"
 
-    decaymode = self.decaymode
-    if "ZZ2l2any_withtaus.input" in self.decaycard: decaymode = "2l2X"
-    elif "ZZany_filter2lOSSF.input" in self.decaycard: decaymode = "_filter2l"
-    elif "ZZ2l2any_withtaus_filter4l.input" or "ZZ2l2any_withtaus_filter4lOSSF.input" in self.decaycard: decaymode = "2l2X_filter4l"
-    tarballname = tarballname.replace("NNPDF31", "ZZ"+self.decaymode+"_NNPDF31")
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
 
   @property
   def datasetname(self):
     result = {
-      "ggH": "Higgs",
       "VBF": "VBFHiggs",
       "HJJ": "JJHiggs",
       "ZH":  "ZHiggs",
@@ -76,10 +70,8 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     result += "_M125_13TeV_JHUGenV7011_pythia8"
 
 
-    pm = self.productionmode.replace("HJJ", "JJH").replace("ggH", "H").replace("H", "Higgs")
+    pm = self.productionmode.replace("HJJ", "JJH").replace("H", "Higgs")
     dm = self.decaymode.upper().replace("NU", "Nu")
-    if self.decaymode == "2l2q" and self.mass == 125:
-      if self.productionmode in ("bbH", "tqH"): dm = "2L2X"
     searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV7011_"]
     shouldntbethere = ["powheg"]
     if any(_ not in result for _ in searchfor) or any(_.lower() in result.lower() for _ in shouldntbethere):
@@ -111,7 +103,7 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def fragmentname(self):
-    if self.productionmode in ("ggH", "ttH"):
+    if self.productionmode == "ttH":
       return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py"
     elif self.productionmode in ("VBF", "HJJ", "ZH", "WH"):
       return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_fudgepTmax_half_LHE_pythia8_cff.py"
