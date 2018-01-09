@@ -5,13 +5,14 @@ from utilities import cache, cd, genproductions, makecards
 from mcfmmcsample import MCFMMCSample
 
 class MCFMAnomCoupMCSample(MCFMMCSample):
-  def __init__(self, signalbkgbsi, width, coupling):
+  def __init__(self, signalbkgbsi, width, coupling, finalstate):
     self.signalbkgbsi = signalbkgbsi
     self.width = int(str(width))
     self.coupling = coupling
+    self.finalstate = finalstate
   @property
   def identifiers(self):
-    return self.signalbkgbsi, self.width, self.coupling
+    return self.signalbkgbsi, self.width, self.coupling, self.finalstate
   @property
   def nevents(self):
     "Carol fill in"
@@ -91,9 +92,10 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   @classmethod
   def allsamples(cls):
     for signalbkgbsi in "Sig", "BSI":
-      for coupling in cls.getcouplings(signalbkgbsi):
-        for width in cls.getwidths(signalbkgbsi, coupling):
-          yield cls(signalbkgbsi, width, coupling)
+      for finalstate in "4E", "2E2MU", "2E2TAU", "2E2NU", "... Carol put the rest":
+        for coupling in cls.getcouplings(signalbkgbsi):
+          for width in cls.getwidths(signalbkgbsi, coupling):
+            yield cls(signalbkgbsi, width, coupling, finalstate)
 
   @property
   def responsible(self):
