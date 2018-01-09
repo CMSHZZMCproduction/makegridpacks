@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-raise RuntimeError("I think this script might break mcm.  Don't run it")
-
 import argparse
 import pprint
 
@@ -74,4 +72,5 @@ if __name__ == "__main__":
   parser.add_argument("--tags", "-t", action="append", required=True)
   parser.add_argument("--dry-run", "-n", action="store_true")
   args = parser.parse_args()
+  if not args.dry_run: parser.error("I think this script might break mcm.  Don't run it without -n.")
   maketicket(block=args.block, chain=args.chain, filter=args.filter, modifyticket=args.modify, notes=args.notes, tags=args.tags, dryrun=args.dry_run)
