@@ -4,7 +4,7 @@ def allsamples(filter=lambda sample: True, onlymysamples=True):
   from mcsamplebase import MCSampleBase
 
   #import all modules that have classes that should be considered here
-  import jhugenjhugenmassscanmcsample, powhegjhugenmassscanmcsample
+  import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, powhegjhugenmassscanmcsample
 
   for subcls in recursivesubclasses(MCSampleBase):
     if "allsamples" in subcls.__abstractmethods__: continue

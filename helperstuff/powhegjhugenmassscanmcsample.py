@@ -82,7 +82,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   def olddatasetname(self):
     p = self.productionmode
     if p == "VBF": p = "VBFH"
-    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/miniAOD_80X/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
+    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
       reader = csv.DictReader(f)
       for row in reader:
         if row["identifier"] == "{}{}".format(p, self.mass):

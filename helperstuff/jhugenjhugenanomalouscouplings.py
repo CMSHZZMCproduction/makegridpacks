@@ -21,16 +21,8 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     return card
 
   @property
-  def reweightdecay(self):
-    return False
-
-  @property
   def queue(self):
     return "1nd"
-
-  @property
-  def filter4L(self):
-    return False
 
   @property
   def tarballversion(self):
@@ -41,44 +33,50 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   @property
   def cvmfstarball(self):
     folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V7011", self.productionmode+"_ZZ_NNPDF31_13TeV")
-    tarballname = os.path.basename(self.productioncard).replace(".input", ".tgz")
+
+    tarballname = self.datasetname+".tgz"
+
     decaymode = self.decaymode
-    if "ZZ2l2any_withtaus.input" in self.decaycard: decaymode == "2l2X"
+    if "ZZ2l2any_withtaus.input" in self.decaycard: decaymode = "2l2X"
     elif "ZZany_filter2lOSSF.input" in self.decaycard: decaymode = "_filter2l"
-    elif "ZZ2l2any_withtaus_filter4l.input" in self.decaycard: decaymode = "2l2X_filter4l"
+    elif "ZZ2l2any_withtaus_filter4l.input" or "ZZ2l2any_withtaus_filter4lOSSF.input" in self.decaycard: decaymode = "2l2X_filter4l"
     tarballname = tarballname.replace("NNPDF31", "ZZ"+self.decaymode+"_NNPDF31")
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
 
   @property
-  @cache
-  def olddatasetname(self):
-    p = self.productionmode
-    if p == "VBF": p = "VBFH"
-    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/miniAOD_80X/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
-      reader = csv.DictReader(f)
-      for row in reader:
-        if row["identifier"] == "{}{}".format(p, self.mass):
-          dataset = row["dataset"]
-          result = re.sub(r"^/([^/]*)/[^/]*/[^/]*$", r"\1", dataset)
-          assert result != dataset and "/" not in result, result
-          if self.decaymode == "4l":
-            return result
-    raise ValueError("Nothing for {}".format(self))
-
-  @property
   def datasetname(self):
-    if self.decaymode == "2l2nu":
-      result = type(self)(self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Nu")
-    elif self.decaymode == "2l2q":
-      result = type(self)(self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Q")
-      if self.mass == 125:
-        if self.productionmode in ("bbH", "tqH"): result = result.replace("2L2Q", "2L2X")
-    elif self.productionmode in ("bbH", "tqH") and self.mass != 125:
-      result = type(self)(self.productionmode, self.decaymode, 125).datasetname.replace("M125", "M{:d}".format(self.mass))
-    else:
-      result = self.olddatasetname.replace("JHUgenV702", "JHUGenV7011")
+    result = {
+      "ggH": "Higgs",
+      "VBF": "VBFHiggs",
+      "HJJ": "JJHiggs",
+      "ZH":  "ZHiggs",
+      "WH":  "WHiggs",
+      "ttH": "ttHiggs",
+    }[self.productionmode]
+    result += {
+      "SM": "0PM",
+      "a2": "0PH",
+      "a3": "0M",
+      "L1": "0L1",
+      "L1Zg": "0L1Zg",
+      "a2mix": "0PHf05ph0",
+      "a3mix": "0Mf05ph0",
+      "L1mix": "0L1f05ph0",
+      "L1Zgmix": "0L1Zgf05ph0",
+    }[self.kind]
 
-    pm = self.productionmode
+    result += "ToZZ"
+    if "ZZ4l_withtaus.input" in self.decaycard:
+      result += "To4L"
+    elif "ZZ2l2any_withtaus_filter4l.input" or "ZZ2l2any_withtaus_filter4lOSSF.input" in self.decaycard:
+      result += "To2L2X_4LFilter"
+    else:
+      raise ValueError("Unknown decay card\n"+self.decaycard)
+
+    result += "_M125_13TeV_JHUGenV7011_pythia8"
+
+
+    pm = self.productionmode.replace("HJJ", "JJH").replace("ggH", "H").replace("H", "Higgs")
     dm = self.decaymode.upper().replace("NU", "Nu")
     if self.decaymode == "2l2q" and self.mass == 125:
       if self.productionmode in ("bbH", "tqH"): dm = "2L2X"
@@ -87,13 +85,16 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     if any(_ not in result for _ in searchfor) or any(_.lower() in result.lower() for _ in shouldntbethere):
       raise ValueError("Dataset name doesn't make sense:\n{}\n{}\nNOT {}\n{}".format(result, searchfor, shouldntbethere, self))
 
-    return result
+    searchfor = result.replace("Zg", "").replace("JHUGenV7011", "JHUgenV6")
+    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC_anomalous.csv")) as f:
+      reader = csv.DictReader(f)
+      for row in reader:
+        if row["dataset"] and row["dataset"].split("/")[1] == searchfor:
+          break
+      else:
+        raise ValueError("Couldn't find dataset name {}".format(searchfor))
 
-  @property
-  def nfinalparticles(self):
-    if self.productionmode == "HJJ": return 1
-#    if self.productionmode in ("VBF", "ZH", "WplusH", "WminusH", "ttH"): return 3
-    assert False, self.productionmode
+    return result
 
   @property
   def defaulttimeperevent(self):
@@ -106,13 +107,21 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def genproductionscommit(self):
-    return "118144fc626bc493af2dac01c57ff51ea56562c7"
+    return "441e6efc2cba80560477251ac06aaba1d60253e6"
+
+  @property
+  def fragmentname(self):
+    if self.productionmode in ("ggH", "ttH"):
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py"
+    elif self.productionmode in ("VBF", "HJJ", "ZH", "WH"):
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_fudgepTmax_half_LHE_pythia8_cff.py"
+    raise ValueError("No fragment for {}".format(self))
 
   @classmethod
   def getmasses(cls, productionmode, decaymode):
     if decaymode == "4l":
       if productionmode == "HJJ" or productionmode == "VBF":
-        return 125
+        return 125,
 
   @classmethod
   def getkind(cls,productionmode,decaymode):
@@ -126,9 +135,9 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   def allsamples(cls):
     for productionmode in "HJJ", "VBF" :
         decaymode = "4l" 
-        mass = cls.getmasses(productionmode, decaymode)
-        for kind in cls.getkind(productionmode, decaymode) :
-            yield cls(productionmode, decaymode, mass, kind)
+        for mass in cls.getmasses(productionmode, decaymode) :
+            for kind in cls.getkind(productionmode, decaymode) :
+                yield cls(productionmode, decaymode, mass, kind)
 
   @property
   def responsible(self):

@@ -12,23 +12,18 @@ class AnomalousCouplingMCSample(MCSampleBase):
     self.kind = kind
   @property
   def identifiers(self):
-    return self.productionmode, self.decaymode, self.mass
-  @abc.abstractproperty
-  def reweightdecay(self): False
+    return self.productionmode, self.decaymode, self.mass, self.kind
   @property
   def decaycard(self):
     folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "decay")
 
-#    if self.decaymode == "4l":
-#      filename = "ZZ2l2any_withtaus_filter4l" if self.filter4L else "ZZ4l_withtaus"
-#      if self.reweightdecay: filename += "_reweightdecay_CPS"
-#      filename += ".input"
-#    elif self.decaymode == "2l2nu":
-#      if self.reweightdecay:
-#        filename = "ZZ2l2nu_notaus_reweightdecay_CPS.input"
-
     if self.decaymode == "4l":
-	filename = "ZZ4l_withtaus.input"
+        if self.productionmode == "ZH":
+            filename = "ZZ2l2any_withtaus_filter4l.input"
+        if self.productionmode == "ttH":
+            filename = "ZZ2l2any_withtaus_filter4lOSSF.input"
+        else:
+            filename = "ZZ4l_withtaus.input"
 
     card = os.path.join(folder, filename)
 
@@ -39,11 +34,12 @@ class AnomalousCouplingMCSample(MCSampleBase):
   @property
   def nevents(self):
     if self.decaymode == "4l":
-      if self.productionmode == "HJJ":
-        return 50000
-#      elif self.productionmode in ("VBF", "ZH", "ttH", "bbH"):
-#        if 124 <= self.mass <= 126 or self.mass >= 1500: return 500000
-#        return 200000
+      if self.productionmode in ("HJJ", "ttH"):
+        return 250000
+      elif self.productionmode in ("ggH", "VBF", "WH"):
+        return 500000
+      elif self.productionmode == "ZH":
+        return 750000
 
     raise ValueError("No nevents for {}".format(self))
 

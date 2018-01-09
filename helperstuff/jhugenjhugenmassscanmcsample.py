@@ -107,6 +107,10 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   def genproductionscommit(self):
     return "118144fc626bc493af2dac01c57ff51ea56562c7"
 
+  @property
+  def fragmentname(self):
+    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py"
+
   @classmethod
   def getmasses(cls, productionmode, decaymode):
     if decaymode == "4l":

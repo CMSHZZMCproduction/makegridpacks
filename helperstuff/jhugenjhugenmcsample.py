@@ -99,10 +99,6 @@ class JHUGenJHUGenMCSample(MCSampleBase):
     return ["JHUGen v7.0.11"]
 
   @property
-  def fragmentname(self):
-    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py"
-
-  @property
   def makegridpackscriptstolink(self):
     for filename in glob.iglob(os.path.join(genproductions, "bin", "JHUGen", "*")):
       if (filename.endswith(".py") or filename.endswith(".sh") or filename.endswith("patches")) and not os.path.exists(os.path.basename(filename)):
