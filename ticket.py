@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+raise RuntimeError("I think this script might break mcm.  Don't run it")
+
 import argparse
 import pprint
 
