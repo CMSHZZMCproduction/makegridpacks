@@ -71,11 +71,11 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   @property
   def genproductionscommit(self):
     "Carol change this after you make the cards"
-    return "441e6efc2cba80560477251ac06aaba1d60253e6"
+    return "fb46462ba79b16eef88cbc03a738e6c3dbf22773"
 
   @property
   def fragmentname(self):
-    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py"
+    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_LHE_pythia8_cff.py"
 
   @classmethod
   def getcouplings(cls, signalbkgbsi):

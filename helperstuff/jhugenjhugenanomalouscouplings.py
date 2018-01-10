@@ -99,14 +99,14 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def genproductionscommit(self):
-    return "441e6efc2cba80560477251ac06aaba1d60253e6"
+    return "fb46462ba79b16eef88cbc03a738e6c3dbf22773"
 
   @property
   def fragmentname(self):
     if self.productionmode == "ttH":
-      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py"
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_LHE_pythia8_cff.py"
     elif self.productionmode in ("VBF", "HJJ", "ZH", "WH"):
-      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_fudgepTmax_half_LHE_pythia8_cff.py"
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py"
     raise ValueError("No fragment for {}".format(self))
 
   @classmethod
