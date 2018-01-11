@@ -51,10 +51,12 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
       "SM": "0PM",
       "a2": "0PH",
       "a3": "0M",
+      "0M": "0M",  #for ttH
       "L1": "0L1",
       "L1Zg": "0L1Zg",
       "a2mix": "0PHf05ph0",
       "a3mix": "0Mf05ph0",
+      "0Mmix": "0Mf05ph0",  #for ttH
       "L1mix": "0L1f05ph0",
       "L1Zgmix": "0L1Zgf05ph0",
     }[self.kind]
@@ -62,10 +64,8 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     result += "ToZZ"
     if "ZZ4l_withtaus" in self.decaycard:
       result += "To4L"
-      if "ZH" in self.productionmode:
-         result.replace("To4L","_4LFilter")
-    elif "ZZ2l2any_withtaus_filter4l.input" or "ZZ2l2any_withtaus_filter4lOSSF.input" in self.decaycard:
-      result += "To2L2X_4LFilter"
+    elif "ZZ2l2any_withtaus_filter4l" in self.decaycard:
+      result += "_4LFilter"
     else:
       raise ValueError("Unknown decay card\n"+self.decaycard)
 
