@@ -60,15 +60,16 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     }[self.kind]
 
     result += "ToZZ"
-    if "ZZ4l_withtaus.input" in self.decaycard:
+    if "ZZ4l_withtaus" in self.decaycard:
       result += "To4L"
+      if "ZH" in self.productionmode:
+         result.replace("To4L","_4LFilter")
     elif "ZZ2l2any_withtaus_filter4l.input" or "ZZ2l2any_withtaus_filter4lOSSF.input" in self.decaycard:
       result += "To2L2X_4LFilter"
     else:
       raise ValueError("Unknown decay card\n"+self.decaycard)
 
     result += "_M125_13TeV_JHUGenV7011_pythia8"
-
 
     pm = self.productionmode.replace("HJJ", "JJH").replace("H", "Higgs")
     dm = self.decaymode.upper().replace("NU", "Nu")
@@ -112,8 +113,8 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   @classmethod
   def getmasses(cls, productionmode, decaymode):
     if decaymode == "4l":
-      if productionmode == "HJJ" or productionmode == "VBF":
-        return 125,
+      if productionmode == "HJJ" or productionmode == "VBF" or productionmode == "ZH" or productionmode == "WH" or productionmode == "ttH":
+        return 125
 
   @classmethod
   def getkind(cls,productionmode,decaymode):
@@ -121,15 +122,22 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
       return "SM","a3","a3mix" 
     if productionmode == "VBF" :
       return "L1","L1Zg","L1Zgmix","L1mix","SM","a2","a2mix","a3","a3mix" 
+    if productionmode == "WH" :
+      return "L1","L1mix","SM","a2","a2mix","a3","a3mix" 
+    if productionmode == "ZH" :
+      return "L1","L1Zg","L1Zgmix","L1mix","SM","a2","a2mix","a3","a3mix" 
+    if productionmode == "ttH" :
+      return "0M","0Mmix","SM" 
 
 
   @classmethod
   def allsamples(cls):
-    for productionmode in "HJJ", "VBF" :
+    for productionmode in "HJJ", "VBF", "ZH","WH","ttH" :
+    #for productionmode in "HJJ", "VBF"  :
         decaymode = "4l" 
-        for mass in cls.getmasses(productionmode, decaymode) :
-            for kind in cls.getkind(productionmode, decaymode) :
-                yield cls(productionmode, decaymode, mass, kind)
+        mass = cls.getmasses(productionmode, decaymode) 
+        for kind in cls.getkind(productionmode, decaymode) :
+            yield cls(productionmode, decaymode, mass, kind)
 
   @property
   def responsible(self):
