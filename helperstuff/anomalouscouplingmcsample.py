@@ -17,12 +17,22 @@ class AnomalousCouplingMCSample(MCSampleBase):
   def decaycard(self):
     folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "decay")
 
+    couplings = ["L1","L1Zg","L1Zgmix","L1mix","a2","a2mix","a3","a3mix"]
+
     if self.decaymode == "4l":
-        if self.productionmode == "ZH":
-            filename = "ZZ2l2any_withtaus_filter4l.input"
+        if self.productionmode == "VBF" or self.productionmode == "WH":
+            for coupling in couplings :
+                if coupling in self.kind and not "mix" in coupling :
+                   filename = "anomalouscouplings/ZZ4l_withtaus_" +coupling+".input"
+                else :
+                   filename = "anomalouscouplings/ZZ4l_withtaus_" +coupling+"for"+self.productionmode+".input"
+        if self.productionmode == "ZH" or self.productionmode == "HJJ":
+            for coupling in couplings :
+                if coupling in self.kind :
+                   filename = "anomalouscouplings/ZZ4l_withtaus_" +coupling+".input"
         if self.productionmode == "ttH":
-            filename = "ZZ2l2any_withtaus_filter4lOSSF.input"
-        else:
+            filename = "ZZ4l_withtaus.input"
+        if self.productionmode == "VBF" or self.productionmode == "ZH" or self.productionmode == "WH" or self.productionmode == "HJJ" and "SM" in self.kind :
             filename = "ZZ4l_withtaus.input"
 
     card = os.path.join(folder, filename)
