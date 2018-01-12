@@ -71,7 +71,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   @property
   def genproductionscommit(self):
     "Carol change this after you make the cards"
-    return "fb46462ba79b16eef88cbc03a738e6c3dbf22773"
+    return "ee94dea404c5b05c9805ad74d42aab506223fbf2"
 
   @property
   def fragmentname(self):

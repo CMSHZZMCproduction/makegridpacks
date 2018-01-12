@@ -111,7 +111,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
   @property
   def genproductionscommit(self):
-    return "fb46462ba79b16eef88cbc03a738e6c3dbf22773"
+    return "ee94dea404c5b05c9805ad74d42aab506223fbf2"
 
   @property
   def fragmentname(self):
