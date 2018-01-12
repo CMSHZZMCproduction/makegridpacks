@@ -278,6 +278,18 @@ class MCSampleBase(JsonDict):
         approvalqueue.reset(self)
         return "needs update on McM, resetting the request"
       return "request is defined"
+    if (self.approval, self.status) == ("submit", "approved"):
+      if self.needsupdate:
+        return "{} is already approved, but needs update!".format(self)
+      return "approved"
+    if (self.approval, self.status) == ("submit", "submitted"):
+      if self.needsupdate:
+        return "{} is already submitted, but needs update!".format(self)
+      return "submitted"
+    if (self.approval, self.status) == ("submit", "done"):
+      if self.needsupdate:
+        return "{} is already finished, but needs update!".format(self)
+      return "finished!"
     return "Unknown approval "+self.approval+" and status "+self.status
 
   #these things should all be calculated once.

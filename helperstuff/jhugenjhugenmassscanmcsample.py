@@ -20,6 +20,12 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     return card
 
   @property
+  def productioncardusesscript(self):
+    if self.productionmode == "tqH": return False
+    if self.productionmode == "bbH": return True
+    assert False, self
+
+  @property
   def reweightdecay(self):
     return False
 

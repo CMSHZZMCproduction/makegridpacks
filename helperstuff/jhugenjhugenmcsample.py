@@ -32,25 +32,36 @@ class JHUGenJHUGenMCSample(MCSampleBase):
   @property
   def makinggridpacksubmitsjob(self):
     return None
+  @abc.abstractproperty
+  def productioncardusesscript(self):
+    pass
 
   @property
   @cache
   def cardsurl(self):
-    productiondir, productioncard = os.path.split(self.productioncard)
-    productionscript = os.path.join(productiondir, "makecards.py")
     commit = self.genproductionscommit
-    productionscript = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, productionscript.split("genproductions/")[-1])
-    JHUGencard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.decaycard.split("genproductions/")[-1])
+    decaycard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.decaycard.split("genproductions/")[-1])
+    if self.productioncardusesscript:
+      productiondir, productioncard = os.path.split(self.productioncard)
+      productionscript = os.path.join(productiondir, "makecards.py")
+      productionscript = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, productionscript.split("genproductions/")[-1])
 
-    result = (       productionscript + "\n"
-            + "#    " + productioncard + "\n"
-            + "# " + JHUGencard)
+      result = (       productionscript + "\n"
+              + "#    " + productioncard + "\n"
+              + "# " + decaycard)
+    else:
+      productioncard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.productioncard.split("genproductions/")[-1])
+      result = (       productioncard + "\n"
+              + "# " + decaycard)
 
     with cdtemp():
-      wget(productionscript)
-      wget(os.path.join(os.path.dirname(productionscript), productioncard.replace("M{}".format(self.mass), "template").replace("Wplus", "W").replace("Wminus", "W")))
-      subprocess.check_call(["python", "makecards.py"])
-      with open(productioncard) as f:
+      if self.productioncardusesscript:
+        wget(productionscript)
+        wget(os.path.join(os.path.dirname(productionscript), productioncard.replace("M{}".format(self.mass), "template").replace("Wplus", "W").replace("Wminus", "W")))
+        subprocess.check_call(["python", "makecards.py"])
+      else:
+        wget(productioncard)
+      with open(os.path.basename(productioncard)) as f:
         productiongitcard = f.read()
         productiongitcardlines = [re.sub(" *([#!].*)?$", "", line) for line in productiongitcard.split("\n")]
         productiongitcardlines = [re.sub("(iseed|ncall2|fakevirt) *", r"\1 ", line) for line in productiongitcardlines
@@ -58,15 +69,17 @@ class JHUGenJHUGenMCSample(MCSampleBase):
                               ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets", "xgriditeration")
                               )]
         productiongitcard = "\n".join(line for line in productiongitcardlines)
-      with contextlib.closing(urllib.urlopen(JHUGencard)) as f:
-        JHUGengitcard = f.read()
+      with contextlib.closing(urllib.urlopen(decaycard)) as f:
+        decaygitcard = f.read()
 
     with cdtemp():
       subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
-      if glob.glob("core.*"):
-        raise ValueError("There is a core dump in the tarball\n{}".format(self))
+      for root, dirnames, filenames in os.walk('.'):
+        for filename in filenames:
+          if re.match("core[.].*", filename):
+            raise ValueError("There is a core dump in the tarball\n{}".format(self))
       try:
-        with open("JHUGen.input") as f:
+        with open(os.path.join(self.shortname+"_JHUGen", "JHUGen.input")) as f:
           productioncard = f.read()
           productioncardlines = [re.sub(" *([#!].*)?$", "", line) for line in productioncard.split("\n")]
           productioncardlines = [re.sub("(iseed|ncall2|fakevirt) *", r"\1 ", line) for line in productioncardlines
@@ -77,10 +90,10 @@ class JHUGenJHUGenMCSample(MCSampleBase):
       except IOError:
         raise ValueError("no JHUGen.input in the tarball\n{}".format(self))
       try:
-        with open("JHUGen.input") as f:
-          JHUGencard = f.read()
+        with open(os.path.join(self.shortname+"_JHUGen", "JHUGen_decay.input")) as f:
+          decaycard = f.read()
       except IOError:
-        raise ValueError("no JHUGen.input in the tarball\n{}".format(self))
+        raise ValueError("no JHUGen_decay.input in the tarball\n{}".format(self))
 
     if productioncard != productiongitcard:
       with cd(here):
@@ -88,9 +101,9 @@ class JHUGenJHUGenMCSample(MCSampleBase):
           f.write(productioncard)
         with open("productiongitcard", "w") as f:
           f.write(productiongitcard)
-      raise ValueError("productioncard != productiongitcard\n{}\nSee ./productioncard and ./productiongitcard".format(self))
-    if JHUGencard != JHUGengitcard:
-      raise ValueError("JHUGencard != JHUGengitcard\n{}\n{}\n{}".format(self, JHUGencard, JHUGengitcard))
+      raise ValueError("productioncard != productiongitcard\n{}\n{}\n{}".format(self, productioncard, productiongitcard))
+    if decaycard != decaygitcard:
+      raise ValueError("decaycard != decaygitcard\n{}\n{}\n{}".format(self, decaycard, decaygitcard))
 
     return result
 

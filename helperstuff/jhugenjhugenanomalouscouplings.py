@@ -21,6 +21,10 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     return card
 
   @property
+  def productioncardusesscript(self):
+    return False
+
+  @property
   def queue(self):
     return "1nd"
 
