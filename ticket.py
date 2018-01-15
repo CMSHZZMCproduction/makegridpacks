@@ -6,8 +6,13 @@ import pprint
 from helperstuff import allsamples
 from helperstuff.utilities import restful
 
-def maketicket(block, chain, tags, filter=lambda sample: True, modifyticket=None, notes=None, dryrun=False):
-  prepids = [sample.prepid for sample in allsamples(filter=lambda sample: sample.prepid is not None and filter(sample))]
+def maketicket(block, chain, tags, filter=lambda sample: True, modifyticket=None, notes=None, dryrun=False, status=("defined",)):
+  prepids = [sample.prepid for sample in allsamples(
+    filter=lambda sample:
+      sample.prepid is not None
+      and filter(sample)
+      and sample.status in status
+  )]
   if not prepids:
     print "no prepids!"
     return
@@ -71,6 +76,16 @@ if __name__ == "__main__":
   parser.add_argument("--notes")
   parser.add_argument("--tags", "-t", action="append", required=True)
   parser.add_argument("--dry-run", "-n", action="store_true")
+  group = parser.add_mutually_exclusive_group()
+  group.add_argument("--submitted", action="store_true", help="make a ticket using requests that are already approved or submitted")
+  group.add_argument("--unvalidated", action="store_true", help="make a ticket using requests that are not validated (status new)")
+  group.add_argument("--status", action="append", help="make a ticket using requests that have the statuses listed here", choices=("new", "validation", "defined", "approved", "submitted", "done"))
   args = parser.parse_args()
   if not args.dry_run: parser.error("I think this script might break mcm.  Don't run it without -n.")
-  maketicket(block=args.block, chain=args.chain, filter=args.filter, modifyticket=args.modify, notes=args.notes, tags=args.tags, dryrun=args.dry_run)
+
+  if args.submitted: status = ("approved", "submitted", "done")
+  elif args.unvalidated: status = ("new",)
+  elif args.status: status = args.status
+  else: status = ("defined",)
+
+  maketicket(block=args.block, chain=args.chain, filter=args.filter, modifyticket=args.modify, notes=args.notes, tags=args.tags, dryrun=args.dry_run, status=status)
