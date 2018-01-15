@@ -1339,54 +1339,74 @@
             "125": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00439"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00439",
+                "sizeperevent": 659.3066666666667,
+                "timeperevent": 83.948959032908
             }
         },
         "4l": {
             "115": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00430"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00430",
+                "sizeperevent": 626.5493333333333,
+                "timeperevent": 84.35259384226066
             },
             "120": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00431"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00431",
+                "sizeperevent": 617.3386666666667,
+                "timeperevent": 72.56578088036805
             },
             "124": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00432"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00432",
+                "sizeperevent": 650.592,
+                "timeperevent": 66.56194254373119
             },
             "125": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00433"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00433",
+                "sizeperevent": 623.28,
+                "timeperevent": 94.72118818258456
             },
             "126": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00434"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00434",
+                "sizeperevent": 610.928,
+                "timeperevent": 72.12197268019675
             },
             "130": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00435"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00435",
+                "sizeperevent": 620.768,
+                "timeperevent": 98.36517086030179
             },
             "135": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00436"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00436",
+                "sizeperevent": 644.2293333333333,
+                "timeperevent": 62.24169695762585
             },
             "140": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00437"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00437",
+                "sizeperevent": 655.04,
+                "timeperevent": 145.4059005714452
             },
             "145": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00438"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00438",
+                "sizeperevent": 643.0133333333333,
+                "timeperevent": 169.13862771065794
             }
         }
     },
@@ -1893,14 +1913,18 @@
             "125": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00441"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00441",
+                "sizeperevent": 718.6133333333333,
+                "timeperevent": 38.236677385681894
             }
         },
         "4l": {
             "125": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-RunIIFall17wmLHEGS-00440"
+                "prepid": "HIG-RunIIFall17wmLHEGS-00440",
+                "sizeperevent": 687.344,
+                "timeperevent": 60.14711985516574
             }
         }
     },
