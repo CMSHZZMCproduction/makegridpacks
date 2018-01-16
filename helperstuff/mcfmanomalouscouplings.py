@@ -30,7 +30,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def productioncard(self):
-    folder = os.path.join('genproductions','bin','MCFM','cards','MCFM+JHUGen',self.signalbkgbsi)
+    folder = os.path.join(genproductions,'bin','MCFM','cards','MCFM+JHUGen',self.signalbkgbsi)
     cardbase = 'MCFM_JHUGen_13TeV_ggZZto{finalstate}_{sigbkgbsi}{widthtag}_NNPDF31.DAT'.format(finalstate=self.finalstate,sigbkgbsi=self.signalbkgbsi,widthtag=self.widthtag)
     card = os.path.join(folder,cardbase)
     if not os.path.exists(card):
@@ -53,8 +53,9 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def cvmfstarball(self): 
-    folder = os.path.join('genproduction','bin','MCFM')
-    tarballname = self.datasetname+".tgz"
+    folder = os.path.join(genproductions,'bin','MCFM')
+    tarballchains = ['MCFM',self.method,scramarch, cmssw, self.datasetname]
+    tarballname = '_'.join(tarballchains)+".tgz"
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
 
   @property
