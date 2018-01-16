@@ -53,9 +53,8 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def cvmfstarball(self): 
-    folder = os.path.join(genproductions,'bin','MCFM')
-    tarballchains = ['MCFM',self.method,scramarch, cmssw, self.datasetname]
-    tarballname = '_'.join(tarballchains)+".tgz"
+    folder = os.path.join(genproductions,'bin','MCFM') 
+    tarballname = self.tmptarball
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
 
   @property
