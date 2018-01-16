@@ -79,7 +79,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @classmethod
   def getcouplings(cls, signalbkgbsi):
-    if signalbkgbsi in ("Sig", "BSI"): return "SM", "a2", "a3", "L1", "L1Zg", "a2mix", "a3mix", "L1mix", "L1Zgmix"
+    if signalbkgbsi in ("Sig", "BSI"): return "SM", "a2", "a3", "L1", "a2mix", "a3mix", "L1mix"
     assert False, signalbkgbsi
 
   @classmethod
