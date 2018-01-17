@@ -45,6 +45,8 @@ class MCSampleBase(JsonDict):
   def keepoutput(self): pass
   @abc.abstractproperty
   def responsible(self): "put the lxplus username of whoever makes these gridpacks"
+  @property
+  def doublevalidationtime(self): return False
 
   @abc.abstractmethod
   def allsamples(self): "should be a classmethod"
@@ -446,6 +448,9 @@ class MCSampleBase(JsonDict):
     req["keep_output"][0] = bool(self.keepoutput)
     req["tags"] = self.tags
     req["memory"] = 2300
+    req["validation"].update({
+      "double_time": self.doublevalidationtime,
+    })
     try:
       answer = mcm.updateA('requests', req)
     except pycurl.error as e:

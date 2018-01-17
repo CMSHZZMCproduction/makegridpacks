@@ -98,6 +98,9 @@ class PythiaVariationSample(MCSampleBase):
   def keepoutput(self):
     return self.mainsample.keepoutput
   @property
+  def doublevalidationtime(self):
+    return self.mainsample.doublevalidationtime
+  @property
   def responsible(self):
     return "hroskes"
 
