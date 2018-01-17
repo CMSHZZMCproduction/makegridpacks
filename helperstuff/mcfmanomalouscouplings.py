@@ -15,19 +15,24 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     return self.signalbkgbsi, self.width, self.coupling, self.finalstate
   @property
   def nevents(self):
-    "Carol fill in"
+    return 5000000
+
   @property
   def keepoutput(self):
     return False
 
   @property
-  def productioncard(self):
-    "Carol fill in"
-#   something like:
-#    folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "2017", "13TeV", "anomalouscouplings", self.productionmode+"_NNPDF31_13TeV")
-#    cardbase = self.productionmode
-#    card = os.path.join(folder, self.kind + ".input")
+  def widthtag(self):
+    if int(self.width) == 1:
+	return ''
+    else:
+	return str(self.width)
 
+  @property
+  def productioncard(self):
+    folder = os.path.join(genproductions,'bin','MCFM','cards','MCFM+JHUGen',self.signalbkgbsi)
+    cardbase = 'MCFM_JHUGen_13TeV_ggZZto{finalstate}_{sigbkgbsi}{widthtag}_NNPDF31.DAT'.format(finalstate=self.finalstate,sigbkgbsi=self.signalbkgbsi,widthtag=self.widthtag)
+    card = os.path.join(folder,cardbase)
     if not os.path.exists(card):
       raise IOError(card+" does not exist")
     return card
@@ -38,7 +43,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def queue(self):
-    return "1nd"
+    return "2nd"
 
   @property
   def tarballversion(self):
@@ -47,18 +52,37 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     return v
 
   @property
-  def cvmfstarball(self):
-    "Carol fill in"
-    folder = os.path.join("...")
-
-    tarballname = self.datasetname+".tgz"
-
+  def cvmfstarball(self): 
+    folder = os.path.join(genproductions,'bin','MCFM') 
+    tarballname = self.tmptarball
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
 
   @property
   def datasetname(self):
-    "Carol fill in"
+   return 'GluGluToHiggs{coupling}{signalbkgbsitag}ToZZTo{finalstatetag}_M125_{widthtag}GaSM_13TeV_MCFM701_pythia8'.format(coupling=self.coupling,finalstatetag=self.datasetfinalstatetag,widthtag=self.widthtag,signalbkgbsitag=self.signalbkgbsitag) 
 
+  @property 
+  def signalbkgbsitag(self):
+    if self.signalbkgbsi == 'SIG':	return ''
+    elif self.signalbkgbsi == 'BSI':	return 'contin'
+
+  @property 
+  def datasetfinalstatetag(self):
+    states = []
+    tag = ''
+    p1,p2 = self.finalstate[:2], self.finalstate[2:] 
+    if p1 == p2:
+	if p1 == 'EL':		return '4e'
+	elif p1 == 'MU':	return '4mu'
+	else:			return '4tau'
+    else:
+	for p in p1,p2:
+		if p == 'EL':	tag += '2e'
+		elif p == 'MU': tag += '2mu'
+		elif p == 'TL': tag += '2tau'
+		else p == 'NU': tag += '2nu'
+	return tag
+    
   @property
   def defaulttimeperevent(self):
     return 30
@@ -70,8 +94,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def genproductionscommit(self):
-    "Carol change this after you make the cards"
-    return "ee94dea404c5b05c9805ad74d42aab506223fbf2"
+    return "30f2b0996446b94cf97165a40ab4b296550afc2e"
 
   @property
   def fragmentname(self):
@@ -79,20 +102,24 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @classmethod
   def getcouplings(cls, signalbkgbsi):
+<<<<<<< HEAD
+    if signalbkgbsi in ("SIG", "BSI"): return "0PM", "0PH", "0PHf05ph0", "0PL1", "0PL1f05ph0", "0M", "0Mf05ph0"
+=======
     if signalbkgbsi in ("Sig", "BSI"): return "SM", "a2", "a3", "L1", "a2mix", "a3mix", "L1mix"
+>>>>>>> c1ac0f97d1c736d3184525f5ef70ebcd34a03bfc
     assert False, signalbkgbsi
 
   @classmethod
   def getwidths(cls, signalbkgbsi, coupling):
-    if signalbkgbsi == "Sig": return 1,
+    if signalbkgbsi == "SIG": return 1,
     if signalbkgbsi == "BSI":
       if coupling == "SM": return 1, 10, 25
       return 1, 10
 
   @classmethod
   def allsamples(cls):
-    for signalbkgbsi in "Sig", "BSI":
-      for finalstate in "4E", "2E2MU", "2E2TAU", "2E2NU", "... Carol put the rest":
+    for signalbkgbsi in "SIG", "BSI":
+      for finalstate in "ELEL", "ELMU", "ELTL", "ELNU", "MUMU","MUNU","TLTL":
         for coupling in cls.getcouplings(signalbkgbsi):
           for width in cls.getwidths(signalbkgbsi, coupling):
             yield cls(signalbkgbsi, width, coupling, finalstate)

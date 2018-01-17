@@ -5,21 +5,25 @@ from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, mak
 from mcsamplebase import MCSampleBase
 
 class MCFMMCSample(MCSampleBase):
+  @property 
+  def method(self):	return 'mdata'
   @abc.abstractproperty
   def productioncard(self): pass
   @property
   def cardbase(self):
     return os.path.basename(self.productioncard).split(".DAT")[0]
   @property
-  def method(self):
-    "Carol fill in"
-  @property
   def tmptarball(self):
-    return os.path.join(here, "workdir",self.productionmode+"_"+self.decaymode, os.path.basename(self.productioncard).replace(".input", ""),
-             "MCFM_%s_%s_%s_%s.tgz" % (self.method, scramarch, cmssw, self.cardbase))
-  @property
+    return os.path.join(here,"MCFM_%s_%s_%s_%s.tgz" % (self.method, scramarch, cmssw, self.datasetname))
+ @property
   def makegridpackcommand(self):
-    "Carol fill in"
+    args = {
+	'-i': self.productioncard,
+	'--coupling': self.coupling,
+	'-d': self.datasetname
+	}
+    return ['./run_mcfm_AC.py'] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
+ 
   @property
   def makinggridpacksubmitsjob(self):
     return None
@@ -42,10 +46,10 @@ class MCFMMCSample(MCSampleBase):
       if glob.glob("core.*"):
         raise ValueError("There is a core dump in the tarball\n{}".format(self))
       try:
-        with open("input.DAT") as f:
+        with open("readInput.DAT") as f:
           productioncard = f.read()
       except IOError:
-        raise ValueError("no input.DAT in the tarball\n{}".format(self))
+        raise ValueError("no readInput.DAT in the tarball\n{}".format(self))
 
     if productioncard != productiongitcard:
       with cd(here):
