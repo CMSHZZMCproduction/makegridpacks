@@ -80,7 +80,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 		if p == 'EL':	tag += '2e'
 		elif p == 'MU': tag += '2mu'
 		elif p == 'TL': tag += '2tau'
-		else p == 'NU': tag += '2nu'
+		elif p == 'NU': tag += '2nu'
 	return tag
     
   @property
@@ -102,11 +102,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @classmethod
   def getcouplings(cls, signalbkgbsi):
-<<<<<<< HEAD
     if signalbkgbsi in ("SIG", "BSI"): return "0PM", "0PH", "0PHf05ph0", "0PL1", "0PL1f05ph0", "0M", "0Mf05ph0"
-=======
-    if signalbkgbsi in ("Sig", "BSI"): return "SM", "a2", "a3", "L1", "a2mix", "a3mix", "L1mix"
->>>>>>> c1ac0f97d1c736d3184525f5ef70ebcd34a03bfc
     assert False, signalbkgbsi
 
   @classmethod
