@@ -82,7 +82,12 @@ class MCSampleBase(JsonDict):
 
   @property
   def workdir(self):
-    return os.path.dirname(self.tmptarball)
+    result = os.path.dirname(self.tmptarball)
+    if os.path.commonprefix((result, os.path.join(here, "workdir"))) != os.path.join(here, "workdir"):
+      raise ValueError("{!r}.workdir is supposed to be in the workdir folder".format(self))
+    if result == os.path.join(here, "workdir"):
+      raise ValueError("{!r}.workdir is supposed to be a subfolder of the workdir folder, not workdir itself".format(self))
+    return result
 
   def createtarball(self):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
