@@ -26,7 +26,7 @@ class MCFMMCSample(MCSampleBase):
  
   @property
   def makinggridpacksubmitsjob(self):
-    return None
+    return 'MCFM_submit_%s.sh'%(self.datasetname)
 
   @property
   @cache
