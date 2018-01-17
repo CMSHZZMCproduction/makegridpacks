@@ -1,4 +1,4 @@
-import abc, os
+import abc, contextlib, csv, os, urllib
 
 from utilities import genproductions
 
@@ -31,7 +31,7 @@ class AnomalousCouplingMCSample(MCSampleBase):
             filename = decaymode+".input"
 
         else :
-            if "mix" not in self.kind :
+            if "mix" not in self.kind or self.productionmode == "ggH":
                 filename = "anomalouscouplings/"+decaymode+"_"+self.kind+".input"
             else :
                 filename = "anomalouscouplings/"+decaymode+"_"+self.kind+"for"+self.productionmode+".input"
@@ -74,12 +74,21 @@ class AnomalousCouplingMCSample(MCSampleBase):
     else:
       raise ValueError("Unknown decay card\n"+self.decaycard)
 
-    result += "_M125_13TeV_JHUGenV7011_pythia8"
+    from powhegjhugenmcsample import POWHEGJHUGenMCSample
 
-    pm = self.productionmode.replace("HJJ", "JJH").replace("H", "Higgs")
+    result += "_M125_13TeV"
+    if isinstance(self, POWHEGJHUGenMCSample):
+      result += "_powheg2"
+    result += "_JHUGenV7011_pythia8"
+
+    pm = self.productionmode.replace("HJJ", "JJH").replace("H", "Higgs").replace("ggHiggs", "Higgs")
     dm = self.decaymode.upper().replace("NU", "Nu")
     searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV7011_"]
-    shouldntbethere = ["powheg"]
+    shouldntbethere = []
+    if isinstance(self, POWHEGJHUGenMCSample):
+      searchfor.append("powheg")
+    else:
+      shouldntbethere.append("powheg")
     if any(_ not in result for _ in searchfor) or any(_.lower() in result.lower() for _ in shouldntbethere):
       raise ValueError("Dataset name doesn't make sense:\n{}\n{}\nNOT {}\n{}".format(result, searchfor, shouldntbethere, self))
 
@@ -115,6 +124,7 @@ class AnomalousCouplingMCSample(MCSampleBase):
     if decaymode == "4l":
       if productionmode == "ggH" or productionmode == "HJJ" or productionmode == "VBF" or productionmode == "ZH" or productionmode == "WH" or productionmode == "ttH":
         return 125,
+    raise ValueError("No masses for {} {}".format(productionmode, decaymode))
 
   @classmethod
   def getkind(cls,productionmode,decaymode):

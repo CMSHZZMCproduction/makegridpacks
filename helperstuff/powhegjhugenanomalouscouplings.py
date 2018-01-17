@@ -3,7 +3,8 @@ import contextlib, csv, os, re, subprocess, urllib
 from utilities import cache, cd, genproductions, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
-from jhugenjhugenmcsample import POWHEGJHUGenMCSample
+from powhegjhugenmcsample import POWHEGJHUGenMCSample
+from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 
 class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSample):
   @property
@@ -13,7 +14,7 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
 
   @property
   def powhegcard(self):
-    return POWHEGJHUGenMassScanMCSample(self.productionmode, self.decaymode, self.mass).productioncard
+    return POWHEGJHUGenMassScanMCSample(self.productionmode, self.decaymode, self.mass).powhegcard
 
   @property
   def queue(self):
@@ -29,14 +30,6 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
   def cvmfstarball(self):
     folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2", self.powhegprocess+"_ZZ_NNPDF31_13TeV", "anomalouscouplings")
     tarballname = self.datasetname
-    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
-
-  @property
-  def cvmfstarball(self):
-    folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V7011", self.productionmode+"_ZZ_NNPDF31_13TeV")
-
-    tarballname = self.datasetname+".tgz"
-
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
 
   @property
@@ -59,7 +52,7 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
 
   @classmethod
   def allsamples(cls):
-    for productionmode in "ggH" :
+    for productionmode in "ggH", :
         decaymode = "4l"
         for mass in cls.getmasses(productionmode, decaymode):
             for kind in cls.getkind(productionmode, decaymode):
