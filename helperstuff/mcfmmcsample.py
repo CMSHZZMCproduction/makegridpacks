@@ -15,7 +15,7 @@ class MCFMMCSample(MCSampleBase):
   @property
   def tmptarball(self):
     return os.path.join(here,"MCFM_%s_%s_%s_%s.tgz" % (self.method, scramarch, cmssw, self.datasetname))
- @property
+  @property
   def makegridpackcommand(self):
     args = {
 	'-i': self.productioncard,
