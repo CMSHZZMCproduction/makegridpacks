@@ -68,9 +68,9 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     for productionmode in "HJJ", "VBF", "ZH","WH","ttH" :
     #for productionmode in "HJJ", "VBF"  :
         decaymode = "4l" 
-        mass = cls.getmasses(productionmode, decaymode) 
-        for kind in cls.getkind(productionmode, decaymode) :
-            yield cls(productionmode, decaymode, mass, kind)
+        for mass in cls.getmasses(productionmode, decaymode) :
+            for kind in cls.getkind(productionmode, decaymode) :
+                yield cls(productionmode, decaymode, mass, kind)
 
   @property
   def responsible(self):

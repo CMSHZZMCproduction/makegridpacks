@@ -45,6 +45,7 @@ class AnomalousCouplingMCSample(MCSampleBase):
   @property
   def datasetname(self):
     result = {
+      "ggH": "Higgs",
       "VBF": "VBFHiggs",
       "HJJ": "JJHiggs",
       "ZH":  "ZHiggs",
@@ -113,7 +114,7 @@ class AnomalousCouplingMCSample(MCSampleBase):
   def getmasses(cls, productionmode, decaymode):
     if decaymode == "4l":
       if productionmode == "ggH" or productionmode == "HJJ" or productionmode == "VBF" or productionmode == "ZH" or productionmode == "WH" or productionmode == "ttH":
-        return 125
+        return 125,
 
   @classmethod
   def getkind(cls,productionmode,decaymode):
