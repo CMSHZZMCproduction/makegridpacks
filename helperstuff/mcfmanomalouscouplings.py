@@ -94,7 +94,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def genproductionscommit(self):
-    return "30f2b0996446b94cf97165a40ab4b296550afc2e"
+    return "520a4cccc80527e3b18a0c3e99ced06c262380c1"
 
   @property
   def fragmentname(self):

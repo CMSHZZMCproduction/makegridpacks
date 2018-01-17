@@ -1,6 +1,6 @@
 import abc, contextlib, glob, os, re, subprocess, urllib
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
+from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
 
 from mcsamplebase import MCSampleBase
 
@@ -34,11 +34,8 @@ class MCFMMCSample(MCSampleBase):
     commit = self.genproductionscommit
     productioncard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.productioncard.split("genproductions/")[-1])
 
-    result = productioncard
-
     with cdtemp():
-      wget(productioncard)
-      with open(productioncard) as f:
+      with contextlib.closing(urllib.urlopen(productioncard)) as f:
         productiongitcard = f.read()
 
     with cdtemp():
@@ -50,6 +47,11 @@ class MCFMMCSample(MCSampleBase):
           productioncard = f.read()
       except IOError:
         raise ValueError("no readInput.DAT in the tarball\n{}".format(self))
+      try:
+        with open("src/User/mdata.f") as f:
+          mdatacard = f.read()
+      except IOError:
+        raise ValueError("no src/User/mdata.f in the tarball\n{}".format(self))
 
     if productioncard != productiongitcard:
       with cd(here):
@@ -58,6 +60,35 @@ class MCFMMCSample(MCSampleBase):
         with open("productiongitcard", "w") as f:
           f.write(productiongitcard)
       raise ValueError("productioncard != productiongitcard\n{}\nSee ./productioncard and ./productiongitcard".format(self))
+
+    mdatascript = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, "bin/MCFM/ACmdataConfig.py")
+    with contextlib.closing(urllib.urlopen(os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, "bin/MCFM/run_mcfm_AC.py"))) as f:
+      infunction = False
+      for line in f:
+        if re.match(r"^\s*def .*", line): infunction = False
+        if re.match(r"^\s*def downloadmcfm.*", line): infunction = True
+        if not infunction: continue
+        match = re.search(r"git checkout (\S*)", line)
+        if match: mcfmcommit = match.group(1)
+    with cdtemp():
+      mkdir_p("src/User")
+      with cd("src/User"): wget(os.path.join("https://raw.githubusercontent.com/usarica/MCFM-7.0_JHUGen", mcfmcommit, "src/User/mdata.f"))
+      wget(mdatascript)
+      subprocess.check_call(["python", os.path.basename(mdatascript), "--coupling", self.coupling, "--mcfmdir", "."])
+      with open("src/User/mdata.f") as f:
+        mdatagitcard = f.read()
+
+    if mdatacard != mdatagitcard:
+      with cd(here):
+        with open("mdatacard", "w") as f:
+          f.write(mdatacard)
+        with open("mdatagitcard", "w") as f:
+          f.write(mdatagitcard)
+      raise ValueError("mdatacard != mdatagitcard\n{}\nSee ./mdatacard and ./mdatagitcard".format(self))
+
+    result = (       productioncard + "\n"
+            + "# " + mdatascript + "\n"
+            + "#    " + self.coupling)
 
     return result
 
