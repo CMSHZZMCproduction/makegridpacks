@@ -42,6 +42,12 @@ class MCFMMCSample(MCSampleBase):
       subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
       if glob.glob("core.*"):
         raise ValueError("There is a core dump in the tarball\n{}".format(self))
+      for root, dirs, files in os.walk("."):
+        for file in files:
+          try:
+            os.stat(file)
+          except OSError:
+            raise ValueError("There is a broken symlink in the tarball\n{}".format(self))
       try:
         with open("readInput.DAT") as f:
           productioncard = f.read()
