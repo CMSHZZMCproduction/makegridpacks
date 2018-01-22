@@ -537,3 +537,14 @@ class MCSampleBase(JsonDict):
       job = "cd "+here+" && eval $(scram ru -sh) && ./makegridpacks.py"
       pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
       subprocess.check_call(["bsub", "-q", "1nd", "-J", "makegridpacks"], stdin=pipe.stdout)
+
+  def delete(self):
+    if not self.prepid: return
+    response = ""
+    while response not in ("yes", "no"):
+      response = raw_input("are you sure you want to delete {}? [yes/no]".format(self))
+    if response == "no": return
+    restful().approve("requests", self.prepid, 0)
+    restful().deleteA("requests", self.prepid)
+    with cd(here), self.writingdict():
+      del self.value
