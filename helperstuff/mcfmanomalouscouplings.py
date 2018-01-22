@@ -7,7 +7,7 @@ from mcfmmcsample import MCFMMCSample
 class MCFMAnomCoupMCSample(MCFMMCSample):
   def __init__(self, signalbkgbsi, width, coupling, finalstate):
     self.signalbkgbsi = signalbkgbsi
-    self.width = int(str(width))
+    self.width = int(width)
     self.coupling = coupling
     self.finalstate = finalstate
   @property
@@ -53,8 +53,8 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def cvmfstarball(self): 
-    folder = os.path.join(genproductions,'bin','MCFM') 
-    tarballname = self.tmptarball
+    folder = '/cvmfs/cms.cern.ch/phys_generator/gridpacks'   
+    tarballname = self.tmptarball.split('/')[-1]
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
 
   @property
@@ -94,6 +94,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def genproductionscommit(self):
+#    return "ae49ee695eb68125cff65b0d47eab2e859c3e9aa"
     return "520a4cccc80527e3b18a0c3e99ced06c262380c1"
 
   @property
@@ -102,20 +103,20 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @classmethod
   def getcouplings(cls, signalbkgbsi):
-    if signalbkgbsi in ("SIG", "BSI"): return "0PM", "0PH", "0PHf05ph0", "0PL1", "0PL1f05ph0", "0M", "0Mf05ph0"
+    if signalbkgbsi in ("SIG", "BSI"): return ["0PM"]#, "0PH"]#, "0PHf05ph0", "0PL1", "0PL1f05ph0", "0M", "0Mf05ph0"
     assert False, signalbkgbsi
 
   @classmethod
   def getwidths(cls, signalbkgbsi, coupling):
     if signalbkgbsi == "SIG": return 1,
     if signalbkgbsi == "BSI":
-      if coupling == "SM": return 1, 10, 25
+      if coupling == "0PM": return 1, 10, 25
       return 1, 10
 
   @classmethod
   def allsamples(cls):
-    for signalbkgbsi in "SIG", "BSI":
-      for finalstate in "ELEL", "ELMU", "ELTL", "ELNU", "MUMU","MUNU","TLTL":
+    for signalbkgbsi in ["SIG", "BSI"]:
+      for finalstate in ["ELEL",'MUMU','ELMU', "ELTL", "ELMU", "ELNU","MUTL","MUNU","TLTL"]:
         for coupling in cls.getcouplings(signalbkgbsi):
           for width in cls.getwidths(signalbkgbsi, coupling):
             yield cls(signalbkgbsi, width, coupling, finalstate)

@@ -1,8 +1,26 @@
-import abc, contextlib, glob, os, re, subprocess, urllib
+import abc, contextlib, glob, os, re, subprocess, urllib, itertools
 
 from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
 
 from mcsamplebase import MCSampleBase
+
+def differentproductioncards(productioncard, gitproductioncard):
+	allowedtobediff = ['[readin]','[writeout]','[ingridfile]','[outgridfile]']
+	prodcardintarball = [line for line in productioncard.split('\n') if line != '']
+	prodcardongit = [line for line in gitproductioncard.split('\n') if line != '']
+	if len(prodcardintarball) != len(prodcardongit):
+		return True
+	diffprodcard = False
+	for tline, gline in itertools.izip(prodcardintarball,prodcardongit):
+		if any(item in tline for item in allowedtobediff):
+			continue
+		elif tline == gline:
+			continue
+		else:
+			return True
+	return diffprodcard
+			
+			
 
 class MCFMMCSample(MCSampleBase):
   @property 
@@ -20,7 +38,8 @@ class MCFMMCSample(MCSampleBase):
     args = {
 	'-i': self.productioncard,
 	'--coupling': self.coupling,
-	'-d': self.datasetname
+	'-d': self.datasetname,
+	'-q': self.queue
 	}
     return ['./run_mcfm_AC.py'] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
  
@@ -32,8 +51,9 @@ class MCFMMCSample(MCSampleBase):
   @cache
   def cardsurl(self):
     commit = self.genproductionscommit
+    print commit
     productioncard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.productioncard.split("genproductions/")[-1])
-
+    mdatascript = os.path.join("https://raw.githubusercontent.com/carolhungwt/genproductions/", commit, "bin/MCFM/ACmdataConfig.py")
     with cdtemp():
       with contextlib.closing(urllib.urlopen(productioncard)) as f:
         productiongitcard = f.read()
@@ -43,11 +63,11 @@ class MCFMMCSample(MCSampleBase):
       if glob.glob("core.*"):
         raise ValueError("There is a core dump in the tarball\n{}".format(self))
       for root, dirs, files in os.walk("."):
-        for file in files:
-          try:
-            os.stat(file)
-          except OSError:
-            raise ValueError("There is a broken symlink in the tarball\n{}".format(self))
+	for file in files:
+	  try:
+	    os.stat(file)
+	  except OSError:
+	    raise ValueError("There is a broken symlink in the tarball\n{}".format(self))
       try:
         with open("readInput.DAT") as f:
           productioncard = f.read()
@@ -67,8 +87,7 @@ class MCFMMCSample(MCSampleBase):
           f.write(productiongitcard)
       raise ValueError("productioncard != productiongitcard\n{}\nSee ./productioncard and ./productiongitcard".format(self))
 
-    mdatascript = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, "bin/MCFM/ACmdataConfig.py")
-    with contextlib.closing(urllib.urlopen(os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, "bin/MCFM/run_mcfm_AC.py"))) as f:
+    with contextlib.closing(urllib.urlopen(os.path.join("https://raw.githubusercontent.com/carolhungwt/genproductions/8b7ab33b0805c965c53ee2f1f3980abcde13f41a/bin/MCFM/run_mcfm_AC.py"))) as f:
       infunction = False
       for line in f:
         if re.match(r"^\s*def .*", line): infunction = False
@@ -104,6 +123,6 @@ class MCFMMCSample(MCSampleBase):
 
   @property
   def makegridpackscriptstolink(self):
-    for filename in glob.iglob(os.path.join(genproductions, "bin", "MCFM", "*")):
+    for filename in glob.iglob(os.path.join(genproductions, "..","scriptsforMCFM", "*")):
       if (filename.endswith(".py") or filename.endswith(".sh") or filename.endswith("patches")) and not os.path.exists(os.path.basename(filename)):
         yield filename
