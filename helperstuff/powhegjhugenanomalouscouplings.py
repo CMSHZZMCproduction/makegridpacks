@@ -43,7 +43,7 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
 
   @property
   def genproductionscommit(self):
-    return "ee94dea404c5b05c9805ad74d42aab506223fbf2"
+    return "fd7d34a91c3160348fd0446ded445fa28f555e09"
 
   @property
   def nfinalparticles(self):

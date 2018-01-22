@@ -7,7 +7,7 @@ class PythiaVariationSample(MCSampleBase):
   def __init__(self, mainsample, variation):
     """
     mainsample - nominal sample that this is similar to
-    variation - ScaleUp, ScaleDown, TuneUp, TuneDown
+    variation - ScaleExtension, TuneUp, TuneDown
     """
     self.mainsample = mainsample
     self.variation = variation
@@ -78,19 +78,19 @@ class PythiaVariationSample(MCSampleBase):
     result = self.mainsample.fragmentname
     if self.variation == "TuneUp":
       result = result.replace("CP5", "CP5Up")
-    elif self.variation == "ScaleUp":
-      result = result.replace("CP5", "CP5_ScaleUp")
     elif self.variation == "TuneDown":
       result = result.replace("CP5", "CP5Down")
-    elif self.variation == "ScaleDown":
+    elif self.variation == "ScaleExtension":
       result = result.replace("CP5", "CP5_ScaleDown")
     else:
       assert False
-    assert result != self.mainsample.fragmentname
+
+    if self.variation != "ScaleExtension":
+      assert result != self.mainsample.fragmentname
     return result
   @property
   def genproductionscommit(self):
-    return "9a5a9d535223760d4df4e66001f701bb1f1426e8"
+    return "fd7d34a91c3160348fd0446ded445fa28f555e09"
   @property
   def makegridpackscriptstolink(self):
     return self.mainsample.makegridpackscriptstolink

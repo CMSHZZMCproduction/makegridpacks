@@ -152,7 +152,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def genproductionscommit(self):
-    return "fadbc79637b695403f65181454f48aee1e28bbc9"
+    return "fd7d34a91c3160348fd0446ded445fa28f555e09"
 
   @classmethod
   def getmasses(cls, productionmode, decaymode):
