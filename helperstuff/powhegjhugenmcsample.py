@@ -74,8 +74,8 @@ class POWHEGJHUGenMCSample(MCSampleBase):
 
     with cdtemp():
       subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
-#      if glob.glob("core.*"):
-#        raise ValueError("There is a core dump in the tarball\n{}".format(self))
+      if glob.glob("core.*") and self.cvmfstarball != "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/HJJ_M125_13TeV/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_13TeV_M125.tgz":
+        raise ValueError("There is a core dump in the tarball\n{}".format(self))
       try:
         with open("powheg.input") as f:
           powhegcard = f.read()
