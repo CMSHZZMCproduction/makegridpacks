@@ -5,8 +5,8 @@ def allsamples(filter=lambda sample: True, onlymysamples=True):
 
   #import all modules that have classes that should be considered here
   import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, \
-         powhegjhugenanomalouscouplings, powhegjhugenmassscanmcsample, \
-         mcfmanomalouscouplings, pythiavariationsample
+         powhegjhugenanomalouscouplings, powhegjhugenmassscanmcsample, powhegjhugenlifetime, \
+         minlomcsample, mcfmanomalouscouplings, pythiavariationsample
 
   for subcls in recursivesubclasses(MCSampleBase):
     if "allsamples" in subcls.__abstractmethods__: continue

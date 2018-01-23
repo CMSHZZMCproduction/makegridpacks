@@ -118,5 +118,5 @@ class PythiaVariationSample(MCSampleBase):
   def allsamples(cls):
     for nominal in cls.nominalsamples():
       for systematic in "TuneUp", "TuneDown", "ScaleExtension":
-        if isinstance(sample, MINLOMCSample) and systematic == "ScaleExtension": continue
+        if isinstance(nominal, MINLOMCSample) and systematic == "ScaleExtension": continue
         yield cls(nominal, systematic)
