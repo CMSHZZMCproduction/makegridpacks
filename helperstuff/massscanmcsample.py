@@ -80,7 +80,3 @@ class MassScanMCSample(MCSampleBase):
         if self.mass == 125: return 200000
 
     raise ValueError("No nevents for {}".format(self))
-
-  @property
-  def keepoutput(self):
-    return False

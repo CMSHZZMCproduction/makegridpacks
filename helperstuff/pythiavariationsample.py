@@ -100,9 +100,6 @@ class PythiaVariationSample(MCSampleBase):
   def makegridpackscriptstolink(self):
     return self.mainsample.makegridpackscriptstolink
   @property
-  def keepoutput(self):
-    return self.mainsample.keepoutput
-  @property
   def doublevalidationtime(self):
     return self.mainsample.doublevalidationtime
   @property

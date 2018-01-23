@@ -13,7 +13,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
 
   @property
   def identifiers(self):
-    return "MINLO", self.decaymode, str(self.mass)
+    return "MINLO", self.decaymode, self.mass
 
   @property
   def powhegprocess(self):
@@ -50,10 +50,6 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
   @property
   def datasetname(self):
     return "GluGluHToZZTo4L_M125_13TeV_powheg2_minloHJJ_JHUgenV7011_pythia8"
-
-  @property
-  def keepoutput(self):
-    return False
 
   @property
   def nevents(self):

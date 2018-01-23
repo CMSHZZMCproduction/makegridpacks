@@ -42,8 +42,6 @@ class MCSampleBase(JsonDict):
   @abc.abstractproperty
   def makegridpackscriptstolink(self): pass
   @abc.abstractproperty
-  def keepoutput(self): pass
-  @abc.abstractproperty
   def responsible(self): "put the lxplus username of whoever makes these gridpacks"
   @property
   def doublevalidationtime(self): return False
@@ -298,6 +296,9 @@ class MCSampleBase(JsonDict):
         return "{} is already finished, but needs update!".format(self)
       return "finished!"
     return "Unknown approval "+self.approval+" and status "+self.status
+
+  @property
+  def keepoutput(self): return False
 
   #these things should all be calculated once.
   #they are stored in McMsampleproperties.json in this folder.

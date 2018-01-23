@@ -18,10 +18,6 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     return 5000000
 
   @property
-  def keepoutput(self):
-    return False
-
-  @property
   def widthtag(self):
     if int(self.width) == 1:
 	return ''

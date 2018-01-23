@@ -115,10 +115,6 @@ class AnomalousCouplingMCSample(MCSampleBase):
 
     raise ValueError("No nevents for {}".format(self))
 
-  @property
-  def keepoutput(self):
-    return False
-
   @classmethod
   def getmasses(cls, productionmode, decaymode):
     if decaymode == "4l":

@@ -17,7 +17,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def powhegcard(self):
-    folder = os.path.join(genproductions, "bin", "Powheg", "production", "2017", "13TeV", self.powhegprocess+"_ZZ_NNPDF31_13TeV")
+    folder = os.path.join(genproductions, "bin", "Powheg", "production", "2017", "13TeV", "Higgs", self.powhegprocess+"_ZZ_NNPDF31_13TeV")
     folder = folder.replace("quark-mass-effects_ZZ", "ZZ_quark-mass-effects")
     makecards(folder)
 
