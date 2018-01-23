@@ -20,6 +20,9 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     return "HJJ"
     raise ValueError("Unknown productionmode "+self.productionmode)
 
+  def createtarball(self):
+    return "making a minlo tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)
+
   @property
   def powhegcard(self):
     return os.path.join(genproductions, "bin/Powheg/production/2017/13TeV/Higgs/HJJ_NNPDF31_13TeV/HJJ_NNPDF31_13TeV_M{}.input".format(self.mass))
