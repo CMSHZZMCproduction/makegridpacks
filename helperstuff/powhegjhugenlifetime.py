@@ -40,6 +40,8 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
   def tarballversion(self):
     v = 1
 
+    v += 1 #wrong powheg process
+
     return v
 
   @property
