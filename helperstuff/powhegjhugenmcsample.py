@@ -9,6 +9,10 @@ class POWHEGJHUGenMCSample(MCSampleBase):
   def powhegprocess(self): pass
   @abc.abstractproperty
   def powhegcard(self): pass
+  @abc.abstractproperty
+  def decaycard(self): pass
+  @abc.abstractproperty
+  def powhegcardusesscript(self): pass
   @property
   def hasfilter(self): return "filter" in self.decaycard.lower()
   @property
@@ -34,26 +38,35 @@ class POWHEGJHUGenMCSample(MCSampleBase):
   @property
   @cache
   def cardsurl(self):
-    powhegdir, powhegcard = os.path.split(self.powhegcard)
-    powhegscript = os.path.join(powhegdir, "makecards.py")
     commit = self.genproductionscommit
-    powhegscript = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, powhegscript.split("genproductions/")[-1])
     JHUGencard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.decaycard.split("genproductions/")[-1])
 
-    result = (       powhegscript + "\n"
-            + "#    " + powhegcard + "\n"
-            + "# " + JHUGencard)
+    if self.powhegcardusesscript:
+      powhegdir, powhegcard = os.path.split(self.powhegcard)
+      powhegscript = os.path.join(powhegdir, "makecards.py")
+      powhegscript = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, powhegscript.split("genproductions/")[-1])
+
+      result = (       powhegscript + "\n"
+              + "#    " + powhegcard + "\n"
+              + "# " + JHUGencard)
+    else:
+      powhegcard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.powhegcard.split("genproductions/")[-1])
+      result = (       powhegcard + "\n"
+              + "# " + JHUGencard)
 
     with cdtemp():
-      wget(powhegscript)
-      wget(os.path.join(os.path.dirname(powhegscript), powhegcard.replace("M{}".format(self.mass), "template").replace("Wplus", "W").replace("Wminus", "W")))
-      subprocess.check_call(["python", "makecards.py"])
-      with open(powhegcard) as f:
+      if self.powhegcardusesscript:
+        wget(powhegscript)
+        wget(os.path.join(os.path.dirname(powhegscript), powhegcard.replace("M{}".format(self.mass), "template").replace("Wplus", "W").replace("Wminus", "W")))
+        subprocess.check_call(["python", "makecards.py"])
+      else:
+        wget(powhegcard)
+      with open(os.path.basename(powhegcard)) as f:
         powheggitcard = f.read()
         powheggitcardlines = [re.sub(" *([#!].*)?$", "", line) for line in powheggitcard.split("\n")]
         powheggitcardlines = [re.sub("(iseed|ncall2|fakevirt) *", r"\1 ", line) for line in powheggitcardlines
                               if line and all(_ not in line for _ in
-                              ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets", "xgriditeration")
+                              ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets", "xgriditeration", "fakevirt")
                               )]
         powheggitcard = "\n".join(line for line in powheggitcardlines)
       with contextlib.closing(urllib.urlopen(JHUGencard)) as f:
@@ -61,15 +74,15 @@ class POWHEGJHUGenMCSample(MCSampleBase):
 
     with cdtemp():
       subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
-      if glob.glob("core.*"):
-        raise ValueError("There is a core dump in the tarball\n{}".format(self))
+#      if glob.glob("core.*"):
+#        raise ValueError("There is a core dump in the tarball\n{}".format(self))
       try:
         with open("powheg.input") as f:
           powhegcard = f.read()
           powhegcardlines = [re.sub(" *([#!].*)?$", "", line) for line in powhegcard.split("\n")]
           powhegcardlines = [re.sub("(iseed|ncall2|fakevirt) *", r"\1 ", line) for line in powhegcardlines
                              if line and all(_ not in line for _ in
-                             ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets", "xgriditeration")
+                             ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets", "xgriditeration", "fakevirt")
                              )]
           powhegcard = "\n".join(line for line in powhegcardlines)
       except IOError:

@@ -2,6 +2,7 @@ import contextlib, csv, os, re, subprocess, urllib
 
 from mcsamplebase import MCSampleBase
 from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+from minlomcsample import MINLOMCSample
 
 class PythiaVariationSample(MCSampleBase):
   def __init__(self, mainsample, variation):
@@ -47,14 +48,18 @@ class PythiaVariationSample(MCSampleBase):
   @property
   def datasetname(self):
     result = self.mainsample.datasetname
-    result = result.replace("13TeV", "13TeV_"+self.variation.lower())
-    assert self.variation.lower() in result
+    if self.variation != "ScaleExtension":
+      result = result.replace("13TeV", "13TeV_"+self.variation.lower())
+      assert self.variation.lower() in result
     return result
   @property
   def nevents(self):
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample):
       if self.mainsample.productionmode in ("ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH") and self.mainsample.mass == 125 and self.mainsample.decaymode == "4l":
-        return 500000
+        if self.variation == "ScaleExtension":
+          return 1000000
+        else:
+          return 500000
     if instance(self.mainsample, MINLOMCSample):
       if self.mainsample.mass in (125, 300):
         return 1000000
@@ -81,7 +86,7 @@ class PythiaVariationSample(MCSampleBase):
     elif self.variation == "TuneDown":
       result = result.replace("CP5", "CP5Down")
     elif self.variation == "ScaleExtension":
-      result = result.replace("CP5", "CP5_ScaleDown")
+      pass
     else:
       assert False
 
@@ -102,18 +107,19 @@ class PythiaVariationSample(MCSampleBase):
     return self.mainsample.doublevalidationtime
   @property
   def responsible(self):
+    if isinstance(self.mainsample, MINLOMCSample): return "wahung"
     return "hroskes"
 
   @classmethod
   def nominalsamples(cls):
     for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
       yield POWHEGJHUGenMassScanMCSample(productionmode, "4l", 125)
-    return
-    for mass in 125, 300:
-      yield MINLOMCSample("4l", mass)
+    for sample in MINLOMCSample.allsamples():
+      yield sample
 
   @classmethod
   def allsamples(cls):
     for nominal in cls.nominalsamples():
-      for systematic in "TuneUp", "TuneDown", "ScaleUp", "ScaleDown":
+      for systematic in "TuneUp", "TuneDown", "ScaleExtension":
+        if isinstance(sample, MINLOMCSample) and systematic == "ScaleExtension": continue
         yield cls(nominal, systematic)

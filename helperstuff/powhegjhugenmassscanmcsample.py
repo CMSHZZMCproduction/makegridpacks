@@ -34,6 +34,9 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     return card
 
   @property
+  def powhegcardusesscript(self): return True
+
+  @property
   def reweightdecay(self):
     return self.mass >= 200
 

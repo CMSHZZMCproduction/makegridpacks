@@ -17,6 +17,9 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
     return POWHEGJHUGenMassScanMCSample(self.productionmode, self.decaymode, self.mass).powhegcard
 
   @property
+  def powhegcardusesscript(self): return True
+
+  @property
   def queue(self):
     return "1nd"
 
