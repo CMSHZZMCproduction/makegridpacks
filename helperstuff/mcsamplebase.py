@@ -499,6 +499,7 @@ class MCSampleBase(JsonDict):
       "member_of_campaign": "RunIIFall17wmLHEGS",
       "mcdb_id": 0,
       "dataset_name": self.datasetname,
+      "extension": self.extensionnumber,
     }
     answer = mcm.putA("requests", req)
     if not (answer and answer.get("results")):
@@ -510,17 +511,10 @@ class MCSampleBase(JsonDict):
 
   def getprepid(self):
     if LSB_JOBID(): return
-    output = subprocess.check_output(["McMScripts/getRequests.py", "dataset_name={}&prepid=HIG-RunIIFall17wmLHEGS-*".format(self.datasetname), "-bw"])
-    if "Traceback (most recent call last):" in output:
-      raise RuntimeError(output)
-    lines = {_ for _ in output.split("\n") if "HIG-" in _ and "&prepid=HIG-" not in _}
-    try:
-      line = lines.pop()
-    except KeyError:
+    output = restful().getA('requests', query="dataset_name={}&extension={}&prepid=HIG-RunIIFall17wmLHEGS-*".format(self.datasetname, self.extensionnumber))
+    prepids = {_["prepid"] for _ in output}
+    if not prepids:
       return None
-    if lines:
-      raise RuntimeError("Don't know what to do with this output:\n\n"+output)
-    prepids = set(line.split(","))
     if len(prepids) != 1:
       raise RuntimeError("Multiple prepids for {} (dataset_name={}&prepid=HIG-RunIIFall17wmLHEGS-*)".format(self, self.datasetname))
     assert len(prepids) == 1, prepids
