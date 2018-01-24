@@ -29,6 +29,7 @@ class POWHEGJHUGenMCSample(MCSampleBase):
       "-f": os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode),
       "-q": self.queue,
       "-n": "10",
+      "-s": str(hash(self) % 2147483647),
     }
     return ["./run_pwg.py"] + sum(([k, v] for k, v in args.iteritems()), [])
   @property
