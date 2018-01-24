@@ -103,6 +103,11 @@ class PythiaVariationSample(MCSampleBase):
   def doublevalidationtime(self):
     return self.mainsample.doublevalidationtime
   @property
+  def extensionnumber(self):
+    result = super(PythiaVariationSample, self).extensionnumber
+    if self.variation == "ScaleExtension": result += 1
+    return result
+  @property
   def responsible(self):
     if isinstance(self.mainsample, MINLOMCSample): return "wahung"
     return "hroskes"

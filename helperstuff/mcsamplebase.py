@@ -25,6 +25,10 @@ class MCSampleBase(JsonDict):
   def hasfilter(self): pass
   @abc.abstractproperty
   def datasetname(self): pass
+  @property
+  def extensionnumber(self):
+    """This should normally be 0, only change it for extension samples"""
+    return 0
   @abc.abstractproperty
   def nevents(self): pass
   @abc.abstractproperty
@@ -220,6 +224,7 @@ class MCSampleBase(JsonDict):
     return "size and time per event are found to be {} and {}, sent it to McM".format(self.sizeperevent, self.timeperevent)
 
   def makegridpack(self, approvalqueue, badrequestqueue):
+    if self.finished: return "finished!"
     if not os.path.exists(self.cvmfstarball):
       if not os.path.exists(self.eostarball):
         if not os.path.exists(self.foreostarball):
@@ -294,6 +299,7 @@ class MCSampleBase(JsonDict):
     if (self.approval, self.status) == ("submit", "done"):
       if self.needsupdate:
         return "{} is already finished, but needs update!".format(self)
+      self.finished = True
       return "finished!"
     return "Unknown approval "+self.approval+" and status "+self.status
 
@@ -427,6 +433,21 @@ class MCSampleBase(JsonDict):
   def badprepid(self):
     with cd(here), self.writingdict():
       del self.value["badprepid"]
+  @property
+  def finished(self):
+    with cd(here):
+      return self.value.get("finished", False)
+  @finished.setter
+  def finished(self, value):
+    if value:
+      with cd(here), self.writingdict():
+        self.value["finished"] = True
+    elif self.finished:
+      del self.finished
+  @finished.deleter
+  def finished(self):
+    with cd(here), self.writingdict():
+      del self.value["finished"]
 
   @property
   def filterefficiency(self): return 1
@@ -457,6 +478,7 @@ class MCSampleBase(JsonDict):
     req["validation"].update({
       "double_time": self.doublevalidationtime,
     })
+    req["extension"] = self.extensionnumber
     try:
       answer = mcm.updateA('requests', req)
     except pycurl.error as e:
