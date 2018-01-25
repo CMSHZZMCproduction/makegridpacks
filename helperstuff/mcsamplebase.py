@@ -198,7 +198,7 @@ class MCSampleBase(JsonDict):
       if not kwof: return "job to get the size and time is already running"
       if not LSB_JOBID(): self.submitLSF(); return "need to get time and size per event, submitting to LSF"
       with cdtemp():
-        wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else ""))
+        wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
         with open(self.prepid) as f:
           testjob = f.read()
         with open(self.prepid, "w") as newf:

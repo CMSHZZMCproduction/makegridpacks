@@ -179,8 +179,9 @@ def cache(function):
       return newfunction(*args, **kwargs)
   return newfunction
 
-def wget(url):
-  with contextlib.closing(urllib.urlopen(url)) as f, open(os.path.basename(url), "w") as newf:
+def wget(url, output=None):
+  if output is None: output = os.path.basename(url)
+  with contextlib.closing(urllib.urlopen(url)) as f, open(output, "w") as newf:
     newf.write(f.read())
 
 class JsonDict(object):
