@@ -49,6 +49,8 @@ class MCSampleBase(JsonDict):
   def responsible(self): "put the lxplus username of whoever makes these gridpacks"
   @property
   def doublevalidationtime(self): return False
+  @property
+  def neventsfortest(self): return 1000
 
   @abc.abstractmethod
   def allsamples(self): "should be a classmethod"
@@ -196,7 +198,7 @@ class MCSampleBase(JsonDict):
       if not kwof: return "job to get the size and time is already running"
       if not LSB_JOBID(): self.submitLSF(); return "need to get time and size per event, submitting to LSF"
       with cdtemp():
-        wget("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/"+self.prepid)
+        wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else ""))
         with open(self.prepid) as f:
           testjob = f.read()
         with open(self.prepid, "w") as newf:
@@ -553,7 +555,7 @@ class MCSampleBase(JsonDict):
     with cd(here):
       job = "cd "+here+" && eval $(scram ru -sh) && ./makegridpacks.py"
       pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
-      subprocess.check_call(["bsub", "-q", "1nd", "-J", "makegridpacks"], stdin=pipe.stdout)
+      subprocess.check_call(["bsub", "-q", "2nd", "-J", "makegridpacks"], stdin=pipe.stdout)
 
   def delete(self):
     if not self.prepid: return
