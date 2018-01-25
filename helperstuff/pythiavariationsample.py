@@ -20,7 +20,7 @@ class PythiaVariationSample(MCSampleBase):
       self.timeperevent = self.mainsample.timeperevent
     if self.sizeperevent is None:
       self.sizeperevent = self.mainsample.sizeperevent
-    if (self.matchefficiency, self.matchefficiencyerror) != (self.mainsample.matchefficiency, self.mainsample.matchefficiencyerror):
+    if (self.matchefficiency, self.matchefficiencyerror) != (self.mainsample.matchefficiency, self.mainsample.matchefficiencyerror) and self.mainsample.matchefficiency is not None is not self.mainsample.matchefficiencyerror:
       raise ValueError("Match efficiency doesn't match!\n{}, {}\n{} +/- {}, {} +/- {}".format(
         self, self.mainsample, self.matchefficiency, self.matchefficiencyerror, self.mainsample.matchefficiency, self.mainsample.matchefficiencyerror
       ))
