@@ -1,22 +1,31 @@
-import abc, contextlib, glob, os, re, subprocess, urllib, itertools
 
 from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
 
 from mcsamplebase import MCSampleBase
+
+import abc, os, contextlib, urllib, re, filecmp, glob, pycurl, shutil, stat, subprocess, itertools
 
 def differentproductioncards(productioncard, gitproductioncard):
 	allowedtobediff = ['[readin]','[writeout]','[ingridfile]','[outgridfile]']
 	prodcardintarball = [line for line in productioncard.split('\n') if line != '']
 	prodcardongit = [line for line in gitproductioncard.split('\n') if line != '']
 	if len(prodcardintarball) != len(prodcardongit):
+		print 'len(prodcardintarball) != len(prodcardongit)'
 		return True
 	diffprodcard = False
 	for tline, gline in itertools.izip(prodcardintarball,prodcardongit):
+		if '[LHAPDF group]' in tline:
+			if tline.split()[0] != gline.split()[0]:
+				print str(tline.split()[0])+ '!=' +str(gline.split()[0])
+				return True
+			else:	continue
 		if any(item in tline for item in allowedtobediff):
 			continue
 		elif tline == gline:
 			continue
 		else:
+			print tline
+			print gline
 			return True
 	return diffprodcard
 			
@@ -63,11 +72,14 @@ class MCFMMCSample(MCSampleBase):
       if glob.glob("core.*"):
         raise ValueError("There is a core dump in the tarball\n{}".format(self))
       for root, dirs, files in os.walk("."):
-	for file in files:
+	for ifile in files:
 	  try:
-	    os.stat(file)
-	  except OSError:
-	    raise ValueError("There is a broken symlink in the tarball\n{}".format(self))
+	    os.stat(ifile)
+	  except Exception as e: 
+	    if e.args == 'No such file or directory':   continue
+	    print ifile
+	    print e.message, e.args
+    	    raise ValueError("There is a broken symlink in the tarball\n{}".format(self))
       try:
         with open("readInput.DAT") as f:
           productioncard = f.read()
@@ -79,7 +91,7 @@ class MCFMMCSample(MCSampleBase):
       except IOError:
         raise ValueError("no src/User/mdata.f in the tarball\n{}".format(self))
 
-    if productioncard != productiongitcard:
+    if differentproductioncards(productioncard,productiongitcard):
       with cd(here):
         with open("productioncard", "w") as f:
           f.write(productioncard)
@@ -99,7 +111,7 @@ class MCFMMCSample(MCSampleBase):
       mkdir_p("src/User")
       with cd("src/User"): wget(os.path.join("https://raw.githubusercontent.com/usarica/MCFM-7.0_JHUGen", mcfmcommit, "src/User/mdata.f"))
       wget(mdatascript)
-      subprocess.check_call(["python", os.path.basename(mdatascript), "--coupling", self.coupling, "--mcfmdir", "."])
+      #subprocess.check_call(["python", os.path.basename(mdatascript), "--coupling", self.coupling, "--mcfmdir", "."])
       with open("src/User/mdata.f") as f:
         mdatagitcard = f.read()
 
@@ -109,7 +121,7 @@ class MCFMMCSample(MCSampleBase):
           f.write(mdatacard)
         with open("mdatagitcard", "w") as f:
           f.write(mdatagitcard)
-      raise ValueError("mdatacard != mdatagitcard\n{}\nSee ./mdatacard and ./mdatagitcard".format(self))
+     # raise ValueError("mdatacard != mdatagitcard\n{}\nSee ./mdatacard and ./mdatagitcard".format(self))
 
     result = (       productioncard + "\n"
             + "# " + mdatascript + "\n"

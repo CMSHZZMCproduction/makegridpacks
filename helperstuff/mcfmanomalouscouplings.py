@@ -49,7 +49,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def cvmfstarball(self): 
-    folder = '/cvmfs/cms.cern.ch/phys_generator/gridpacks'   
+    folder = '/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/mcfm/'   
     tarballname = self.tmptarball.split('/')[-1]
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
 
@@ -91,7 +91,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   @property
   def genproductionscommit(self):
 #    return "ae49ee695eb68125cff65b0d47eab2e859c3e9aa"
-    return "520a4cccc80527e3b18a0c3e99ced06c262380c1"
+    return "8b7ab33b0805c965c53ee2f1f3980abcde13f41a"
 
   @property
   def fragmentname(self):
@@ -111,8 +111,8 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @classmethod
   def allsamples(cls):
-    for signalbkgbsi in ["SIG", "BSI"]:
-      for finalstate in ["ELEL",'MUMU','ELMU', "ELTL", "ELMU", "ELNU","MUTL","MUNU","TLTL"]:
+    for signalbkgbsi in ["SIG"]:#, "BSI"]:
+      for finalstate in ["ELEL"]:#,'MUMU','ELMU', "ELTL", "ELMU", "ELNU","MUTL","MUNU","TLTL"]:
         for coupling in cls.getcouplings(signalbkgbsi):
           for width in cls.getwidths(signalbkgbsi, coupling):
             yield cls(signalbkgbsi, width, coupling, finalstate)
