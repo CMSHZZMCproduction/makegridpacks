@@ -60,7 +60,7 @@ class PythiaVariationSample(MCSampleBase):
           return 1000000
         else:
           return 500000
-    if instance(self.mainsample, MINLOMCSample):
+    if isinstance(self.mainsample, MINLOMCSample):
       if self.mainsample.mass in (125, 300):
         return 1000000
     raise ValueError("No nevents for {}".format(self))
