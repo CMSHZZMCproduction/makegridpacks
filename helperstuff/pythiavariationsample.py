@@ -16,9 +16,9 @@ class PythiaVariationSample(MCSampleBase):
       self.matchefficiency = self.mainsample.matchefficiency
     if self.matchefficiencyerror is None:
       self.matchefficiencyerror = self.mainsample.matchefficiencyerror
-    if self.timeperevent is None:
+    if self.timeperevent is None and self.mainsample.timeperevent is not None:
       self.timeperevent = self.mainsample.timeperevent
-    if self.sizeperevent is None:
+    if self.sizeperevent is None and self.mainsample.sizeperevent is not None:
       self.sizeperevent = self.mainsample.sizeperevent
     if (self.matchefficiency, self.matchefficiencyerror) != (self.mainsample.matchefficiency, self.mainsample.matchefficiencyerror) and self.mainsample.matchefficiency is not None is not self.mainsample.matchefficiencyerror:
       raise ValueError("Match efficiency doesn't match!\n{}, {}\n{} +/- {}, {} +/- {}".format(
@@ -36,6 +36,13 @@ class PythiaVariationSample(MCSampleBase):
   @property
   def tmptarball(self):
     return self.mainsample.tmptarball
+  def createtarball(self):
+    return "this is a variation sample, the gridpack is the same as for the main sample"
+  def findmatchefficiency(self):
+    return "this is a variation sample, the filter efficiency is the same as for the main sample"
+  @property
+  def workdir(self):
+    return self.mainsample.workdir.rstrip("/")+"_"+self.variation
   @property
   def makegridpackcommand(self):
     return self.mainsample.makegridpackcommand
