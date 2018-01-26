@@ -398,6 +398,7 @@
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
+                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00641"
                 },
                 "ELTL": {
@@ -430,6 +431,7 @@
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
+                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00637"
                 },
                 "ELNU": {
@@ -462,6 +464,7 @@
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
+                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00638"
                 },
                 "ELNU": {
@@ -504,6 +507,7 @@
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
+                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00639"
                 },
                 "ELNU": {
@@ -541,6 +545,7 @@
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
+                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00640"
                 },
                 "ELNU": {
@@ -579,6 +584,7 @@
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
+                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00636"
                 },
                 "ELNU": {
