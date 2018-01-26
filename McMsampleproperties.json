@@ -46,6 +46,7 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
+                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00633"
                 }
             }
