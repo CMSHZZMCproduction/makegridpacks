@@ -171,14 +171,18 @@ class MCSampleBase(JsonDict):
               jobsrunning = True
               continue
             if not os.path.exists("cmsgrid_final.lhe"):
-              if not LSB_JOBID(): self.submitLSF(); return "need to figure out filter efficiency, submitting to LSF"
+              if not LSB_JOBID():
+                self.submitLSF()
+                jobsrunning = True
+                continue
               with cdtemp():
                 subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
-                with open("powheg.input") as f:
-                  powheginput = f.read()
-                powheginput = re.sub("^(rwl_|lhapdf6maxsets)", r"#\1", powheginput, flags=re.MULTILINE)
-                with open("powheg.input", "w") as f:
-                  f.write(powheginput)
+                if os.path.exists("powheg.input"):
+                  with open("powheg.input") as f:
+                    powheginput = f.read()
+                  powheginput = re.sub("^(rwl_|lhapdf6maxsets)", r"#\1", powheginput, flags=re.MULTILINE)
+                  with open("powheg.input", "w") as f:
+                    f.write(powheginput)
                 subprocess.check_call(["./runcmsgrid.sh", "1000", str(abs(hash(self))%2147483647 + i), "1"])
                 shutil.move("cmsgrid_final.lhe", os.path.join(self.workdir, str(i), ""))
             with open("cmsgrid_final.lhe") as f:
