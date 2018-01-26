@@ -56,7 +56,7 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
   @property
   def datasetname(self):
     assert self.productionmode == "ggH" and self.decaymode == "4l"
-    return "Higgs0PMToZZTo4L_M{}_CTau{}um_13TeV_JHUgenV7011_pythia8".format(self.mass, self.lifetime)
+    return "Higgs0PMToZZTo4L_M{}_CTau{}um_13TeV_JHUGenV7011_pythia8".format(self.mass, self.lifetime)
 
   @property
   def defaulttimeperevent(self):
