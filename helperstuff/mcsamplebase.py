@@ -251,8 +251,7 @@ class MCSampleBase(JsonDict):
       self.getprepid()
       if self.prepid is None:
         #need to make the request
-        self.createrequest()
-        return "will send the request to McM, run again to proceed further"
+        return self.createrequest()
       else:
         return "found prepid: {}".format(self.prepid)
 
@@ -495,6 +494,7 @@ class MCSampleBase(JsonDict):
     self.needsupdate = False
 
   def createrequest(self):
+    if LSB_JOBID(): return "run locally to submit to McM"
     mcm = restful()
     req = {
       "pwg": "HIG",
@@ -510,6 +510,7 @@ class MCSampleBase(JsonDict):
     if self.prepid != answer["prepid"]:
       raise RuntimeError("Wrong prepid?? {} {}".format(self.prepid, answer["prepid"]))
     self.updaterequest()
+    return "created request "+self.prepid+" on McM"
 
   def getprepid(self):
     if LSB_JOBID(): return
