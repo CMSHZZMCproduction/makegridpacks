@@ -171,14 +171,18 @@ class MCSampleBase(JsonDict):
               jobsrunning = True
               continue
             if not os.path.exists("cmsgrid_final.lhe"):
-              if not LSB_JOBID(): self.submitLSF(); return "need to figure out filter efficiency, submitting to LSF"
+              if not LSB_JOBID():
+                self.submitLSF()
+                jobsrunning = True
+                continue
               with cdtemp():
                 subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
-                with open("powheg.input") as f:
-                  powheginput = f.read()
-                powheginput = re.sub("^(rwl_|lhapdf6maxsets)", r"#\1", powheginput, flags=re.MULTILINE)
-                with open("powheg.input", "w") as f:
-                  f.write(powheginput)
+                if os.path.exists("powheg.input"):
+                  with open("powheg.input") as f:
+                    powheginput = f.read()
+                  powheginput = re.sub("^(rwl_|lhapdf6maxsets)", r"#\1", powheginput, flags=re.MULTILINE)
+                  with open("powheg.input", "w") as f:
+                    f.write(powheginput)
                 subprocess.check_call(["./runcmsgrid.sh", "1000", str(abs(hash(self))%2147483647 + i), "1"])
                 shutil.move("cmsgrid_final.lhe", os.path.join(self.workdir, str(i), ""))
             with open("cmsgrid_final.lhe") as f:
@@ -251,8 +255,7 @@ class MCSampleBase(JsonDict):
       self.getprepid()
       if self.prepid is None:
         #need to make the request
-        self.createrequest()
-        return "will send the request to McM, run again to proceed further"
+        return self.createrequest()
       else:
         return "found prepid: {}".format(self.prepid)
 
@@ -495,6 +498,7 @@ class MCSampleBase(JsonDict):
     self.needsupdate = False
 
   def createrequest(self):
+    if LSB_JOBID(): return "run locally to submit to McM"
     mcm = restful()
     req = {
       "pwg": "HIG",
@@ -510,6 +514,7 @@ class MCSampleBase(JsonDict):
     if self.prepid != answer["prepid"]:
       raise RuntimeError("Wrong prepid?? {} {}".format(self.prepid, answer["prepid"]))
     self.updaterequest()
+    return "created request "+self.prepid+" on McM"
 
   def getprepid(self):
     if LSB_JOBID(): return

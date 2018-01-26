@@ -61,10 +61,10 @@ class MCFMMCSample(MCSampleBase):
   def cardsurl(self):
     commit = self.genproductionscommit
     print commit
-    productioncard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.productioncard.split("genproductions/")[-1])
+    productioncardurl = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.productioncard.split("genproductions/")[-1])
     mdatascript = os.path.join("https://raw.githubusercontent.com/carolhungwt/genproductions/", commit, "bin/MCFM/ACmdataConfig.py")
     with cdtemp():
-      with contextlib.closing(urllib.urlopen(productioncard)) as f:
+      with contextlib.closing(urllib.urlopen(productioncardurl)) as f:
         productiongitcard = f.read()
 
     with cdtemp():
@@ -123,7 +123,7 @@ class MCFMMCSample(MCSampleBase):
           f.write(mdatagitcard)
      # raise ValueError("mdatacard != mdatagitcard\n{}\nSee ./mdatacard and ./mdatagitcard".format(self))
 
-    result = (       productioncard + "\n"
+    result = (       productioncardurl + "\n"
             + "# " + mdatascript + "\n"
             + "#    " + self.coupling)
 
