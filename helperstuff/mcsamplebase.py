@@ -51,6 +51,12 @@ class MCSampleBase(JsonDict):
   def doublevalidationtime(self): return False
   @property
   def neventsfortest(self): return 1000
+  @property
+  def creategridpackqueue(self): return "1nd"
+  @property
+  def timepereventqueue(self): return "1nd"
+  @property
+  def filterefficiencyqueue(self): return "1nd"
 
   @abc.abstractmethod
   def allsamples(self): "should be a classmethod"
@@ -127,7 +133,8 @@ class MCSampleBase(JsonDict):
               os.remove(_)
             except OSError:
               shutil.rmtree(_)
-        if not LSB_JOBID(): self.submitLSF(); return "need to create the gridpack, submitting to LSF"
+        if not LSB_JOBID(): self.submitLSF(self.creategridpackqueue); return "need to create the gridpack, submitting to LSF"
+        if LSB_QUEUE() != self.creategridpackqueue: return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))
         output = subprocess.check_output(self.makegridpackcommand)
@@ -172,7 +179,10 @@ class MCSampleBase(JsonDict):
               continue
             if not os.path.exists("cmsgrid_final.lhe"):
               if not LSB_JOBID():
-                self.submitLSF()
+                self.submitLSF(self.filterefficiencyqueue)
+                jobsrunning = True
+                continue
+              if LSB_QUEUE() != self.filterefficiencyqueue:
                 jobsrunning = True
                 continue
               with cdtemp():
@@ -200,7 +210,8 @@ class MCSampleBase(JsonDict):
     mkdir_p(self.workdir)
     with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), message=LSB_JOBID(), deleteifjobdied=True) as kwof:
       if not kwof: return "job to get the size and time is already running"
-      if not LSB_JOBID(): self.submitLSF(); return "need to get time and size per event, submitting to LSF"
+      if not LSB_JOBID(): self.submitLSF(self.timepereventqueue); return "need to get time and size per event, submitting to LSF"
+      if LSB_QUEUE() != self.timepereventqueue: return "need to get time and size per event, but on the wrong queue"
       with cdtemp():
         wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
         with open(self.prepid) as f:
@@ -556,11 +567,11 @@ class MCSampleBase(JsonDict):
     return self.fullinfo["status"]
 
   @staticmethod
-  def submitLSF():
+  def submitLSF(queue):
     with cd(here):
       job = "cd "+here+" && eval $(scram ru -sh) && ./makegridpacks.py"
       pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
-      subprocess.check_call(["bsub", "-q", "2nd", "-J", "makegridpacks"], stdin=pipe.stdout)
+      subprocess.check_call(["bsub", "-q", queue, "-J", "makegridpacks"], stdin=pipe.stdout)
 
   def delete(self):
     if not self.prepid: return

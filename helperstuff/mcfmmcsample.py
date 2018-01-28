@@ -48,7 +48,7 @@ class MCFMMCSample(MCSampleBase):
 	'-i': self.productioncard,
 	'--coupling': self.coupling,
 	'-d': self.datasetname,
-	'-q': self.queue
+	'-q': self.creategridpackqueue
 	}
     return ['./run_mcfm_AC.py'] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
  

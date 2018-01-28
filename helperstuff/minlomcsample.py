@@ -35,10 +35,6 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     return POWHEGJHUGenMassScanMCSample("ggH", self.decaymode, self.mass).decaycard
 
   @property
-  def queue(self):
-    return "1nd"
-
-  @property
   def tarballversion(self):
     v = 1
 

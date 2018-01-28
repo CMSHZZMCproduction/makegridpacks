@@ -41,10 +41,14 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     return self.mass >= 200
 
   @property
-  def queue(self):
-    if self.productionmode == "ggH": return "1nd"
+  def creategridpackqueue(self):
     if self.productionmode in ("ZH", "ttH"): return "1nw"
-    return "1nd"
+    return super(POWHEGJHUGenMassScanMCSample, self).creategridpackqueue
+
+  @property
+  def timepereventqueue(self):
+    if self.productionmode in ("ZH", "ttH"): return "1nw"
+    return super(POWHEGJHUGenMassScanMCSample, self).timepereventqueue
 
   @property
   def filter4L(self):

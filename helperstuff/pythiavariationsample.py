@@ -110,6 +110,14 @@ class PythiaVariationSample(MCSampleBase):
   def doublevalidationtime(self):
     return self.mainsample.doublevalidationtime
   @property
+  def neventsfortest(self): return self.mainsample.neventsfortest
+  @property
+  def creategridpackqueue(self): return self.mainsample.creategridpackqueue
+  @property
+  def timepereventqueue(self): return self.mainsample.timepereventqueue
+  @property
+  def filterefficiencyqueue(self): return self.mainsample.filterefficiencyqueue
+  @property
   def extensionnumber(self):
     result = super(PythiaVariationSample, self).extensionnumber
     if self.variation == "ScaleExtension": result += 1
