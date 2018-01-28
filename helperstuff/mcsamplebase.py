@@ -2,7 +2,7 @@ import abc, filecmp, glob, os, pycurl, re, shutil, stat, subprocess
 
 from McMScripts.manageRequests import createLHEProducer
 
-from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, restful, wget
+from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, LSB_JOBID, LSB_QUEUE, mkdir_p, restful, wget
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
