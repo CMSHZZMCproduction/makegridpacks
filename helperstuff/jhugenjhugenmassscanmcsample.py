@@ -30,10 +30,6 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     return False
 
   @property
-  def queue(self):
-    return "1nd"
-
-  @property
   def filter4L(self):
     return False
 

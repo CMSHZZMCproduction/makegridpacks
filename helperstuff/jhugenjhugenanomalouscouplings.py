@@ -25,10 +25,6 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     return False
 
   @property
-  def queue(self):
-    return "1nd"
-
-  @property
   def tarballversion(self):
     v = 1
 
@@ -41,6 +37,10 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     tarballname = self.datasetname+".tgz"
 
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
+
+  @property
+  def doublevalidationtime(self):
+    return self.productionmode in ("ZH", "ttH")
 
   @property
   def defaulttimeperevent(self):
