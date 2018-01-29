@@ -39,6 +39,10 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
 
   @property
+  def doublevalidationtime(self):
+    return self.productionmode in ("ZH", "ttH")
+
+  @property
   def defaulttimeperevent(self):
     return 30
     assert False
