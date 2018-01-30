@@ -27,8 +27,12 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   @property
   def tarballversion(self):
     v = 1
-
     return v
+
+  @property
+  def timepereventqueue(self):
+    return "1nw"
+
 
   @property
   def cvmfstarball(self):
