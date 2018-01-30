@@ -1,9 +1,9 @@
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
+from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget, KeepWhileOpenFile, LSB_JOBID, jobended
 
 from mcsamplebase import MCSampleBase
 
-import abc, os, contextlib, urllib, re, filecmp, glob, pycurl, shutil, stat, subprocess, itertools
+import abc, os, contextlib, urllib, re, filecmp, glob, pycurl, shutil, stat, subprocess, itertools, os
 
 def differentproductioncards(productioncard, gitproductioncard):
 	allowedtobediff = ['[readin]','[writeout]','[ingridfile]','[outgridfile]']
@@ -32,6 +32,43 @@ def differentproductioncards(productioncard, gitproductioncard):
 			
 
 class MCFMMCSample(MCSampleBase):
+
+  def checkandfixtarball(self):
+    mkdir_p(self.workdir)
+    with KeepWhileOpenFile(os.path.join(self.workdir,self.prepid+'.tmp'),message=LSB_JOBID(),deleteifjobdied=True) as kwof:
+	if not kwof: return " check in progress"
+	if not LSB_JOBID(): self.submitLSF(); return "Check if the tarball needs fixing"	
+  	with cdtemp():
+  	  subprocess.call(['cp',self.cvmfstarball,'.'])
+  	  subprocess.check_call(['tar','xzvf',self.cvmfstarball])
+  	  subprocess.call(['cp','readInput.DAT','readInput.DAT_bak'])
+	  os.system('chmod 755 runcmsgrid.sh')
+	  try:
+  	    output = subprocess.check_output(['bash','runcmsgrid.sh','1','31313','12'], stderr=subprocess.STDOUT)
+	  except subprocess.CalledProcessError as e:
+	    output = e.output
+  	  for line in output.split('\n'):
+  	    if not 'Reading in vegas grid from' in line: continue
+  	    else:
+  	      line = line.split()[-2]
+  	      internalgridname = line.split('CMS_')[1]
+	  internalgridname = str(internalgridname)
+	  print "internal tarball name: "+internalgridname
+  	  if self.datasetname+'_grid' == internalgridname:
+	    with open(os.path.join(self.workdir,'INTACT'),'w') as fout:
+	      fout.write(LSB_JOBID())
+  	    return str(self.identifiers)+"'s gridpack is intact"
+  	  else:
+  	    os.system('cp '+self.datasetname+'_grid '+internalgridname)
+ 	    os.system('mv readInput.DAT_bak readInput.DAT')
+  	    os.system('rm -r *tgz CMSSW*')
+  	    curdirpath = subprocess.check_output(['pwd'])
+  	    os.system('tar cvzf '+self.tmptarball+' ./*')
+	    if os.path.exists(self.tmptarball):	
+	      with open(os.path.join(self.workdir,'FIXED'),'w') as fout:
+		fout.write(LSB_JOBID())
+
+
   @property 
   def method(self):	return 'mdata'
   @abc.abstractproperty
@@ -71,15 +108,15 @@ class MCFMMCSample(MCSampleBase):
       subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
       if glob.glob("core.*"):
         raise ValueError("There is a core dump in the tarball\n{}".format(self))
-      for root, dirs, files in os.walk("."):
-	for ifile in files:
-	  try:
-	    os.stat(ifile)
-	  except Exception as e: 
-	    if e.args == 'No such file or directory':   continue
-	    print ifile
-	    print e.message, e.args
-    	    raise ValueError("There is a broken symlink in the tarball\n{}".format(self))
+#      for root, dirs, files in os.walk("."):
+#	for ifile in files:
+#	  try:
+#	    os.stat(ifile)
+#	  except Exception as e: 
+#	    if e.args == 'No such file or directory':   continue
+#	    print ifile
+#	    print e.message, e.args
+ #   	    raise ValueError("There is a broken symlink in the tarball\n{}".format(self))
       try:
         with open("readInput.DAT") as f:
           productioncard = f.read()
