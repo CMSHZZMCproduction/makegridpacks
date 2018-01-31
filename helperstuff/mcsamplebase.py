@@ -50,7 +50,7 @@ class MCSampleBase(JsonDict):
   @property
   def doublevalidationtime(self): return False
   @property
-  def neventsfortest(self): return 1000
+  def neventsfortest(self): return None
   @property
   def creategridpackqueue(self): return "1nd"
   @property

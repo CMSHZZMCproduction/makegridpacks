@@ -149,6 +149,11 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     assert False
 
   @property
+  def neventsfortest(self):
+    if self.productionmode == "ZH": return 100
+    return super(POWHEGJHUGenMassScanMCSample, self).neventsfortest
+
+  @property
   def tags(self):
     result = ["HZZ"]
     if self.productionmode in ("ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH") and self.decaymode == "4l" and self.mass in (120, 125, 130):
