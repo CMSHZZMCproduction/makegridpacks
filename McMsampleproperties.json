@@ -593,7 +593,7 @@
                     "matchefficiencyerror": 0,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00715",
                     "sizeperevent": 606.221312,
-                    "timeperevent": 91.0865
+                    "timeperevent": 56.72407142695074
                 },
                 "ELMU": {
                     "matchefficiency": 1,
@@ -607,7 +607,7 @@
                     "matchefficiencyerror": 0,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00771",
                     "sizeperevent": 569.362432,
-                    "timeperevent": 76.783
+                    "timeperevent": 46.08443590346232
                 },
                 "ELTL": {
                     "matchefficiency": 1,
@@ -636,7 +636,7 @@
                     "matchefficiencyerror": 0,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00815",
                     "sizeperevent": 577.6762879999999,
-                    "timeperevent": 35.3172
+                    "timeperevent": 40.575852498661
                 }
             }
         },
