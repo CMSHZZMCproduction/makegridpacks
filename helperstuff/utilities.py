@@ -65,6 +65,9 @@ def cdtemp(**kwargs):
 def LSB_JOBID():
   return os.environ.get("LSB_JOBID", None)
 
+def LSB_QUEUE():
+  return os.environ.get("LSB_QUEUE", None)
+
 class KeepWhileOpenFile(object):
   def __init__(self, name, message=None, deleteifjobdied=False):
     logging.debug("creating KeepWhileOpenFile {}".format(name))

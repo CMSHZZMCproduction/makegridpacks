@@ -38,8 +38,9 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     return False
 
   @property
-  def queue(self):
-    return "1nd"
+  def creategridpackqueue(self):
+    return "2nd"
+
 
   @property
   def tarballversion(self):

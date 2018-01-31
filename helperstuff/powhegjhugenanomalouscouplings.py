@@ -20,10 +20,6 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
   def powhegcardusesscript(self): return True
 
   @property
-  def queue(self):
-    return "1nd"
-
-  @property
   def tarballversion(self):
     v = 1
 
