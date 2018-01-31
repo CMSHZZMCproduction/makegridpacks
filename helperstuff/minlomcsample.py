@@ -80,4 +80,4 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
 
   @property
   def responsible(self):
-     return "wahung"
+     return "" #"wahung"

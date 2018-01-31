@@ -41,10 +41,13 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   def creategridpackqueue(self):
     return "2nd"
 
+
   @property
   def tarballversion(self):
     v = 1
-
+    identifierstr = ' '.join(map(str,self.identifiers))
+    with open('/afs/cern.ch/user/w/wahung/work/public/CMSSW_9_3_0/src/makegridpacks/listofv2tarballs.txt','r') as f:
+	if identifierstr in f.read():  v+=1   
     return v
 
   @property
@@ -81,7 +84,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     
   @property
   def defaulttimeperevent(self):
-    return 30
+    return 50
     assert False
 
   @property
@@ -99,7 +102,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @classmethod
   def getcouplings(cls, signalbkgbsi):
-    if signalbkgbsi in ("SIG", "BSI"): return ["0PM"]#, "0PH"]#, "0PHf05ph0", "0PL1", "0PL1f05ph0", "0M", "0Mf05ph0"
+    if signalbkgbsi in ("SIG", "BSI"): return ["0PM", "0PH", "0PHf05ph0", "0PL1", "0PL1f05ph0", "0M", "0Mf05ph0"]
     assert False, signalbkgbsi
 
   @classmethod
@@ -111,8 +114,8 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @classmethod
   def allsamples(cls):
-    for signalbkgbsi in ["SIG"]:#, "BSI"]:
-      for finalstate in ["ELEL"]:#,'MUMU','ELMU', "ELTL", "ELMU", "ELNU","MUTL","MUNU","TLTL"]:
+    for signalbkgbsi in ["SIG", "BSI"]:
+      for finalstate in ["ELTL",'MUTL','ELMU',"ELNU","MUMU","MUNU","TLTL","ELEL"]:
         for coupling in cls.getcouplings(signalbkgbsi):
           for width in cls.getwidths(signalbkgbsi, coupling):
             yield cls(signalbkgbsi, width, coupling, finalstate)
