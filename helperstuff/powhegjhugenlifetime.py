@@ -69,7 +69,7 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
 
   @property
   def genproductionscommit(self):
-    return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    return "c6b09012caef889ecc4d11de26a3718ef7f9d242"
 
   @property
   def nfinalparticles(self):
@@ -83,7 +83,8 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
 
   @property
   def responsible(self):
-     return "wahung"
+#     return "wahung"
+    return "nobody"
 
   @property
   def nevents(self): return 500000
