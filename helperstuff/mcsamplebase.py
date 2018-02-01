@@ -237,6 +237,7 @@ class MCSampleBase(JsonDict):
 
     if not (self.sizeperevent and self.timeperevent):
       return "failed to get the size and time"
+    if LSB_JOBID(): return "size and time per event are found to be {} and {}, run locally to send to McM".format(self.sizeperevent, self.timeperevent)
     self.updaterequest()
     return "size and time per event are found to be {} and {}, sent it to McM".format(self.sizeperevent, self.timeperevent)
 
