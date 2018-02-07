@@ -57,6 +57,10 @@ class MCSampleBase(JsonDict):
   def timepereventqueue(self): return "1nd"
   @property
   def filterefficiencyqueue(self): return "1nd"
+  @property
+  def dovalidation(self):
+    """Set this to false if a request fails so badly that the validation will never succeed"""
+    return True
 
   @abc.abstractmethod
   def allsamples(self): "should be a classmethod"
@@ -289,6 +293,7 @@ class MCSampleBase(JsonDict):
         if self.badprepid:
           return badrequestqueue.add(self)
         return "needs update on McM, sending it there"
+      if not self.dovalidation: return "not starting the validation"
       approvalqueue.validate(self)
       return "starting the validation"
     if (self.approval, self.status) == ("validation", "new"):
