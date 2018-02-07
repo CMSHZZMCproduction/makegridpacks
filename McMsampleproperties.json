@@ -2490,6 +2490,7 @@
                 "TuneDown": {
                     "matchefficiency": 0.14835550966597078,
                     "matchefficiencyerror": 0.00018236587065478363,
+                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00510",
                     "sizeperevent": 1176.0867555555556,
                     "timeperevent": 13.831616666666664
@@ -2497,6 +2498,7 @@
                 "TuneUp": {
                     "matchefficiency": 0.14835550966597078,
                     "matchefficiencyerror": 0.00018236587065478363,
+                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00509",
                     "sizeperevent": 967.1133866666665,
                     "timeperevent": 13.831616666666664
