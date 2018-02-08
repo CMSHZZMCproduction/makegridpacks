@@ -1,6 +1,6 @@
 import contextlib, csv, os, re, subprocess, urllib
 
-from utilities import cache, cd, genproductions, makecards
+from utilities import cache, cd, genproductions, here, makecards
 
 from mcfmmcsample import MCFMMCSample
 
@@ -16,6 +16,11 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   @property
   def nevents(self):
     return 5000000
+  @property
+  def extensionnumber(self):
+    result = super(MCFMAnomCoupMCSample, self).extensionnumber
+    if self.signalbkgbsi == "BKG": result += 1
+    return result
 
   @property
   def widthtag(self):
@@ -26,7 +31,9 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def productioncard(self):
-    folder = os.path.join(genproductions,'bin','MCFM','cards','MCFM+JHUGen',self.signalbkgbsi)
+    folder = os.path.join(genproductions,'bin','MCFM','cards','MCFM+JHUGen')
+    if self.signalbkgbsi in ("SIG", "BSI"):
+      folder = os.path.join(folder,self.signalbkgbsi)
     cardbase = 'MCFM_JHUGen_13TeV_ggZZto{finalstate}_{sigbkgbsi}{widthtag}_NNPDF31.DAT'.format(finalstate=self.finalstate,sigbkgbsi=self.signalbkgbsi,widthtag=self.widthtag)
     card = os.path.join(folder,cardbase)
     if not os.path.exists(card):
@@ -45,25 +52,34 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   @property
   def tarballversion(self):
     v = 1
+    if self.signalbkgbsi == "BKG": v+=1
     identifierstr = ' '.join(map(str,self.identifiers))
-    with open('/afs/cern.ch/user/w/wahung/work/public/CMSSW_9_3_0/src/makegridpacks/listofv2tarballs.txt','r') as f:
+    with cd(here), open('listofv2tarballs.txt','r') as f:
 	if identifierstr in f.read():  v+=1   
     return v
 
   @property
   def cvmfstarball(self): 
     folder = '/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/mcfm/'   
-    tarballname = self.tmptarball.split('/')[-1]
-    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
+    if self.signalbkgbsi == "BKG":
+        mainfoldername = "MCFM_mdata_MCFM_JHUGen_13TeV_ggZZto{}_BKG_NNPDF31".format(self.finalstate)
+        tarballname = "MCFM_mdata_slc6_amd64_gcc630_CMSSW_9_3_0_MCFM_JHUGen_13TeV_ggZZto{}_BKG_NNPDF31.tgz".format(self.finalstate)
+    else:
+        tarballname = self.tmptarball.split('/')[-1]
+        mainfoldername = tarballname.replace(".tgz", "")
+    return os.path.join(folder, mainfoldername, "v{}".format(self.tarballversion), tarballname)
 
   @property
   def datasetname(self):
-   return 'GluGluToHiggs{coupling}{signalbkgbsitag}ToZZTo{finalstatetag}_M125_{widthtag}GaSM_13TeV_MCFM701_pythia8'.format(coupling=self.coupling,finalstatetag=self.datasetfinalstatetag,widthtag=self.widthtag,signalbkgbsitag=self.signalbkgbsitag) 
+   if self.signalbkgbsi == "BKG":
+     return "GluGluToContinToZZTo{finalstatetag}_13TeV_MCFM701_pythia8".format(finalstatetag=self.datasetfinalstatetag)
+   return 'GluGluToHiggs{coupling}{signalbkgbsitag}ToZZTo{finalstatetag}_M125_{widthtag}GaSM_13TeV_MCFM701_pythia8'.format(coupling=self.coupling,finalstatetag=self.datasetfinalstatetag,widthtag=self.widthtag,signalbkgbsitag=self.signalbkgbsitag)
 
   @property 
   def signalbkgbsitag(self):
     if self.signalbkgbsi == 'SIG':	return ''
     elif self.signalbkgbsi == 'BSI':	return 'contin'
+    assert False
 
   @property 
   def datasetfinalstatetag(self):
@@ -103,18 +119,19 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   @classmethod
   def getcouplings(cls, signalbkgbsi):
     if signalbkgbsi in ("SIG", "BSI"): return ["0PM", "0PH", "0PHf05ph0", "0PL1", "0PL1f05ph0", "0M", "0Mf05ph0"]
+    if signalbkgbsi == "BKG": return ["0PM"]
     assert False, signalbkgbsi
 
   @classmethod
   def getwidths(cls, signalbkgbsi, coupling):
-    if signalbkgbsi == "SIG": return 1,
+    if signalbkgbsi in ("SIG", "BKG"): return 1,
     if signalbkgbsi == "BSI":
       if coupling == "0PM": return 1, 10, 25
       return 1, 10
 
   @classmethod
   def allsamples(cls):
-    for signalbkgbsi in ["SIG", "BSI"]:
+    for signalbkgbsi in ["SIG", "BSI", "BKG"]:
       for finalstate in ["ELTL",'MUTL','ELMU',"ELNU","MUMU","MUNU","TLTL","ELEL"]:
         for coupling in cls.getcouplings(signalbkgbsi):
           for width in cls.getwidths(signalbkgbsi, coupling):
