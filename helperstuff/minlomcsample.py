@@ -72,6 +72,9 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     return 3
     raise ValueError("No fragment for {}".format(self))
 
+  @property
+  def doublevalidationtime(self): return True
+
   @classmethod
   def allsamples(cls):
     for mass in 125,:
