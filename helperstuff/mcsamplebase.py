@@ -50,13 +50,17 @@ class MCSampleBase(JsonDict):
   @property
   def doublevalidationtime(self): return False
   @property
-  def neventsfortest(self): return 1000
+  def neventsfortest(self): return None
   @property
   def creategridpackqueue(self): return "1nd"
   @property
   def timepereventqueue(self): return "1nd"
   @property
   def filterefficiencyqueue(self): return "1nd"
+  @property
+  def dovalidation(self):
+    """Set this to false if a request fails so badly that the validation will never succeed"""
+    return True
 
   @abc.abstractmethod
   def allsamples(self): "should be a classmethod"
@@ -237,6 +241,7 @@ class MCSampleBase(JsonDict):
 
     if not (self.sizeperevent and self.timeperevent):
       return "failed to get the size and time"
+    if LSB_JOBID(): return "size and time per event are found to be {} and {}, run locally to send to McM".format(self.sizeperevent, self.timeperevent)
     self.updaterequest()
     return "size and time per event are found to be {} and {}, sent it to McM".format(self.sizeperevent, self.timeperevent)
 
@@ -288,6 +293,7 @@ class MCSampleBase(JsonDict):
         if self.badprepid:
           return badrequestqueue.add(self)
         return "needs update on McM, sending it there"
+      if not self.dovalidation: return "not starting the validation"
       approvalqueue.validate(self)
       return "starting the validation"
     if (self.approval, self.status) == ("validation", "new"):

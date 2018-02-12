@@ -126,6 +126,10 @@ class PythiaVariationSample(MCSampleBase):
   def responsible(self):
     if isinstance(self.mainsample, MINLOMCSample): return "wahung"
     return "hroskes"
+  @property
+  def dovalidation(self):
+    if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH": return False
+    return self.mainsample.dovalidation
 
   @classmethod
   def nominalsamples(cls):

@@ -5,149 +5,326 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00723"
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00751"
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00780"
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00766",
+                    "sizeperevent": 604.8471040000001,
+                    "timeperevent": 39.670732916790634
+                },
+                "MUMU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00913"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00810"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00795"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00824"
                 }
             },
             "0Mf05ph0": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00725"
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00753"
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00782"
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00768"
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00738"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00812"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00797"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00826"
                 }
             },
             "0PH": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00717"
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00743",
+                    "sizeperevent": 588.0606720000001,
+                    "timeperevent": 37.49137698329384
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00773",
+                    "sizeperevent": 583.83872,
+                    "timeperevent": 83.4514
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00758",
+                    "sizeperevent": 593.733632,
+                    "timeperevent": 104.55
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00730"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00802",
+                    "sizeperevent": 563.351552,
+                    "timeperevent": 82.1776
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00787",
+                    "sizeperevent": 580.4103680000001,
+                    "timeperevent": 83.1858
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00817"
                 }
             },
             "0PHf05ph0": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00719"
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00745"
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00911"
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00760"
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00732"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00804"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00789"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00819"
                 }
             },
             "0PL1": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00720"
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00747",
+                    "sizeperevent": 588.914688,
+                    "timeperevent": 46.42633301608672
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00776"
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00762",
+                    "sizeperevent": 605.3017600000001,
+                    "timeperevent": 41.98593471187153
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00734",
+                    "sizeperevent": 557.636608,
+                    "timeperevent": 68.91228843927449
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00806"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00791"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00914"
                 }
             },
             "0PL1f05ph0": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00722"
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00749"
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00778"
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00764"
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00736"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00808"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00793"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00822"
                 }
             },
             "0PM": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00714",
+                    "sizeperevent": 593.210368,
+                    "timeperevent": 41.407524575365834
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00740",
+                    "sizeperevent": 581.7088,
+                    "timeperevent": 44.74873584821229
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00770",
+                    "sizeperevent": 565.291008,
+                    "timeperevent": 48.75908137890682
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00755",
+                    "sizeperevent": 605.601792,
+                    "timeperevent": 33.78469688369956
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00727",
+                    "sizeperevent": 553.2037120000001,
+                    "timeperevent": 69.39577102171394
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00799",
+                    "sizeperevent": 540.3105280000001,
+                    "timeperevent": 68.2371
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00784",
+                    "sizeperevent": 567.59296,
+                    "timeperevent": 36.90295629582886
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00814"
                 }
             }
         },
@@ -156,139 +333,310 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00724"
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00752"
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00781"
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00767",
+                    "sizeperevent": 640.858112,
+                    "timeperevent": 50.50198977839727
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00737"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00811"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00796"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00825"
                 }
             },
             "0Mf05ph0": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00726"
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00754"
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00783"
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00769"
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00739"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00813"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00798"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00827"
                 }
             },
             "0PH": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00718"
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00744",
+                    "sizeperevent": 605.8065919999999,
+                    "timeperevent": 54.1251481675931
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00774",
+                    "sizeperevent": 625.6220159999999,
+                    "timeperevent": 96.1445
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00759"
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00731"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00803"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00788"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00818"
                 }
             },
             "0PHf05ph0": {
+                "ELEL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00915"
+                },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00746"
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00775"
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00761"
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00733"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00805"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00790"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00820"
                 }
             },
             "0PL1": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00721"
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00748"
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00777"
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00763"
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00735"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00807"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00792"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00821"
                 }
             },
             "0PL1f05ph0": {
+                "ELEL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00916"
+                },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00750"
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00779"
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00765"
+                },
+                "MUMU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00912"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00809"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00794"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00823"
                 }
             },
             "0PM": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00715",
+                    "sizeperevent": 606.221312,
+                    "timeperevent": 91.0865
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00741",
+                    "sizeperevent": 587.5865600000001,
+                    "timeperevent": 62.32898484782378
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00771",
+                    "sizeperevent": 569.362432,
+                    "timeperevent": 76.783
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00756"
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00728",
+                    "sizeperevent": 563.063808,
+                    "timeperevent": 62.769516611952575
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00800"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00785"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00815",
+                    "sizeperevent": 577.6762879999999,
+                    "timeperevent": 35.3172
                 }
             }
         },
@@ -297,22 +645,46 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00716"
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00742",
+                    "sizeperevent": 587.083776,
+                    "timeperevent": 73.90600634113535
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00772",
+                    "sizeperevent": 594.3808,
+                    "timeperevent": 87.9475
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00757"
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00729"
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00801"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00786"
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00816"
                 }
             }
         }
@@ -370,256 +742,388 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00678",
+                    "sizeperevent": 657.7991679999999,
+                    "timeperevent": 47.295
+                },
+                "ELMU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00905"
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00906"
+                },
+                "ELTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00902"
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00685",
+                    "sizeperevent": 581.799936,
+                    "timeperevent": 33.44705331460298
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00706",
+                    "sizeperevent": 581.6995840000001,
+                    "timeperevent": 48.15958158955515
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00701",
+                    "sizeperevent": 615.5878399999999,
+                    "timeperevent": 33.58725296575444
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00713",
+                    "sizeperevent": 618.37312,
+                    "timeperevent": 33.61627027481301
                 }
             },
             "0Mf05ph0": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00679",
+                    "sizeperevent": 632.807424,
+                    "timeperevent": 43.980595761150184
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00641"
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00641",
+                    "sizeperevent": 608.992256,
+                    "timeperevent": 26.63215139845427
+                },
+                "ELNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00907"
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00692",
+                    "sizeperevent": 638.306304,
+                    "timeperevent": 47.24446649186214
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00686",
+                    "sizeperevent": 575.920128,
+                    "timeperevent": 45.975531821964346
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00707",
+                    "sizeperevent": 566.531072,
+                    "timeperevent": 40.72656186364747
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00702",
+                    "sizeperevent": 598.8218880000001,
+                    "timeperevent": 41.54135026004885
+                },
+                "TLTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00910"
                 }
             },
             "0PH": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00674",
+                    "sizeperevent": 646.3006720000001,
+                    "timeperevent": 48.051742115910415
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00637"
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00637",
+                    "sizeperevent": 590.340096,
+                    "timeperevent": 38.21461326811372
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00694",
+                    "sizeperevent": 614.441984,
+                    "timeperevent": 79.86454972366866
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00688",
+                    "sizeperevent": 646.3201280000001,
+                    "timeperevent": 101.057
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00681",
+                    "sizeperevent": 584.400896,
+                    "timeperevent": 44.25875438161668
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00908"
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00903"
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00709",
+                    "sizeperevent": 622.226432,
+                    "timeperevent": 44.46242702604164
                 }
             },
             "0PHf05ph0": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00675",
+                    "sizeperevent": 623.2350720000001,
+                    "timeperevent": 53.8645092135243
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00638"
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00638",
+                    "sizeperevent": 597.5685119999999,
+                    "timeperevent": 47.99086253977243
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00695",
+                    "sizeperevent": 584.920064,
+                    "timeperevent": 36.47345461972776
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00689",
+                    "sizeperevent": 596.4185600000001,
+                    "timeperevent": 56.67327854916407
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00682",
+                    "sizeperevent": 548.1779200000001,
+                    "timeperevent": 39.8247710075667
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00704",
+                    "sizeperevent": 569.6993279999999,
+                    "timeperevent": 49.6109
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00699",
+                    "sizeperevent": 564.87424,
+                    "timeperevent": 62.457060770720126
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00710",
+                    "sizeperevent": 591.425536,
+                    "timeperevent": 59.42971247905103
                 }
             },
             "0PL1": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00676",
+                    "sizeperevent": 610.42688,
+                    "timeperevent": 42.05055317502702
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00639"
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00639",
+                    "sizeperevent": 579.679232,
+                    "timeperevent": 48.61708696138344
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00696",
+                    "sizeperevent": 585.2477439999999,
+                    "timeperevent": 57.87539427612351
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00690",
+                    "sizeperevent": 604.944384,
+                    "timeperevent": 33.48277813306726
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00683",
+                    "sizeperevent": 549.1425280000001,
+                    "timeperevent": 41.140242974275004
+                },
+                "MUNU": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00909"
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00700",
+                    "sizeperevent": 572.027904,
+                    "timeperevent": 34.147640739501306
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00711",
+                    "sizeperevent": 586.4273919999999,
+                    "timeperevent": 32.23259037212526
                 }
             },
             "0PL1f05ph0": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00677",
+                    "sizeperevent": 588.742656,
+                    "timeperevent": 44.75674707962226
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00640"
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00640",
+                    "sizeperevent": 560.512,
+                    "timeperevent": 35.32682613195983
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00697",
+                    "sizeperevent": 558.3872,
+                    "timeperevent": 55.873101012979326
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00691",
+                    "sizeperevent": 589.838336,
+                    "timeperevent": 40.632567815755685
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00684",
+                    "sizeperevent": 532.947968,
+                    "timeperevent": 51.491184709177794
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00705",
+                    "sizeperevent": 535.82848,
+                    "timeperevent": 27.87992673155255
+                },
+                "MUTL": {
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00904"
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00712",
+                    "sizeperevent": 577.0864640000001,
+                    "timeperevent": 39.36728893228039
                 }
             },
             "0PM": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00633"
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00633",
+                    "sizeperevent": 578.205696,
+                    "timeperevent": 46.234008812202084
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00636"
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00636",
+                    "sizeperevent": 557.744128,
+                    "timeperevent": 39.217378004541374
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00693",
+                    "sizeperevent": 564.005888,
+                    "timeperevent": 33.92751725214252
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00687",
+                    "sizeperevent": 576.7403519999999,
+                    "timeperevent": 43.91743522178305
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00680",
+                    "sizeperevent": 529.595392,
+                    "timeperevent": 37.440983649522444
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00703",
+                    "sizeperevent": 527.798272,
+                    "timeperevent": 38.81204104761461
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00698",
+                    "sizeperevent": 542.562304,
+                    "timeperevent": 36.7763336937414
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00708",
+                    "sizeperevent": 574.548992,
+                    "timeperevent": 53.11774610779716
                 }
             }
         }
@@ -662,6 +1166,7 @@
                 "timeperevent": 53.28672521101544
             },
             "300": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00165",
@@ -669,6 +1174,7 @@
                 "timeperevent": 46.940863899659206
             },
             "3000": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00176",
@@ -683,6 +1189,7 @@
                 "timeperevent": 59.18595635627579
             },
             "500": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00167",
@@ -690,6 +1197,7 @@
                 "timeperevent": 62.93979179516874
             },
             "600": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00168",
@@ -704,6 +1212,7 @@
                 "timeperevent": 71.60810317295505
             },
             "800": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00170",
@@ -741,6 +1250,7 @@
                 "timeperevent": 82.78625417035755
             },
             "200": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00178",
@@ -755,6 +1265,7 @@
                 "timeperevent": 73.69631223653569
             },
             "250": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00179",
@@ -769,6 +1280,7 @@
                 "timeperevent": 85.00076500688506
             },
             "300": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00180",
@@ -783,6 +1295,7 @@
                 "timeperevent": 100.87763542822556
             },
             "350": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00181",
@@ -790,6 +1303,7 @@
                 "timeperevent": 51.63902257658067
             },
             "400": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00182",
@@ -797,6 +1311,7 @@
                 "timeperevent": 78.65283425488236
             },
             "450": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00183",
@@ -804,6 +1319,7 @@
                 "timeperevent": 54.73543626879478
             },
             "500": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00184",
@@ -818,6 +1334,7 @@
                 "timeperevent": 86.6333417078897
             },
             "600": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00186",
@@ -832,6 +1349,7 @@
                 "timeperevent": 106.06770938296171
             },
             "750": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00188",
@@ -847,6 +1365,7 @@
                 "timeperevent": 85.83027920589825
             },
             "900": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00190",
@@ -863,6 +1382,7 @@
                 "timeperevent": 55.915277172028944
             },
             "115": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00126",
@@ -870,6 +1390,7 @@
                 "timeperevent": 58.775471820100044
             },
             "120": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00127",
@@ -877,6 +1398,7 @@
                 "timeperevent": 75.61894103234978
             },
             "124": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00128",
@@ -969,6 +1491,7 @@
                     "sizeperevent": 664.863744,
                     "timeperevent": 65.1744
                 },
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00129",
@@ -1012,6 +1535,7 @@
                 "timeperevent": 58.038642127928775
             },
             "150": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00135",
@@ -1054,6 +1578,7 @@
                 "timeperevent": 52.14444009907444
             },
             "175": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00140",
@@ -1152,6 +1677,7 @@
                 "timeperevent": 65.17332846705814
             },
             "450": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00151",
@@ -1194,6 +1720,7 @@
                 "timeperevent": 64.04385723343346
             },
             "800": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00157",
@@ -1283,6 +1810,7 @@
                 "timeperevent": 93.03796879506527
             },
             "115": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00235",
@@ -1298,6 +1826,7 @@
                 "timeperevent": 62.71715816012945
             },
             "124": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00237",
@@ -1341,6 +1870,7 @@
                 "timeperevent": 78.28585296351096
             },
             "130": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00240",
@@ -1355,6 +1885,7 @@
                 "timeperevent": 79.52223043951936
             },
             "140": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00242",
@@ -1397,6 +1928,7 @@
                 "timeperevent": 86.38711795297085
             },
             "165": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00247",
@@ -1488,6 +2020,7 @@
                 "timeperevent": 63.82924400643398
             },
             "3000": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00272",
@@ -1523,6 +2056,7 @@
                 "timeperevent": 87.5196919306844
             },
             "550": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00262",
@@ -1530,6 +2064,7 @@
                 "timeperevent": 68.6059275521405
             },
             "600": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00263",
@@ -1551,6 +2086,7 @@
                 "timeperevent": 93.65751320570936
             },
             "800": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00266",
@@ -1558,6 +2094,7 @@
                 "timeperevent": 102.9531069188606
             },
             "900": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00267",
@@ -1650,6 +2187,7 @@
                 "timeperevent": 94.97578117580017
             },
             "135": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00202",
@@ -1657,6 +2195,7 @@
                 "timeperevent": 97.96238244514106
             },
             "140": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00374",
@@ -1664,6 +2203,7 @@
                 "timeperevent": 175.48323696378904
             },
             "145": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00204",
@@ -1692,6 +2232,7 @@
                 "timeperevent": 85.59079043094964
             },
             "160": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00207",
@@ -1699,6 +2240,7 @@
                 "timeperevent": 83.21613727334004
             },
             "165": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00208",
@@ -1755,6 +2297,7 @@
                 "timeperevent": 103.57542362348262
             },
             "230": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00215",
@@ -1776,6 +2319,7 @@
                 "timeperevent": 105.79290193103785
             },
             "270": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00217",
@@ -1790,6 +2334,7 @@
                 "timeperevent": 90.3897606479138
             },
             "3000": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00233",
@@ -1832,6 +2377,7 @@
                 "timeperevent": 158.54342980172558
             },
             "600": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00224",
@@ -1871,6 +2417,7 @@
     "ZH": {
         "2l2q": {
             "125": {
+                "finished": true,
                 "matchefficiency": 0.27155,
                 "matchefficiencyerror": 0.001406451554444731,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00317",
@@ -1880,6 +2427,7 @@
         },
         "4l": {
             "1000": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00313",
@@ -1887,6 +2435,7 @@
                 "timeperevent": 14.835550966597078
             },
             "115": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00280",
@@ -1894,6 +2443,7 @@
                 "timeperevent": 14.835550966597078
             },
             "120": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00281",
@@ -1947,22 +2497,22 @@
                     "matchefficiency": 0.14835550966597078,
                     "matchefficiencyerror": 0.00018236587065478363,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00609",
-                    "sizeperevent": 880.9553920000001,
-                    "timeperevent": 0
+                    "sizeperevent": 745.3787022222222,
+                    "timeperevent": 13.831616666666664
                 },
                 "TuneDown": {
                     "matchefficiency": 0.14835550966597078,
                     "matchefficiencyerror": 0.00018236587065478363,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00510",
-                    "sizeperevent": 880.9553920000001,
-                    "timeperevent": 0
+                    "sizeperevent": 1176.0867555555556,
+                    "timeperevent": 13.831616666666664
                 },
                 "TuneUp": {
                     "matchefficiency": 0.14835550966597078,
                     "matchefficiencyerror": 0.00018236587065478363,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00509",
-                    "sizeperevent": 880.9553920000001,
-                    "timeperevent": 0
+                    "sizeperevent": 967.1133866666665,
+                    "timeperevent": 13.831616666666664
                 },
                 "a2": {
                     "matchefficiency": 0.1472,
@@ -1992,6 +2542,7 @@
                     "sizeperevent": 601.6330732919254,
                     "timeperevent": 7.56543
                 },
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00283",
@@ -2006,6 +2557,7 @@
                 "timeperevent": 14.835550966597078
             },
             "130": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00285",
@@ -2077,6 +2629,7 @@
                 "timeperevent": 14.835550966597078
             },
             "175": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00293",
@@ -2084,6 +2637,7 @@
                 "timeperevent": 14.835550966597078
             },
             "180": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00294",
@@ -2112,6 +2666,7 @@
                 "timeperevent": 14.835550966597078
             },
             "210": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00297",
@@ -2126,6 +2681,7 @@
                 "timeperevent": 14.835550966597078
             },
             "250": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00299",
@@ -2168,6 +2724,7 @@
                 "timeperevent": 14.835550966597078
             },
             "400": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00303",
@@ -2175,6 +2732,7 @@
                 "timeperevent": 14.835550966597078
             },
             "450": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00305",
@@ -2196,6 +2754,7 @@
                 "timeperevent": 14.835550966597078
             },
             "600": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00308",
@@ -2217,6 +2776,7 @@
                 "timeperevent": 14.835550966597078
             },
             "800": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00311",
@@ -2244,6 +2804,7 @@
         },
         "4l": {
             "115": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00430",
@@ -2258,6 +2819,7 @@
                 "timeperevent": 72.56578088036805
             },
             "124": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00432",
@@ -2279,6 +2841,7 @@
                 "timeperevent": 72.12197268019675
             },
             "130": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00435",
@@ -2311,6 +2874,7 @@
     "ggH": {
         "2l2nu": {
             "1000": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00102",
@@ -2318,6 +2882,7 @@
                 "timeperevent": 49.04340832070465
             },
             "1500": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00103",
@@ -2346,6 +2911,7 @@
                 "timeperevent": 79.69270492979072
             },
             "300": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00095",
@@ -2367,6 +2933,7 @@
                 "timeperevent": 37.49109586473213
             },
             "500": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00097",
@@ -2388,6 +2955,7 @@
                 "timeperevent": 43.63725224950035
             },
             "800": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00100",
@@ -2395,6 +2963,7 @@
                 "timeperevent": 46.04708775193513
             },
             "900": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00101",
@@ -2404,6 +2973,7 @@
         },
         "2l2q": {
             "1000": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00121",
@@ -2439,6 +3009,7 @@
                 "timeperevent": 78.64046366417377
             },
             "250": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00109",
@@ -2474,6 +3045,7 @@
                 "timeperevent": 41.178699082538586
             },
             "400": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00112",
@@ -2495,6 +3067,7 @@
                 "timeperevent": 66.16294610366411
             },
             "550": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00115",
@@ -2509,6 +3082,7 @@
                 "timeperevent": 55.76094169078327
             },
             "700": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00117",
@@ -2516,6 +3090,7 @@
                 "timeperevent": 86.35056602796031
             },
             "750": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00118",
@@ -2523,6 +3098,7 @@
                 "timeperevent": 76.3860244129734
             },
             "800": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00119",
@@ -2539,6 +3115,7 @@
         },
         "4l": {
             "1000": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00089",
@@ -2553,6 +3130,7 @@
                 "timeperevent": 53.08729143330378
             },
             "120": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00359",
@@ -2652,6 +3230,7 @@
                     "sizeperevent": 607.848448,
                     "timeperevent": 74.50509987408638
                 },
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00360",
@@ -2694,6 +3273,7 @@
                 "timeperevent": 28.86819360165357
             },
             "150": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00364",
@@ -2813,6 +3393,7 @@
                 "timeperevent": 38.693550945863855
             },
             "3000": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00093",
@@ -2869,6 +3450,7 @@
                 "timeperevent": 58.91606228606105
             },
             "750": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00086",
@@ -2903,6 +3485,7 @@
         },
         "4l": {
             "125": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00440",
@@ -3009,6 +3592,7 @@
                 "timeperevent": 8.56193
             },
             "135": {
+                "finished": true,
                 "matchefficiency": 0.15411950306736202,
                 "matchefficiencyerror": 0.0003805893835507585,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00324",
