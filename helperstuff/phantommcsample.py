@@ -136,13 +136,3 @@ class PhantomMCSample(MCSampleBase):
   @property
   def fragmentname(self):
     return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_oneoversqrt2_LHE_pythia8_cff.py"
-
-  @property
-  def creategridpackqueue(self):
-    """fill this or delete it (default 1nd)"""
-  @property
-  def timepereventqueue(self):
-    """fill this or delete it (default 1nd)"""
-  @property
-  def filterefficiencyqueue(self):
-    """fill this or delete it (default 1nd)"""
