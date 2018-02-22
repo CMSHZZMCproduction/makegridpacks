@@ -321,6 +321,7 @@ class MCSampleBase(JsonDict):
     if (self.approval, self.status) == ("submit", "done"):
       if self.needsupdate:
         return "{} is already finished, but needs update!".format(self)
+      self.gettimepereventfromMcM()
       self.finished = True
       return "finished!"
     return "Unknown approval "+self.approval+" and status "+self.status
