@@ -21,6 +21,9 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
     return POWHEGJHUGenMassScanMCSample(self.productionmode, self.decaymode, self.mass).powhegprocess
 
   @property
+  def powhegsubmissionstrategy(self): return "onestep"
+
+  @property
   def powhegcard(self):
     return POWHEGJHUGenMassScanMCSample(self.productionmode, self.decaymode, self.mass).powhegcard
 
