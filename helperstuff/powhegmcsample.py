@@ -19,7 +19,7 @@ class POWHEGMCSample(MCSampleBase):
   @property
   def tmptarball(self):
     return os.path.join(here, "workdir", self.foldernameforrunpwg,
-             self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+self.foldernameforrunpwg+".tgz"
+             self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+self.foldernameforrunpwg+".tgz")
   def makegridpackcommand(self):
     args = {
       "-i": self.powhegcard,

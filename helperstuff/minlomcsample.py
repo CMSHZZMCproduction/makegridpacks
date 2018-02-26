@@ -20,6 +20,10 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     return "HJJ"
     raise ValueError("Unknown productionmode "+self.productionmode)
 
+  @property
+  def powhegsubmissionstrategy(self):
+    return "multicore"
+
   def createtarball(self):
     return "making a minlo tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)
 
