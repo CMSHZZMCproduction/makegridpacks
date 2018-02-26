@@ -46,6 +46,8 @@ class MCSampleBase(JsonDict):
   @abc.abstractproperty
   def makegridpackscriptstolink(self): pass
   @abc.abstractproperty
+  def xsec(self): pass
+  @abc.abstractproperty
   def responsible(self): "put the lxplus username of whoever makes these gridpacks"
   @property
   def doublevalidationtime(self): return False
@@ -494,7 +496,7 @@ class MCSampleBase(JsonDict):
       "match_efficiency": self.matchefficiency,
       "filter_efficiency": self.filterefficiency,
       "filter_efficiency_error": self.filterefficiencyerror,
-      "cross_section": 1.0,
+      "cross_section": self.xsec,
     })
     req["sequences"][0]["nThreads"] = 1
     req["keep_output"][0] = bool(self.keepoutput)
@@ -534,7 +536,7 @@ class MCSampleBase(JsonDict):
     }
     answer = mcm.putA("requests", req)
     if not (answer and answer.get("results")):
-      raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
+      raise RuntimeError("Failed to create the request on McM\n{}\n{}".format(self, answer))
     self.getprepid()
     if self.prepid != answer["prepid"]:
       raise RuntimeError("Wrong prepid?? {} {}".format(self.prepid, answer["prepid"]))

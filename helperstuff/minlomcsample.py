@@ -16,6 +16,9 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     return "MINLO", self.decaymode, self.mass
 
   @property
+  def xsec(self): return 1 #unknown for unknown signal
+
+  @property
   def powhegprocess(self):
     return "HJJ"
     raise ValueError("Unknown productionmode "+self.productionmode)

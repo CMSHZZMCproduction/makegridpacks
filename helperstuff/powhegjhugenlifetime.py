@@ -15,6 +15,9 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
   @property
   def identifiers(self):
     return self.productionmode, self.decaymode, self.mass, "lifetime", self.lifetime
+
+  @property
+  def xsec(self): return 1 #unknown for unknown signal
  
   @property
   def powhegprocess(self):

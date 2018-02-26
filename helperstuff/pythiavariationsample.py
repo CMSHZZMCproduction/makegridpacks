@@ -53,6 +53,9 @@ class PythiaVariationSample(MCSampleBase):
   def hasfilter(self):
     return self.mainsample.hasfilter
   @property
+  def xsec(self):
+    return self.mainsample.xsec
+  @property
   def datasetname(self):
     result = self.mainsample.datasetname
     if self.variation != "ScaleExtension":

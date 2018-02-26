@@ -12,6 +12,8 @@ class MassScanMCSample(MCSampleBase):
   @property
   def identifiers(self):
     return self.productionmode, self.decaymode, self.mass
+  @property
+  def xsec(self): return 1 #unknown for unknown signal
   @abc.abstractproperty
   def reweightdecay(self): False
   @property

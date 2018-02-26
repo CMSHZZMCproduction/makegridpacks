@@ -60,6 +60,9 @@ class PhantomMCSample(MCSampleBase):
   @property
   def tags(self):
     return ["HZZ", "Fall17P2A"]
+  @property
+  def xsec(self):
+    assert False, "need to fill this"
 
   @property
   def genproductionscommit(self):

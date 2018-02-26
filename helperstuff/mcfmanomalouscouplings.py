@@ -41,6 +41,10 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     return card
 
   @property
+  def xsec(self):
+    assert False, "need to fill this"
+
+  @property
   def hasfilter(self):
     return False
 

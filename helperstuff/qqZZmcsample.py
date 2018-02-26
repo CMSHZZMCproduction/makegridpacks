@@ -83,6 +83,9 @@ class QQZZMCSample(POWHEGMCSample):
     if self.finalstate == "4l" and self.cut == "100-160":
       result.append("Fall17P3")
     return result
+  @property
+  def xsec(self):
+    assert False, "need to fill this"
 
   @classmethod
   def allsamples(cls):
