@@ -17,6 +17,10 @@ class POWHEGMCSample(MCSampleBase):
   def foldernameforrunpwg(self):
     return os.path.basename(self.powhegcard).replace(".input", "")
   @property
+  def creategridpackqueue(self):
+    if self.powhegsubmissionstrategy == "multicore" and self.multicore_upto[0] in (0, 9): return None
+    return super(POWHEGMCSample, self).creategridpackqueue
+  @property
   def tmptarball(self):
     return os.path.join(here, "workdir", self.foldernameforrunpwg,
              self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+self.foldernameforrunpwg+".tgz")
