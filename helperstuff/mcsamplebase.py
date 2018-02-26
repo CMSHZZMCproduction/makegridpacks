@@ -517,12 +517,17 @@ class MCSampleBase(JsonDict):
       raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
     self.needsupdate = False
 
+  @property
+  def pwg(self): return "HIG"
+  @property
+  def campaign(self): return "RunIIFall17wmLHEGS"
+
   def createrequest(self):
     if LSB_JOBID(): return "run locally to submit to McM"
     mcm = restful()
     req = {
-      "pwg": "HIG",
-      "member_of_campaign": "RunIIFall17wmLHEGS",
+      "pwg": self.pwg,
+      "member_of_campaign": self.campaign,
       "mcdb_id": 0,
       "dataset_name": self.datasetname,
       "extension": self.extensionnumber,
@@ -538,12 +543,13 @@ class MCSampleBase(JsonDict):
 
   def getprepid(self):
     if LSB_JOBID(): return
-    output = restful().getA('requests', query="dataset_name={}&extension={}&prepid=HIG-RunIIFall17wmLHEGS-*".format(self.datasetname, self.extensionnumber))
+    query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.datasetname, self.extensionnumber, self.pwg, self.campaign)
+    output = restful().getA('requests', query=query)
     prepids = {_["prepid"] for _ in output}
     if not prepids:
       return None
     if len(prepids) != 1:
-      raise RuntimeError("Multiple prepids for {} (dataset_name={}&prepid=HIG-RunIIFall17wmLHEGS-*)".format(self, self.datasetname))
+      raise RuntimeError("Multiple prepids for {} ({})".format(self, self.datasetname, query))
     assert len(prepids) == 1, prepids
     self.prepid = prepids.pop()
 
