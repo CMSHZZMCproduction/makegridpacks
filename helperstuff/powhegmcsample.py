@@ -1,6 +1,6 @@
 import abc, contextlib, glob, os, re, subprocess, urllib
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
+from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, jobended, makecards, scramarch, wget
 
 from mcsamplebase import MCSampleBase
 
