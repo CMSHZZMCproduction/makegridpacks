@@ -14,26 +14,96 @@ class POWHEGMCSample(MCSampleBase):
   @abc.abstractproperty
   def powhegsubmissionstrategy(self): pass
   @property
+  def foldernameforrunpwg(self):
+    return os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode)
+  @property
   def tmptarball(self):
-    return os.path.join(here, "workdir", os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode),
-             self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode+".tgz"))
+    return os.path.join(here, "workdir", self.foldernameforrunpwg,
+             self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+self.foldernameforrunpwg+".tgz"
   def makegridpackcommand(self):
+    args = {
+      "-i": self.powhegcard,
+      "-m": self.powhegprocess,
+      "-f": self.foldernameforrunpwg,
+    }
     if self.powhegsubmissionstrategy == "onestep":
-      args = {
+      args.update({
         "-p": "f",
-        "-i": self.powhegcard,
-        "-m": self.powhegprocess,
-        "-f": os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode),
-        "-q": self.creategridpackqueue,
         "-n": "10",
         "-s": str(hash(self) % 2147483647),
-      }
+        "-q": self.creategridpackqueue,
+      })
+    elif self.powhegsubmissionstrategy == "multicore":
+      if self.multicore_upto[0] == 0:
+        args.update({
+          "-p": "0",
+        })
+      elif self.multicore_upto in ((1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 1), (3, 1)):
+        args.update({
+          "-p": str(self.multicore_upto[0]),
+          "-x": str(self.multicore_upto[1]),
+          "-j": "10",
+          "-t": "100",
+          "-n": "10",
+          "-q": self.creategridpackqueue,
+        })
+      elif self.multicore_upto[0] == 9:
+        args.update({
+          "-p": "9",
+          "-k": "1",
+        })
+      else:
+        assert False, self.multicore_upto
     else:
       assert False, self.powhegsubmissionstrategy
     return ["./run_pwg.py"] + sum(([k, v] for k, v in args.iteritems()), [])
+
+  @property
+  def inthemiddleofmultistepgridpackcreation(self):
+    if self.powhegsubmissionstrategy == "multicore" and self.multicore_upto[0] != 0: return True
+    return super(POWHEGMCSample, self).inthemiddleofmultistepgridpackcreation
+
+  @property
+  def multicore_upto(self):
+    assert self.powhegsubmissionstrategy == "multicore", self.powhegsubmissionstrategy
+    if not os.path.exists(os.path.join(self.workdir, self.foldernameforrunpwg)):
+      return 0, 1
+    for p, x in (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 1), (3, 1):
+      for n in range(1, 11):
+        if not os.path.exists(os.path.join(
+          self.workdir, self.foldernameforrunpwg, "run_{}_{}_{}.log".format(p, x, n)
+        )):
+          return p, x
+    return 9, 1
+
   @property
   def makinggridpacksubmitsjob(self):
-    return "full_"+os.path.basename(self.powhegcard).replace(".input", "")
+    if self.powhegsubmissionstrategy == "onestep":
+      return "full_"+os.path.basename(self.powhegcard).replace(".input", "")
+    elif self.powhegsubmissionstrategy == "multicore":
+      if self.multicore_upto[0] in (0, 9):
+        return False
+      else:
+        return True
+    else:
+      assert False, self.powhegsubmissionstrategy
+  @property
+  def gridpackjobsrunning(self):
+    if self.powhegsubmissionstrategy == "multicore" and self.multicore_upto[0] in (1, 2, 3):
+      p, x = self.multicore_upto
+      for n in range(1, 11):
+        if not os.path.exists(os.path.join(
+          self.workdir, self.foldernameforrunpwg, "run_{}_{}_{}.log".format(p, x, n)
+        )) and os.path.exists(os.path.join(
+          self.workdir, self.foldernameforrunpwg, "run_{}_{}_{}.sh".format(p, x, n)
+        )) and not jobended("-J", "{}_{}_{}".format(p, x, n)):
+          #In other words, if there's a job with this name currently running,
+          #AND the .sh exists, AND the log doesn't exist, we can't conclude that
+          #the job isn't running
+          return True
+      return False
+    return super(POWHEGMCSample, self).gridpackjobsrunning
+
 
   @property
   @cache

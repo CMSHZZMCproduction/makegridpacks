@@ -61,6 +61,15 @@ class MCSampleBase(JsonDict):
   def dovalidation(self):
     """Set this to false if a request fails so badly that the validation will never succeed"""
     return True
+  @property
+  def inthemiddleofmultistepgridpackcreation(self):
+    """powheg samples that need to run the grid in multiple steps should sometimes return true"""
+    return False
+  @property
+  def gridpackjobsrunning(self):
+    """powheg samples that need to run the grid in multiple steps need to modify this"""
+    if not self.makinggridpacksubmitsjob: return False
+    return not jobended("-J", self.makinggridpacksubmitsjob)
 
   @abc.abstractmethod
   def allsamples(self): "should be a classmethod"
@@ -116,48 +125,41 @@ class MCSampleBase(JsonDict):
             return "try running again, probably you just got really bad timing"
         if jobended(str(jobid)):
           if self.makinggridpacksubmitsjob:
-            if jobended("-J", self.makinggridpacksubmitsjob):
-              for _ in os.listdir("."):            #--> delete everything in the folder, except the tarball if that exists
-                if os.path.basename(_) != os.path.basename(self.tmptarball) and os.path.basename(_) != os.path.basename(self.tmptarball)+".tmp":
-                  try:
-                    os.remove(_)
-                  except OSError:
-                    shutil.rmtree(_)
-              os.remove(os.path.basename(self.tmptarball)+".tmp") #remove that last
-              return "gridpack job died, cleaned it up.  run makegridpacks.py again."
-            else:
-              return "job to make the tarball is already running (but the original one died)"
+            os.remove(self.tmptarball+".tmp")
+            return "job died at a very odd time, cleaned it up.  Try running again."
+          for _ in os.listdir("."):            #--> delete everything in the folder, except the tarball if that exists
+            if os.path.basename(_) != os.path.basename(self.tmptarball) and os.path.basename(_) != os.path.basename(self.tmptarball)+".tmp":
+              try:
+                os.remove(_)
+              except OSError:
+                shutil.rmtree(_)
+          os.remove(os.path.basename(self.tmptarball)+".tmp") #remove that last
+          return "gridpack job died, cleaned it up.  run makegridpacks.py again."
         else:
           return "job to make the tarball is already running"
 
+      if self.gridpackjobsrunning:
+        return "job to make the tarball is already running"
+
       if not os.path.exists(self.tmptarball):
-        for _ in os.listdir("."):
-          if not _.endswith(".tmp"):
-            try:
-              os.remove(_)
-            except OSError:
-              shutil.rmtree(_)
-        if not LSB_JOBID(): self.submitLSF(self.creategridpackqueue); return "need to create the gridpack, submitting to LSF"
-        if LSB_QUEUE() != self.creategridpackqueue: return "need to create the gridpack, but on the wrong queue"
+        if not self.inthemiddleofmultistepgridpackcreation:
+          for _ in os.listdir("."):
+            if not _.endswith(".tmp"):
+              try:
+                os.remove(_)
+              except OSError:
+                shutil.rmtree(_)
+        if not makinggridpacksubmitsjob:
+          if not LSB_JOBID(): self.submitLSF(self.creategridpackqueue); return "need to create the gridpack, submitting to LSF"
+          if LSB_QUEUE() != self.creategridpackqueue: return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))
         output = subprocess.check_output(self.makegridpackcommand)
         print output
         if self.makinggridpacksubmitsjob:
-          waitids = []
-          for line in output.split("\n"):
-            if "is submitted to" in line:
-              waitids.append(int(line.split("<")[1].split(">")[0]))
-          if waitids:
-            subprocess.check_call(["bsub", "-q", "cmsinter", "-I", "-J", "wait for "+str(self), "-w", " && ".join("ended({})".format(_) for _ in waitids), "echo", "done"])
-          else:
-            for _ in os.listdir("."):
-              if not _.endswith(".tmp"):
-                try:
-                  os.remove(_)
-                except OSError:
-                  shutil.rmtree(_)
-            return "gridpack job submission failed"
+          return "submitted the gridpack creation job"
+        if self.inthemiddleofmultistepgridpackcreation:
+          return "ran one step of gridpack creation, run again to continue"
 
       mkdir_p(os.path.dirname(self.foreostarball))
       shutil.move(self.tmptarball, self.foreostarball)
