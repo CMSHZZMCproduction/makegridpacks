@@ -3243,6 +3243,18 @@
             }
         }
     },
+    "clone": {
+        "HIG-RunIIFall17wmLHEGS-00304": {
+            "RunIISpring18wmLHEGS": {
+                "matchefficiency": 0.37,
+                "matchefficiencyerror": 0.1,
+                "needsupdate": true,
+                "prepid": "HIG-RunIISpring18wmLHEGS-00002",
+                "sizeperevent": 531,
+                "timeperevent": 2.546129501238692
+            }
+        }
+    },
     "ggH": {
         "2l2nu": {
             "1000": {

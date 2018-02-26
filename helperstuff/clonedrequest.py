@@ -1,4 +1,4 @@
-from utilities import cache, restful
+from utilities import cache, LSB_JOBID, restful
 
 from mcsamplebase import MCSampleBase
 
@@ -8,15 +8,14 @@ class ClonedRequest(MCSampleBase):
     self.newcampaign = newcampaign
 
     if self.matchefficiency is None:
+      assert self.originalfullinfo["generator_parameters"][0]["filter_efficiency"] == 1, self.originalfullinfo["generator_parameters"][0]["filter_efficiency"]
       self.matchefficiency = self.originalfullinfo["generator_parameters"][0]["match_efficiency"]
-      assert self.originalfullinfo["generator_parameters"][0]["filter_efficiency"] == 1
     if self.matchefficiencyerror is None:
       self.matchefficiencyerror = self.originalfullinfo["generator_parameters"][0]["match_efficiency_error"]
-      assert self.originalfullinfo["generator_parameters"][0]["filter_efficiency_error"] == 0
     if self.timeperevent is None:
-      self.timeperevent = self.originalfullinfo["time_event"]
+      self.timeperevent = self.originalfullinfo["time_event"][0]
     if self.sizeperevent is None:
-      self.sizeperevent = self.originalfullinfo["size_event"]
+      self.sizeperevent = self.originalfullinfo["size_event"][0]
 
   @property
   def campaign(self): return self.newcampaign
@@ -40,6 +39,10 @@ class ClonedRequest(MCSampleBase):
   def tarballversion(self): assert False
   @property
   def cvmfstarball(self): assert False
+  @property
+  def foreostarball(self): return "/nonexistent/path"
+  @property
+  def cvmfstarballexists(self): return True
   @property
   def tmptarball(self): assert False
   @property
@@ -84,10 +87,14 @@ class ClonedRequest(MCSampleBase):
     yield cls("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
 
   def createrequest(self):
+    self.needsupdate = True
+    return ("Please go to https://cms-pdmv.cern.ch/mcm/requests?prepid="+self.originalprepid
+            + " and clone it into "+self.newcampaign)
+
     if LSB_JOBID(): return "run locally to submit to McM"
     mcm = restful()
     clone_req = mcm.getA('requests', self.originalprepid)
-    clone_req['member_of_campaign'] = campaign
+    clone_req['member_of_campaign'] = self.campaign
     answer = mcm.clone(self.originalprepid, clone_req)
     if not (answer and answer.get("results")):
       raise RuntimeError("Failed to create the request on McM\n{}\n{}".format(self, answer))
@@ -113,4 +120,3 @@ class ClonedRequest(MCSampleBase):
     if not (answer and answer.get("results")):
       raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
     self.needsupdate = False
-

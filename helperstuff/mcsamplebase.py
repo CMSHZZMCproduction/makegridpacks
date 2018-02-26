@@ -114,6 +114,9 @@ class MCSampleBase(JsonDict):
       raise ValueError("{!r}.workdir is supposed to be a subfolder of the workdir folder, not workdir itself".format(self))
     return result
 
+  @property
+  def cvmfstarballexists(self): return os.path.exists(self.cvmfstarball)
+
   def createtarball(self):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
 
@@ -251,7 +254,7 @@ class MCSampleBase(JsonDict):
 
   def makegridpack(self, approvalqueue, badrequestqueue):
     if self.finished: return "finished!"
-    if not os.path.exists(self.cvmfstarball):
+    if not self.cvmfstarballexists:
       if not os.path.exists(self.eostarball):
         if not os.path.exists(self.foreostarball):
           return self.createtarball()
