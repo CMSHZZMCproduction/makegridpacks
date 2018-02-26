@@ -15,11 +15,12 @@ class POWHEGMCSample(MCSampleBase):
   def powhegsubmissionstrategy(self): pass
   @property
   def foldernameforrunpwg(self):
-    return os.path.basename(self.powhegcard).replace(".input", "_"+self.decaymode)
+    return os.path.basename(self.powhegcard).replace(".input", "")
   @property
   def tmptarball(self):
     return os.path.join(here, "workdir", self.foldernameforrunpwg,
              self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+self.foldernameforrunpwg+".tgz")
+  @property
   def makegridpackcommand(self):
     args = {
       "-i": self.powhegcard,

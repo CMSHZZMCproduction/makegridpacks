@@ -149,7 +149,7 @@ class MCSampleBase(JsonDict):
                 os.remove(_)
               except OSError:
                 shutil.rmtree(_)
-        if not makinggridpacksubmitsjob:
+        if not self.makinggridpacksubmitsjob:
           if not LSB_JOBID(): self.submitLSF(self.creategridpackqueue); return "need to create the gridpack, submitting to LSF"
           if LSB_QUEUE() != self.creategridpackqueue: return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:

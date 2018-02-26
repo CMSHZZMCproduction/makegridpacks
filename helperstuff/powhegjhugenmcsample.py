@@ -9,8 +9,12 @@ class POWHEGJHUGenMCSample(POWHEGMCSample):
   def decaycard(self): pass
   @property
   def hasfilter(self): return "filter" in self.decaycard.lower()
-  def makegridpackcommand(self, *args, **kwargs):
-    return super(POWHEGJHUGenMCSample, self).makegridpackcommand(*args, **kwargs) + ["-g", self.decaycard]
+  @property
+  def makegridpackcommand(self):
+    return super(POWHEGJHUGenMCSample, self).makegridpackcommand() + ["-g", self.decaycard]
+  @property
+  def foldernameforrunpwg(self):
+    return super(POHWEGJHUGenMCSample, self).foldernameforrunpwg+"_"+self.decaymode
 
   @property
   @cache
