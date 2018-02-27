@@ -115,10 +115,9 @@ class ClonedRequest(MCSampleBase):
     yield cls("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS")
     yield cls("MUO-RunIIFall17wmLHEGS-00002", "RunIISpring18wmLHEGS")
 
-  def createrequest(self):
+  def createrequest(self, clonequeue):
     self.needsupdate = True
-    return ("Please go to https://cms-pdmv.cern.ch/mcm/requests?prepid="+self.originalprepid
-            + " and clone it into "+self.pwg+"-"+self.newcampaign)
+    return clonequeue.add(self, self.pwg, self.newcampaign)
 
     if LSB_JOBID(): return "run locally to submit to McM"
     mcm = restful()

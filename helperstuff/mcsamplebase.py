@@ -254,7 +254,7 @@ class MCSampleBase(JsonDict):
     self.updaterequest()
     return "size and time per event are found to be {} and {}, sent it to McM".format(self.sizeperevent, self.timeperevent)
 
-  def makegridpack(self, approvalqueue, badrequestqueue):
+  def makegridpack(self, approvalqueue, badrequestqueue, clonequeue):
     if self.finished: return "finished!"
     if not self.cvmfstarballexists:
       if not os.path.exists(self.eostarball):
@@ -280,7 +280,7 @@ class MCSampleBase(JsonDict):
       self.getprepid()
       if self.prepid is None:
         #need to make the request
-        return self.createrequest()
+        return self.createrequest(clonequeue)
       else:
         return "found prepid: {}".format(self.prepid)
 
@@ -533,7 +533,7 @@ class MCSampleBase(JsonDict):
   @property
   def campaign(self): return "RunIIFall17wmLHEGS"
 
-  def createrequest(self):
+  def createrequest(self, clonequeue):
     if LSB_JOBID(): return "run locally to submit to McM"
     mcm = restful()
     req = {
