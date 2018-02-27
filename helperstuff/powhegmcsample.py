@@ -71,7 +71,7 @@ class POWHEGMCSample(MCSampleBase):
   @property
   def multicore_upto(self):
     assert self.powhegsubmissionstrategy == "multicore", self.powhegsubmissionstrategy
-    if not os.path.exists(os.path.join(self.workdir, self.foldernameforrunpwg)):
+    if not os.path.exists(os.path.join(self.workdir, self.foldernameforrunpwg, "pwhg_main")):
       return 0, 1
     with cd(os.path.join(self.workdir, self.foldernameforrunpwg)):
       for logfile in glob.iglob("run_*.log"):

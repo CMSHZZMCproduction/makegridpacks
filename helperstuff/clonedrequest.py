@@ -117,7 +117,7 @@ class ClonedRequest(MCSampleBase):
     yield cls("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
     yield cls("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS")
     for _ in 1, 2, 3, 4, 50, 51, 35:
-      yield cls("HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_), "RunIISpring18wmLHEGS")
+      yield cls("HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_), "PhaseIISummer17wmLHEGENOnly")
 
   def createrequest(self, clonequeue):
     self.needsupdate = True

@@ -19,6 +19,13 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     return tuple(result)
 
   @property
+  def makegridpackcommand(self):
+    result = super(MINLOMCSample, self).makegridpackcommand
+    if self.energy == 14:
+      result += ["-d", "1"]
+    return result
+
+  @property
   def xsec(self): return 1 #unknown for unknown signal
 
   @property
