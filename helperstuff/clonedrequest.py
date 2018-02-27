@@ -98,14 +98,12 @@ class ClonedRequest(MCSampleBase):
   def nevents(self):
     if (self.originalprepid, self.newcampaign) == ("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS"): return 10000000
     if (self.originalprepid, self.newcampaign) == ("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS"): return 50000000
-    if (self.originalprepid, self.newcampaign) == ("MUO-RunIIFall17wmLHEGS-00002", "RunIISpring18wmLHEGS"): return 50000000
     assert False
   @property
   def responsible(self):
     if (self.originalprepid, self.newcampaign) in (
       ("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS"),
       ("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS"),
-      ("MUO-RunIIFall17wmLHEGS-00002", "RunIISpring18wmLHEGS"),
     ):
       return "hroskes"
     assert False, self
@@ -113,7 +111,6 @@ class ClonedRequest(MCSampleBase):
   def allsamples(cls):
     yield cls("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
     yield cls("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS")
-    yield cls("MUO-RunIIFall17wmLHEGS-00002", "RunIISpring18wmLHEGS")
 
   def createrequest(self, clonequeue):
     self.needsupdate = True
