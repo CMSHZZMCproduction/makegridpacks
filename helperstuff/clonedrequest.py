@@ -97,21 +97,28 @@ class ClonedRequest(MCSampleBase):
   @property
   def nevents(self):
     if (self.originalprepid, self.newcampaign) == ("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS"): return 10000000
+    if (self.originalprepid, self.newcampaign) == ("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS"): return 50000000
+    if (self.originalprepid, self.newcampaign) == ("MUO-RunIIFall17wmLHEGS-00002", "RunIISpring18wmLHEGS"): return 50000000
     assert False
   @property
   def responsible(self):
-    if (self.originalprepid, self.newcampaign) == ("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS"):
+    if (self.originalprepid, self.newcampaign) in (
+      ("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS"),
+      ("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS"),
+      ("MUO-RunIIFall17wmLHEGS-00002", "RunIISpring18wmLHEGS"),
+    ):
       return "hroskes"
     assert False, self
   @classmethod
   def allsamples(cls):
     yield cls("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
     yield cls("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS")
+    yield cls("MUO-RunIIFall17wmLHEGS-00002", "RunIISpring18wmLHEGS")
 
   def createrequest(self):
     self.needsupdate = True
     return ("Please go to https://cms-pdmv.cern.ch/mcm/requests?prepid="+self.originalprepid
-            + " and clone it into "+self.newcampaign)
+            + " and clone it into "+self.pwg+"-"+self.newcampaign)
 
     if LSB_JOBID(): return "run locally to submit to McM"
     mcm = restful()
