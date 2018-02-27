@@ -41,7 +41,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
   def creategridpackqueue(self):
     if super(MINLOMCSample, self).creategridpackqueue is None: return None
     if self.multicore_upto[0] in (2, 3): return "1nw"
-    return "1nh"
+    return "1nd"
 
   def createtarball(self):
     if self.energy == 13:
