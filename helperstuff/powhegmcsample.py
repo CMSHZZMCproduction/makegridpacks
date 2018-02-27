@@ -73,12 +73,17 @@ class POWHEGMCSample(MCSampleBase):
     assert self.powhegsubmissionstrategy == "multicore", self.powhegsubmissionstrategy
     if not os.path.exists(os.path.join(self.workdir, self.foldernameforrunpwg)):
       return 0, 1
-    for p, x in (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 1), (3, 1):
-      for n in range(1, 11):
-        if not os.path.exists(os.path.join(
-          self.workdir, self.foldernameforrunpwg, "run_{}_{}_{}.log".format(p, x, n)
-        )):
-          return p, x
+    with cd(os.path.join(self.workdir, self.foldernameforrunpwg)):
+      for logfile in glob.iglob("run_*.log"):
+        with open(logfile) as f:
+          if "Backtrace" not in f.read():
+            os.remove(logfile)
+      for coredump in glob.iglob("core.*"):
+        os.remove(coredump)
+      for p, x in (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 1), (3, 1):
+        for n in range(1, 11):
+          if not os.path.exists("run_{}_{}_{}.log".format(p, x, n)):
+            return p, x
     return 9, 1
 
   @property
