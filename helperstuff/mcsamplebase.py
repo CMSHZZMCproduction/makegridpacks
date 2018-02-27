@@ -487,7 +487,7 @@ class MCSampleBase(JsonDict):
   def filterefficiencyerror(self): return 0.1
 
   @property
-  def fragment(self):
+  def fullfragment(self):
     return createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommit)
 
   def updaterequest(self):
