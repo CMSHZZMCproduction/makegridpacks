@@ -56,6 +56,8 @@ class MCSampleBase(JsonDict):
   @property
   def nthreads(self): return 1
   @property
+  def notes(self): return ""
+  @property
   def creategridpackqueue(self): return "1nd"
   @property
   def timepereventqueue(self): return "1nd"
@@ -515,6 +517,7 @@ class MCSampleBase(JsonDict):
       "double_time": self.doublevalidationtime,
     })
     req["extension"] = self.extensionnumber
+    req["notes"] = self.notes
     try:
       answer = mcm.updateA('requests', req)
     except pycurl.error as e:

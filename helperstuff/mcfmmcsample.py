@@ -112,6 +112,10 @@ class MCFMMCSample(MCSampleBase):
       return self.xsecerror if error else self.xsec
 
   @property
+  def notes(self):
+    return "cross section = {} +/- {}".format(self.xsec, self.xsecerror)
+
+  @property
   def xsec(self):
     with cd(here):
       try:
