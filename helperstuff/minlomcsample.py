@@ -81,7 +81,13 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     return "GluGluHToZZTo4L_M%d_%dTeV_powheg2_minloHJJ_JHUGenV7011_pythia8"%(self.mass, self.energy)
 
   @property
+  def campaign(self):
+    if self.energy == 14: return "PhaseIISummer17wmLHEGENOnly"
+    return super(MINLOMCSample, self).campaign
+
+  @property
   def nevents(self):
+    if self.energy == 14: return 1000000
     return 3000000
 
   @property
