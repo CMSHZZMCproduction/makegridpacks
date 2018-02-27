@@ -9,7 +9,8 @@ from helperstuff.utilities import restful
 def maketicket(block, chain, tags, filter=lambda sample: True, modifyticket=None, notes=None, dryrun=False, status=("defined",), onlymysamples=False):
   prepids = [sample.prepid for sample in allsamples(
     filter=lambda sample:
-      sample.prepid is not None
+      not sample.finished
+      and sample.prepid is not None
       and filter(sample)
       and sample.status in status,
     onlymysamples=onlymysamples,

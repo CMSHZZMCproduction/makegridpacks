@@ -65,7 +65,9 @@ class ClonedRequest(MCSampleBase):
 
   @property
   def datasetname(self):
-    return self.originalfullinfo["dataset_name"]
+    result = self.originalfullinfo["dataset_name"]
+    if result == "ZZTo4L_14TeV_powheg_pythia8_v2": return "ZZTo4L_14TeV_powheg_pythia8"
+    return result
   @property
   def fullfragment(self):
     return self.originalfullinfo["fragment"]
@@ -106,11 +108,16 @@ class ClonedRequest(MCSampleBase):
       ("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS"),
     ):
       return "hroskes"
+    if self.newcampaign == "RunIISpring18wmLHEGS":
+      if any(self.originalprepid == "HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_) for _ in (1, 2, 3, 4, 50, 51, 35)):
+        return "hroskes"
     assert False, self
   @classmethod
   def allsamples(cls):
     yield cls("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
     yield cls("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS")
+    for _ in 1, 2, 3, 4, 50, 51, 35:
+      yield cls("HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_), "RunIISpring18wmLHEGS")
 
   def createrequest(self, clonequeue):
     self.needsupdate = True
