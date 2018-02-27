@@ -31,7 +31,8 @@ class QQZZMCSample(POWHEGMCSample):
   def powhegcardusesscript(self): return False
   @property
   def powhegsubmissionstrategy(self): return "multicore"
-
+  @property
+  def creategridpackqueue(self): return "1nw" if super(QQZZMCSample, self).creategridpackqueue is not None else None
   @property
   def tarballversion(self):
     v = 1
