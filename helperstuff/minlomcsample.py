@@ -66,8 +66,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
 
   @property
   def cvmfstarball(self):
-    result = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/{energy}TeV/powheg/V2/HJJ_M125_{energy}TeV/v{}/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_{energy}TeV_M125.tgz".format(self.tarballversion, energy=self.energy)
-    if self.tarballversion == 1 and self.mass==125 and self.energy == 13 and self.decaymode == "4l": result = result.replace("/v1/", "/") 
+    result = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/{energy}TeV/powheg/V2/HJJ_M{mass}_{energy}TeV/v{}/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_{energy}TeV_M{mass}.tgz".format(self.tarballversion,mass=self.mass, energy=self.energy)
     return result
 
   @property

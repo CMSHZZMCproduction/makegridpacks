@@ -54,7 +54,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   @property
   def tarballversion(self):
     v = 2
-    if self.signalbkgbsi == "BKG": v+=1
+#    if self.signalbkgbsi == "BKG": v
     identifierstr = ' '.join(map(str,self.identifiers))
     with cd(here), open('listofv2tarballs.txt','r') as f:
 	if identifierstr in f.read():  v+=1   
@@ -134,7 +134,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @classmethod
   def allsamples(cls):
-    for signalbkgbsi in [ "BSI","SIG"]:#, "BKG"]:
+    for signalbkgbsi in [ "BSI","SIG", "BKG"]:
       for finalstate in ["ELTL",'MUTL','ELMU',"ELNU","MUMU","MUNU","TLTL","ELEL"]:
         for coupling in cls.getcouplings(signalbkgbsi):
           for width in cls.getwidths(signalbkgbsi, coupling):
