@@ -108,7 +108,7 @@ class ClonedRequest(MCSampleBase):
       ("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS"),
     ):
       return "hroskes"
-    if self.newcampaign == "RunIISpring18wmLHEGS":
+    if self.newcampaign == "PhaseIISummer17wmLHEGENOnly":
       if any(self.originalprepid == "HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_) for _ in (1, 2, 3, 4, 50, 51, 35)):
         return "hroskes"
     assert False, self

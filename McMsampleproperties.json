@@ -3452,7 +3452,7 @@
             }
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00001": {
-            "RunIISpring18wmLHEGS": {
+            "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "needsupdate": true,
@@ -3461,7 +3461,7 @@
             }
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00002": {
-            "RunIISpring18wmLHEGS": {
+            "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "needsupdate": true,
@@ -3470,7 +3470,7 @@
             }
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00003": {
-            "RunIISpring18wmLHEGS": {
+            "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "needsupdate": true,
@@ -3479,16 +3479,16 @@
             }
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00004": {
-            "RunIISpring18wmLHEGS": {
+            "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "needsupdate": true,
                 "sizeperevent": 2147,
                 "timeperevent": 35.060286162055654
-            }
+            },
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00035": {
-            "RunIISpring18wmLHEGS": {
+            "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "needsupdate": true,
@@ -3497,7 +3497,7 @@
             }
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00050": {
-            "RunIISpring18wmLHEGS": {
+            "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "needsupdate": true,
@@ -3506,7 +3506,7 @@
             }
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00051": {
-            "RunIISpring18wmLHEGS": {
+            "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "needsupdate": true,
