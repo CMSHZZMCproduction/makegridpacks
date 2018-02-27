@@ -54,6 +54,8 @@ class MCSampleBase(JsonDict):
   @property
   def neventsfortest(self): return None
   @property
+  def nthreads(self): return 1
+  @property
   def creategridpackqueue(self): return "1nd"
   @property
   def timepereventqueue(self): return "1nd"
@@ -484,13 +486,17 @@ class MCSampleBase(JsonDict):
   @property
   def filterefficiencyerror(self): return 0.1
 
+  @property
+  def fragment(self):
+    return createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommit)
+
   def updaterequest(self):
     mcm = restful()
     req = mcm.getA("requests", self.prepid)
     req["dataset_name"] = self.datasetname
     req["mcdb_id"] = 0
     req["total_events"] = self.nevents
-    req["fragment"] = createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommit)
+    req["fragment"] = self.fullfragment
     req["time_event"] = [(self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent) / self.matchefficiency]
     req["size_event"] = [self.sizeperevent if self.sizeperevent is not None else 600]
     req["generators"] = self.generators
@@ -501,7 +507,7 @@ class MCSampleBase(JsonDict):
       "filter_efficiency_error": self.filterefficiencyerror,
       "cross_section": self.xsec,
     })
-    req["sequences"][0]["nThreads"] = 1
+    req["sequences"][0]["nThreads"] = self.nthreads
     req["keep_output"][0] = bool(self.keepoutput)
     req["tags"] = self.tags
     req["memory"] = 2300

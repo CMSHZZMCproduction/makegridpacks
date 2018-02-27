@@ -32,10 +32,13 @@ class QQZZMCSample(POWHEGMCSample):
   @property
   def powhegsubmissionstrategy(self): return "multicore"
   @property
-  def creategridpackqueue(self): return "1nw" if super(QQZZMCSample, self).creategridpackqueue is not None else None
+  def creategridpackqueue(self): return ("1nw" if self.cut else "1nh") if super(QQZZMCSample, self).creategridpackqueue is not None else None
   @property
   def tarballversion(self):
     v = 1
+    if self.cut is None: v += 1
+    elif self.cut == "100-160": pass
+    else: assert 0, repr(self.cut)
     return v
 
   @property
@@ -91,7 +94,9 @@ class QQZZMCSample(POWHEGMCSample):
   @classmethod
   def allsamples(cls):
     yield cls("4l", "100-160")
+    yield cls("4l")
   @property
   def responsible(self):
     if self.finalstate == "4l" and self.cut == "100-160": return "hroskes"
+    if self.finalstate == "4l" and self.cut is None: return "hroskes"
     assert False, self

@@ -54,17 +54,11 @@ class ClonedRequest(MCSampleBase):
   @property
   def cardsurl(self): assert False
   @property
-  def generators(self): assert False
-  @property
-  def tags(self): assert False
-  @property
   def fragmentname(self): assert False
   @property
   def genproductionscommit(self): assert False
   @property
   def makegridpackscriptstolink(self): assert False
-  @property
-  def xsec(self): assert False
 
   @property
   def defaulttimeperevent(self): return None
@@ -72,10 +66,37 @@ class ClonedRequest(MCSampleBase):
   @property
   def datasetname(self):
     return self.originalfullinfo["dataset_name"]
+  @property
+  def fullfragment(self):
+    return self.originalfullinfo["fragment"]
+  @property
+  def generators(self):
+    return self.originalfullinfo["generators"]
+  @property
+  def xsec(self):
+    return self.originalfullinfo["generator_parameters"][0]["cross_section"]
+  @property
+  def nthreads(self):
+    return self.originalfullinfo["sequences"][0]["nThreads"]
+  @property
+  def keepoutput(self):
+    return self.originalfullinfo["keep_output"][0]
+  @property
+  def tags(self):
+    return self.originalfullinfo["tags"]
+  @property
+  def doublevalidationtime(self):
+    return self.originalfullinfo["validation"].get("double_time", False)
+  @property
+  def extension(self):
+    if self.newcampaign not in self.originalprepid: return 0
+    assert False
+  
     
 
   @property
   def nevents(self):
+    if (self.originalprepid, self.newcampaign) == ("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS"): return 10000000
     assert False
   @property
   def responsible(self):
@@ -85,6 +106,7 @@ class ClonedRequest(MCSampleBase):
   @classmethod
   def allsamples(cls):
     yield cls("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
+    yield cls("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS")
 
   def createrequest(self):
     self.needsupdate = True
@@ -103,20 +125,3 @@ class ClonedRequest(MCSampleBase):
       raise RuntimeError("Wrong prepid?? {} {}".format(self.prepid, answer["prepid"]))
     self.updaterequest()
     return "cloned request "+self.originalprepid+" as "+self.prepid+" on McM"
-
-  def updaterequest(self):
-    mcm = restful()
-    req = mcm.getA("requests", self.prepid)
-    req["total_events"] = self.nevents
-    try:
-      answer = mcm.updateA('requests', req)
-    except pycurl.error as e:
-      if e[0] == 52 and e[1] == "Empty reply from server":
-        self.badprepid = self.prepid
-        del self.prepid
-        return
-      else:
-        raise
-    if not (answer and answer.get("results")):
-      raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
-    self.needsupdate = False
