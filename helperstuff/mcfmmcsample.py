@@ -84,6 +84,7 @@ class MCFMMCSample(MCSampleBase):
     args = {
 	'-i': self.productioncard,
 	'--coupling': self.coupling,
+	'--bsisigbkg': self.signalbkgbsi,
 	'-d': self.datasetname,
 	'-q': self.creategridpackqueue
 	}
@@ -121,14 +122,14 @@ class MCFMMCSample(MCSampleBase):
         with open("readInput.DAT") as f:
           productioncard = f.read()
       except IOError:
-        raise ValueError("no readInput.DAT in the tarball\n{}".format(self))
+        raise ValueError("no readInput.DAT in the tarball\n{}".format(self)) 
       try:
         with open("src/User/mdata.f") as f:
           mdatacard = f.read()
       except IOError:
         raise ValueError("no src/User/mdata.f in the tarball\n{}".format(self))
 
-    if differentproductioncards(productioncard,productiongitcard):
+    if differentproductioncards(productioncard,productiongitcard) and not 'BKG' in self.identifiers:
       with cd(here):
         with open("productioncard", "w") as f:
           f.write(productioncard)
@@ -152,7 +153,7 @@ class MCFMMCSample(MCSampleBase):
       with open("src/User/mdata.f") as f:
         mdatagitcard = f.read()
 
-    if mdatacard != mdatagitcard:
+    if mdatacard != mdatagitcard and not 'BKG' in self.identifiers:
       with cd(here):
         with open("mdatacard", "w") as f:
           f.write(mdatacard)

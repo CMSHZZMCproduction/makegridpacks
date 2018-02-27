@@ -15,7 +15,9 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     return self.signalbkgbsi, self.width, self.coupling, self.finalstate
   @property
   def nevents(self):
-    return 5000000
+    if self.finalstate=='ELEL' or self.finalstate=='MUMU':  return 1000000
+    else:  return 500000
+
   @property
   def extensionnumber(self):
     result = super(MCFMAnomCoupMCSample, self).extensionnumber
@@ -51,11 +53,12 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def tarballversion(self):
-    v = 1
+    v = 2
     if self.signalbkgbsi == "BKG": v+=1
     identifierstr = ' '.join(map(str,self.identifiers))
     with cd(here), open('listofv2tarballs.txt','r') as f:
 	if identifierstr in f.read():  v+=1   
+#    if self.signalbkgbsi == 'BSI' and self.finalstate == 'ELMU' and self.coupling == '0M':  v+=1
     return v
 
   @property
@@ -110,7 +113,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   @property
   def genproductionscommit(self):
 #    return "ae49ee695eb68125cff65b0d47eab2e859c3e9aa"
-    return "8b7ab33b0805c965c53ee2f1f3980abcde13f41a"
+    return "bcee2b23ce664c6dac4adaaac259dfdb9834493d"
 
   @property
   def fragmentname(self):
@@ -126,12 +129,12 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   def getwidths(cls, signalbkgbsi, coupling):
     if signalbkgbsi in ("SIG", "BKG"): return 1,
     if signalbkgbsi == "BSI":
-      if coupling == "0PM": return 1, 10, 25
+      if coupling == "0PM": return 1, 10
       return 1, 10
 
   @classmethod
   def allsamples(cls):
-    for signalbkgbsi in ["SIG", "BSI", "BKG"]:
+    for signalbkgbsi in [ "BSI","SIG"]:#, "BKG"]:
       for finalstate in ["ELTL",'MUTL','ELMU',"ELNU","MUMU","MUNU","TLTL","ELEL"]:
         for coupling in cls.getcouplings(signalbkgbsi):
           for width in cls.getwidths(signalbkgbsi, coupling):

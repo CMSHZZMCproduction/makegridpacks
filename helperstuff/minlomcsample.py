@@ -35,6 +35,9 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     return POWHEGJHUGenMassScanMCSample("ggH", self.decaymode, self.mass).decaycard
 
   @property
+  def timepereventqueue(self): return "1nw"
+
+  @property
   def tarballversion(self):
     v = 1
 
@@ -43,12 +46,12 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
   @property
   def cvmfstarball(self):
     result = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/HJJ_M125_13TeV/v{}/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_13TeV_M125.tgz".format(self.tarballversion)
-    if self.tarballversion == 1: result = result.replace("/v1/", "/")
+    if self.tarballversion == 1 and self.mass==125: result = result.replace("/v1/", "/") 
     return result
 
   @property
   def datasetname(self):
-    return "GluGluHToZZTo4L_M125_13TeV_powheg2_minloHJJ_JHUGenV7011_pythia8"
+    return "GluGluHToZZTo4L_M%d_13TeV_powheg2_minloHJJ_JHUGenV7011_pythia8"%(self.mass)
 
   @property
   def nevents(self):
@@ -56,7 +59,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
 
   @property
   def defaulttimeperevent(self):
-    return 60
+    return 300
     assert False
 
   @property
@@ -74,10 +77,10 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
 
   @classmethod
   def allsamples(cls):
-    for mass in 125,:
+    for mass in 125, 300:
         for decaymode in "4l",:
             yield cls(decaymode, mass)
 
   @property
   def responsible(self):
-     return "" #"wahung"
+     return ""#"wahung"
