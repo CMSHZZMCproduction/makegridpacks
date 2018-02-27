@@ -32,7 +32,11 @@ class QQZZMCSample(POWHEGMCSample):
   @property
   def powhegsubmissionstrategy(self): return "multicore"
   @property
-  def creategridpackqueue(self): return ("1nw" if self.cut or self.multicore_upto[0] != 1 else "1nh") if super(QQZZMCSample, self).creategridpackqueue is not None else None
+  def creategridpackqueue(self):
+    if super(QQZZMCSample, self).creategridpackqueue is None: return None
+    if self.cut: return "1nw"
+    if self.multicore_upto[0] in (2, 3): return "1nw"
+    return "1nh"
   @property
   def tarballversion(self):
     v = 1
