@@ -46,11 +46,15 @@ class MCSampleBase(JsonDict):
   @abc.abstractproperty
   def makegridpackscriptstolink(self): pass
   @abc.abstractproperty
+  def xsec(self): pass
+  @abc.abstractproperty
   def responsible(self): "put the lxplus username of whoever makes these gridpacks"
   @property
   def doublevalidationtime(self): return False
   @property
   def neventsfortest(self): return None
+  @property
+  def nthreads(self): return 1
   @property
   def creategridpackqueue(self): return "1nd"
   @property
@@ -61,6 +65,15 @@ class MCSampleBase(JsonDict):
   def dovalidation(self):
     """Set this to false if a request fails so badly that the validation will never succeed"""
     return True
+  @property
+  def inthemiddleofmultistepgridpackcreation(self):
+    """powheg samples that need to run the grid in multiple steps should sometimes return true"""
+    return False
+  @property
+  def gridpackjobsrunning(self):
+    """powheg samples that need to run the grid in multiple steps need to modify this"""
+    if not self.makinggridpacksubmitsjob: return False
+    return not jobended("-J", self.makinggridpacksubmitsjob)
 
   @abc.abstractmethod
   def allsamples(self): "should be a classmethod"
@@ -103,6 +116,9 @@ class MCSampleBase(JsonDict):
       raise ValueError("{!r}.workdir is supposed to be a subfolder of the workdir folder, not workdir itself".format(self))
     return result
 
+  @property
+  def cvmfstarballexists(self): return os.path.exists(self.cvmfstarball)
+
   def createtarball(self):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
 
@@ -116,48 +132,41 @@ class MCSampleBase(JsonDict):
             return "try running again, probably you just got really bad timing"
         if jobended(str(jobid)):
           if self.makinggridpacksubmitsjob:
-            if jobended("-J", self.makinggridpacksubmitsjob):
-              for _ in os.listdir("."):            #--> delete everything in the folder, except the tarball if that exists
-                if os.path.basename(_) != os.path.basename(self.tmptarball) and os.path.basename(_) != os.path.basename(self.tmptarball)+".tmp":
-                  try:
-                    os.remove(_)
-                  except OSError:
-                    shutil.rmtree(_)
-              os.remove(os.path.basename(self.tmptarball)+".tmp") #remove that last
-              return "gridpack job died, cleaned it up.  run makegridpacks.py again."
-            else:
-              return "job to make the tarball is already running (but the original one died)"
+            os.remove(self.tmptarball+".tmp")
+            return "job died at a very odd time, cleaned it up.  Try running again."
+          for _ in os.listdir("."):            #--> delete everything in the folder, except the tarball if that exists
+            if os.path.basename(_) != os.path.basename(self.tmptarball) and os.path.basename(_) != os.path.basename(self.tmptarball)+".tmp":
+              try:
+                os.remove(_)
+              except OSError:
+                shutil.rmtree(_)
+          os.remove(os.path.basename(self.tmptarball)+".tmp") #remove that last
+          return "gridpack job died, cleaned it up.  run makegridpacks.py again."
         else:
           return "job to make the tarball is already running"
 
+      if self.gridpackjobsrunning:
+        return "job to make the tarball is already running"
+
       if not os.path.exists(self.tmptarball):
-        for _ in os.listdir("."):
-          if not _.endswith(".tmp"):
-            try:
-              os.remove(_)
-            except OSError:
-              shutil.rmtree(_)
-        if not LSB_JOBID(): self.submitLSF(self.creategridpackqueue); return "need to create the gridpack, submitting to LSF"
-        if LSB_QUEUE() != self.creategridpackqueue: return "need to create the gridpack, but on the wrong queue"
+        if not self.inthemiddleofmultistepgridpackcreation:
+          for _ in os.listdir("."):
+            if not _.endswith(".tmp"):
+              try:
+                os.remove(_)
+              except OSError:
+                shutil.rmtree(_)
+        if not self.makinggridpacksubmitsjob and self.creategridpackqueue is not None:
+          if not LSB_JOBID(): self.submitLSF(self.creategridpackqueue); return "need to create the gridpack, submitting to LSF"
+          if LSB_QUEUE() != self.creategridpackqueue: return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))
         output = subprocess.check_output(self.makegridpackcommand)
         print output
         if self.makinggridpacksubmitsjob:
-          waitids = []
-          for line in output.split("\n"):
-            if "is submitted to" in line:
-              waitids.append(int(line.split("<")[1].split(">")[0]))
-          if waitids:
-            subprocess.check_call(["bsub", "-q", "cmsinter", "-I", "-J", "wait for "+str(self), "-w", " && ".join("ended({})".format(_) for _ in waitids), "echo", "done"])
-          else:
-            for _ in os.listdir("."):
-              if not _.endswith(".tmp"):
-                try:
-                  os.remove(_)
-                except OSError:
-                  shutil.rmtree(_)
-            return "gridpack job submission failed"
+          return "submitted the gridpack creation job"
+        if self.inthemiddleofmultistepgridpackcreation:
+          return "ran one step of gridpack creation, run again to continue"
 
       mkdir_p(os.path.dirname(self.foreostarball))
       shutil.move(self.tmptarball, self.foreostarball)
@@ -245,9 +254,9 @@ class MCSampleBase(JsonDict):
     self.updaterequest()
     return "size and time per event are found to be {} and {}, sent it to McM".format(self.sizeperevent, self.timeperevent)
 
-  def makegridpack(self, approvalqueue, badrequestqueue):
+  def makegridpack(self, approvalqueue, badrequestqueue, clonequeue):
     if self.finished: return "finished!"
-    if not os.path.exists(self.cvmfstarball):
+    if not self.cvmfstarballexists:
       if not os.path.exists(self.eostarball):
         if not os.path.exists(self.foreostarball):
           return self.createtarball()
@@ -271,7 +280,7 @@ class MCSampleBase(JsonDict):
       self.getprepid()
       if self.prepid is None:
         #need to make the request
-        return self.createrequest()
+        return self.createrequest(clonequeue)
       else:
         return "found prepid: {}".format(self.prepid)
 
@@ -321,6 +330,7 @@ class MCSampleBase(JsonDict):
     if (self.approval, self.status) == ("submit", "done"):
       if self.needsupdate:
         return "{} is already finished, but needs update!".format(self)
+      self.gettimepereventfromMcM()
       self.finished = True
       return "finished!"
     return "Unknown approval "+self.approval+" and status "+self.status
@@ -476,13 +486,17 @@ class MCSampleBase(JsonDict):
   @property
   def filterefficiencyerror(self): return 0.1
 
+  @property
+  def fullfragment(self):
+    return createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommit)
+
   def updaterequest(self):
     mcm = restful()
     req = mcm.getA("requests", self.prepid)
     req["dataset_name"] = self.datasetname
     req["mcdb_id"] = 0
     req["total_events"] = self.nevents
-    req["fragment"] = createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommit)
+    req["fragment"] = self.fullfragment
     req["time_event"] = [(self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent) / self.matchefficiency]
     req["size_event"] = [self.sizeperevent if self.sizeperevent is not None else 600]
     req["generators"] = self.generators
@@ -491,9 +505,9 @@ class MCSampleBase(JsonDict):
       "match_efficiency": self.matchefficiency,
       "filter_efficiency": self.filterefficiency,
       "filter_efficiency_error": self.filterefficiencyerror,
-      "cross_section": 1.0,
+      "cross_section": self.xsec,
     })
-    req["sequences"][0]["nThreads"] = 1
+    req["sequences"][0]["nThreads"] = self.nthreads
     req["keep_output"][0] = bool(self.keepoutput)
     req["tags"] = self.tags
     req["memory"] = 2300
@@ -514,19 +528,24 @@ class MCSampleBase(JsonDict):
       raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
     self.needsupdate = False
 
-  def createrequest(self):
+  @property
+  def pwg(self): return "HIG"
+  @property
+  def campaign(self): return "RunIIFall17wmLHEGS"
+
+  def createrequest(self, clonequeue):
     if LSB_JOBID(): return "run locally to submit to McM"
     mcm = restful()
     req = {
-      "pwg": "HIG",
-      "member_of_campaign": "RunIIFall17wmLHEGS",
+      "pwg": self.pwg,
+      "member_of_campaign": self.campaign,
       "mcdb_id": 0,
       "dataset_name": self.datasetname,
       "extension": self.extensionnumber,
     }
     answer = mcm.putA("requests", req)
     if not (answer and answer.get("results")):
-      raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
+      raise RuntimeError("Failed to create the request on McM\n{}\n{}".format(self, answer))
     self.getprepid()
     if self.prepid != answer["prepid"]:
       raise RuntimeError("Wrong prepid?? {} {}".format(self.prepid, answer["prepid"]))
@@ -535,12 +554,13 @@ class MCSampleBase(JsonDict):
 
   def getprepid(self):
     if LSB_JOBID(): return
-    output = restful().getA('requests', query="dataset_name={}&extension={}&prepid=HIG-RunIIFall17wmLHEGS-*".format(self.datasetname, self.extensionnumber))
+    query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.datasetname, self.extensionnumber, self.pwg, self.campaign)
+    output = restful().getA('requests', query=query)
     prepids = {_["prepid"] for _ in output}
     if not prepids:
       return None
     if len(prepids) != 1:
-      raise RuntimeError("Multiple prepids for {} (dataset_name={}&prepid=HIG-RunIIFall17wmLHEGS-*)".format(self, self.datasetname))
+      raise RuntimeError("Multiple prepids for {} ({})".format(self, self.datasetname, query))
     assert len(prepids) == 1, prepids
     self.prepid = prepids.pop()
 

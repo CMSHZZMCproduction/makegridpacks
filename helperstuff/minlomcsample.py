@@ -16,9 +16,16 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     return "MINLO", self.decaymode, self.mass
 
   @property
+  def xsec(self): return 1 #unknown for unknown signal
+
+  @property
   def powhegprocess(self):
     return "HJJ"
     raise ValueError("Unknown productionmode "+self.productionmode)
+
+  @property
+  def powhegsubmissionstrategy(self):
+    return "multicore"
 
   def createtarball(self):
     return "making a minlo tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)
@@ -74,6 +81,9 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
   def nfinalparticles(self):
     return 3
     raise ValueError("No fragment for {}".format(self))
+
+  @property
+  def doublevalidationtime(self): return True
 
   @classmethod
   def allsamples(cls):

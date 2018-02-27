@@ -13,6 +13,7 @@ class ApprovalQueue(object):
   def define(self, request): self.approve(request, 2)
   def __exit__(self, *err):
     for level, prepids in self.approvals.iteritems():
+      print
       print "approving", len(prepids), "requests to level", level
       for prepid in sorted(prepids): print " ", prepid
       restful().approve("requests", ",".join(prepids), level)
@@ -26,6 +27,21 @@ class BadRequestQueue(object):
     return "please delete the bad prepid {} before proceeding".format(request.badprepid)
   def __exit__(self, *err):
     if self.badprepids:
+      print
       print "Please delete the following bad prepids:"
       for prepid in sorted(self.badprepids):
-        print " ", prepid
+        print " https://cms-pdmv.cern.ch/mcm/requests?prepid="+prepid
+
+class CloneQueue(object):
+  def __enter__(self):
+    self.clones = collections.defaultdict(set)
+    return self
+  def add(self, request, newpwg, newcampaign):
+    self.clones[newpwg+"-"+newcampaign].add(request.originalprepid)
+    return "please clone the request (see below)"
+  def __exit__(self, *err):
+    for newpwgcampaign, clones in self.clones.iteritems():
+      print
+      print "Please clone the following prepids into "+newpwgcampaign+":"
+      for prepid in sorted(clones):
+        print " https://cms-pdmv.cern.ch/mcm/requests?prepid="+prepid

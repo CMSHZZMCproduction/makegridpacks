@@ -14,6 +14,8 @@ class AnomalousCouplingMCSample(MCSampleBase):
   def identifiers(self):
     return self.productionmode, self.decaymode, self.mass, self.kind
   @property
+  def xsec(self): return 1 #unknown for unknown signal
+  @property
   def decaycard(self):
     folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "decay")
 

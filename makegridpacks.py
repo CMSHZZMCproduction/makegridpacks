@@ -3,12 +3,12 @@
 import argparse, os, sys, urllib
 
 from helperstuff import allsamples
-from helperstuff.queues import ApprovalQueue, BadRequestQueue
+from helperstuff.queues import ApprovalQueue, BadRequestQueue, CloneQueue
 
 def makegridpacks(args):
-  with ApprovalQueue() as approvalqueue, BadRequestQueue() as badrequestqueue:
+  with ApprovalQueue() as approvalqueue, BadRequestQueue() as badrequestqueue, CloneQueue() as clonequeue:
     for sample in allsamples(filter=args.filter):
-      print sample, sample.makegridpack(approvalqueue, badrequestqueue)
+      print sample, sample.makegridpack(approvalqueue, badrequestqueue, clonequeue)
       sys.stdout.flush()
 
 if __name__ == "__main__":

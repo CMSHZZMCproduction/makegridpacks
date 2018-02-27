@@ -94,6 +94,57 @@ class MCFMMCSample(MCSampleBase):
   def makinggridpacksubmitsjob(self):
     return 'MCFM_submit_%s.sh'%(self.datasetname)
 
+  def getxsec(self, error=False):
+    with cdtemp():
+      subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
+      dats = set(glob.iglob("*.dat")) - {"fferr.dat", "ffperm5.dat", "ffwarn.dat", "hto_output.dat"}
+      if len(dats) != 1:
+        raise ValueError("Expected to find exactly 1 .dat in the tarball\n"
+                         "(besides fferr.dat, ffperm5.dat, ffwarn.dat, hto_output.dat)\n"
+                         "but found {}:\n{}\n\n{}".format(len(dats), ", ".join(dats), self.cvmfstarball))
+      with open(dats.pop()) as f:
+        matches = re.findall(r"Cross-section is:\s*([0-9.Ee+-]*)\s*[+]/-\s*([0-9.Ee+-]*)\s*", f.read())
+      if not matches: raise ValueError("Didn't find the cross section in the dat\n\n"+self.cvmfstarball)
+      if len(matches) > 1: raise ValueError("Found multiple cross section lines in the dat\n\n"+self.cvmfstarball)
+      xsec, xsecerror = matches[0]
+      self.xsec = float(xsec)
+      self.xsecerror = float(xsecerror)
+      return self.xsecerror if error else self.xsec
+
+  @property
+  def xsec(self):
+    with cd(here):
+      try:
+        return self.value["xsec"]
+      except KeyError:
+        self.getxsec()
+        return self.xsec
+  @xsec.setter
+  def xsec(self, value):
+    with cd(here), self.writingdict():
+      self.value["xsec"] = value
+  @xsec.deleter
+  def xsec(self):
+    with cd(here), self.writingdict():
+      del self.value["xsec"]
+
+  @property
+  def xsecerror(self):
+    with cd(here):
+      try:
+        return self.value["xsecerror"]
+      except KeyError:
+        self.getxsec()
+        return self.xsecerror
+  @xsecerror.setter
+  def xsecerror(self, value):
+    with cd(here), self.writingdict():
+      self.value["xsecerror"] = value
+  @xsecerror.deleter
+  def xsecerror(self):
+    with cd(here), self.writingdict():
+      del self.value["xsecerror"]
+
   @property
   @cache
   def cardsurl(self):

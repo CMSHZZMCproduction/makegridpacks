@@ -331,7 +331,7 @@ def jobended(*bjobsargs):
     bjobsout = subprocess.check_output(["bjobs"]+list(bjobsargs), stderr=subprocess.STDOUT)
   except subprocess.CalledProcessError:
     return True
-  if re.match("Job <[0-9]*> is not found", bjobsout.strip()):
+  if re.match("Job <.*> is not found", bjobsout.strip()):
     return True
   lines = bjobsout.strip().split("\n")
   if len(lines) == 2 and lines[1].split()[2] == "EXIT":
