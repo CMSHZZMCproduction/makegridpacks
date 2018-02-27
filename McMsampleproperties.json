@@ -3459,15 +3459,6 @@
                 "sizeperevent": 531,
                 "timeperevent": 1.819344052711806
             }
-        },
-        "MUO-RunIIFall17wmLHEGS-00002": {
-            "RunIISpring18wmLHEGS": {
-                "matchefficiency": 0.4396,
-                "matchefficiencyerror": 0.007,
-                "prepid": "HIG-RunIISpring18wmLHEGS-00004",
-                "sizeperevent": 526,
-                "timeperevent": 2.3200025984029105
-            }
         }
     },
     "ggH": {
