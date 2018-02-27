@@ -76,7 +76,7 @@ class POWHEGMCSample(MCSampleBase):
     with cd(os.path.join(self.workdir, self.foldernameforrunpwg)):
       for logfile in glob.iglob("run_*.log"):
         with open(logfile) as f:
-          if "Backtrace" not in f.read():
+          if "Backtrace" in f.read():
             os.remove(logfile)
       for coredump in glob.iglob("core.*"):
         os.remove(coredump)
