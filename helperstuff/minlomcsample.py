@@ -46,7 +46,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     if self.energy == 13:
       return os.path.join(genproductions, "bin/Powheg/production/2017/13TeV/Higgs/HJJ_NNPDF31_13TeV/HJJ_NNPDF31_13TeV_M{}.input".format(self.mass))
     elif self.energy == 14:
-      return os.path.join(genproductions, "bin/Powheg/production/pre2017/14TeV/HJJ_NNPDF30_14TeV/HJJ_NNPDF30_14TeV_M{mass}.input".format(mass=self.mass)
+      return os.path.join(genproductions, "bin/Powheg/production/pre2017/14TeV/HJJ_NNPDF30_14TeV/HJJ_NNPDF30_14TeV_M{mass}.input".format(mass=self.mass))
 
   @property
   def powhegcardusesscript(self): return False
@@ -103,7 +103,9 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     for mass in 125, 300:
         for decaymode in "4l",:
             yield cls(decaymode, mass)
+    yield cls("4l", 125, energy=14)
 
   @property
   def responsible(self):
+     if self.energy == 14: return "hroskes"
      return "wahung"
