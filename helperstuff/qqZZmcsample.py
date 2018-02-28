@@ -35,8 +35,8 @@ class QQZZMCSample(POWHEGMCSample):
   def creategridpackqueue(self):
     if super(QQZZMCSample, self).creategridpackqueue is None: return None
     if self.multicore_upto[0] == 0: return "1nh"
-    if self.cut: return "1nw"
     if self.multicore_upto[0] in (2, 3): return "1nw"
+    if self.cut: return "1nd"
     return "1nh"
   @property
   def tarballversion(self):
