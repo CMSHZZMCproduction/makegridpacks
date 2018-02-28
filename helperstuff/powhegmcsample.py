@@ -52,6 +52,9 @@ class POWHEGMCSample(MCSampleBase):
           "-n": "10",
           "-q": self.creategridpackqueue,
         })
+        with cd(os.path.join(self.workdir, self.foldernameforrunpwg)):
+          for _ in glob.iglob("run_{-p}_{-x}_*.*".format(**args)):
+            os.remove(_)
       elif self.multicore_upto[0] == 9:
         args.update({
           "-p": "9",
@@ -71,12 +74,13 @@ class POWHEGMCSample(MCSampleBase):
   @property
   def multicore_upto(self):
     assert self.powhegsubmissionstrategy == "multicore", self.powhegsubmissionstrategy
-    if not os.path.exists(os.path.join(self.workdir, self.foldernameforrunpwg)):
+    if not os.path.exists(os.path.join(self.workdir, self.foldernameforrunpwg, "pwhg_main")):
       return 0, 1
     with cd(os.path.join(self.workdir, self.foldernameforrunpwg)):
       for logfile in glob.iglob("run_*.log"):
         with open(logfile) as f:
-          if "Backtrace" in f.read():
+          contents = f.read()
+          if "Backtrace" in contents or not contents.strip() or "cannot load grid files" in contents:
             os.remove(logfile)
       for coredump in glob.iglob("core.*"):
         os.remove(coredump)

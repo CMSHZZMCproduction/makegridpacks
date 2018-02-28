@@ -1,6 +1,7 @@
 import collections
 
 from utilities import restful
+from requesturl import requesturl_prepids
 
 class ApprovalQueue(object):
   def __enter__(self):
@@ -29,8 +30,7 @@ class BadRequestQueue(object):
     if self.badprepids:
       print
       print "Please delete the following bad prepids:"
-      for prepid in sorted(self.badprepids):
-        print " https://cms-pdmv.cern.ch/mcm/requests?prepid="+prepid
+      print " "+requesturl_prepids(self.badprepids)
 
 class CloneQueue(object):
   def __enter__(self):
@@ -43,5 +43,4 @@ class CloneQueue(object):
     for newpwgcampaign, clones in self.clones.iteritems():
       print
       print "Please clone the following prepids into "+newpwgcampaign+":"
-      for prepid in sorted(clones):
-        print " https://cms-pdmv.cern.ch/mcm/requests?prepid="+prepid
+      print " "+requesturl_prepids(clones)

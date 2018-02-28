@@ -139,7 +139,8 @@ class PythiaVariationSample(MCSampleBase):
     for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
       yield POWHEGJHUGenMassScanMCSample(productionmode, "4l", 125)
     for sample in MINLOMCSample.allsamples():
-      yield sample
+      if sample.energy == 13:
+        yield sample
 
   @classmethod
   def allsamples(cls):

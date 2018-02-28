@@ -7,13 +7,23 @@ from powhegjhugenmcsample import POWHEGJHUGenMCSample
 from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 
 class MINLOMCSample(POWHEGJHUGenMCSample):
-  def __init__(self, decaymode, mass):
+  def __init__(self, decaymode, mass, energy=13):
     self.decaymode = decaymode
     self.mass = int(str(mass))
+    self.energy = int(str(energy))
 
   @property
   def identifiers(self):
-    return "MINLO", self.decaymode, self.mass
+    result = ["MINLO", self.decaymode, self.mass]
+    if self.energy != 13: result.append(str(self.energy)+"TeV")
+    return tuple(result)
+
+  @property
+  def makegridpackcommand(self):
+    result = super(MINLOMCSample, self).makegridpackcommand
+    if self.energy == 14:
+      result += ["-d", "1"]
+    return result
 
   @property
   def xsec(self): return 1 #unknown for unknown signal
@@ -27,12 +37,23 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
   def powhegsubmissionstrategy(self):
     return "multicore"
 
+  @property
+  def creategridpackqueue(self):
+    if super(MINLOMCSample, self).creategridpackqueue is None: return None
+    if self.multicore_upto[0] in (2, 3): return "1nw"
+    return "1nd"
+
   def createtarball(self):
-    return "making a minlo tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)
+    if self.energy == 13:
+      return "making a minlo tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)
+    return super(MINLOMCSample, self).createtarball()
 
   @property
   def powhegcard(self):
-    return os.path.join(genproductions, "bin/Powheg/production/2017/13TeV/Higgs/HJJ_NNPDF31_13TeV/HJJ_NNPDF31_13TeV_M{}.input".format(self.mass))
+    if self.energy == 13:
+      return os.path.join(genproductions, "bin/Powheg/production/2017/13TeV/Higgs/HJJ_NNPDF31_13TeV/HJJ_NNPDF31_13TeV_M{}.input".format(self.mass))
+    elif self.energy == 14:
+      return os.path.join(genproductions, "bin/Powheg/production/pre2017/14TeV/HJJ_NNPDF30_14TeV/HJJ_NNPDF30_14TeV_M{mass}.input".format(mass=self.mass))
 
   @property
   def powhegcardusesscript(self): return False
@@ -47,21 +68,26 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
   @property
   def tarballversion(self):
     v = 1
-    if self.mass == 125:  v+=1
+    if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1
     return v
 
   @property
   def cvmfstarball(self):
-    result = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/HJJ_M{mass}_13TeV/v{}/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_13TeV_M{mass}.tgz".format(self.tarballversion,mass=self.mass)
-    if self.tarballversion == 1 and self.mass==125: result = result.replace("/v1/", "/") 
+    result = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/{energy}TeV/powheg/V2/HJJ_M{mass}_{energy}TeV/v{}/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_{energy}TeV_M{mass}.tgz".format(self.tarballversion,mass=self.mass, energy=self.energy)
     return result
 
   @property
   def datasetname(self):
-    return "GluGluHToZZTo4L_M%d_13TeV_powheg2_minloHJJ_JHUGenV7011_pythia8"%(self.mass)
+    return "GluGluHToZZTo4L_M%d_%dTeV_powheg2_minloHJJ_JHUGenV7011_pythia8"%(self.mass, self.energy)
+
+  @property
+  def campaign(self):
+    if self.energy == 14: return "PhaseIISummer17wmLHEGENOnly"
+    return super(MINLOMCSample, self).campaign
 
   @property
   def nevents(self):
+    if self.energy == 14: return 1000000
     return 3000000
 
   @property
@@ -90,7 +116,9 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     for mass in 125, 300:
         for decaymode in "4l",:
             yield cls(decaymode, mass)
+    yield cls("4l", 125, energy=14)
 
   @property
   def responsible(self):
+     if self.energy == 14: return "hroskes"
      return "wahung"

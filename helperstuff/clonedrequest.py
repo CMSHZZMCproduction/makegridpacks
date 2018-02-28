@@ -65,7 +65,9 @@ class ClonedRequest(MCSampleBase):
 
   @property
   def datasetname(self):
-    return self.originalfullinfo["dataset_name"]
+    result = self.originalfullinfo["dataset_name"]
+    if result == "ZZTo4L_14TeV_powheg_pythia8_v2": return "ZZTo4L_14TeV_powheg_pythia8"
+    return result
   @property
   def fullfragment(self):
     return self.originalfullinfo["fragment"]
@@ -98,6 +100,9 @@ class ClonedRequest(MCSampleBase):
   def nevents(self):
     if (self.originalprepid, self.newcampaign) == ("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS"): return 10000000
     if (self.originalprepid, self.newcampaign) == ("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS"): return 50000000
+    if self.newcampaign == "PhaseIISummer17wmLHEGENOnly":
+      if self.datasetname == "ZZTo4L_14TeV_powheg_pythia8": return 26800000 #!!!
+      else: return 1000000
     assert False
   @property
   def responsible(self):
@@ -106,11 +111,16 @@ class ClonedRequest(MCSampleBase):
       ("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS"),
     ):
       return "hroskes"
+    if self.newcampaign == "PhaseIISummer17wmLHEGENOnly":
+      if any(self.originalprepid == "HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_) for _ in (1, 2, 3, 4, 50, 51, 35)):
+        return "hroskes"
     assert False, self
   @classmethod
   def allsamples(cls):
     yield cls("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
     yield cls("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS")
+    for _ in 1, 2, 3, 4, 50, 51, 35:
+      yield cls("HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_), "PhaseIISummer17wmLHEGENOnly")
 
   def createrequest(self, clonequeue):
     self.needsupdate = True
@@ -128,3 +138,18 @@ class ClonedRequest(MCSampleBase):
       raise RuntimeError("Wrong prepid?? {} {}".format(self.prepid, answer["prepid"]))
     self.updaterequest()
     return "cloned request "+self.originalprepid+" as "+self.prepid+" on McM"
+
+  def getprepid(self):
+    super(ClonedRequest, self).getprepid()
+    if self.prepid: return
+    if LSB_JOBID(): return
+    query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.originalfullinfo["dataset_name"], self.extensionnumber, self.pwg, self.campaign)
+    output = restful().getA('requests', query=query)
+    prepids = {_["prepid"] for _ in output}
+    if not prepids:
+      return None
+    if len(prepids) != 1:
+      raise RuntimeError("Multiple prepids for {} ({})".format(self, self.datasetname, query))
+    assert len(prepids) == 1, prepids
+    self.prepid = prepids.pop()
+
