@@ -79,6 +79,9 @@ class ClonedRequest(MCSampleBase):
     return self.originalfullinfo["generator_parameters"][0]["cross_section"]
   @property
   def nthreads(self):
+    if self.campaign == "PhaseIISummer17wmLHEGENOnly" and int(self.originalprepid.split("-")[-1]) in (1, 2, 3, 4, 50, 51, 35) \
+     and "-".join(self.originalprepid.split("-")[:-1]) == "HIG-PhaseIITDRFall17wmLHEGS":
+      return 1
     return self.originalfullinfo["sequences"][0]["nThreads"]
   @property
   def keepoutput(self):
