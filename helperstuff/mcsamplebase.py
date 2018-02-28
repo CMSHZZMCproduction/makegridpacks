@@ -287,6 +287,7 @@ class MCSampleBase(JsonDict):
         return "found prepid: {}".format(self.prepid)
 
     if self.needsoptionreset:
+      if LSB_JOBID(): return "need to do an option reset, please run locally"
       if not self.optionreset():
         return "need to do option reset but failed, maybe validation is running?"
       self.updaterequest()
@@ -294,6 +295,7 @@ class MCSampleBase(JsonDict):
 
     if not (self.sizeperevent and self.timeperevent):
       if self.needsupdate:
+        if LSB_JOBID(): return "need to update the request, please run locally"
         self.updaterequest()
         return "need update before getting time and size per event, updated the request on McM"
       return self.getsizeandtime()
