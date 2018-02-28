@@ -3455,7 +3455,6 @@
             "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00003",
                 "sizeperevent": 1000,
                 "timeperevent": 7.810669374365383
@@ -3465,7 +3464,6 @@
             "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00004",
                 "sizeperevent": 1031,
                 "timeperevent": 18.021492431874254
@@ -3475,7 +3473,6 @@
             "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00005",
                 "sizeperevent": 1365,
                 "timeperevent": 86
@@ -3485,7 +3482,6 @@
             "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00006",
                 "sizeperevent": 2147,
                 "timeperevent": 35.060286162055654
@@ -3504,7 +3500,6 @@
             "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00008",
                 "sizeperevent": 1257,
                 "timeperevent": 45.7695229900314
@@ -3514,7 +3509,6 @@
             "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00009",
                 "sizeperevent": 1055,
                 "timeperevent": 88.14766496835499
