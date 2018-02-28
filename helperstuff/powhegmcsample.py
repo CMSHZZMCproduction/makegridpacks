@@ -76,7 +76,8 @@ class POWHEGMCSample(MCSampleBase):
     with cd(os.path.join(self.workdir, self.foldernameforrunpwg)):
       for logfile in glob.iglob("run_*.log"):
         with open(logfile) as f:
-          if "Backtrace" in f.read():
+          contents = f.read()
+          if "Backtrace" in contents or not contents.strip() or "cannot load grid files" in contents:
             os.remove(logfile)
       for coredump in glob.iglob("core.*"):
         os.remove(coredump)
