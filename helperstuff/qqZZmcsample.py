@@ -73,7 +73,7 @@ class QQZZMCSample(POWHEGMCSample):
   @property
   def defaulttimeperevent(self): return 15
   @property
-  def genproductionscommit(self): return "0774506836218eb536d48380d3129cdedefe8f58"
+  def genproductionscommit(self): return "dfc4658b3b18aefa67f173f369efdc32e92f0dab"
   @property
   def hasfilter(self): return False #the mass cut filter is done within powheg
   @property
