@@ -40,6 +40,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
   @property
   def creategridpackqueue(self):
     if super(MINLOMCSample, self).creategridpackqueue is None: return None
+    if self.multicore_upto[0] == 0: return "1nh"
     if self.multicore_upto[0] in (2, 3): return "1nw"
     return "1nd"
 
