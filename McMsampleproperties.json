@@ -441,7 +441,7 @@
                     "prepid": "HIG-RunIIFall17wmLHEGS-00764",
                     "sizeperevent": 588.9310720000001,
                     "timeperevent": 43.286295558826076
-               },
+                },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
@@ -465,14 +465,14 @@
                     "prepid": "HIG-RunIIFall17wmLHEGS-00793",
                     "sizeperevent": 559.824896,
                     "timeperevent": 35.93051039290013
-               },
+                },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
                     "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00822",
-                    "sizeperevent": 577.8176,
-               }
+                    "sizeperevent": 577.8176
+                }
             },
             "0PM": {
                 "ELEL": {
