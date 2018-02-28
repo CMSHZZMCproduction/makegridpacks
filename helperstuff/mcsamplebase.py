@@ -286,6 +286,12 @@ class MCSampleBase(JsonDict):
       else:
         return "found prepid: {}".format(self.prepid)
 
+    if self.needsoptionreset:
+      if not self.optionreset():
+        return "need to do option reset but failed, maybe validation is running?"
+      self.updaterequest()
+      return "needed option reset, did that and updated the request on McM"
+
     if not (self.sizeperevent and self.timeperevent):
       if self.needsupdate:
         self.updaterequest()
@@ -447,6 +453,21 @@ class MCSampleBase(JsonDict):
   def needsupdate(self):
     with cd(here), self.writingdict():
       del self.value["needsupdate"]
+  @property
+  def needsoptionreset(self):
+    with cd(here):
+      return self.value.get("needsoptionreset", False)
+  @needsoptionreset.setter
+  def needsoptionreset(self, value):
+    if value:
+      with cd(here), self.writingdict():
+        self.value["needsoptionreset"] = True
+    elif self.needsoptionreset:
+      del self.needsoptionreset
+  @needsoptionreset.deleter
+  def needsoptionreset(self):
+    with cd(here), self.writingdict():
+      del self.value["needsoptionreset"]
   @property
   def badprepid(self):
     with cd(here):
@@ -612,3 +633,15 @@ class MCSampleBase(JsonDict):
     restful().deleteA("requests", self.prepid)
     with cd(here), self.writingdict():
       del self.value
+
+  def optionreset(self):
+    if self.prepid is None: return
+    self.needsupdate = True
+    results = restful().get("restapi/requests/option_reset/"+self.prepid)
+    try:
+      success = bool(results["results"][self.prepid])
+    except KeyError:
+      success = False
+    if success:
+      self.needsoptionreset = False
+    return success
