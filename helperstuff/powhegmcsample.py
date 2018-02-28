@@ -52,6 +52,9 @@ class POWHEGMCSample(MCSampleBase):
           "-n": "10",
           "-q": self.creategridpackqueue,
         })
+        with cd(os.path.join(self.workdir, self.foldernameforrunpwg)):
+          for _ in glob.iglob("run_{-p}_{-x}_*.*".format(**args)):
+            os.remove(_)
       elif self.multicore_upto[0] == 9:
         args.update({
           "-p": "9",
