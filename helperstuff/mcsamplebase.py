@@ -298,13 +298,6 @@ class MCSampleBase(JsonDict):
       else:
         return "found prepid: {}".format(self.prepid)
 
-    if self.needsoptionreset:
-      if LSB_JOBID(): return "need to do an option reset, please run locally"
-      if not self.optionreset():
-        return "need to do option reset but failed, maybe validation is running?"
-      self.updaterequest()
-      return "needed option reset, did that and updated the request on McM"
-
     if not (self.sizeperevent and self.timeperevent):
       if self.needsupdate:
         if LSB_JOBID(): return "need to update the request, please run locally"
@@ -319,6 +312,10 @@ class MCSampleBase(JsonDict):
       return badrequestqueue.add(self)
 
     if (self.approval, self.status) == ("none", "new"):
+      if self.needsoptionreset:
+        if not self.optionreset():
+          return "need to do option reset but failed"
+        return "needed option reset, sent it to McM"
       if self.needsupdate:
         self.updaterequest()
         if self.badprepid:
@@ -454,6 +451,7 @@ class MCSampleBase(JsonDict):
       del self.value["matchefficiencyerror"]
   @property
   def needsupdate(self):
+    if self.needsoptionreset: return True
     with cd(here):
       return self.value.get("needsupdate", False)
   @needsupdate.setter
