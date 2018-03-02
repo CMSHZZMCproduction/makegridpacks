@@ -80,7 +80,9 @@ class POWHEGMCSample(MCSampleBase):
       for logfile in glob.iglob("run_*.log"):
         with open(logfile) as f:
           contents = f.read()
-          if "Backtrace" in contents or not contents.strip() or "cannot load grid files" in contents:
+          if "Backtrace" in contents or "cannot load grid files" in contents:
+            os.remove(logfile)
+          if not contents.strip() and logfile.startswith("run_1_"):
             os.remove(logfile)
       for coredump in glob.iglob("core.*"):
         os.remove(coredump)
@@ -89,6 +91,15 @@ class POWHEGMCSample(MCSampleBase):
           if not os.path.exists("run_{}_{}_{}.log".format(p, x, n)):
             return p, x
     return 9, 1
+
+  def processmakegridpackstdout(self, stdout):
+    if self.powhegsubmissionstrategy == "multicore":
+      matches = [int(_) for _ in re.findall("Job <(.*)> is submitted to queue <.*>[.]", stdout)]
+      for match in matches:
+        with open(os.path.join(self.workdir, "jobisrunning_{}".format(match)), 'w') as f:
+          pass
+    super(POWHEGMCSample, self).processmakegridpackstdout(stdout)
+    #else don't need to do anything
 
   @property
   def makinggridpacksubmitsjob(self):
@@ -104,16 +115,11 @@ class POWHEGMCSample(MCSampleBase):
   @property
   def gridpackjobsrunning(self):
     if self.powhegsubmissionstrategy == "multicore" and self.multicore_upto[0] in (1, 2, 3):
-      p, x = self.multicore_upto
-      for n in range(1, 11):
-        if not os.path.exists(os.path.join(
-          self.workdir, self.foldernameforrunpwg, "run_{}_{}_{}.log".format(p, x, n)
-        )) and os.path.exists(os.path.join(
-          self.workdir, self.foldernameforrunpwg, "run_{}_{}_{}.sh".format(p, x, n)
-        )) and not jobended("-J", "{}_{}_{}".format(p, x, n)):
-          #In other words, if there's a job with this name currently running,
-          #AND the .sh exists, AND the log doesn't exist, we can't conclude that
-          #the job isn't running
+      for filename in glob.iglob(os.path.join(self.workdir, "jobisrunning_*")):
+        jobid = int(os.path.basename(filename.replace("jobisrunning_", "")))
+        if jobended(str(jobid)):
+          os.remove(filename)
+        else:
           return True
       return False
     return super(POWHEGMCSample, self).gridpackjobsrunning

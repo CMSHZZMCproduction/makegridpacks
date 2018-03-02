@@ -76,6 +76,7 @@ class MCSampleBase(JsonDict):
     """powheg samples that need to run the grid in multiple steps need to modify this"""
     if not self.makinggridpacksubmitsjob: return False
     return not jobended("-J", self.makinggridpacksubmitsjob)
+  def processmakegridpackstdout(self, stdout): "do nothing by default, powheg uses this"
 
   @abc.abstractmethod
   def allsamples(self): "should be a classmethod"
@@ -163,6 +164,16 @@ class MCSampleBase(JsonDict):
           if LSB_QUEUE() != self.creategridpackqueue: return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))
+
+        #https://stackoverflow.com/a/17698359/5228524
+        makegridpackstdout = ""
+        pipe = subprocess.Popen(self.makegridpackcommand, stdout=subprocess.PIPE, bufsize=1)
+        with pipe.stdout:
+            for line in iter(pipe.stdout.readline, b''):
+                print line,
+                makegridpackstdout += line
+        self.processmakegridpackstdout(makegridpackstdout)
+
         output = subprocess.check_output(self.makegridpackcommand)
         print output
         if self.makinggridpacksubmitsjob:
