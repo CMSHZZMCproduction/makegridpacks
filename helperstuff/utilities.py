@@ -334,7 +334,7 @@ def jobended(*bjobsargs):
   if re.match("Job <.*> is not found", bjobsout.strip()):
     return True
   lines = bjobsout.strip().split("\n")
-  if len(lines) == 2 and lines[1].split()[2] == "EXIT":
+  if len(lines) == 2 and lines[1].split()[2] in ("EXIT", "DONE"):
     return True
 
   return False
