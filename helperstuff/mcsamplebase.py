@@ -165,6 +165,9 @@ class MCSampleBase(JsonDict):
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))
 
+        makinggridpacksubmitsjob = self.makinggridpacksubmitsjob
+        inthemiddleofmultistepgridpackcreation = self.inthemiddleofmultistepgridpackcreation
+
         #https://stackoverflow.com/a/17698359/5228524
         makegridpackstdout = ""
         pipe = subprocess.Popen(self.makegridpackcommand, stdout=subprocess.PIPE, bufsize=1)
@@ -174,11 +177,9 @@ class MCSampleBase(JsonDict):
                 makegridpackstdout += line
         self.processmakegridpackstdout(makegridpackstdout)
 
-        output = subprocess.check_output(self.makegridpackcommand)
-        print output
-        if self.makinggridpacksubmitsjob:
+        if makinggridpacksubmitsjob:
           return "submitted the gridpack creation job"
-        if self.inthemiddleofmultistepgridpackcreation:
+        if inthemiddleofmultistepgridpackcreation:
           return "ran one step of gridpack creation, run again to continue"
 
       mkdir_p(os.path.dirname(self.foreostarball))
