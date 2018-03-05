@@ -166,7 +166,6 @@ class MCSampleBase(JsonDict):
           os.symlink(filename, os.path.basename(filename))
 
         makinggridpacksubmitsjob = self.makinggridpacksubmitsjob
-        inthemiddleofmultistepgridpackcreation = self.inthemiddleofmultistepgridpackcreation
 
         #https://stackoverflow.com/a/17698359/5228524
         makegridpackstdout = ""
@@ -179,7 +178,7 @@ class MCSampleBase(JsonDict):
 
         if makinggridpacksubmitsjob:
           return "submitted the gridpack creation job"
-        if inthemiddleofmultistepgridpackcreation:
+        if self.inthemiddleofmultistepgridpackcreation:
           return "ran one step of gridpack creation, run again to continue"
 
       mkdir_p(os.path.dirname(self.foreostarball))
