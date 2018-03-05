@@ -68,6 +68,7 @@ class POWHEGMCSample(MCSampleBase):
 
   @property
   def inthemiddleofmultistepgridpackcreation(self):
+    if os.path.exists(self.tmptarball): return False
     if self.powhegsubmissionstrategy == "multicore" and self.multicore_upto[0] != 0: return True
     return super(POWHEGMCSample, self).inthemiddleofmultistepgridpackcreation
 
