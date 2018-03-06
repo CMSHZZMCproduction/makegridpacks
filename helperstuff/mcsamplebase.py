@@ -297,11 +297,7 @@ class MCSampleBase(JsonDict):
       else:
         return "found prepid: {}".format(self.prepid)
 
-    if not (self.sizeperevent and self.timeperevent):
-      if self.needsupdate:
-        if LSB_JOBID(): return "need to update the request, please run locally"
-        self.updaterequest()
-        return "need update before getting time and size per event, updated the request on McM"
+    if not (self.sizeperevent and self.timeperevent) and not self.needsupdate:
       return self.getsizeandtime()
 
     if LSB_JOBID():
@@ -450,7 +446,8 @@ class MCSampleBase(JsonDict):
       del self.value["matchefficiencyerror"]
   @property
   def needsupdate(self):
-    if self.needsoptionreset: return True
+    if self.needsoptionreset:
+      self.needsupdate = True
     with cd(here):
       return self.value.get("needsupdate", False)
   @needsupdate.setter

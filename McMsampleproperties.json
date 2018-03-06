@@ -1107,7 +1107,11 @@
         "4l": {
             "125": {
                 "14TeV": {
-                    "needsoptionreset": true
+                    "matchefficiency": 1,
+                    "matchefficiencyerror": 0,
+                    "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00012",
+                    "sizeperevent": 131.62091789473683,
+                    "timeperevent": 2.50648
                 },
                 "TuneDown": {
                     "matchefficiency": 1,
@@ -2595,6 +2599,7 @@
                 "timeperevent": 78.24542459879659
             },
             "400": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00259",
