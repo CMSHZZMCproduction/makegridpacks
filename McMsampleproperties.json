@@ -1109,10 +1109,9 @@
                 "14TeV": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true,
                     "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00012",
                     "sizeperevent": 131.62091789473683,
-                    "timeperevent": 500
+                    "timeperevent": 495.687518588282
                 },
                 "TuneDown": {
                     "matchefficiency": 1,
