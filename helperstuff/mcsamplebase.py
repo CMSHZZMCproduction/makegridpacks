@@ -632,13 +632,13 @@ class MCSampleBase(JsonDict):
       subprocess.check_call(["bsub", "-q", queue, "-J", "makegridpacks"], stdin=pipe.stdout)
 
   def delete(self):
-    if not self.prepid: return
     response = ""
     while response not in ("yes", "no"):
       response = raw_input("are you sure you want to delete {}? [yes/no]".format(self))
     if response == "no": return
-    restful().approve("requests", self.prepid, 0)
-    restful().deleteA("requests", self.prepid)
+    if self.prepid:
+      restful().approve("requests", self.prepid, 0)
+      restful().deleteA("requests", self.prepid)
     with cd(here), self.writingdict():
       del self.value
 

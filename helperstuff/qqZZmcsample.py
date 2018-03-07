@@ -21,6 +21,7 @@ class QQZZMCSample(POWHEGMCSample):
     if self.finalstate == "4l":
       if self.cut is None: filename = "ZZ_4L_NNPDF31_13TeV.input"
       elif self.cut == "100-160": filename = "ZZ_4L_100-160GeV_NNPDF31_13TeV.input"
+      elif self.cut == "800+": filename = "ZZ_4L_800+GeV_NNPDF31_13TeV.input"
     elif self.finalstate == "2l2nu":
       if self.cut is None: filename = "ZZ_2L2NU_NNPDF31_13TeV.input"
     try:
@@ -41,9 +42,6 @@ class QQZZMCSample(POWHEGMCSample):
   @property
   def tarballversion(self):
     v = 1
-    if self.cut is None: v += 1
-    elif self.cut == "100-160": pass
-    else: assert 0, repr(self.cut)
     return v
 
   @property
@@ -58,6 +56,9 @@ class QQZZMCSample(POWHEGMCSample):
       elif self.cut == "100-160":
         folder = os.path.join(folder, "100-160GeV")
         filename = "ZZTo4L_100-160GeV.tgz"
+      elif self.cut == "800+":
+        folder = os.path.join(folder, "800+GeV")
+        filename = "ZZTo4L_800+GeV.tgz"
 
     try:
       return os.path.join(folder, "v{}".format(self.tarballversion), filename)
@@ -74,7 +75,7 @@ class QQZZMCSample(POWHEGMCSample):
   @property
   def defaulttimeperevent(self): return 15
   @property
-  def genproductionscommit(self): return "dfc4658b3b18aefa67f173f369efdc32e92f0dab"
+  def genproductionscommit(self): return "bd0250b39ae7b2bbf8a82d90ab0ba7182dbf650b"
   @property
   def hasfilter(self): return False #the mass cut filter is done within powheg
   @property
@@ -99,9 +100,9 @@ class QQZZMCSample(POWHEGMCSample):
   @classmethod
   def allsamples(cls):
     yield cls("4l", "100-160")
-    yield cls("4l")
+    yield cls("4l", "800+")
   @property
   def responsible(self):
     if self.finalstate == "4l" and self.cut == "100-160": return "hroskes"
-    if self.finalstate == "4l" and self.cut is None: return "hroskes"
+    if self.finalstate == "4l" and self.cut == "800+": return "hroskes"
     assert False, self
