@@ -43,7 +43,7 @@ class POWHEGMCSample(MCSampleBase):
         args.update({
           "-p": "0",
         })
-      elif self.multicore_upto in ((1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 1), (3, 1)):
+      elif self.multicore_upto[0] in (1, 2, 3):
         args.update({
           "-p": str(self.multicore_upto[0]),
           "-x": str(self.multicore_upto[1]),
