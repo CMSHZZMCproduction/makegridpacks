@@ -2497,6 +2497,7 @@
                 "timeperevent": 96.89077502930947
             },
             "175": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00249",
