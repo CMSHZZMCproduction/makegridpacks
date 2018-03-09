@@ -22,6 +22,7 @@ class QQZZMCSample(POWHEGMCSample):
       if self.cut is None: filename = "ZZ_4L_NNPDF31_13TeV.input"
       elif self.cut == "100-160": filename = "ZZ_4L_100-160GeV_NNPDF31_13TeV.input"
       elif self.cut == "800+": filename = "ZZ_4L_800+GeV_NNPDF31_13TeV.input"
+      elif self.cut == "10-40": filename = "ZZ_4L_10-40GeV_NNPDF31_13TeV.input"
     elif self.finalstate == "2l2nu":
       if self.cut is None: filename = "ZZ_2L2NU_NNPDF31_13TeV.input"
     try:
@@ -59,6 +60,9 @@ class QQZZMCSample(POWHEGMCSample):
       elif self.cut == "800+":
         folder = os.path.join(folder, "800+GeV")
         filename = "ZZTo4L_800+GeV.tgz"
+      elif self.cut == "10-40":
+        folder = os.path.join(folder, "10-40GeV")
+        filename = "ZZTo4L_10-40GeV.tgz"
 
     try:
       return os.path.join(folder, "v{}".format(self.tarballversion), filename)
@@ -101,8 +105,10 @@ class QQZZMCSample(POWHEGMCSample):
   def allsamples(cls):
     yield cls("4l", "100-160")
     yield cls("4l", "800+")
+    yield cls("4l", "10-40")
   @property
   def responsible(self):
     if self.finalstate == "4l" and self.cut == "100-160": return "hroskes"
     if self.finalstate == "4l" and self.cut == "800+": return "hroskes"
+    if self.finalstate == "4l" and self.cut == "10-40": return "hroskes"
     assert False, self
