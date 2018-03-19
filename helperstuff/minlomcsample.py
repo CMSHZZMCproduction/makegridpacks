@@ -101,7 +101,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
 
   @property
   def genproductionscommit(self):
-    return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    return "1383619647949814646806a6fc8b0ecd3228f293"
 
   @property
   def nfinalparticles(self):
