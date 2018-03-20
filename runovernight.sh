@@ -11,7 +11,7 @@ set -euo pipefail
 for i in {1..192}; do (
   source /afs/cern.ch/cms/PPD/PdmV/tools/McM/getCookie.sh
   eval $(scram ru -sh)
-  ./makegridpacks.py
+  ./makegridpacks.py "$@"
 ) || true
 sleep 15m
 done
