@@ -3414,6 +3414,7 @@
                 "timeperevent": 31.16103921914606
             },
             "900": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00312",
@@ -3522,7 +3523,7 @@
             "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00003",
+                "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00029",
                 "sizeperevent": 1000,
                 "timeperevent": 1.1156119856889295
             }
@@ -3531,7 +3532,7 @@
             "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00004",
+                "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00030",
                 "sizeperevent": 1031,
                 "timeperevent": 15.79601656054376
             }
@@ -3540,7 +3541,7 @@
             "PhaseIISummer17wmLHEGENOnly": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00005",
+                "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00031",
                 "sizeperevent": 1365,
                 "timeperevent": 79.07326137666549
             }
@@ -3583,6 +3584,7 @@
         },
         "HIG-RunIIFall17wmLHEGS-00304": {
             "RunIISpring18wmLHEGS": {
+                "finished": true,
                 "matchefficiency": 0.37,
                 "matchefficiencyerror": 0.1,
                 "prepid": "HIG-RunIISpring18wmLHEGS-00002",
