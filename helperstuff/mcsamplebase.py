@@ -76,6 +76,7 @@ class MCSampleBase(JsonDict):
     """powheg samples that need to run the grid in multiple steps need to modify this"""
     if not self.makinggridpacksubmitsjob: return False
     return not jobended("-J", self.makinggridpacksubmitsjob)
+  def processmakegridpackstdout(self, stdout): "do nothing by default, powheg uses this"
 
   @abc.abstractmethod
   def allsamples(self): "should be a classmethod"
@@ -163,9 +164,19 @@ class MCSampleBase(JsonDict):
           if LSB_QUEUE() != self.creategridpackqueue: return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))
-        output = subprocess.check_output(self.makegridpackcommand)
-        print output
-        if self.makinggridpacksubmitsjob:
+
+        makinggridpacksubmitsjob = self.makinggridpacksubmitsjob
+
+        #https://stackoverflow.com/a/17698359/5228524
+        makegridpackstdout = ""
+        pipe = subprocess.Popen(self.makegridpackcommand, stdout=subprocess.PIPE, bufsize=1)
+        with pipe.stdout:
+            for line in iter(pipe.stdout.readline, b''):
+                print line,
+                makegridpackstdout += line
+        self.processmakegridpackstdout(makegridpackstdout)
+
+        if makinggridpacksubmitsjob:
           return "submitted the gridpack creation job"
         if self.inthemiddleofmultistepgridpackcreation:
           return "ran one step of gridpack creation, run again to continue"
@@ -290,16 +301,7 @@ class MCSampleBase(JsonDict):
       else:
         return "found prepid: {}".format(self.prepid)
 
-    if self.needsoptionreset:
-      if not self.optionreset():
-        return "need to do option reset but failed, maybe validation is running?"
-      self.updaterequest()
-      return "needed option reset, did that and updated the request on McM"
-
-    if not (self.sizeperevent and self.timeperevent):
-      if self.needsupdate:
-        self.updaterequest()
-        return "need update before getting time and size per event, updated the request on McM"
+    if not (self.sizeperevent and self.timeperevent) and not self.needsupdate:
       return self.getsizeandtime()
 
     if LSB_JOBID():
@@ -309,6 +311,10 @@ class MCSampleBase(JsonDict):
       return badrequestqueue.add(self)
 
     if (self.approval, self.status) == ("none", "new"):
+      if self.needsoptionreset:
+        if not self.optionreset():
+          return "need to do option reset but failed"
+        return "needed option reset, sent it to McM"
       if self.needsupdate:
         self.updaterequest()
         if self.badprepid:
@@ -444,6 +450,8 @@ class MCSampleBase(JsonDict):
       del self.value["matchefficiencyerror"]
   @property
   def needsupdate(self):
+    if self.needsoptionreset:
+      self.needsupdate = True
     with cd(here):
       return self.value.get("needsupdate", False)
   @needsupdate.setter
@@ -628,13 +636,13 @@ class MCSampleBase(JsonDict):
       subprocess.check_call(["bsub", "-q", queue, "-J", "makegridpacks"], stdin=pipe.stdout)
 
   def delete(self):
-    if not self.prepid: return
     response = ""
     while response not in ("yes", "no"):
       response = raw_input("are you sure you want to delete {}? [yes/no]".format(self))
     if response == "no": return
-    restful().approve("requests", self.prepid, 0)
-    restful().deleteA("requests", self.prepid)
+    if self.prepid:
+      restful().approve("requests", self.prepid, 0)
+      restful().deleteA("requests", self.prepid)
     with cd(here), self.writingdict():
       del self.value
 

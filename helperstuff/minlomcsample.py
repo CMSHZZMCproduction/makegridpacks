@@ -40,6 +40,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
   @property
   def creategridpackqueue(self):
     if super(MINLOMCSample, self).creategridpackqueue is None: return None
+    if self.multicore_upto[0] == 0: return "1nh"
     if self.multicore_upto[0] in (2, 3): return "1nw"
     return "1nd"
 
@@ -73,8 +74,23 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
 
   @property
   def cvmfstarball(self):
-    result = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/{energy}TeV/powheg/V2/HJJ_M{mass}_{energy}TeV/v{}/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_{energy}TeV_M{mass}.tgz".format(self.tarballversion,mass=self.mass, energy=self.energy)
-    return result
+    if self.energy == 13: year = "2017"
+    if self.energy == 14: year = "slc6_amd64_gcc481"
+    repmap = dict(version=self.tarballversion, mass=self.mass, energy=self.energy, year=year)
+
+    maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/{year}/{energy}TeV/powheg/V2"
+    if self.energy == 13:
+      folder = "HJJ_M{mass}_{energy}TeV"
+    elif self.energy == 14:
+      folder = "HJJ_HZZ4L_NNPDF30_14TeV_M125_JHUGenV710"
+    else: assert False
+
+    if self.energy == 13 and (self.tarballversion == 1 or self.mass == 125 and self.decaymode == "4l" and self.tarballversion == 2):
+      tarballname = "HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_{energy}TeV_M{mass}.tgz"
+    else:
+      tarballname = folder+".tgz"
+
+    return os.path.join(maindir, folder, "v{version}", tarballname).format(**repmap)
 
   @property
   def datasetname(self):

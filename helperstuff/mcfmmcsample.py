@@ -87,7 +87,8 @@ class MCFMMCSample(MCSampleBase):
 	'--coupling': self.coupling,
 	'--bsisigbkg': self.signalbkgbsi,
 	'-d': self.datasetname,
-	'-q': self.creategridpackqueue
+	'-q': self.creategridpackqueue,
+	'-s': str(hash(self) % 2147483647),
 	}
     return ['./run_mcfm_AC.py'] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
  
