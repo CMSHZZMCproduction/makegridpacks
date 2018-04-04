@@ -10,6 +10,7 @@ def differentproductioncards(productioncard, gitproductioncard):
 	prodcardintarball = [line for line in productioncard.split('\n') if line != '']
 	prodcardongit = [line for line in gitproductioncard.split('\n') if line != '']
 	if len(prodcardintarball) != len(prodcardongit):
+		print self.cvmfstarball
 		print 'len(prodcardintarball) != len(prodcardongit)'
 		return True
 	diffprodcard = False
@@ -86,8 +87,8 @@ class MCFMMCSample(MCSampleBase):
 	'--coupling': self.coupling,
 	'--bsisigbkg': self.signalbkgbsi,
 	'-d': self.datasetname,
-	'-q': self.creategridpackqueue,
-	'-s': str(hash(self) % 2147483647),
+	'-q': self.creategridpackqueue
+#	'-s': str(hash(self) % 2147483647),
 	}
     return ['./run_mcfm_AC.py'] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
  
@@ -164,7 +165,8 @@ class MCFMMCSample(MCSampleBase):
     with cdtemp():
       subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
       if glob.glob("core.*"):
-        raise ValueError("There is a core dump in the tarball\n{}".format(self))
+	print "There is a core dump in the tarball\n{}".format(self)
+#        raise ValueError("There is a core dump in the tarball\n{}".format(self))
 #      for root, dirs, files in os.walk("."):
 #	for ifile in files:
 #	  try:
