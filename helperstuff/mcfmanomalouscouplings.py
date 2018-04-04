@@ -56,9 +56,18 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     v = 2
 #    if self.signalbkgbsi == "BKG": v
     identifierstr = ' '.join(map(str,self.identifiers))
+    if 'BSI' in identifierstr and '0PL1f05ph0 TLTL' in identifierstr:  v+=1 
+    if 'BSI' in identifierstr and '0PL1f05ph0 ELEL' in identifierstr: v+=1 
+    if 'BSI 1 0PL1f05ph0 MUMU' == identifierstr: v+=2 
     with cd(here), open('listofv2tarballs.txt','r') as f:
 	if identifierstr in f.read():  v+=1   
 #    if self.signalbkgbsi == 'BSI' and self.finalstate == 'ELMU' and self.coupling == '0M':  v+=1
+    if 'BSI 1 0PL1f05ph0 ELEL' == identifierstr: v=7
+    if 'BSI 1 0PL1f05ph0 MUMU' == identifierstr: v=6
+    if 'BSI 1 0PL1f05ph0 TLTL' == identifierstr: v=4
+    if 'BSI 10 0Mf05ph0 TLTL' == identifierstr: v=4
+    if 'BSI 10 0Mf05ph0 ELEL' == identifierstr: v=4
+    if 'BSI 10 0Mf05ph0 MUMU' == identifierstr: v=4 
     return v
 
   @property
