@@ -64,7 +64,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 #    if self.signalbkgbsi == 'BSI' and self.finalstate == 'ELMU' and self.coupling == '0M':  v+=1
     if 'BSI 1 0PL1f05ph0 ELEL' == identifierstr: v=7
     if 'BSI 1 0PL1f05ph0 MUMU' == identifierstr: v=6
-    if 'BSI 1 0PL1f05ph0 TLTL' == identifierstr: v=4
+    if 'BSI 1 0PL1f05ph0 TLTL' == identifierstr: v=6
     if 'BSI 10 0Mf05ph0 TLTL' == identifierstr: v=4
     if 'BSI 10 0Mf05ph0 ELEL' == identifierstr: v=4
     if 'BSI 10 0Mf05ph0 MUMU' == identifierstr: v=4 
