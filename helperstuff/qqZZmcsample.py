@@ -45,8 +45,7 @@ class QQZZMCSample(POWHEGMCSample):
     v = 1
     return v
 
-  @property
-  def cvmfstarball(self):
+  def cvmfstarball_anyversion(self, version):
     maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/"
     if self.finalstate == "2l2nu":
       folder = os.path.join(maindir, "ZZTo2L2NU")
@@ -65,7 +64,7 @@ class QQZZMCSample(POWHEGMCSample):
         filename = "ZZTo4L_10-40GeV.tgz"
 
     try:
-      return os.path.join(folder, "v{}".format(self.tarballversion), filename)
+      return os.path.join(folder, "v{}".format(version), filename)
     except NameError:
       assert False, self
   @property

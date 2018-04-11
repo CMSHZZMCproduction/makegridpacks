@@ -46,14 +46,13 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
 
     return v
 
-  @property
-  def cvmfstarball(self):
+  def cvmfstarball_anyversion(self, version):
     folder = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V7011/lifetime"
-    if self.tarballversion == 1 and self.productionmode == "ggH" and self.decaymode == "4l" and self.mass == 125:
+    if version == 1 and self.productionmode == "ggH" and self.decaymode == "4l" and self.mass == 125:
       tarballname = "ZZ_slc6_amd64_gcc630_CMSSW_9_3_0_ZZ4l_lifetime_NNPDF31_13TeV_{}um.tgz".format(self.lifetime)
       return os.path.join(folder, tarballname)
     tarballname = self.datasetname+".tgz"
-    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
+    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
   @property
   def datasetname(self):

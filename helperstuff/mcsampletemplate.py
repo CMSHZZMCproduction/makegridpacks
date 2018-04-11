@@ -49,13 +49,12 @@ class MyMCSample(MCSampleBase):
     """
     return v
 
-  @property
-  def cvmfstarball(self):
+  def cvmfstarball_anyversion(self, version):
     """
     fill this
     folder = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/..."
     tarballname = "..."
-    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(tarballversion), tarballname)
+    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
     """
 
   @property

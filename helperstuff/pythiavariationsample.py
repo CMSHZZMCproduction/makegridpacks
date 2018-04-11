@@ -30,9 +30,8 @@ class PythiaVariationSample(MCSampleBase):
   @property
   def tarballversion(self):
     return self.mainsample.tarballversion
-  @property
-  def cvmfstarball(self):
-    return self.mainsample.cvmfstarball
+  def cvmfstarball_anyversion(self, version):
+    return self.mainsample.cvmfstarball_anyversion(version)
   @property
   def tmptarball(self):
     return self.mainsample.tmptarball

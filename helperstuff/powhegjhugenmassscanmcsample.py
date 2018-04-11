@@ -80,8 +80,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
     return v
 
-  @property
-  def cvmfstarball(self):
+  def cvmfstarball_anyversion(self, version):
     folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2", self.powhegprocess+"_ZZ_NNPDF31_13TeV")
     tarballname = os.path.basename(self.powhegcard.replace("_ZZ", "")).replace(".input", ".tgz")
     if self.decaymode != "4l":
@@ -89,7 +88,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
       if "ZZ2l2any_withtaus.input" in self.decaycard: decaymode == "2l2X"
       elif "ZZany_filter2lOSSF.input" in self.decaycard: decaymode = "_filter2l"
       tarballname = tarballname.replace("NNPDF31", "ZZ"+self.decaymode+"_NNPDF31")
-    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(self.tarballversion), tarballname)
+    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
   @property
   @cache

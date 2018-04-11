@@ -72,11 +72,10 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1
     return v
 
-  @property
-  def cvmfstarball(self):
+  def cvmfstarball_anyversion(self, version):
     if self.energy == 13: year = "2017"
     if self.energy == 14: year = "slc6_amd64_gcc481"
-    repmap = dict(version=self.tarballversion, mass=self.mass, energy=self.energy, year=year)
+    repmap = dict(version=version, mass=self.mass, energy=self.energy, year=year)
 
     maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/{year}/{energy}TeV/powheg/V2"
     if self.energy == 13:
@@ -85,7 +84,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
       folder = "HJJ_HZZ4L_NNPDF30_14TeV_M125_JHUGenV710"
     else: assert False
 
-    if self.energy == 13 and (self.tarballversion == 1 or self.mass == 125 and self.decaymode == "4l" and self.tarballversion == 2):
+    if self.energy == 13 and (version == 1 or self.mass == 125 and self.decaymode == "4l" and version == 2):
       tarballname = "HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_{energy}TeV_M{mass}.tgz"
     else:
       tarballname = folder+".tgz"

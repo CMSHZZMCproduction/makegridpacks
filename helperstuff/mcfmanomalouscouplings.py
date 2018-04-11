@@ -70,8 +70,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     if 'BSI 10 0Mf05ph0 MUMU' == identifierstr: v=4 
     return v
 
-  @property
-  def cvmfstarball(self): 
+  def cvmfstarball_anyversion(self, version):
     folder = '/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/mcfm/'   
     if self.signalbkgbsi == "BKG":
         mainfoldername = "MCFM_mdata_MCFM_JHUGen_13TeV_ggZZto{}_BKG_NNPDF31".format(self.finalstate)
@@ -79,7 +78,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     else:
         tarballname = self.tmptarball.split('/')[-1]
         mainfoldername = tarballname.replace(".tgz", "")
-    return os.path.join(folder, mainfoldername, "v{}".format(self.tarballversion), tarballname)
+    return os.path.join(folder, mainfoldername, "v{}".format(version), tarballname)
 
   @property
   def datasetname(self):

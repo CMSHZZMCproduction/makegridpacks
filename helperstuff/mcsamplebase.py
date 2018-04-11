@@ -12,8 +12,10 @@ class MCSampleBase(JsonDict):
     """example: productionmode, decaymode, mass"""
   @abc.abstractproperty
   def tarballversion(self): pass
-  @abc.abstractproperty
-  def cvmfstarball(self): pass
+  @property
+  def cvmfstarball(self): return self.cvmfstarball_anyversion(self.tarballversion)
+  @abc.abstractmethod
+  def cvmfstarball_anyversion(self, version): pass
   @abc.abstractproperty
   def tmptarball(self): pass
   @abc.abstractproperty
@@ -121,6 +123,25 @@ class MCSampleBase(JsonDict):
 
   @property
   def cvmfstarballexists(self): return os.path.exists(self.cvmfstarball)
+
+  def patchtarball(self):
+    if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
+
+    if not self.needspatch: assert False
+    mkdir_p(self.workdir)
+    with KeepWhileOpenFile(self.tmptarball+".tmp", message=LSB_JOBID()) as kwof:
+      if not kwof:
+        return "job to patch the tarball is already running"
+
+      kwargs = self.needspatch
+      if "oldfilename" in kwargs or "newfilename" in kwargs: assert False, kwargs
+      kwargs["oldfilename"] = self.cvmfstarball_anyversion(version=kwargs.pop("oldtarballversion"))
+      kwargs["newfilename"] = self.foreostarball
+      os.makedirs(os.path.dirname(self.foreostarball))
+
+      dopatch(**kwargs)
+
+      return "tarball is patched and the new version is in this directory to be copied to eos"
 
   def createtarball(self):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
@@ -272,6 +293,7 @@ class MCSampleBase(JsonDict):
     if not self.cvmfstarballexists:
       if not os.path.exists(self.eostarball):
         if not os.path.exists(self.foreostarball):
+          if self.needspatch: return self.patchtarball()
           return self.createtarball()
 	tmplist = self.makegridpackcommand
 	print ' '.join(tmplist)
@@ -515,6 +537,29 @@ class MCSampleBase(JsonDict):
   def finished(self):
     with cd(here), self.writingdict():
       del self.value["finished"]
+  @property
+  def needspatch(self):
+    with cd(here):
+      return self.value.get("needspatch", {})
+  @needspatch.setter
+  def needspatch(self, value):
+    if value:
+      try:
+        value["oldtarballversion"]
+      except TypeError:
+        raise ValueError("needspatch has to be a dict")
+      except KeyError:
+        raise ValueError('needspatch has to have "oldtarballversion" in it')
+      if "newfilename" in value or "oldfilename" in value:
+        raise ValueError("""needspatch can't have "oldfilename" or "newfilename" in it""")
+      with cd(here), self.writingdict():
+        self.value["needspatch"] = value
+    elif self.needspatch:
+      del self.needspatch
+  @needspatch.deleter
+  def needspatch(self):
+    with cd(here), self.writingdict():
+      del self.value["needspatch"]
 
   @property
   def filterefficiency(self): return 1

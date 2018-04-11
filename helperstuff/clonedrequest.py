@@ -37,8 +37,7 @@ class ClonedRequest(MCSampleBase):
     return "clone", self.originalprepid, self.newcampaign
   @property
   def tarballversion(self): assert False
-  @property
-  def cvmfstarball(self): assert False
+  def cvmfstarball_anyversion(self, version): assert False
   @property
   def foreostarball(self): return "/nonexistent/path"
   @property
