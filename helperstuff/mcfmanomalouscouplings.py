@@ -68,6 +68,8 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     if 'BSI 10 0Mf05ph0 TLTL' == identifierstr: v=4
     if 'BSI 10 0Mf05ph0 ELEL' == identifierstr: v=4
     if 'BSI 10 0Mf05ph0 MUMU' == identifierstr: v=4 
+    with cd(here), open('data/listofpatchedmcfmgridpacks.txt', 'r') as f:
+	if identifierstr in f.read():  v+=1
     return v
 
   def cvmfstarball_anyversion(self, version):
