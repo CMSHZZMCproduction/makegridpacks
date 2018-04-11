@@ -552,6 +552,10 @@ class MCSampleBase(JsonDict):
         raise ValueError('needspatch has to have "oldtarballversion" in it')
       if "newfilename" in value or "oldfilename" in value:
         raise ValueError("""needspatch can't have "oldfilename" or "newfilename" in it""")
+      if "functionname" not in value:
+        raise ValueError('needspatch has to have "functionname" in it')
+      if value["functionname"] not in patches.functiondict:
+        raise ValueError('invalid functionname "{functionname}", choices:\n{}'.format(", ".join(patches.functiondict), **value))
       with cd(here), self.writingdict():
         self.value["needspatch"] = value
     elif self.needspatch:
