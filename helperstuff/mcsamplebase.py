@@ -2,6 +2,7 @@ import abc, filecmp, glob, os, pycurl, re, shutil, stat, subprocess
 
 from McMScripts.manageRequests import createLHEProducer
 
+import patches
 from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, LSB_JOBID, LSB_QUEUE, mkdir_p, restful, wget
 
 class MCSampleBase(JsonDict):
@@ -139,7 +140,7 @@ class MCSampleBase(JsonDict):
       kwargs["newfilename"] = self.foreostarball
       os.makedirs(os.path.dirname(self.foreostarball))
 
-      dopatch(**kwargs)
+      patches.dopatch(**kwargs)
 
       return "tarball is patched and the new version is in this directory to be copied to eos"
 
