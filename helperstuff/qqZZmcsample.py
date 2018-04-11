@@ -102,6 +102,7 @@ class QQZZMCSample(POWHEGMCSample):
 
   @classmethod
   def allsamples(cls):
+    return
     yield cls("4l", "100-160")
     yield cls("4l", "800+")
     yield cls("4l", "10-40")
