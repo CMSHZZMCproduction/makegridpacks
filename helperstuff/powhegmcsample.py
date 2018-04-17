@@ -32,7 +32,11 @@ class POWHEGMCSample(MCSampleBase):
     Returns a function that takes an AlternateWeight object (below) and returns True
     if we should keep the weight, False if not.
     """
-    return lambda weight: True
+    return None
+  @property
+  def patchkwargs(self):
+    if self.pwgrwlfilter: return {"functionname": "prunepwgrwl"}
+    return super(POWHEGMCSample, self).patchkwargs
   @property
   def makegridpackcommand(self):
     args = {
@@ -222,7 +226,7 @@ class POWHEGMCSample(MCSampleBase):
           kwargs = dict(_.split("=") for _ in match.group(1).split())
           weight = AlternateWeight(**kwargs)
 
-          if not self.pwgrwlfilter(weight):
+          if self.pwgrwlfilter and not self.pwgrwlfilter(weight):
             if verbose: remove[weight.pdfname] += 1
             continue
           if verbose: keep[weight.pdfname] += 1

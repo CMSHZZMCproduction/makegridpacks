@@ -53,6 +53,8 @@ class MCSampleBase(JsonDict):
   @abc.abstractproperty
   def responsible(self): "put the lxplus username of whoever makes these gridpacks"
   @property
+  def patchkwargs(self): return None
+  @property
   def doublevalidationtime(self): return False
   @property
   def neventsfortest(self): return None
@@ -135,9 +137,11 @@ class MCSampleBase(JsonDict):
         return "job to patch the tarball is already running"
 
       kwargs = self.needspatch
-      if "oldfilename" in kwargs or "newfilename" in kwargs: assert False, kwargs
+      if kwargs == True: kwargs = self.patchkwargs
+      if "oldfilename" in kwargs or "newfilename" in kwargs or "sample" in kwargs: assert False, kwargs
       kwargs["oldfilename"] = self.cvmfstarball_anyversion(version=kwargs.pop("oldtarballversion"))
       kwargs["newfilename"] = self.foreostarball
+      kwargs["sample"] == self
       os.makedirs(os.path.dirname(self.foreostarball))
 
       patches.dopatch(**kwargs)
@@ -207,6 +211,16 @@ class MCSampleBase(JsonDict):
           return "ran one step of gridpack creation, run again to continue"
 
       mkdir_p(os.path.dirname(self.foreostarball))
+      if self.patchkwargs:
+        kwargs = self.patchkwargs
+        for _ in "oldfilename", "newfilename", "sample": assert _ not in kwargs, _
+        with cdtemp():
+          kwargs["oldfilename"] = self.tmptarball
+          kwargs["newfilename"] = os.path.abspath(os.path.basename(self.tmptarball))
+          kwargs["sample"] = self
+          patches.dopatch(**kwargs)
+          shutil.move(os.path.basename(self.tmptarball), self.tmptarball)
+
       shutil.move(self.tmptarball, self.foreostarball)
       shutil.rmtree(os.path.dirname(self.tmptarball))
       return "tarball is created and moved to this folder, to be copied to eos"
@@ -547,19 +561,24 @@ class MCSampleBase(JsonDict):
       return self.value.get("needspatch", {})
   @needspatch.setter
   def needspatch(self, value):
+    if value == True:
     if value:
-      try:
-        value["oldtarballversion"]
-      except TypeError:
-        raise ValueError("needspatch has to be a dict")
-      except KeyError:
-        raise ValueError('needspatch has to have "oldtarballversion" in it')
-      if "newfilename" in value or "oldfilename" in value:
-        raise ValueError("""needspatch can't have "oldfilename" or "newfilename" in it""")
-      if "functionname" not in value:
-        raise ValueError('needspatch has to have "functionname" in it')
-      if value["functionname"] not in patches.functiondict:
-        raise ValueError('invalid functionname "{functionname}", choices:\n{}'.format(", ".join(patches.functiondict), **value))
+      if value == True:
+        pass
+      else:
+        try:
+          value["oldtarballversion"]
+        except TypeError:
+          raise ValueError("needspatch has to be a dict or True")
+        except KeyError:
+          raise ValueError('needspatch has to have "oldtarballversion" in it')
+        for _ in "oldfilename", "newfilename", "sample":
+          if _ in value:
+            raise ValueError('''needspatch can't have "'''+_+'" in it')
+        if "functionname" not in value:
+          raise ValueError('needspatch has to have "functionname" in it')
+        if value["functionname"] not in patches.functiondict:
+          raise ValueError('invalid functionname "{functionname}", choices:\n{}'.format(", ".join(patches.functiondict), **value))
       with cd(here), self.writingdict():
         self.value["needspatch"] = value
     elif self.needspatch:
