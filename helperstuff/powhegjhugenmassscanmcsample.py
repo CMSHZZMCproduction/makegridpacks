@@ -40,6 +40,16 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   def powhegcardusesscript(self): return True
 
   @property
+  def pwgrwlfilter(self):
+    if self.productionmode == "ZH":
+      def filter(weight):
+        if weight.pdfname.startswith("NNPDF31_"): return True
+        if weight.pdfname.startswith("PDF4LHC15"): return True
+        return False
+      return filter
+    return super(POWHEGJHUGenMassScanMCSample, self).pwgrwlfilter
+
+  @property
   def reweightdecay(self):
     return self.mass >= 200
 
