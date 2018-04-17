@@ -38,6 +38,7 @@ class PythiaVariationSample(MCSampleBase):
   def createtarball(self):
     return "this is a variation sample, the gridpack is the same as for the main sample"
   def patchtarball(self):
+    assert self.mainsample.needspatch == self.needspatch or not self.mainsample.needspatch
     self.mainsample.needspatch = self.needspatch
     self.mainsample.patchtarball()
     self.needspatch = False

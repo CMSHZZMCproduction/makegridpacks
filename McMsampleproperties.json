@@ -4077,7 +4077,6 @@
                 "TuneUp": {
                     "matchefficiency": 0.14835550966597078,
                     "matchefficiencyerror": 0.00018236587065478363,
-                    "needspatch": 3,
                     "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00509",
                     "sizeperevent": 880.9553920000001,

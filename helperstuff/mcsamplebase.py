@@ -143,8 +143,8 @@ class MCSampleBase(JsonDict):
       if "oldfilename" in kwargs or "newfilename" in kwargs or "sample" in kwargs: assert False, kwargs
       kwargs["oldfilename"] = self.cvmfstarball_anyversion(version=kwargs.pop("oldtarballversion"))
       kwargs["newfilename"] = self.foreostarball
-      kwargs["sample"] == self
-      os.makedirs(os.path.dirname(self.foreostarball))
+      kwargs["sample"] = self
+      mkdir_p(os.path.dirname(self.foreostarball))
 
       patches.dopatch(**kwargs)
 
