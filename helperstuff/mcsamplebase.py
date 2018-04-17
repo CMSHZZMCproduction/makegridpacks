@@ -137,7 +137,9 @@ class MCSampleBase(JsonDict):
         return "job to patch the tarball is already running"
 
       kwargs = self.needspatch
-      if kwargs == True: kwargs = self.patchkwargs
+      if isinstance(kwargs, int):
+        kwargs = self.patchkwargs
+        kwargs["oldtarballversion"] = self.needspatch
       if "oldfilename" in kwargs or "newfilename" in kwargs or "sample" in kwargs: assert False, kwargs
       kwargs["oldfilename"] = self.cvmfstarball_anyversion(version=kwargs.pop("oldtarballversion"))
       kwargs["newfilename"] = self.foreostarball
@@ -561,15 +563,14 @@ class MCSampleBase(JsonDict):
       return self.value.get("needspatch", {})
   @needspatch.setter
   def needspatch(self, value):
-    if value == True:
     if value:
-      if value == True:
+      if isinstance(value, int):
         pass
       else:
         try:
           value["oldtarballversion"]
         except TypeError:
-          raise ValueError("needspatch has to be a dict or True")
+          raise ValueError("needspatch has to be a dict or version number")
         except KeyError:
           raise ValueError('needspatch has to have "oldtarballversion" in it')
         for _ in "oldfilename", "newfilename", "sample":
