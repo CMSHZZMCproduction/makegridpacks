@@ -87,6 +87,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if self.decaymode == "4l": v+=1  #v1 messed up the JHUGen decay card
     if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 2500: v+=1  #v1 is corrupted
     if self.productionmode == "ggH" and self.decaymode == "2l2q" and self.mass == 800: v+=1  #same
+    if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass == 125: v+=1  #trimming pwg-rwl.dat
 
     return v
 
