@@ -633,6 +633,7 @@ class MCSampleBase(JsonDict):
     if not (answer and answer.get("results")):
       raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
     self.needsupdate = False
+    self.resettimeperevent = False
 
   @property
   def pwg(self): return "HIG"
