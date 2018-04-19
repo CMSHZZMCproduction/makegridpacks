@@ -330,7 +330,7 @@ class MCSampleBase(JsonDict):
       return self.findmatchefficiency()
 
     if self.badprepid:
-      return badrequestqueue.add(self)
+      badrequestqueue.add(self)
 
     if self.prepid is None:
       self.getprepid()
@@ -347,7 +347,7 @@ class MCSampleBase(JsonDict):
       return "please run locally to check and/or advance the status".format(self.prepid)
 
     if self.badprepid:
-      return badrequestqueue.add(self)
+      badrequestqueue.add(self)
 
     if (self.approval, self.status) == ("none", "new"):
       if self.needsoptionreset:
@@ -357,7 +357,7 @@ class MCSampleBase(JsonDict):
       if self.needsupdate:
         self.updaterequest()
         if self.badprepid:
-          return badrequestqueue.add(self)
+          badrequestqueue.add(self)
         return "needs update on McM, sending it there"
       if not self.dovalidation: return "not starting the validation"
       approvalqueue.validate(self)
@@ -413,8 +413,6 @@ class MCSampleBase(JsonDict):
   def prepid(self, value):
     with cd(here), self.writingdict():
       self.value["prepid"] = value
-    if self.badprepid:
-      del self.badprepid
   @prepid.deleter
   def prepid(self):
     with cd(here), self.writingdict():
@@ -522,12 +520,18 @@ class MCSampleBase(JsonDict):
   @property
   def badprepid(self):
     with cd(here):
-      result = self.value.get("badprepid", None)
-      if result:
-        if restful().getA("requests", query="prepid="+result):
-          return result
-        else:
-          del self.badprepid
+      result = self.value.get("badprepid", [])
+
+      originalresult = result[:]
+      for _ in result[:]:
+        if not restful().getA("requests", query="prepid="+_):
+          result.remove(_)
+
+      if result != originalresult:
+        self.badprepid = result
+
+      return result
+
   @badprepid.setter
   def badprepid(self, value):
     if value:
@@ -625,7 +629,7 @@ class MCSampleBase(JsonDict):
       answer = mcm.updateA('requests', req)
     except pycurl.error as e:
       if e[0] == 52 and e[1] == "Empty reply from server":
-        self.badprepid = self.prepid
+        self.badprepid += [self.prepid]
         del self.prepid
         return
       else:
@@ -664,6 +668,7 @@ class MCSampleBase(JsonDict):
     query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.datasetname, self.extensionnumber, self.pwg, self.campaign)
     output = restful().getA('requests', query=query)
     prepids = {_["prepid"] for _ in output}
+    prepids -= frozenset(self.badprepid)
     if not prepids:
       return None
     if len(prepids) != 1:
