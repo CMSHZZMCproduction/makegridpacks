@@ -524,7 +524,7 @@ class MCSampleBase(JsonDict):
 
       originalresult = result[:]
       for _ in result[:]:
-        if not restful().getA("requests", query="prepid="+_):
+        if not LSB_JOBID() and not restful().getA("requests", query="prepid="+_):
           result.remove(_)
 
       if result != originalresult:
