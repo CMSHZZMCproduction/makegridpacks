@@ -521,6 +521,8 @@ class MCSampleBase(JsonDict):
   def badprepid(self):
     with cd(here):
       result = self.value.get("badprepid", [])
+      #backwards compatibility
+      if isinstance(result, basestring): result = [result]
 
       originalresult = result[:]
       for _ in result[:]:
