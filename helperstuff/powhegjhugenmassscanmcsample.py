@@ -40,6 +40,16 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   def powhegcardusesscript(self): return True
 
   @property
+  def pwgrwlfilter(self):
+    if self.productionmode == "ZH":
+      def filter(weight):
+        if weight.pdfname.startswith("NNPDF31_"): return True
+        if weight.pdfname.startswith("PDF4LHC15"): return True
+        return False
+      return filter
+    return super(POWHEGJHUGenMassScanMCSample, self).pwgrwlfilter
+
+  @property
   def reweightdecay(self):
     return self.mass >= 200
 
@@ -77,6 +87,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if self.decaymode == "4l": v+=1  #v1 messed up the JHUGen decay card
     if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 2500: v+=1  #v1 is corrupted
     if self.productionmode == "ggH" and self.decaymode == "2l2q" and self.mass == 800: v+=1  #same
+    if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass == 125: v+=1  #trimming pwg-rwl.dat
 
     return v
 

@@ -43,6 +43,7 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
     v = 1
 
     v += 1 #wrong powheg process
+    v += 1 #lifetime units
 
     return v
 
@@ -52,7 +53,8 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
       tarballname = "ZZ_slc6_amd64_gcc630_CMSSW_9_3_0_ZZ4l_lifetime_NNPDF31_13TeV_{}um.tgz".format(self.lifetime)
       return os.path.join(folder, tarballname)
     tarballname = self.datasetname+".tgz"
-    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
+    if version <= 3: tarballname = tarballname.replace("JHUGen", "JHUgen")
+    return os.path.join(folder, tarballname.replace(".tgz", "").replace("JHUGen", "JHUgen"), "v{}".format(version), tarballname)
 
   @property
   def datasetname(self):
@@ -84,8 +86,7 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
 
   @property
   def responsible(self):
-#     return "wahung"
-    return "nobody"
+     return "wahung"
 
   @property
   def nevents(self): return 500000

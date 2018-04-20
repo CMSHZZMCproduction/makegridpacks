@@ -369,3 +369,5 @@ def makecards(folder):
   with cd(folder):
     subprocess.check_call(["./makecards.py"])
 
+class OrderedCounter(collections.Counter, collections.OrderedDict):
+  pass

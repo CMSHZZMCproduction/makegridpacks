@@ -24,8 +24,8 @@ class BadRequestQueue(object):
     self.badprepids = set()
     return self
   def add(self, request):
-    self.badprepids.add(request.badprepid)
-    return "please delete the bad prepid {} before proceeding".format(request.badprepid)
+    self.badprepids |= frozenset(request.badprepid)
+    return "please delete the bad prepids {} before proceeding".format(", ".join(request.badprepid))
   def __exit__(self, *err):
     if self.badprepids:
       print

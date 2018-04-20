@@ -53,6 +53,8 @@ class MCSampleBase(JsonDict):
   @abc.abstractproperty
   def responsible(self): "put the lxplus username of whoever makes these gridpacks"
   @property
+  def patchkwargs(self): return None
+  @property
   def doublevalidationtime(self): return False
   @property
   def neventsfortest(self): return None
@@ -135,10 +137,14 @@ class MCSampleBase(JsonDict):
         return "job to patch the tarball is already running"
 
       kwargs = self.needspatch
-      if "oldfilename" in kwargs or "newfilename" in kwargs: assert False, kwargs
+      if isinstance(kwargs, int):
+        kwargs = self.patchkwargs
+        kwargs["oldtarballversion"] = self.needspatch
+      if "oldfilename" in kwargs or "newfilename" in kwargs or "sample" in kwargs: assert False, kwargs
       kwargs["oldfilename"] = self.cvmfstarball_anyversion(version=kwargs.pop("oldtarballversion"))
       kwargs["newfilename"] = self.foreostarball
-      os.makedirs(os.path.dirname(self.foreostarball))
+      kwargs["sample"] = self
+      mkdir_p(os.path.dirname(self.foreostarball))
 
       patches.dopatch(**kwargs)
 
@@ -207,6 +213,16 @@ class MCSampleBase(JsonDict):
           return "ran one step of gridpack creation, run again to continue"
 
       mkdir_p(os.path.dirname(self.foreostarball))
+      if self.patchkwargs:
+        kwargs = self.patchkwargs
+        for _ in "oldfilename", "newfilename", "sample": assert _ not in kwargs, _
+        with cdtemp():
+          kwargs["oldfilename"] = self.tmptarball
+          kwargs["newfilename"] = os.path.abspath(os.path.basename(self.tmptarball))
+          kwargs["sample"] = self
+          patches.dopatch(**kwargs)
+          shutil.move(os.path.basename(self.tmptarball), self.tmptarball)
+
       shutil.move(self.tmptarball, self.foreostarball)
       shutil.rmtree(os.path.dirname(self.tmptarball))
       return "tarball is created and moved to this folder, to be copied to eos"
@@ -300,9 +316,6 @@ class MCSampleBase(JsonDict):
           if self.needspatch: return self.patchtarball()
           return self.createtarball()
 	tmplist = self.makegridpackcommand
-#	print ' '.join(tmplist)
-#	print self.foreostarball
-	print self.eostarball
         return "gridpack exists in this folder, to be copied to eos" 
       return "gridpack exists on eos, not yet copied to cvmfs"
 
@@ -317,7 +330,7 @@ class MCSampleBase(JsonDict):
       return self.findmatchefficiency()
 
     if self.badprepid:
-      return badrequestqueue.add(self)
+      badrequestqueue.add(self)
 
     if self.prepid is None:
       self.getprepid()
@@ -334,7 +347,7 @@ class MCSampleBase(JsonDict):
       return "please run locally to check and/or advance the status".format(self.prepid)
 
     if self.badprepid:
-      return badrequestqueue.add(self)
+      badrequestqueue.add(self)
 
     if (self.approval, self.status) == ("none", "new"):
       if self.needsoptionreset:
@@ -344,7 +357,7 @@ class MCSampleBase(JsonDict):
       if self.needsupdate:
         self.updaterequest()
         if self.badprepid:
-          return badrequestqueue.add(self)
+          badrequestqueue.add(self)
         return "needs update on McM, sending it there"
       if not self.dovalidation: return "not starting the validation"
       approvalqueue.validate(self)
@@ -400,8 +413,6 @@ class MCSampleBase(JsonDict):
   def prepid(self, value):
     with cd(here), self.writingdict():
       self.value["prepid"] = value
-    if self.badprepid:
-      del self.badprepid
   @prepid.deleter
   def prepid(self):
     with cd(here), self.writingdict():
@@ -509,12 +520,20 @@ class MCSampleBase(JsonDict):
   @property
   def badprepid(self):
     with cd(here):
-      result = self.value.get("badprepid", None)
-      if result:
-        if restful().getA("requests", query="prepid="+result):
-          return result
-        else:
-          del self.badprepid
+      result = self.value.get("badprepid", [])
+      #backwards compatibility
+      if isinstance(result, basestring): result = [result]
+
+      originalresult = result[:]
+      for _ in result[:]:
+        if not LSB_JOBID() and not restful().getA("requests", query="prepid="+_):
+          result.remove(_)
+
+      if result != originalresult:
+        self.badprepid = result
+
+      return result
+
   @badprepid.setter
   def badprepid(self, value):
     if value:
@@ -548,18 +567,22 @@ class MCSampleBase(JsonDict):
   @needspatch.setter
   def needspatch(self, value):
     if value:
-      try:
-        value["oldtarballversion"]
-      except TypeError:
-        raise ValueError("needspatch has to be a dict")
-      except KeyError:
-        raise ValueError('needspatch has to have "oldtarballversion" in it')
-      if "newfilename" in value or "oldfilename" in value:
-        raise ValueError("""needspatch can't have "oldfilename" or "newfilename" in it""")
-      if "functionname" not in value:
-        raise ValueError('needspatch has to have "functionname" in it')
-      if value["functionname"] not in patches.functiondict:
-        raise ValueError('invalid functionname "{functionname}", choices:\n{}'.format(", ".join(patches.functiondict), **value))
+      if isinstance(value, int):
+        pass
+      else:
+        try:
+          value["oldtarballversion"]
+        except TypeError:
+          raise ValueError("needspatch has to be a dict or version number")
+        except KeyError:
+          raise ValueError('needspatch has to have "oldtarballversion" in it')
+        for _ in "oldfilename", "newfilename", "sample":
+          if _ in value:
+            raise ValueError('''needspatch can't have "'''+_+'" in it')
+        if "functionname" not in value:
+          raise ValueError('needspatch has to have "functionname" in it')
+        if value["functionname"] not in patches.functiondict:
+          raise ValueError('invalid functionname "{functionname}", choices:\n{}'.format(", ".join(patches.functiondict), **value))
       with cd(here), self.writingdict():
         self.value["needspatch"] = value
     elif self.needspatch:
@@ -608,7 +631,7 @@ class MCSampleBase(JsonDict):
       answer = mcm.updateA('requests', req)
     except pycurl.error as e:
       if e[0] == 52 and e[1] == "Empty reply from server":
-        self.badprepid = self.prepid
+        self.badprepid += [self.prepid]
         del self.prepid
         return
       else:
@@ -616,6 +639,7 @@ class MCSampleBase(JsonDict):
     if not (answer and answer.get("results")):
       raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
     self.needsupdate = False
+    self.resettimeperevent = False
 
   @property
   def pwg(self): return "HIG"
@@ -646,6 +670,7 @@ class MCSampleBase(JsonDict):
     query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.datasetname, self.extensionnumber, self.pwg, self.campaign)
     output = restful().getA('requests', query=query)
     prepids = {_["prepid"] for _ in output}
+    prepids -= frozenset(self.badprepid)
     if not prepids:
       return None
     if len(prepids) != 1:

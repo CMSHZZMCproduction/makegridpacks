@@ -1,8 +1,10 @@
-import abc, contextlib, glob, os, re, subprocess, urllib
+import abc, collections, contextlib, glob, os, re, shutil, subprocess, sys, urllib
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, jobended, makecards, scramarch, wget
+from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, jobended, makecards, OrderedCounter, scramarch, wget
 
 from mcsamplebase import MCSampleBase
+
+sys.path.append(os.path.join(os.environ["LHAPDF_DATA_PATH"], "..", "..", "lib", "python2.7", "site-packages"))
 
 class POWHEGMCSample(MCSampleBase):
   @abc.abstractproperty
@@ -24,6 +26,17 @@ class POWHEGMCSample(MCSampleBase):
   def tmptarball(self):
     return os.path.join(here, "workdir", self.foldernameforrunpwg,
              self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+self.foldernameforrunpwg+".tgz")
+  @property
+  def pwgrwlfilter(self):
+    """
+    Returns a function that takes an AlternateWeight object (below) and returns True
+    if we should keep the weight, False if not.
+    """
+    return None
+  @property
+  def patchkwargs(self):
+    if self.pwgrwlfilter: return {"functionname": "prunepwgrwl"}
+    return super(POWHEGMCSample, self).patchkwargs
   @property
   def makegridpackcommand(self):
     args = {
@@ -198,3 +211,61 @@ class POWHEGMCSample(MCSampleBase):
       if (filename.endswith(".py") or filename.endswith(".sh") or filename.endswith("/patches")) and not os.path.exists(os.path.basename(filename)):
         yield filename
 
+  def editpwgrwl(self, verbose=False):
+    shutil.move("pwg-rwl.dat", "original-pwg-rwl.dat")
+
+    if verbose:
+      keep = OrderedCounter()
+      remove = OrderedCounter()
+
+    with open("original-pwg-rwl.dat") as f, open("pwg-rwl.dat", "w") as newf:
+      for line in f:
+        if "<weight id" in line:
+          match = re.match(r"^<weight id='[^']*'>((?:\s*\w*=[\w.]*\s*)*)</weight>$", line.strip())
+          if not match: raise ValueError("Bad pwg-rwl line:\n"+line)
+          kwargs = dict(_.split("=") for _ in match.group(1).split())
+          weight = AlternateWeight(**kwargs)
+
+          if self.pwgrwlfilter and not self.pwgrwlfilter(weight):
+            if verbose: remove[weight.pdfname] += 1
+            continue
+          if verbose: keep[weight.pdfname] += 1
+
+        newf.write(line)
+
+    if verbose:
+      print "Keeping", sum(keep.values()), "alternate weights:"
+      for name, n in keep.iteritems():
+        if n>1: print "   {} ({} variations)".format(name, n)
+        else: print "   {}".format(name)
+      print
+      print "Removing", sum(remove.values()), "alternate weights:"
+      for name, n in remove.iteritems():
+        if n>1: print "   {} ({} variations)".format(name, n)
+        else: print "   {}".format(name)
+
+
+class AlternateWeight(collections.namedtuple("AlternateWeight", "lhapdf renscfact facscfact")):
+  def __new__(cls, lhapdf, renscfact=None, facscfact=None):
+    lhapdf = int(lhapdf)
+    renscfact = cls.parsescalefactor(renscfact)
+    facscfact = cls.parsescalefactor(facscfact)
+    return super(AlternateWeight, cls).__new__(cls, lhapdf=lhapdf, renscfact=renscfact, facscfact=facscfact)
+
+  @classmethod
+  def parsescalefactor(cls, scalefactor):
+    if scalefactor is None: return 1
+    return float(scalefactor.replace("d", "e").replace("D", "E"))
+
+  @property
+  @cache
+  def pdf(self):
+    import lhapdf
+    return lhapdf.mkPDF(self.lhapdf)
+
+  @property
+  def pdfname(self):
+    return self.pdf.set().name
+  @property
+  def pdfmemberid(self):
+    return self.pdf.memberID
