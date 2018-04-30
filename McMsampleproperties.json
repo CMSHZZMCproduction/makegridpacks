@@ -4539,6 +4539,7 @@
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00050": {
             "PhaseIISummer17wmLHEGENOnly": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00008",
@@ -4548,6 +4549,7 @@
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00051": {
             "PhaseIISummer17wmLHEGENOnly": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00009",
