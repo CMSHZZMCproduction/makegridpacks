@@ -1,8 +1,5 @@
 import abc, collections, contextlib, errno, functools, getpass, itertools, json, logging, os, re, shutil, subprocess, sys, tempfile, time, urllib
 
-sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
-import rest
-
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""
   try:
@@ -384,3 +381,12 @@ def makecards(folder):
 
 class OrderedCounter(collections.Counter, collections.OrderedDict):
   pass
+
+if os.path.exists(os.path.join(here, "helperstuff", "rest.pyc")):
+  os.remove(os.path.join(here, "helperstuff", "rest.pyc"))
+
+if not LSB_JOBID():
+  sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
+  import rest
+
+assert not os.path.exists(os.path.join(here, "helperstuff", "rest.pyc"))
