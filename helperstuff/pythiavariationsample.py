@@ -38,10 +38,18 @@ class PythiaVariationSample(MCSampleBase):
   def createtarball(self):
     return "this is a variation sample, the gridpack is the same as for the main sample"
   def patchtarball(self):
-    assert self.mainsample.needspatch == self.needspatch or not self.mainsample.needspatch
+    samples = (
+      [mainsample] +
+      [s for s in self.allsamples() if s.mainsample == self.mainsample]
+    )
+
+    needspatchparameters = {
+      _.needspatch for _ in samples if _.needspatch
+    }
+    assert len(needspatchparameters) == 1
     self.mainsample.needspatch = self.needspatch
     self.mainsample.patchtarball()
-    self.needspatch = False
+    for _ in samples: _.needspatch = False
     return "This is a variation sample, the gridpack is the same as for the main sample.  Patched that one."
   def findmatchefficiency(self):
     return "this is a variation sample, the filter efficiency is the same as for the main sample"
