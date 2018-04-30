@@ -1,5 +1,8 @@
 import abc, collections, contextlib, errno, functools, getpass, itertools, json, logging, os, re, shutil, subprocess, sys, tempfile, time, urllib
 
+sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
+import rest
+
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""
   try:
@@ -339,11 +342,21 @@ def jobended(*bjobsargs):
 
   return False
 
-@cache
-def restful(usedev=False):
-  sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
-  from rest import restful # Load class to access McM
-  return restful(dev=usedev)
+@contextlib.contextmanager
+def redirect_stdout(target):
+  original = sys.stdout
+  sys.stdout = target
+  try:
+    yield
+  finally:
+    sys.stdout = original
+
+def restful(*args, **kwargs):
+  try:
+    with open("/dev/null", "w") as f, redirect_stdout(f):
+      return rest.restful(*args, **kwargs)
+  except:
+    raise
 
 here = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 #do not change these once you've started making tarballs!
