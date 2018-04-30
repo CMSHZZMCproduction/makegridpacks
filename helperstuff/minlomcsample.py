@@ -27,14 +27,12 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
 
   @property
   def pwgrwlfilter(self):
-    if self.productionmode == "ZH":
-      def filter(weight):
-        if weight.pdfname.startswith("NNPDF31_"): return True
-        if weight.pdfname.startswith("NNPDF30_"): return True
-        if weight.pdfname.startswith("PDF4LHC15"): return True
-        return False
-      return filter
-    return super(POWHEGJHUGenMassScanMCSample, self).pwgrwlfilter
+    def filter(weight):
+      if weight.pdfname.startswith("NNPDF31_"): return True
+      if weight.pdfname.startswith("NNPDF30_"): return True
+      if weight.pdfname.startswith("PDF4LHC15"): return True
+      return False
+    return filter
 
   @property
   def xsec(self): return 1 #unknown for unknown signal
