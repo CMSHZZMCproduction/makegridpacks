@@ -39,7 +39,7 @@ class PythiaVariationSample(MCSampleBase):
     return "this is a variation sample, the gridpack is the same as for the main sample"
   def patchtarball(self):
     samples = (
-      [mainsample] +
+      [self.mainsample] +
       [s for s in self.allsamples() if s.mainsample == self.mainsample]
     )
 
@@ -48,9 +48,14 @@ class PythiaVariationSample(MCSampleBase):
     }
     assert len(needspatchparameters) == 1
     self.mainsample.needspatch = self.needspatch
-    self.mainsample.patchtarball()
-    for _ in samples: _.needspatch = False
-    return "This is a variation sample, the gridpack is the same as for the main sample.  Patched that one."
+    result = self.mainsample.patchtarball()
+    if result == "tarball is patched and the new version is in this directory to be copied to eos":
+      for _ in samples: _.needspatch = False
+      return result
+    elif result == "job to patch the tarball is already running" or result is None:
+      return result
+    else:
+      raise ValueError("Unknown result from patchtarball:\n{}".format(result))
   def findmatchefficiency(self):
     return "this is a variation sample, the filter efficiency is the same as for the main sample"
   @property
