@@ -136,7 +136,6 @@ class PythiaVariationSample(MCSampleBase):
     return "hroskes"
   @property
   def dovalidation(self):
-    if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.variation != "TuneUp": return False
     return self.mainsample.dovalidation
 
   @classmethod
