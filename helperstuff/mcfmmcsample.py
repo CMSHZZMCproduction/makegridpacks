@@ -205,7 +205,7 @@ class MCFMMCSample(MCSampleBase):
       mkdir_p("src/User")
       with cd("src/User"): wget(os.path.join("https://raw.githubusercontent.com/usarica/MCFM-7.0_JHUGen", mcfmcommit, "src/User/mdata.f"))
       wget(mdatascript)
-      subprocess.check_call(["python", os.path.basename(mdatascript), "--coupling", self.coupling, "--mcfmdir", "."])
+      subprocess.check_call(["python", os.path.basename(mdatascript), "--coupling", self.coupling, "--mcfmdir", ".", "--bsisigbkg", self.signalbkgbsi])
       with open("src/User/mdata.f") as f:
         mdatagitcard = f.read()
 
@@ -219,7 +219,7 @@ class MCFMMCSample(MCSampleBase):
 
     result = (       productioncardurl + "\n"
             + "# " + mdatascript + "\n"
-            + "#    " + self.coupling)
+            + "#    --coupling " + self.coupling + " --bsisigbkg " + self.signalbkgbsi)
 
     return result
 
