@@ -539,7 +539,7 @@ class MCSampleBase(JsonDict):
     if value:
       with cd(here), self.writingdict():
         self.value["badprepid"] = value
-    elif self.badprepid:
+    elif self.value["badprepid"]:
       del self.badprepid
   @badprepid.deleter
   def badprepid(self):
