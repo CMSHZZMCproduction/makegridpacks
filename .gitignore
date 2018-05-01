@@ -2,5 +2,5 @@
 LSFJOB
 STDOUT
 McMsampleproperties.json.tmp
-gridpacks/**/*.tgz
-gridpacks/**/*.tar.gz
+*.tgz
+*.tar.gz
