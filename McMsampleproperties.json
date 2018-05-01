@@ -5,112 +5,72 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00940",
                     "sizeperevent": 647.2890991304348,
-                    "timeperevent": 45.353325079028174,
+                    "timeperevent": 80.50622313104803,
                     "xsec": 1.37763,
                     "xsecerror": 0.0348474
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00935",
                     "sizeperevent": 589.193572173913,
-                    "timeperevent": 40.9373004306604,
+                    "timeperevent": 27.82624181560663,
                     "xsec": 3.27659,
                     "xsecerror": 0.00958021
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00936",
                     "sizeperevent": 613.6030608695652,
-                    "timeperevent": 37.74710196624654,
+                    "timeperevent": 40.69391259761452,
                     "xsec": 17.7081,
                     "xsecerror": 0.0171695
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00933",
                     "sizeperevent": 616.0018921739131,
-                    "timeperevent": 34.972249520005875,
+                    "timeperevent": 36.11007796165832,
                     "xsec": 3.27659,
                     "xsecerror": 0.00958021
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00937",
                     "sizeperevent": 568.40192,
-                    "timeperevent": 43.38281866849453,
+                    "timeperevent": 60.823550878900306,
                     "xsec": 1.37763,
                     "xsecerror": 0.0348474
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00938",
                     "sizeperevent": 549.6921043478261,
-                    "timeperevent": 34.17518198284406,
+                    "timeperevent": 38.998518056313856,
                     "xsec": 17.7081,
                     "xsecerror": 0.0171695
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00934",
                     "sizeperevent": 587.4839373913043,
-                    "timeperevent": 30.676540422477313,
+                    "timeperevent": 29.456469229772246,
                     "xsec": 3.27659,
                     "xsecerror": 0.00958021
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00939",
                     "sizeperevent": 579.0301495652174,
-                    "timeperevent": 41.9797657529071,
+                    "timeperevent": 78.62438771258068,
                     "xsec": 1.37763,
                     "xsecerror": 0.0348474
                 }
@@ -123,28 +83,18 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00723",
                     "sizeperevent": 606.5383513043478,
-                    "timeperevent": 171.88628003712745,
+                    "timeperevent": 104.00697262744494,
                     "xsec": 1.42135,
                     "xsecerror": 0.0349911
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00751",
                     "sizeperevent": 609.4750476190476,
-                    "timeperevent": 36.01799459009721,
+                    "timeperevent": 47.098275261159934,
                     "xsec": 3.39454,
                     "xsecerror": 0.00842924
                 },
@@ -171,56 +121,36 @@
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00913",
                     "sizeperevent": 578.9793947826087,
-                    "timeperevent": 96.88514266337256,
+                    "timeperevent": 109.62123670294399,
                     "xsec": 1.42135,
                     "xsecerror": 0.0349911
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00810",
                     "sizeperevent": 626.7582511627908,
-                    "timeperevent": 31.642565579217163,
+                    "timeperevent": 26.275477359734932,
                     "xsec": 18.5171,
                     "xsecerror": 0.0217829
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00795",
                     "sizeperevent": 557.9557463414634,
-                    "timeperevent": 30.041577543319953,
+                    "timeperevent": 37.32332073049203,
                     "xsec": 3.39454,
                     "xsecerror": 0.00842924
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00824",
                     "sizeperevent": 600.9809454545455,
-                    "timeperevent": 128.5289222207227,
+                    "timeperevent": 76.31199395609008,
                     "xsec": 1.42135,
                     "xsecerror": 0.0349911
                 }
@@ -229,28 +159,18 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00725",
                     "sizeperevent": 597.5823582608696,
-                    "timeperevent": 56.37995579811465,
+                    "timeperevent": 75.10270294627904,
                     "xsec": 1.8524,
                     "xsecerror": 0.0455691
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00753",
                     "sizeperevent": 597.62176,
-                    "timeperevent": 35.74364656682275,
+                    "timeperevent": 28.144358041265257,
                     "xsec": 4.02914,
                     "xsecerror": 0.0100517
                 },
@@ -277,14 +197,9 @@
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00738",
                     "sizeperevent": 593.3688208695652,
-                    "timeperevent": 36.25290023201856,
+                    "timeperevent": 73.07057155801073,
                     "xsec": 1.8524,
                     "xsecerror": 0.0455691
                 },
@@ -311,14 +226,9 @@
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00826",
                     "sizeperevent": 608.0227060869565,
-                    "timeperevent": 37.8061828231389,
+                    "timeperevent": 63.15324134011178,
                     "xsec": 1.8524,
                     "xsecerror": 0.0455691
                 }
@@ -327,126 +237,82 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00717",
                     "sizeperevent": 604.206152112676,
-                    "timeperevent": 84.9163149715955,
+                    "timeperevent": 45.98018254132469,
                     "xsec": 1.27654,
                     "xsecerror": 0.0359051
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00743",
                     "sizeperevent": 588.0606720000001,
-                    "timeperevent": 36.55144433032271,
+                    "timeperevent": 43.64125145652677,
                     "xsec": 3.15312,
                     "xsecerror": 0.00830446
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00773",
                     "sizeperevent": 583.83872,
-                    "timeperevent": 51.51373098499405,
+                    "timeperevent": 40.67603571355936,
                     "xsec": 16.8368,
                     "xsecerror": 0.0189522
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00758",
                     "sizeperevent": 593.733632,
-                    "timeperevent": 36.41872796666958,
+                    "timeperevent": 41.64671095100264,
                     "xsec": 3.15312,
                     "xsecerror": 0.00830446
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00730",
                     "sizeperevent": 602.6135272727273,
-                    "timeperevent": 54.749820694337224,
+                    "timeperevent": 43.670219966897974,
                     "xsec": 1.27654,
                     "xsecerror": 0.0359051
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00802",
                     "sizeperevent": 563.351552,
-                    "timeperevent": 40.44309454382211,
+                    "timeperevent": 45.168342412170155,
                     "xsec": 16.8368,
                     "xsecerror": 0.0189522
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00787",
                     "sizeperevent": 580.4103680000001,
-                    "timeperevent": 25.083465230554673,
+                    "timeperevent": 35.95169530219198,
                     "xsec": 3.15312,
                     "xsecerror": 0.00830446
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00817",
                     "sizeperevent": 611.202523943662,
-                    "timeperevent": 74.40531551574045,
+                    "timeperevent": 63.63185155961668,
                     "xsec": 1.27654,
                     "xsecerror": 0.0359051
                 }
             },
             "0PHf05ph0": {
                 "ELEL": {
+                    "badprepid": "HIG-RunIIFall17wmLHEGS-00719",
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00719",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01640",
                     "sizeperevent": 585.0076382608696,
                     "timeperevent": 38.51842721557993,
                     "xsec": 1.72302,
@@ -455,54 +321,38 @@
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00745",
                     "sizeperevent": 571.5476480000001,
-                    "timeperevent": 36.48889278103746,
+                    "timeperevent": 43.55021339604564,
                     "xsec": 4.12645,
                     "xsecerror": 0.0100694
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00911",
                     "sizeperevent": 588.3984139130434,
-                    "timeperevent": 25.67440236409897,
+                    "timeperevent": 40.44931094598804,
                     "xsec": 23.6428,
                     "xsecerror": 0.0341238
                 },
                 "ELTL": {
+                    "badprepid": "HIG-RunIIFall17wmLHEGS-00760",
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00760",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01631",
                     "sizeperevent": 584.8135679999999,
                     "timeperevent": 49.009037266471935,
                     "xsec": 4.12645,
                     "xsecerror": 0.0100694
                 },
                 "MUMU": {
+                    "badprepid": [
+                        "HIG-RunIIFall17wmLHEGS-00732"
+                    ],
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00732",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01637",
                     "sizeperevent": 580.3070330434782,
                     "timeperevent": 40.82282485783451,
                     "xsec": 1.72302,
@@ -511,40 +361,28 @@
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00804",
                     "sizeperevent": 555.38688,
-                    "timeperevent": 39.064178538921595,
+                    "timeperevent": 38.43168000245963,
                     "xsec": 23.6428,
                     "xsecerror": 0.0341238
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00789",
                     "sizeperevent": 572.585984,
-                    "timeperevent": 30.792917628945347,
+                    "timeperevent": 26.119753847439743,
                     "xsec": 4.12645,
                     "xsecerror": 0.0100694
                 },
                 "TLTL": {
+                    "badprepid": [
+                        "HIG-RunIIFall17wmLHEGS-00819"
+                    ],
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00819",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01644",
                     "sizeperevent": 594.9039304347826,
                     "timeperevent": 50.41618561222895,
                     "xsec": 1.72302,
@@ -555,112 +393,72 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00720",
                     "sizeperevent": 628.5473078651686,
-                    "timeperevent": 69.53909487914106,
+                    "timeperevent": 60.4215003866976,
                     "xsec": 1.80033,
                     "xsecerror": 0.0611936
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00747",
                     "sizeperevent": 588.914688,
-                    "timeperevent": 79.61593274046002,
+                    "timeperevent": 43.72616923776542,
                     "xsec": 3.81538,
                     "xsecerror": 0.00933488
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00776",
                     "sizeperevent": 579.4867848101266,
-                    "timeperevent": 41.026650912432714,
+                    "timeperevent": 39.15672085956834,
                     "xsec": 21.3145,
                     "xsecerror": 0.0262382
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00762",
                     "sizeperevent": 605.3017600000001,
-                    "timeperevent": 40.78353324061877,
+                    "timeperevent": 43.48147471769653,
                     "xsec": 3.81538,
                     "xsecerror": 0.00933488
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00734",
                     "sizeperevent": 557.636608,
-                    "timeperevent": 72.15788144460079,
+                    "timeperevent": 62.83538386136001,
                     "xsec": 1.80033,
                     "xsecerror": 0.0611936
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00806",
                     "sizeperevent": 542.4393481481482,
-                    "timeperevent": 26.81698480549641,
+                    "timeperevent": 31.53837905347017,
                     "xsec": 21.3145,
                     "xsecerror": 0.0262382
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00791",
                     "sizeperevent": 547.894272,
-                    "timeperevent": 31.701347941314463,
+                    "timeperevent": 25.13516434627208,
                     "xsec": 3.81538,
                     "xsecerror": 0.00933488
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00914",
                     "sizeperevent": 609.4465113043478,
-                    "timeperevent": 98.18745949767296,
+                    "timeperevent": 70.37099589033384,
                     "xsec": 1.80033,
                     "xsecerror": 0.0611936
                 }
@@ -669,70 +467,45 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 7
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00722",
                     "sizeperevent": 624.0919703703703,
-                    "timeperevent": 167.47557368757768,
+                    "timeperevent": 84.26729586247576,
                     "xsec": 1.27303,
                     "xsecerror": 0.044402
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00749",
                     "sizeperevent": 583.1424000000001,
-                    "timeperevent": 36.16061096968294,
+                    "timeperevent": 50.4979093865514,
                     "xsec": 3.4938,
                     "xsecerror": 0.00914247
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00778",
                     "sizeperevent": 562.977792,
-                    "timeperevent": 46.3615458793858,
+                    "timeperevent": 34.73947133472523,
                     "xsec": 19.1994,
                     "xsecerror": 0.0269962
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00764",
                     "sizeperevent": 588.9310720000001,
-                    "timeperevent": 45.93835990867454,
+                    "timeperevent": 38.71407333994053,
                     "xsec": 3.4938,
                     "xsecerror": 0.00914247
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 6
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00736",
                     "sizeperevent": 545.092608,
-                    "timeperevent": 134.05796130014772,
+                    "timeperevent": 44.96584843811125,
                     "xsec": 1.40729,
                     "xsecerror": 0.0440907
                 },
@@ -749,136 +522,92 @@
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00793",
                     "sizeperevent": 559.824896,
-                    "timeperevent": 33.889803913594555,
+                    "timeperevent": 34.38624000220072,
                     "xsec": 3.4938,
                     "xsecerror": 0.00914247
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00822",
                     "sizeperevent": 595.791776744186,
-                    "timeperevent": 34.6676
+                    "timeperevent": 57.79845678120394,
+                    "xsec": 1.52796,
+                    "xsecerror": 0.0408667
                 }
             },
             "0PM": {
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00714",
                     "sizeperevent": 593.210368,
-                    "timeperevent": 51.145662847790504,
+                    "timeperevent": 97.88950232977015,
                     "xsec": 1.7335,
                     "xsecerror": 0.0467753
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00740",
                     "sizeperevent": 581.7088,
-                    "timeperevent": 40.8613574142933,
+                    "timeperevent": 43.265507439504,
                     "xsec": 3.90935,
                     "xsecerror": 0.0101918
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00770",
                     "sizeperevent": 565.291008,
-                    "timeperevent": 35.7963616578011,
+                    "timeperevent": 36.69765171726661,
                     "xsec": 22.1653,
                     "xsecerror": 0.0305425
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00755",
                     "sizeperevent": 605.601792,
-                    "timeperevent": 45.15651247222874,
+                    "timeperevent": 42.58327158758953,
                     "xsec": 3.90935,
                     "xsecerror": 0.0101918
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00727",
                     "sizeperevent": 553.2037120000001,
-                    "timeperevent": 43.244178252502756,
+                    "timeperevent": 40.687124152690636,
                     "xsec": 1.7335,
                     "xsecerror": 0.0467753
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00799",
                     "sizeperevent": 540.3105280000001,
-                    "timeperevent": 28.311608892110122,
+                    "timeperevent": 27.34893134050787,
                     "xsec": 22.1653,
                     "xsecerror": 0.0305425
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00784",
                     "sizeperevent": 567.59296,
-                    "timeperevent": 25.01651089719215,
+                    "timeperevent": 34.96112323096717,
                     "xsec": 3.90935,
                     "xsecerror": 0.0101918
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00814",
                     "sizeperevent": 602.6878337662338,
-                    "timeperevent": 47.46377327504782,
+                    "timeperevent": 62.32043923445572,
                     "xsec": 1.7335,
                     "xsecerror": 0.0467753
                 }
@@ -889,14 +618,9 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00724",
                     "sizeperevent": 639.2092939130434,
-                    "timeperevent": 149.4225565302887,
+                    "timeperevent": 67.65945642392708,
                     "xsec": 1.81857,
                     "xsecerror": 0.0678318
                 },
@@ -913,56 +637,36 @@
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00781",
                     "sizeperevent": 596.8104727272728,
-                    "timeperevent": 34.41926101846593,
+                    "timeperevent": 32.20238555272174,
                     "xsec": 25.0109,
                     "xsecerror": 0.0250613
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00767",
                     "sizeperevent": 640.858112,
-                    "timeperevent": 48.65043688092319,
+                    "timeperevent": 46.64527203522651,
                     "xsec": 4.40288,
                     "xsecerror": 0.00982992
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00737",
                     "sizeperevent": 604.926780952381,
-                    "timeperevent": 153.00533070572178,
+                    "timeperevent": 70.61997274069051,
                     "xsec": 1.81857,
                     "xsecerror": 0.0678318
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00811",
                     "sizeperevent": 560.83072,
-                    "timeperevent": 25.6879885534323,
+                    "timeperevent": 29.43817247825255,
                     "xsec": 25.0109,
                     "xsecerror": 0.0250613
                 },
@@ -979,14 +683,9 @@
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00825",
                     "sizeperevent": 673.1102315789474,
-                    "timeperevent": 163.10951988712822,
+                    "timeperevent": 134.76435105574393,
                     "xsec": 1.81857,
                     "xsecerror": 0.0678318
                 }
@@ -999,10 +698,9 @@
                         "functionname": "patchmcfmgridpack",
                         "oldtarballversion": 4
                     },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00726",
                     "sizeperevent": 692,
-                    "timeperevent": 80.23621541819115,
+                    "timeperevent": 77.77622225333272,
                     "xsec": 2.43643,
                     "xsecerror": 0.106231
                 },
@@ -1019,84 +717,54 @@
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00783",
                     "sizeperevent": 619.058176,
-                    "timeperevent": 39.712323925483794,
+                    "timeperevent": 33.51936581359881,
                     "xsec": 33.0014,
                     "xsecerror": 0.0409423
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00769",
                     "sizeperevent": 638.47424,
-                    "timeperevent": 46.492598378338165,
+                    "timeperevent": 44.457287660879814,
                     "xsec": 5.55478,
                     "xsecerror": 0.0123518
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 4
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00739",
                     "sizeperevent": 562.4039513043479,
-                    "timeperevent": 28.8379,
+                    "timeperevent": 55.67153792623522,
                     "xsec": 2.43643,
                     "xsecerror": 0.106231
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00813",
                     "sizeperevent": 576.755712,
-                    "timeperevent": 29.866348092287016,
+                    "timeperevent": 35.41854089778918,
                     "xsec": 33.0014,
                     "xsecerror": 0.0409423
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00798",
                     "sizeperevent": 612.680704,
-                    "timeperevent": 45.02516906950986,
+                    "timeperevent": 36.26762606626821,
                     "xsec": 5.55478,
                     "xsecerror": 0.0123518
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 4
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00827",
                     "sizeperevent": 633.61024,
-                    "timeperevent": 68.44814368634323,
+                    "timeperevent": 161.3556455920058,
                     "xsec": 2.43643,
                     "xsecerror": 0.106231
                 }
@@ -1105,96 +773,62 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00718",
                     "sizeperevent": 584.7482469135803,
-                    "timeperevent": 534.5478259939916,
+                    "timeperevent": 59.89817310572027,
                     "xsec": 1.37513,
                     "xsecerror": 0.0311908
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00744",
                     "sizeperevent": 605.8065919999999,
-                    "timeperevent": 27.996226108720546,
+                    "timeperevent": 37.312597479160914,
                     "xsec": 3.58749,
                     "xsecerror": 0.00873135
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00774",
                     "sizeperevent": 625.6220159999999,
-                    "timeperevent": 36.333644591555334,
+                    "timeperevent": 33.588268289651786,
                     "xsec": 19.4946,
                     "xsecerror": 0.0204305
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00759",
                     "sizeperevent": 628.236288,
-                    "timeperevent": 27.930386305172984,
+                    "timeperevent": 40.49304329516189,
                     "xsec": 3.58749,
                     "xsecerror": 0.00873135
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00731",
                     "sizeperevent": 587.0789818181819,
-                    "timeperevent": 344.97985317657447,
+                    "timeperevent": 134.01897440639644,
                     "xsec": 1.37513,
                     "xsecerror": 0.0311908
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00803",
                     "sizeperevent": 581.405696,
-                    "timeperevent": 33.025208141374314,
+                    "timeperevent": 41.9058793948791,
                     "xsec": 19.4946,
                     "xsecerror": 0.0204305
                 },
                 "MUTL": {
+                    "badprepid": "HIG-RunIIFall17wmLHEGS-00788",
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00788",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01633",
                     "sizeperevent": 602.8820479999999,
                     "timeperevent": 39.935623774475545,
                     "xsec": 3.58749,
@@ -1203,28 +837,19 @@
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00818",
                     "sizeperevent": 628.1964307692308,
-                    "timeperevent": 353.2894783327563,
+                    "timeperevent": 61.12133195606598,
                     "xsec": 1.37513,
                     "xsecerror": 0.0311908
                 }
             },
             "0PHf05ph0": {
                 "ELEL": {
+                    "badprepid": "HIG-RunIIFall17wmLHEGS-00915",
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00915",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01641",
                     "sizeperevent": 599.5056973913042,
                     "timeperevent": 29.9372,
                     "xsec": 2.41421,
@@ -1233,54 +858,37 @@
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00746",
                     "sizeperevent": 619.6572160000001,
-                    "timeperevent": 36.809364302278496,
+                    "timeperevent": 53.80567542264358,
                     "xsec": 5.68683,
                     "xsecerror": 0.0126189
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00775",
                     "sizeperevent": 594.2241280000001,
-                    "timeperevent": 36.149761230827075,
+                    "timeperevent": 28.722426470588236,
                     "xsec": 33.8235,
                     "xsecerror": 0.0426242
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00761",
                     "sizeperevent": 636.199936,
-                    "timeperevent": 52.85021192934983,
+                    "timeperevent": 44.712121008884296,
                     "xsec": 5.68683,
                     "xsecerror": 0.0126189
                 },
                 "MUMU": {
+                    "badprepid": [
+                        "HIG-RunIIFall17wmLHEGS-00733"
+                    ],
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00733",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01638",
                     "sizeperevent": 533.8628452173913,
                     "timeperevent": 38.18849075265696,
                     "xsec": 2.41421,
@@ -1289,40 +897,26 @@
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00805",
                     "sizeperevent": 584.457216,
-                    "timeperevent": 40.4955029743947,
+                    "timeperevent": 43.84887922264707,
                     "xsec": 33.8235,
                     "xsecerror": 0.0426242
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00790",
                     "sizeperevent": 603.7084159999999,
-                    "timeperevent": 33.3096834580781,
+                    "timeperevent": 35.329447094152975,
                     "xsec": 5.68683,
                     "xsecerror": 0.0126189
                 },
                 "TLTL": {
+                    "badprepid": "HIG-RunIIFall17wmLHEGS-00820",
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00820",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01639",
                     "sizeperevent": 572.1738017391305,
                     "timeperevent": 34.2745,
                     "xsec": 2.41421,
@@ -1333,54 +927,41 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00721",
                     "sizeperevent": 583.8762666666667,
-                    "timeperevent": 76.10987221152456,
+                    "timeperevent": 186.40336569917108,
                     "xsec": 2.07197,
                     "xsecerror": 0.0454392
                 },
                 "ELMU": {
+                    "badprepid": [
+                        "HIG-RunIIFall17wmLHEGS-00748"
+                    ],
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00748",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01635",
                     "sizeperevent": 579.479552,
                     "timeperevent": 30.625245001960014,
                     "xsec": 5.39975,
                     "xsecerror": 0.0122672
                 },
                 "ELNU": {
+                    "badprepid": [
+                        "HIG-RunIIFall17wmLHEGS-00777"
+                    ],
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00777",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01636",
                     "sizeperevent": 587.313152,
                     "timeperevent": 38.46834439939374,
                     "xsec": 31.6383,
                     "xsecerror": 0.0366125
                 },
                 "ELTL": {
+                    "badprepid": "HIG-RunIIFall17wmLHEGS-00763",
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00763",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01632",
                     "sizeperevent": 601.797632,
                     "timeperevent": 41.32214329692853,
                     "xsec": 5.39975,
@@ -1389,14 +970,9 @@
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00735",
                     "sizeperevent": 534.1279255813954,
-                    "timeperevent": 49.11205406254911,
+                    "timeperevent": 184.76296758888023,
                     "xsec": 2.07197,
                     "xsecerror": 0.0454392
                 },
@@ -1411,14 +987,10 @@
                     "xsecerror": 0.0366125
                 },
                 "MUTL": {
+                    "badprepid": "HIG-RunIIFall17wmLHEGS-00792",
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00792",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01634",
                     "sizeperevent": 584.567808,
                     "timeperevent": 34.44759831344559,
                     "xsec": 5.39975,
@@ -1427,14 +999,9 @@
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00821",
                     "sizeperevent": 613.128031372549,
-                    "timeperevent": 71.58298615585048,
+                    "timeperevent": 211.1049656110011,
                     "xsec": 2.07197,
                     "xsecerror": 0.0454392
                 }
@@ -1443,28 +1010,18 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 4
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00916",
                     "sizeperevent": 596.1291686956522,
-                    "timeperevent": 51.46627415054914,
+                    "timeperevent": 53.03829895567589,
                     "xsec": 1.55147,
                     "xsecerror": 0.0429664
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00750",
                     "sizeperevent": 606.1946879999999,
-                    "timeperevent": 26.435304878371163,
+                    "timeperevent": 36.170158895508024,
                     "xsec": 3.53773,
                     "xsecerror": 0.00892247
                 },
@@ -1481,70 +1038,45 @@
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00765",
                     "sizeperevent": 627.3116160000001,
-                    "timeperevent": 36.56186816521577,
+                    "timeperevent": 42.97914222227953,
                     "xsec": 3.53773,
                     "xsecerror": 0.00892247
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00912",
                     "sizeperevent": 566.0508159999999,
-                    "timeperevent": 40.676697540280095,
+                    "timeperevent": 42.36282915918257,
                     "xsec": 1.55147,
                     "xsecerror": 0.0429664
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00809",
                     "sizeperevent": 567.571456,
-                    "timeperevent": 36.285918523598546,
+                    "timeperevent": 30.101260640795637,
                     "xsec": 19.4364,
                     "xsecerror": 0.0264502
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00794",
                     "sizeperevent": 590.440448,
-                    "timeperevent": 65.59054446710962,
+                    "timeperevent": 34.492987575625875,
                     "xsec": 3.53773,
                     "xsecerror": 0.00892247
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 4
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00823",
                     "sizeperevent": 580.555464347826,
-                    "timeperevent": 29.302741271445946,
+                    "timeperevent": 44.015634353322305,
                     "xsec": 1.55147,
                     "xsecerror": 0.0429664
                 }
@@ -1553,112 +1085,72 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00715",
                     "sizeperevent": 606.221312,
-                    "timeperevent": 83.21405984755184,
+                    "timeperevent": 75.11003620303745,
                     "xsec": 1.95767,
                     "xsecerror": 0.101433
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00741",
                     "sizeperevent": 587.5865600000001,
-                    "timeperevent": 34.11246196460491,
+                    "timeperevent": 42.96658488693343,
                     "xsec": 4.44946,
                     "xsecerror": 0.0104609
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00771",
                     "sizeperevent": 569.362432,
-                    "timeperevent": 40.019529530410836,
+                    "timeperevent": 32.19098266193674,
                     "xsec": 25.6362,
                     "xsecerror": 0.0321978
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00756",
                     "sizeperevent": 610.112512,
-                    "timeperevent": 38.80375775590108,
+                    "timeperevent": 39.64383974374222,
                     "xsec": 4.44946,
                     "xsecerror": 0.0104609
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00728",
                     "sizeperevent": 563.063808,
-                    "timeperevent": 41.38370557976502,
+                    "timeperevent": 64.34054161867934,
                     "xsec": 1.95767,
                     "xsecerror": 0.101433
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00800",
                     "sizeperevent": 557.34784,
-                    "timeperevent": 32.477549893636024,
+                    "timeperevent": 31.979635368197528,
                     "xsec": 25.6362,
                     "xsecerror": 0.0321978
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00785",
                     "sizeperevent": 563.564544,
-                    "timeperevent": 36.41634074041704,
+                    "timeperevent": 33.063425569269526,
                     "xsec": 4.44946,
                     "xsecerror": 0.0104609
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00815",
                     "sizeperevent": 577.6762879999999,
-                    "timeperevent": 56.40157924421884,
+                    "timeperevent": 56.94404109082005,
                     "xsec": 1.95767,
                     "xsecerror": 0.101433
                 }
@@ -1772,14 +1264,14 @@
                     "matchefficiencyerror": 0,
                     "prepid": "HIG-RunIIFall17wmLHEGS-01148",
                     "sizeperevent": 1076.6774857142857,
-                    "timeperevent": 753.108455148626
+                    "timeperevent": 713.0480665701674
                 },
                 "TuneUp": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
                     "prepid": "HIG-RunIIFall17wmLHEGS-01147",
                     "sizeperevent": 932.9590857142857,
-                    "timeperevent": 549.9309836615505
+                    "timeperevent": 723.0292031495153
                 },
                 "finished": true,
                 "matchefficiency": 1,
@@ -1801,8 +1293,9 @@
                     "matchefficiencyerror": 0,
                     "prepid": "HIG-RunIIFall17wmLHEGS-01144",
                     "sizeperevent": 1075.658105263158,
-                    "timeperevent": 664.9510928471211
+                    "timeperevent": 647.7900641959953
                 },
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-01146",
@@ -1817,112 +1310,72 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00678",
                     "sizeperevent": 657.7991679999999,
-                    "timeperevent": 52.764879696074296,
+                    "timeperevent": 54.072760306268115,
                     "xsec": 0.23051,
                     "xsecerror": 0.00821157
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00905",
                     "sizeperevent": 633.7473669565217,
-                    "timeperevent": 46.184896615108926,
+                    "timeperevent": 38.88085351249631,
                     "xsec": 0.934778,
                     "xsecerror": 0.00189721
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00906",
                     "sizeperevent": 602.3159095652173,
-                    "timeperevent": 54.58098180270066,
+                    "timeperevent": 73.66319713008184,
                     "xsec": 6.17056,
                     "xsecerror": 0.0118364
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00902",
                     "sizeperevent": 657.7997913043478,
-                    "timeperevent": 46.14376551584115,
+                    "timeperevent": 55.24617696455405,
                     "xsec": 0.934778,
                     "xsecerror": 0.00189721
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00685",
                     "sizeperevent": 581.799936,
-                    "timeperevent": 38.61302031044868,
+                    "timeperevent": 36.28697188848288,
                     "xsec": 0.23051,
                     "xsecerror": 0.00821157
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00706",
                     "sizeperevent": 581.6995840000001,
-                    "timeperevent": 26.07337569387771,
+                    "timeperevent": 28.9467437807921,
                     "xsec": 6.17056,
                     "xsecerror": 0.0118364
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00701",
                     "sizeperevent": 615.5878399999999,
-                    "timeperevent": 27.104310940655115,
+                    "timeperevent": 29.629893006456353,
                     "xsec": 0.934778,
                     "xsecerror": 0.00189721
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00713",
                     "sizeperevent": 618.37312,
-                    "timeperevent": 34.98852376420534,
+                    "timeperevent": 46.62852453359819,
                     "xsec": 0.23051,
                     "xsecerror": 0.00821157
                 }
@@ -1931,28 +1384,18 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00679",
                     "sizeperevent": 632.807424,
-                    "timeperevent": 42.59324726657836,
+                    "timeperevent": 43.72750766324572,
                     "xsec": 0.48014,
                     "xsecerror": 0.00515379
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00641",
                     "sizeperevent": 608.992256,
-                    "timeperevent": 29.849944329853823,
+                    "timeperevent": 24.504818872631304,
                     "xsec": 0.984038,
                     "xsecerror": 0.00147926
                 },
@@ -1969,70 +1412,45 @@
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00692",
                     "sizeperevent": 638.306304,
-                    "timeperevent": 34.93169107809678,
+                    "timeperevent": 48.82740975473992,
                     "xsec": 0.984038,
                     "xsecerror": 0.00147926
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00686",
                     "sizeperevent": 575.920128,
-                    "timeperevent": 59.65768420801441,
+                    "timeperevent": 36.72959670902814,
                     "xsec": 0.48014,
                     "xsecerror": 0.00515379
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00707",
                     "sizeperevent": 566.531072,
-                    "timeperevent": 65.87398307038636,
+                    "timeperevent": 29.723158501715027,
                     "xsec": 6.82433,
                     "xsecerror": 0.0104152
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00702",
                     "sizeperevent": 598.8218880000001,
-                    "timeperevent": 29.562009270646104,
+                    "timeperevent": 28.480129413708053,
                     "xsec": 0.984038,
                     "xsecerror": 0.00147926
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00910",
                     "sizeperevent": 648.6389982608696,
-                    "timeperevent": 33.22855263070451,
+                    "timeperevent": 70.6104983688975,
                     "xsec": 0.48014,
                     "xsecerror": 0.00515379
                 }
@@ -2041,28 +1459,18 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00674",
                     "sizeperevent": 646.3006720000001,
-                    "timeperevent": 58.66203627660323,
+                    "timeperevent": 48.240430304638316,
                     "xsec": 0.371911,
                     "xsecerror": 0.0147991
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00637",
                     "sizeperevent": 590.340096,
-                    "timeperevent": 78.58854964831625,
+                    "timeperevent": 41.69846174374627,
                     "xsec": 1.15155,
                     "xsecerror": 0.00187231
                 },
@@ -2079,28 +1487,18 @@
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00688",
                     "sizeperevent": 646.3201280000001,
-                    "timeperevent": 32.89874096518326,
+                    "timeperevent": 42.35744601543505,
                     "xsec": 1.17572,
                     "xsecerror": 0.00255806
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00681",
                     "sizeperevent": 584.400896,
-                    "timeperevent": 64.6429125510679,
+                    "timeperevent": 35.37281174943315,
                     "xsec": 0.371911,
                     "xsecerror": 0.0147991
                 },
@@ -2117,28 +1515,18 @@
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00903",
                     "sizeperevent": 625.0451478260869,
-                    "timeperevent": 41.23711340206185,
+                    "timeperevent": 32.867383394740564,
                     "xsec": 1.15155,
                     "xsecerror": 0.00187231
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00709",
                     "sizeperevent": 622.226432,
-                    "timeperevent": 33.99221578258579,
+                    "timeperevent": 37.86659598235416,
                     "xsec": 0.371911,
                     "xsecerror": 0.0147991
                 }
@@ -2147,70 +1535,45 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00675",
                     "sizeperevent": 623.2350720000001,
-                    "timeperevent": 66.3376320118877,
+                    "timeperevent": 35.056721775833296,
                     "xsec": 0.634948,
                     "xsecerror": 0.0110382
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00638",
                     "sizeperevent": 597.5685119999999,
-                    "timeperevent": 35.13962730911276,
+                    "timeperevent": 35.985202884573866,
                     "xsec": 1.34165,
                     "xsecerror": 0.00201905
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00695",
                     "sizeperevent": 584.920064,
-                    "timeperevent": 30.32352165251064,
+                    "timeperevent": 24.528741552914628,
                     "xsec": 9.28166,
                     "xsecerror": 0.01292
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00689",
                     "sizeperevent": 596.4185600000001,
-                    "timeperevent": 74.5656550592797,
+                    "timeperevent": 40.05238852418964,
                     "xsec": 1.34165,
                     "xsecerror": 0.00201905
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00682",
                     "sizeperevent": 548.1779200000001,
-                    "timeperevent": 26.866986921150765,
+                    "timeperevent": 21.494883143067792,
                     "xsec": 0.634948,
                     "xsecerror": 0.0110382
                 },
@@ -2227,28 +1590,18 @@
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00699",
                     "sizeperevent": 564.87424,
-                    "timeperevent": 62.669206858517995,
+                    "timeperevent": 66.21201085876979,
                     "xsec": 1.34165,
                     "xsecerror": 0.00201905
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00710",
                     "sizeperevent": 591.425536,
-                    "timeperevent": 71.20579900027057,
+                    "timeperevent": 38.956435018718565,
                     "xsec": 0.634948,
                     "xsecerror": 0.0110382
                 }
@@ -2257,28 +1610,18 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00676",
                     "sizeperevent": 610.42688,
-                    "timeperevent": 55.46034862375145,
+                    "timeperevent": 49.66550283838349,
                     "xsec": 3.56711e-09,
                     "xsecerror": 5.08632e-11
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00639",
                     "sizeperevent": 579.679232,
-                    "timeperevent": 34.499532531334204,
+                    "timeperevent": 35.39960848033021,
                     "xsec": 8.43656e-09,
                     "xsecerror": 1.73606e-11
                 },
@@ -2295,70 +1638,45 @@
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00690",
                     "sizeperevent": 604.944384,
-                    "timeperevent": 36.88117990270745,
+                    "timeperevent": 73.04548542377339,
                     "xsec": 8.43656e-09,
                     "xsecerror": 1.73606e-11
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00683",
                     "sizeperevent": 549.1425280000001,
-                    "timeperevent": 40.67239605152379,
+                    "timeperevent": 29.70382317908138,
                     "xsec": 3.56711e-09,
                     "xsecerror": 5.08632e-11
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00909",
                     "sizeperevent": 546.9014817391304,
-                    "timeperevent": 30.80097947114718,
+                    "timeperevent": 62.71519150083725,
                     "xsec": 5.761e-08,
                     "xsecerror": 1.44436e-10
                 },
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00700",
                     "sizeperevent": 572.027904,
-                    "timeperevent": 41.972541563309285,
+                    "timeperevent": 30.41344030754071,
                     "xsec": 8.43656e-09,
                     "xsecerror": 1.73606e-11
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00711",
                     "sizeperevent": 586.4273919999999,
-                    "timeperevent": 33.8465600048739,
+                    "timeperevent": 34.367449900849905,
                     "xsec": 3.56711e-09,
                     "xsecerror": 5.08632e-11
                 }
@@ -2367,70 +1685,45 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00677",
                     "sizeperevent": 588.742656,
-                    "timeperevent": 67.9643323183993,
+                    "timeperevent": 41.47037356512508,
                     "xsec": 0.121393,
                     "xsecerror": 0.000332827
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00640",
                     "sizeperevent": 560.512,
-                    "timeperevent": 26.68232029457282,
+                    "timeperevent": 34.043132649066365,
                     "xsec": 0.206523,
                     "xsecerror": 0.000259815
                 },
                 "ELNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00697",
                     "sizeperevent": 558.3872,
-                    "timeperevent": 29.893846949482388,
+                    "timeperevent": 33.62723537047125,
                     "xsec": 1.46024,
                     "xsecerror": 0.00180896
                 },
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00691",
                     "sizeperevent": 589.838336,
-                    "timeperevent": 34.52371088463557,
+                    "timeperevent": 42.38257906470125,
                     "xsec": 0.206523,
                     "xsecerror": 0.000259815
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00684",
                     "sizeperevent": 532.947968,
-                    "timeperevent": 29.749420630033228,
+                    "timeperevent": 28.600682984309664,
                     "xsec": 0.121393,
                     "xsecerror": 0.000332827
                 },
@@ -2447,28 +1740,18 @@
                 "MUTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 3
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00904",
                     "sizeperevent": 561.870848,
-                    "timeperevent": 57.497700091996315,
+                    "timeperevent": 34.66504896438166,
                     "xsec": 0.206523,
                     "xsecerror": 0.000259815
                 },
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00712",
                     "sizeperevent": 577.0864640000001,
-                    "timeperevent": 25.36886327197451,
+                    "timeperevent": 23.903315867977206,
                     "xsec": 0.121393,
                     "xsecerror": 0.000332827
                 }
@@ -2477,28 +1760,18 @@
                 "ELEL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00633",
                     "sizeperevent": 578.205696,
-                    "timeperevent": 42.533101386153774,
+                    "timeperevent": 32.92408693275914,
                     "xsec": 0.445876,
                     "xsecerror": 0.00430136
                 },
                 "ELMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00636",
                     "sizeperevent": 557.744128,
-                    "timeperevent": 66.96981670361168,
+                    "timeperevent": 61.00499630919772,
                     "xsec": 0.859212,
                     "xsecerror": 0.00129003
                 },
@@ -2515,54 +1788,35 @@
                 "ELTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00687",
                     "sizeperevent": 576.7403519999999,
-                    "timeperevent": 41.845731526155674,
+                    "timeperevent": 35.57946495600599,
                     "xsec": 0.861063,
                     "xsecerror": 0.00126982
                 },
                 "MUMU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00680",
                     "sizeperevent": 529.595392,
-                    "timeperevent": 26.188225250163022,
+                    "timeperevent": 32.21037238411513,
                     "xsec": 0.445876,
                     "xsecerror": 0.00430136
                 },
                 "MUNU": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00703",
                     "sizeperevent": 527.798272,
-                    "timeperevent": 29.755440038325006,
+                    "timeperevent": 32.043784627314764,
                     "xsec": 5.98594,
                     "xsecerror": 0.00767952
                 },
                 "MUTL": {
+                    "badprepid": "HIG-RunIIFall17wmLHEGS-00698",
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00698",
+                    "prepid": "HIG-RunIIFall17wmLHEGS-01643",
                     "sizeperevent": 542.562304,
                     "timeperevent": 31.700845461548457,
                     "xsec": 0.859212,
@@ -2571,14 +1825,9 @@
                 "TLTL": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needspatch": {
-                        "functionname": "patchmcfmgridpack",
-                        "oldtarballversion": 2
-                    },
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00708",
                     "sizeperevent": 574.548992,
-                    "timeperevent": 32.15630536913831,
+                    "timeperevent": 35.26006057678407,
                     "xsec": 0.445876,
                     "xsecerror": 0.00430136
                 }
@@ -4969,21 +4218,21 @@
                         "matchefficiencyerror": 0,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01615",
                         "sizeperevent": 589.8506666666666,
-                        "timeperevent": 38.585
+                        "timeperevent": 43.49301067318482
                     },
                     "50": {
                         "matchefficiency": 1,
                         "matchefficiencyerror": 0,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01614",
                         "sizeperevent": 627.3919999999999,
-                        "timeperevent": 46.4976
+                        "timeperevent": 30.67908146830084
                     },
                     "800": {
                         "matchefficiency": 1,
                         "matchefficiencyerror": 0,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01616",
                         "sizeperevent": 606.224,
-                        "timeperevent": 30.8049
+                        "timeperevent": 37.461742195782556
                     }
                 },
                 "matchefficiency": 1,
