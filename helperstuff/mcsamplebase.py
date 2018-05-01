@@ -598,6 +598,7 @@ class MCSampleBase(JsonDict):
   def filterefficiencyerror(self): return 0.1
 
   @property
+  @cache
   def fullfragment(self):
     return createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommit)
 
