@@ -339,11 +339,22 @@ def jobended(*bjobsargs):
 
   return False
 
-@cache
-def restful(usedev=False):
-  sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
-  from rest import restful # Load class to access McM
-  return restful(dev=usedev)
+@contextlib.contextmanager
+def redirect_stdout(target):
+  original = sys.stdout
+  sys.stdout = target
+  try:
+    yield
+  finally:
+    sys.stdout = original
+
+def restful(*args, **kwargs):
+  if "dev" not in kwargs: kwargs["dev"] = False
+  try:
+    with open("/dev/null", "w") as f, redirect_stdout(f):
+      return rest.restful(*args, **kwargs)
+  except:
+    raise
 
 here = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 #do not change these once you've started making tarballs!
@@ -371,3 +382,12 @@ def makecards(folder):
 
 class OrderedCounter(collections.Counter, collections.OrderedDict):
   pass
+
+if os.path.exists(os.path.join(here, "helperstuff", "rest.pyc")):
+  os.remove(os.path.join(here, "helperstuff", "rest.pyc"))
+
+if not LSB_JOBID():
+  sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
+  import rest
+
+assert not os.path.exists(os.path.join(here, "helperstuff", "rest.pyc"))

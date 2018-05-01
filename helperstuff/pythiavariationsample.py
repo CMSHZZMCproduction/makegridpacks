@@ -38,11 +38,24 @@ class PythiaVariationSample(MCSampleBase):
   def createtarball(self):
     return "this is a variation sample, the gridpack is the same as for the main sample"
   def patchtarball(self):
-    assert self.mainsample.needspatch == self.needspatch or not self.mainsample.needspatch
+    samples = (
+      [self.mainsample] +
+      [s for s in self.allsamples() if s.mainsample == self.mainsample]
+    )
+
+    needspatchparameters = {
+      _.needspatch for _ in samples if _.needspatch
+    }
+    assert len(needspatchparameters) == 1
     self.mainsample.needspatch = self.needspatch
-    self.mainsample.patchtarball()
-    self.needspatch = False
-    return "This is a variation sample, the gridpack is the same as for the main sample.  Patched that one."
+    result = self.mainsample.patchtarball()
+    if result == "tarball is patched and the new version is in this directory to be copied to eos":
+      for _ in samples: _.needspatch = False
+      return result
+    elif result == "job to patch the tarball is already running" or result is None:
+      return result
+    else:
+      raise ValueError("Unknown result from patchtarball:\n{}".format(result))
   def findmatchefficiency(self):
     return "this is a variation sample, the filter efficiency is the same as for the main sample"
   @property
@@ -136,7 +149,6 @@ class PythiaVariationSample(MCSampleBase):
     return "hroskes"
   @property
   def dovalidation(self):
-    if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.variation != "TuneUp": return False
     return self.mainsample.dovalidation
 
   @classmethod

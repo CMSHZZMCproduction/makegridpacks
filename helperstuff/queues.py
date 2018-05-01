@@ -17,7 +17,7 @@ class ApprovalQueue(object):
       print
       print "approving", len(prepids), "requests to level", level
       for prepid in sorted(prepids): print " ", prepid
-      restful().approve("requests", ",".join(prepids), level)
+      print restful().approve("requests", ",".join(prepids), level)
 
 class BadRequestQueue(object):
   def __enter__(self):

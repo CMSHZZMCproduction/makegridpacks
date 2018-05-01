@@ -44,6 +44,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if self.productionmode == "ZH":
       def filter(weight):
         if weight.pdfname.startswith("NNPDF31_"): return True
+        if weight.pdfname.startswith("NNPDF30_"): return True
         if weight.pdfname.startswith("PDF4LHC15"): return True
         return False
       return filter
@@ -88,6 +89,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 2500: v+=1  #v1 is corrupted
     if self.productionmode == "ggH" and self.decaymode == "2l2q" and self.mass == 800: v+=1  #same
     if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass == 125: v+=1  #trimming pwg-rwl.dat
+    if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (125, 165, 170): v+=1  #same (and changing the pdfs for 125)
 
     return v
 

@@ -26,6 +26,15 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     return result
 
   @property
+  def pwgrwlfilter(self):
+    def filter(weight):
+      if weight.pdfname.startswith("NNPDF31_"): return True
+      if weight.pdfname.startswith("NNPDF30_"): return True
+      if weight.pdfname.startswith("PDF4LHC15"): return True
+      return False
+    return filter
+
+  @property
   def xsec(self): return 1 #unknown for unknown signal
 
   @property
@@ -70,6 +79,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
   def tarballversion(self):
     v = 1
     if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1
+    if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some pdfs
     return v
 
   def cvmfstarball_anyversion(self, version):

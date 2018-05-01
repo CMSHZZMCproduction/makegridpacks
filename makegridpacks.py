@@ -3,6 +3,7 @@
 import argparse, os, sys, urllib
 
 from helperstuff import allsamples
+from helperstuff.cleanupgridpacks import cleanupgridpacks
 from helperstuff.queues import ApprovalQueue, BadRequestQueue, CloneQueue
 
 def makegridpacks(args):

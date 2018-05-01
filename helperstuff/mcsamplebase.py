@@ -526,7 +526,7 @@ class MCSampleBase(JsonDict):
 
       originalresult = result[:]
       for _ in result[:]:
-        if not LSB_JOBID() and not restful().getA("requests", query="prepid="+_):
+        if not LSB_JOBID() and not restful().getA("requests", _):
           result.remove(_)
 
       if result != originalresult:
@@ -630,11 +630,11 @@ class MCSampleBase(JsonDict):
     try:
       answer = mcm.updateA('requests', req)
     except pycurl.error as e:
-      if e[0] == 52 and e[1] == "Empty reply from server":
-        self.badprepid += [self.prepid]
-        del self.prepid
-        return
-      else:
+#      if e[0] == 52 and e[1] == "Empty reply from server":
+#        self.badprepid += [self.prepid]
+#        del self.prepid
+#        return
+#      else:
         raise
     if not (answer and answer.get("results")):
       raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
