@@ -1370,10 +1370,9 @@
                     ],
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "needsupdate": true,
                     "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00012",
-                    "resettimeperevent": true,
-                    "sizeperevent": 131.62091789473683
+                    "sizeperevent": 124.57472,
+                    "timeperevent": 2.51001
                 },
                 "TuneDown": {
                     "matchefficiency": 1,
@@ -3486,10 +3485,9 @@
                     ],
                     "matchefficiency": 0.14835550966597078,
                     "matchefficiencyerror": 0.00018236587065478363,
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00609",
-                    "resettimeperevent": true,
-                    "sizeperevent": 647.4046577777777
+                    "sizeperevent": 667.7185422222223,
+                    "timeperevent": 3.33122
                 },
                 "TuneDown": {
                     "badprepid": [
@@ -3497,10 +3495,9 @@
                     ],
                     "matchefficiency": 0.14835550966597078,
                     "matchefficiencyerror": 0.00018236587065478363,
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00510",
-                    "resettimeperevent": true,
-                    "sizeperevent": 832.28672
+                    "sizeperevent": 852.5789866666667,
+                    "timeperevent": 7.09638
                 },
                 "TuneUp": {
                     "badprepid": [
@@ -3508,10 +3505,9 @@
                     ],
                     "matchefficiency": 0.14835550966597078,
                     "matchefficiencyerror": 0.00018236587065478363,
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00509",
-                    "resettimeperevent": true,
-                    "sizeperevent": 1215.2604444444444
+                    "sizeperevent": 1223.3045333333332,
+                    "timeperevent": 13.4026
                 },
                 "a2": {
                     "finished": true,
@@ -3625,18 +3621,16 @@
             "165": {
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
-                "needsupdate": true,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00291",
-                "resettimeperevent": true,
-                "sizeperevent": 895.2448
+                "sizeperevent": 654.8029439999999,
+                "timeperevent": 9.12223
             },
             "170": {
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
-                "needsupdate": true,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00292",
-                "resettimeperevent": true,
-                "sizeperevent": 769.7845527272729
+                "sizeperevent": 767.5542588235294,
+                "timeperevent": 8.04285
             },
             "175": {
                 "finished": true,
@@ -3918,7 +3912,7 @@
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00029",
                 "sizeperevent": 1000,
-                "timeperevent": 0.862277101369296
+                "timeperevent": 0.9362594562205079
             }
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00002": {
@@ -3927,7 +3921,7 @@
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00030",
                 "sizeperevent": 1031,
-                "timeperevent": 14.976247671193487
+                "timeperevent": 11.656016952511056
             }
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00003": {
@@ -3936,7 +3930,7 @@
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00031",
                 "sizeperevent": 1365,
-                "timeperevent": 74.44242622755561
+                "timeperevent": 94.95143234235688
             }
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00004": {
