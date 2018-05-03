@@ -13,5 +13,5 @@ for i in {1..192}; do (
   eval $(scram ru -sh)
   ./makegridpacks.py "$@"
 ) || true
-sleep 15m
+sleep 15m || true
 done
