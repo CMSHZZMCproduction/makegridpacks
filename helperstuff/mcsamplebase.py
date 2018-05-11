@@ -295,8 +295,8 @@ class MCSampleBase(JsonDict):
             if match: nevents = int(match.group(1))
             match = re.match('<Metric Name="Timing-tstoragefile-write-totalMegabytes" Value="([0-9.]*)"/>', line)
             if match: totalsize = float(match.group(1))
-            match = re.match('<Metric Name="AvgEventTime" Value="([0-9.]*)"/>', line)
-            if match: self.timeperevent = float(match.group(1))
+            match = re.match('<Metric Name="EventThroughput" Value="([0-9.eE+-]*)"/>', line)
+            if match: self.timeperevent = 1/float(match.group(1))
           if nevents is not None is not totalsize:
             self.sizeperevent = totalsize * 1024 / nevents
 
@@ -609,7 +609,7 @@ class MCSampleBase(JsonDict):
     req["mcdb_id"] = 0
     req["total_events"] = self.nevents
     req["fragment"] = self.fullfragment
-    req["time_event"] = [(self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent) / self.matchefficiency]
+    req["time_event"] = [(self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent)]
     req["size_event"] = [self.sizeperevent if self.sizeperevent is not None else 600]
     req["generators"] = self.generators
     req["generator_parameters"][0].update({
@@ -697,7 +697,7 @@ class MCSampleBase(JsonDict):
     needsupdate = self.needsupdate
     timeperevent = self.fullinfo["time_event"][0]
     if timeperevent != self.defaulttimeperevent:
-      self.timeperevent = timeperevent * self.matchefficiency
+      self.timeperevent = timeperevent
       self.needsupdate = needsupdate #don't need to reupdate on McM, unless that was already necessary
 
   @property
