@@ -15,7 +15,10 @@ class PhantomMCSample(MCSampleBase):
     return self.signalbkgbsi, "PHANTOM", self.mass, self.width, self.finalstate
   @property
   def nevents(self):
-    return 500000
+    if self.finalstate in ("2e2mu" ,"4e", "4mu"):
+      return 500000
+    if self.finalstate in ("2e2nue" ,"2e2num", "2e2nut","2mu2nue","2mu2num","2mu2nut"):
+      return 500000
   @property
   def hasfilter(self):
     return False
@@ -65,15 +68,16 @@ class PhantomMCSample(MCSampleBase):
 
   @property
   def genproductionscommit(self):
+    return "76336e9844b0df3aaf1496a40755ca772beecbb6"
     """
-    Sumit fill this
+####    Sumit fill this
     it has to be AFTER they merge your PR (because your PR has phantom stuff, but master has pythia stuff, so we need the merge)
     """
 
   @classmethod
   def allsamples(cls):
     for signalbkgbsi in ["SIG", "BSI", "BKG"]:
-      for finalstate in ["2e2mu","4e","4mu","2e2nu","2mu2nu"]:
+      for finalstate in ["2e2mu","4e","4mu","2e2nue","2e2num","2e2nut","2mu2nue","2mu2num","2mu2nut"]:
         for mass in 125,:
           for width in 1,:
             yield cls(signalbkgbsi, finalstate, mass, width)
@@ -105,7 +109,10 @@ class PhantomMCSample(MCSampleBase):
   @property
   @cache
   def cardsurl(self):
-    card = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", self.genproductionscommit, "Sumit fill this")
+   cards=['VBF_H125_NNPDF31_13TeV_ee_ee_.py','VBF_H125ZZcont_NNPDF31_13TeV_ee_ee_.py','VBF_ZZcont_NNPDF31_13TeV_ee_ee_.py','VBF_H125_NNPDF31_13TeV_ee_mumu_.py','VBF_H125ZZcont_NNPDF31_13TeV_ee_mumu_.py', 'VBF_ZZcont_NNPDF31_13TeV_ee_mumu_.py','VBF_H125_NNPDF31_13TeV_ee_veve_.py','VBF_H125ZZcont_NNPDF31_13TeV_ee_veve_.py','VBF_ZZcont_NNPDF31_13TeV_ee_veve_.py','VBF_H125_NNPDF31_13TeV_ee_vmvm_.py','VBF_H125ZZcont_NNPDF31_13TeV_ee_vmvm_.py','VBF_ZZcont_NNPDF31_13TeV_ee_vmvm_.py','VBF_H125_NNPDF31_13TeV_ee_vtvt_.py','VBF_H125ZZcont_NNPDF31_13TeV_ee_vtvt_.py','VBF_ZZcont_NNPDF31_13TeV_ee_vtvt_.py','VBF_H125_NNPDF31_13TeV_mumu_mumu_.py','VBF_H125ZZcont_NNPDF31_13TeV_mumu_mumu_.py','VBF_ZZcont_NNPDF31_13TeV_mumu_mumu_.py','VBF_H125_NNPDF31_13TeV_mumu_veve_.py','VBF_H125ZZcont_NNPDF31_13TeV_mumu_veve_.py','VBF_ZZcont_NNPDF31_13TeV_mumu_veve_.py','VBF_H125_NNPDF31_13TeV_mumu_vmvm_.py','VBF_H125ZZcont_NNPDF31_13TeV_mumu_vmvm_.py','VBF_ZZcont_NNPDF31_13TeV_mumu_vmvm_.py','VBF_H125_NNPDF31_13TeV_mumu_vtvt_.py',  'VBF_H125ZZcont_NNPDF31_13TeV_mumu_vtvt_.py','VBF_ZZcont_NNPDF31_13TeV_mumu_vtvt_.py']
+
+   for icard in cards :
+    card = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", self.genproductionscommit, "bin/Phantom/cards/production/13TeV/HZZ_VBFoffshell_Phantom",icard)
 
     with cdtemp():
       wget(card)
@@ -115,7 +122,7 @@ class PhantomMCSample(MCSampleBase):
       subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
       if glob.glob("core.*") and self.cvmfstarball != "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/HJJ_M125_13TeV/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_13TeV_M125.tgz":
         raise ValueError("There is a core dump in the tarball\n{}".format(self))
-      cardnameintarball = "Sumit fill htis"
+      cardnameintarball = icard
       try:
         with open(cardnameintarball) as f:
           cardcontents = f.read()
