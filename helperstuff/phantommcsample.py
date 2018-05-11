@@ -32,7 +32,7 @@ class PhantomMCSample(MCSampleBase):
     return v
 
   def cvmfstarball_anyversion(self, version):
-    folder = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/phantom"
+    folder = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/phantom"
     tarballname = self.datasetname + ".tgz"
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
