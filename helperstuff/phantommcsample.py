@@ -80,7 +80,7 @@ class PhantomMCSample(MCSampleBase):
 
   @property
   def responsible(self):
-    "skeshri"
+    return "skeshri"
 
   @property
   def makegridpackcommand(self):
