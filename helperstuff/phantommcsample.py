@@ -69,10 +69,6 @@ class PhantomMCSample(MCSampleBase):
   @property
   def genproductionscommit(self):
     return "76336e9844b0df3aaf1496a40755ca772beecbb6"
-    """
-####    Sumit fill this
-    it has to be AFTER they merge your PR (because your PR has phantom stuff, but master has pythia stuff, so we need the merge)
-    """
 
   @classmethod
   def allsamples(cls):
@@ -109,9 +105,24 @@ class PhantomMCSample(MCSampleBase):
   @property
   @cache
   def cardsurl(self):
-   cards=['VBF_H125_NNPDF31_13TeV_ee_ee_.py','VBF_H125ZZcont_NNPDF31_13TeV_ee_ee_.py','VBF_ZZcont_NNPDF31_13TeV_ee_ee_.py','VBF_H125_NNPDF31_13TeV_ee_mumu_.py','VBF_H125ZZcont_NNPDF31_13TeV_ee_mumu_.py', 'VBF_ZZcont_NNPDF31_13TeV_ee_mumu_.py','VBF_H125_NNPDF31_13TeV_ee_veve_.py','VBF_H125ZZcont_NNPDF31_13TeV_ee_veve_.py','VBF_ZZcont_NNPDF31_13TeV_ee_veve_.py','VBF_H125_NNPDF31_13TeV_ee_vmvm_.py','VBF_H125ZZcont_NNPDF31_13TeV_ee_vmvm_.py','VBF_ZZcont_NNPDF31_13TeV_ee_vmvm_.py','VBF_H125_NNPDF31_13TeV_ee_vtvt_.py','VBF_H125ZZcont_NNPDF31_13TeV_ee_vtvt_.py','VBF_ZZcont_NNPDF31_13TeV_ee_vtvt_.py','VBF_H125_NNPDF31_13TeV_mumu_mumu_.py','VBF_H125ZZcont_NNPDF31_13TeV_mumu_mumu_.py','VBF_ZZcont_NNPDF31_13TeV_mumu_mumu_.py','VBF_H125_NNPDF31_13TeV_mumu_veve_.py','VBF_H125ZZcont_NNPDF31_13TeV_mumu_veve_.py','VBF_ZZcont_NNPDF31_13TeV_mumu_veve_.py','VBF_H125_NNPDF31_13TeV_mumu_vmvm_.py','VBF_H125ZZcont_NNPDF31_13TeV_mumu_vmvm_.py','VBF_ZZcont_NNPDF31_13TeV_mumu_vmvm_.py','VBF_H125_NNPDF31_13TeV_mumu_vtvt_.py',  'VBF_H125ZZcont_NNPDF31_13TeV_mumu_vtvt_.py','VBF_ZZcont_NNPDF31_13TeV_mumu_vtvt_.py']
 
-   for icard in cards :
+    icard = "VBF_"
+    if self.signalbkgbsi == "SIG" or self.signalbkgbsi == "BSI": icard += "H125"
+    if self.signalbkgbsi == "BKG" or self.signalbkgbsi == "BSI": icard += "ZZcont"
+    icard += "NNPDF31_13TeV_"
+    icard += {
+      "4e": "ee_ee_",
+      "4mu": "mumu_mumu_",
+      "2e2mu": "ee_mumu_",
+      "2e2nue": "ee_veve_",
+      "2e2num": "ee_vmvm_",
+      "2e2nut": "ee_vtvt_",
+      "2mu2nue": "mumu_veve_",
+      "2mu2num": "mumu_vmvm_",
+      "2mu2nut": "mumu_vtvt_",
+    }[self.finalstate]
+    icard += ".py"
+
     card = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", self.genproductionscommit, "bin/Phantom/cards/production/13TeV/HZZ_VBFoffshell_Phantom",icard)
 
     with cdtemp():
