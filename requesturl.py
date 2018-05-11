@@ -34,7 +34,7 @@ if __name__ == "__main__":
   if args.submitted: status = ("approved", "submitted", "done")
   elif args.unvalidated: status = ("new",)
   elif args.status: status = args.status
-  elif args.all_Statuses: status = allstatuses
+  elif args.all_statuses: status = allstatuses
   else: status = ("defined",)
 
   print requesturl(filter=args.filter, status=status, onlymysamples=not args.everyones_samples)

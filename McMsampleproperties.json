@@ -1370,9 +1370,11 @@
                     ],
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
+                    "needsupdate": true,
                     "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00012",
                     "resettimeperevent": true,
-                    "sizeperevent": 124.57472
+                    "sizeperevent": 111.3488695652174,
+                    "timeperevent": 1.97308
                 },
                 "TuneDown": {
                     "matchefficiency": 1,
@@ -3917,6 +3919,7 @@
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00002": {
             "PhaseIISummer17wmLHEGENOnly": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00030",
