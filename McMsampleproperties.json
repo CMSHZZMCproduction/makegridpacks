@@ -1373,8 +1373,7 @@
                     "needsupdate": true,
                     "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00012",
                     "resettimeperevent": true,
-                    "sizeperevent": 111.3488695652174,
-                    "timeperevent": 1.97308
+                    "sizeperevent": 111.3488695652174
                 },
                 "TuneDown": {
                     "matchefficiency": 1,
