@@ -73,7 +73,7 @@ class JHUGenJHUGenMCSample(MCSampleBase):
         decaygitcard = f.read()
 
     with cdtemp():
-      subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
+      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
       for root, dirnames, filenames in os.walk('.'):
         for filename in filenames:
           if re.match("core[.].*", filename):

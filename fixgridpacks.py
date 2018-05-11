@@ -7,7 +7,7 @@ def JHUGen():
   originaldir = os.getcwd()
   with cdtemp():
     subprocess.check_call(["wget", "http://spin.pha.jhu.edu/Generator/JHUGenerator.v7.0.11.tar.gz"])
-    subprocess.check_call(["tar", "xvzf", "JHUGenerator.v7.0.11.tar.gz"])
+    subprocess.check_call(["tar", "xvaf", "JHUGenerator.v7.0.11.tar.gz"])
     with cd("JHUGenerator"):
       subprocess.check_call(["sed", "-i", "-e", "s#linkMELA = Yes#linkMELA = No#g", "makefile"])
       os.system("make")
@@ -26,7 +26,7 @@ class MCSampleFix(POWHEGJHUGenMassScanMCSample):
       for _ in self.cvmfstarball, self.eostarball, self.foreostarball:
         if os.path.exists(_):
           with cdtemp():
-            subprocess.check_output(["tar", "xvzf", _])
+            subprocess.check_output(["tar", "xvaf", _])
             output = subprocess.check_output(["./JHUGen", "Process=50", "VegasNc0=1000", "VegasNc2=1"])
             version = re.search("JHU Generator (v[0-9.]*)", output).group(1)
             if version == "v7.0.11": return "already fixed"
@@ -37,10 +37,10 @@ class MCSampleFix(POWHEGJHUGenMassScanMCSample):
       with cdtemp():
         oldtarball = self.cvmfstarball
         oldtarball = re.sub("(/v)([0-9]*)(/)", lambda match: match.group(1) + str(int(match.group(2))-1) + match.group(3), oldtarball)
-        subprocess.check_output(["tar", "xvzf", oldtarball])
+        subprocess.check_output(["tar", "xvaf", oldtarball])
         os.remove("JHUGen")
         shutil.copy(jhugen, "JHUGen")
-        subprocess.check_call(["tar", "cvzf", self.foreostarball]+os.listdir("."))
+        subprocess.check_call(["tar", "cvaf", self.foreostarball]+os.listdir("."))
     return "fixed JHUGen version"
 
 if __name__ == "__main__":

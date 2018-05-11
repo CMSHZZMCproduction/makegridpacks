@@ -253,7 +253,7 @@ class MCSampleBase(JsonDict):
                 jobsrunning = True
                 continue
               with cdtemp():
-                subprocess.check_call(["tar", "xvzf", self.cvmfstarball])
+                subprocess.check_call(["tar", "xvaf", self.cvmfstarball])
                 if os.path.exists("powheg.input"):
                   with open("powheg.input") as f:
                     powheginput = f.read()

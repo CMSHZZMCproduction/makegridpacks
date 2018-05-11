@@ -11,7 +11,7 @@ from utilities import cdtemp, genproductions
 
 def patchmcfmgridpack(oldfilename, newfilename, sample=None):
   with cdtemp():
-    subprocess.check_call(["tar", "xvzf", oldfilename])
+    subprocess.check_call(["tar", "xvaf", oldfilename])
     with open("runcmsgrid.sh") as f:
       contents = f.read()
 
@@ -38,7 +38,7 @@ def patchmcfmgridpack(oldfilename, newfilename, sample=None):
 
     os.chmod("runcmsgrid.sh", os.stat("runcmsgrid.sh").st_mode | stat.S_IEXEC)
 
-    subprocess.check_call(["tar", "cvzf", newfilename] + glob.glob("*"))
+    subprocess.check_call(["tar", "cvaf", newfilename] + glob.glob("*"))
 
 if __name__ == "__main__":
   p = argparse.ArgumentParser()

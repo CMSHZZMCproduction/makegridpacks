@@ -64,7 +64,7 @@ class MCFMMCSample(MCSampleBase):
  	    os.system('mv readInput.DAT_bak readInput.DAT')
   	    os.system('rm -r *tgz CMSSW*')
   	    curdirpath = subprocess.check_output(['pwd'])
-  	    os.system('tar cvzf '+self.tmptarball+' ./*')
+  	    os.system('tar cvaf '+self.tmptarball+' ./*')
 	    if os.path.exists(self.tmptarball):	
 	      with open(os.path.join(self.workdir,'FIXED'),'w') as fout:
 		fout.write(LSB_JOBID())
@@ -98,7 +98,7 @@ class MCFMMCSample(MCSampleBase):
 
   def getxsec(self, error=False):
     with cdtemp():
-      subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
+      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
       dats = set(glob.iglob("*.dat")) - {"fferr.dat", "ffperm5.dat", "ffwarn.dat", "hto_output.dat"}
       if len(dats) != 1:
         raise ValueError("Expected to find exactly 1 .dat in the tarball\n"
@@ -162,7 +162,7 @@ class MCFMMCSample(MCSampleBase):
         productiongitcard = f.read()
 
     with cdtemp():
-      subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
+      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
       if glob.glob("core.*"):
         raise ValueError("There is a core dump in the tarball\n{}".format(self))
 #      for root, dirs, files in os.walk("."):
