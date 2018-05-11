@@ -1,6 +1,6 @@
 import abc, contextlib, glob, os, re, subprocess, urllib
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
+from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
 
 from mcsamplebase import MCSampleBase
 
@@ -99,6 +99,7 @@ class PhantomMCSample(MCSampleBase):
       if (filename.endswith(".py") or filename.endswith(".sh") or filename.endswith("/patches")) and not os.path.exists(os.path.basename(filename)):
         yield filename
   def createtarball(self):
+    mkdir_p(os.path.dirname(self.foreostarball))
     return "making a phantom tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)
 
   @property
