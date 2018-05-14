@@ -315,7 +315,6 @@ class MCSampleBase(JsonDict):
         if not os.path.exists(self.foreostarball):
           if self.needspatch: return self.patchtarball()
           return self.createtarball()
-	tmplist = self.makegridpackcommand
         return "gridpack exists in this folder, to be copied to eos" 
       return "gridpack exists on eos, not yet copied to cvmfs"
 
