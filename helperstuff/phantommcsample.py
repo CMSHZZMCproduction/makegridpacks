@@ -18,7 +18,7 @@ class PhantomMCSample(MCSampleBase):
     if self.finalstate in ("2e2mu" ,"4e", "4mu"):
       return 500000
     if self.finalstate in ("2e2nue" ,"2e2num", "2e2nut","2mu2nue","2mu2num","2mu2nut"):
-      return 500000
+      return 250000
   @property
   def hasfilter(self):
     return False
@@ -28,6 +28,9 @@ class PhantomMCSample(MCSampleBase):
   @property
   def tarballversion(self):
     v = 1
+
+    if self.finalstate == "2mu2num" and self.signalbkgbsi == "BSI" : v+=1
+    if self.finalstate == "2mu2nue" and self.signalbkgbsi == "BSI" : v+=1
     """
     if the first tarball is copied to eos and then is found to be bad, add something like
     if self.(whatever) == (whatever): v += 1

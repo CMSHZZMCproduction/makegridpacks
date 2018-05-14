@@ -83,6 +83,39 @@
                     "xsecerror": 0.0348474
                 }
             }
+        },
+        "PHANTOM": {
+            "125": {
+                "1": {
+                    "2e2mu": {
+                        "needsupdate": true
+                    },
+                    "2e2nue": {
+                        "needsupdate": true
+                    },
+                    "2e2num": {
+                        "needsupdate": true
+                    },
+                    "2e2nut": {
+                        "needsupdate": true
+                    },
+                    "2mu2nue": {
+                        "needsupdate": true
+                    },
+                    "2mu2num": {
+                        "needsupdate": true
+                    },
+                    "2mu2nut": {
+                        "needsupdate": true
+                    },
+                    "4e": {
+                        "needsupdate": true
+                    },
+                    "4mu": {
+                        "needsupdate": true
+                    }
+                }
+            }
         }
     },
     "BSI": {
@@ -1331,6 +1364,39 @@
                     "timeperevent": 91.64810792481188
                 }
             }
+        },
+        "PHANTOM": {
+            "125": {
+                "1": {
+                    "2e2mu": {
+                        "needsupdate": true
+                    },
+                    "2e2nue": {
+                        "needsupdate": true
+                    },
+                    "2e2num": {
+                        "needsupdate": true
+                    },
+                    "2e2nut": {
+                        "needsupdate": true
+                    },
+                    "2mu2nue": {
+                        "needsupdate": true
+                    },
+                    "2mu2num": {
+                        "needsupdate": true
+                    },
+                    "2mu2nut": {
+                        "needsupdate": true
+                    },
+                    "4e": {
+                        "needsupdate": true
+                    },
+                    "4mu": {
+                        "needsupdate": true
+                    }
+                }
+            }
         }
     },
     "HJJ": {
@@ -1999,6 +2065,39 @@
                     "timeperevent": 35.26006057678407,
                     "xsec": 0.445876,
                     "xsecerror": 0.00430136
+                }
+            }
+        },
+        "PHANTOM": {
+            "125": {
+                "1": {
+                    "2e2mu": {
+                        "needsupdate": true
+                    },
+                    "2e2nue": {
+                        "needsupdate": true
+                    },
+                    "2e2num": {
+                        "needsupdate": true
+                    },
+                    "2e2nut": {
+                        "needsupdate": true
+                    },
+                    "2mu2nue": {
+                        "needsupdate": true
+                    },
+                    "2mu2num": {
+                        "needsupdate": true
+                    },
+                    "2mu2nut": {
+                        "needsupdate": true
+                    },
+                    "4e": {
+                        "needsupdate": true
+                    },
+                    "4mu": {
+                        "needsupdate": true
+                    }
                 }
             }
         }
