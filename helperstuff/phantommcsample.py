@@ -65,9 +65,32 @@ class PhantomMCSample(MCSampleBase):
   @property
   def tags(self):
     return ["HZZ", "Fall17P2A"]
+
+  def getxsec(error=False):
+    with cdtemp():
+      subprocess.check_output(["tar", "xvaf",self.cvmfstarball])
+      dats = set(glob.iglob("result"))
+      if len(dats) != 1:
+        raise ValueError("Expected to find result in the tarball {}\n".foramt(self.cvmfstarball))
+      with open(dats.pop()) as f:
+        matches = re.findall(r"total cross section=\s*([0-9.Ee+-]*)\s*[+]/-\s*([0-9.Ee+-]*)\s*", f.read())
+      if not matches: raise ValueError("Didn't find the cross section in the result\n\n"+self.cvmfstarball)
+      if len(matches) > 1: raise ValueError("Found multiple cross section lines in the result\n\n")
+      xsec, xsecerror = matches[0]
+      xsec = float(xsec)
+      xsecerror = float(xsecerror)
+      return xsecerror if error else xsec
+
+
   @property
   def xsec(self):
-    assert False, "need to fill this"
+    value = getxsec()
+    return value
+
+  @property
+  def xsecerror(self):
+    value = getxsec(True)
+    return value
 
   @property
   def genproductionscommit(self):
