@@ -28,7 +28,8 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
   @property
   def pwgrwlfilter(self):
     def filter(weight):
-      if weight.pdfname.startswith("NNPDF31_"): return True
+      if self.energy == 13:
+        if weight.pdfname.startswith("NNPDF31_"): return True
       if weight.pdfname.startswith("NNPDF30_"): return True
       if weight.pdfname.startswith("PDF4LHC15"): return True
       return False
@@ -80,6 +81,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
     v = 1
     if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1
     if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some pdfs
+    if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some more pdfs
     return v
 
   def cvmfstarball_anyversion(self, version):
