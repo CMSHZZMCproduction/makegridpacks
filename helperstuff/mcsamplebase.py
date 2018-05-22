@@ -149,7 +149,7 @@ class MCSampleBase(JsonDict):
       patches.dopatch(**kwargs)
 
       if not os.path.exists(self.foreostarball): raise RuntimeError("Patching failed, gridpack doesn't exist")
-      self.needsupdate = True
+      del self.timeperevent
       self.needspatch = False
 
       return "tarball is patched and the new version is in this directory to be copied to eos"
