@@ -1438,6 +1438,7 @@
                     ],
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
+                    "needspatch": 1,
                     "needsupdate": true,
                     "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00012",
                     "resettimeperevent": true,
