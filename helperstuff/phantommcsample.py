@@ -29,8 +29,8 @@ class PhantomMCSample(MCSampleBase):
   def tarballversion(self):
     v = 1
 
-    if self.finalstate == "2mu2num" and self.signalbkgbsi == "BSI" : v+=1
-    if self.finalstate == "2mu2nue" and self.signalbkgbsi == "BSI" : v+=1
+#    if self.finalstate == "2mu2num" and self.signalbkgbsi == "BSI" : v+=1
+#    if self.finalstate == "2e2nue" and self.signalbkgbsi == "BSI" : v+=1
     """
     if the first tarball is copied to eos and then is found to be bad, add something like
     if self.(whatever) == (whatever): v += 1
@@ -77,8 +77,8 @@ class PhantomMCSample(MCSampleBase):
       if not matches: raise ValueError("Didn't find the cross section in the result\n\n"+self.cvmfstarball)
       if len(matches) > 1: raise ValueError("Found multiple cross section lines in the result\n\n")
       xsec, xsecerror = matches[0]
-      xsec = float(xsec)
-      xsecerror = float(xsecerror)
+      self.xsec = float(xsec)
+      self.xsecerror = float(xsecerror)
       return xsecerror if error else xsec
 
 
@@ -91,6 +91,10 @@ class PhantomMCSample(MCSampleBase):
   def xsecerror(self):
     value = getxsec(True)
     return value
+
+  @property
+  def notes(self):
+    return "cross section = {} +/- {}".format(self.xsec, self.xsecerror)
 
   @property
   def genproductionscommit(self):
@@ -135,7 +139,7 @@ class PhantomMCSample(MCSampleBase):
     icard = "VBF_"
     if self.signalbkgbsi == "SIG" or self.signalbkgbsi == "BSI": icard += "H125"
     if self.signalbkgbsi == "BKG" or self.signalbkgbsi == "BSI": icard += "ZZcont"
-    icard += "NNPDF31_13TeV_"
+    icard += "_NNPDF31_13TeV_"
     icard += {
       "4e": "ee_ee_",
       "4mu": "mumu_mumu_",

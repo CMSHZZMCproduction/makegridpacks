@@ -88,30 +88,48 @@
             "125": {
                 "1": {
                     "2e2mu": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2e2nue": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2e2num": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2e2nut": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2mu2nue": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2mu2num": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2mu2nut": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "4e": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "4mu": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     }
                 }
@@ -1369,30 +1387,48 @@
             "125": {
                 "1": {
                     "2e2mu": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2e2nue": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2e2num": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2e2nut": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2mu2nue": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2mu2num": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2mu2nut": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "4e": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "4mu": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     }
                 }
@@ -2071,30 +2107,45 @@
             "125": {
                 "1": {
                     "2e2mu": {
-                        "needsupdate": true
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
+                        "needsupdate": true,
+                        "prepid": "HIG-RunIIFall17wmLHEGS-01856"
                     },
                     "2e2nue": {
                         "needsupdate": true
                     },
                     "2e2num": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2e2nut": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2mu2nue": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "2mu2num": {
                         "needsupdate": true
                     },
                     "2mu2nut": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "4e": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     },
                     "4mu": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
                         "needsupdate": true
                     }
                 }
