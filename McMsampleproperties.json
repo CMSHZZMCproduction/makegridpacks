@@ -1492,9 +1492,9 @@
                     "sizeperevent": 932.9590857142857,
                     "timeperevent": 723.0292031495153
                 },
-                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
+                "needspatch": 2,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00917",
                 "sizeperevent": 681.6121263157895,
                 "timeperevent": 711.3640405477503
