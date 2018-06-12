@@ -149,6 +149,7 @@ class PythiaVariationSample(MCSampleBase):
     return "hroskes"
   @property
   def dovalidation(self):
+    if self.prepid == "HIG-RunIIFall17wmLHEGS-00509": return False
     return self.mainsample.dovalidation
 
   @classmethod

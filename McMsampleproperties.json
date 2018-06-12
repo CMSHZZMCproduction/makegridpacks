@@ -1494,10 +1494,9 @@
                 },
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needspatch": 2,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00917",
-                "sizeperevent": 681.6121263157895,
-                "timeperevent": 711.3640405477503
+                "sizeperevent": 674.7243789473683,
+                "timeperevent": 638.4880602732729
             },
             "300": {
                 "TuneDown": {
