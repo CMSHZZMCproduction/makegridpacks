@@ -82,7 +82,7 @@ class MadgraphHZZdFromLucien(MadgraphGridpackBySomeoneElse):
     return "madgraph",
   @property
   def responsible(self):
-    return "hroskes"
+    return "nobody for the moment"
 
   @property
   def cardsurl(self):
