@@ -23,7 +23,7 @@ class ClonedRequest(MCSampleBase):
   @property
   @cache
   def originalfullinfo(self):
-    result = restful().getA("requests", query="prepid="+self.originalprepid)
+    result = restful().get("requests", query="prepid="+self.originalprepid)
     if not result:
       raise ValueError("mcm query for prepid="+self.originalprepid+" returned None!")
     if len(result) == 0:
@@ -130,7 +130,7 @@ class ClonedRequest(MCSampleBase):
 
     if LSB_JOBID(): return "run locally to submit to McM"
     mcm = restful()
-    clone_req = mcm.getA('requests', self.originalprepid)
+    clone_req = mcm.get('requests', self.originalprepid)
     clone_req['member_of_campaign'] = self.campaign
     answer = mcm.clone(self.originalprepid, clone_req)
     if not (answer and answer.get("results")):
@@ -146,7 +146,7 @@ class ClonedRequest(MCSampleBase):
     if self.prepid: return
     if LSB_JOBID(): return
     query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.originalfullinfo["dataset_name"], self.extensionnumber, self.pwg, self.campaign)
-    output = restful().getA('requests', query=query)
+    output = restful().get('requests', query=query)
     prepids = {_["prepid"] for _ in output}
     if not prepids:
       return None

@@ -7,7 +7,7 @@ def allsamples(filter=lambda sample: True, onlymysamples=True, __docheck=True):
   import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, \
          powhegjhugenanomalouscouplings, powhegjhugenmassscanmcsample, powhegjhugenlifetime, \
          minlomcsample, mcfmanomalouscouplings, pythiavariationsample, phantommcsample, \
-         qqZZmcsample, clonedrequest
+         qqZZmcsample, clonedrequest, gridpackbysomeoneelse
 
   if __docheck: __checkforduplicates()
 

@@ -25,7 +25,7 @@ def maketicket(block, chain, tags, filter=lambda sample: True, modifyticket=None
   firstpart = firstpart.pop()
 
   if modifyticket is not None:
-    ticket = restful().getA("mccms", modifyticket)
+    ticket = restful().get("mccms", modifyticket)
   else:
     ticket = {
       "prepid": firstpart.split("-")[0],

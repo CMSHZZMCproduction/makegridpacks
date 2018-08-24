@@ -352,7 +352,7 @@ def restful(*args, **kwargs):
   if "dev" not in kwargs: kwargs["dev"] = False
   try:
     with open("/dev/null", "w") as f, redirect_stdout(f):
-      return rest.restful(*args, **kwargs)
+      return rest.McM(*args, **kwargs)
   except:
     raise
 

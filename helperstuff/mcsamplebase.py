@@ -526,7 +526,7 @@ class MCSampleBase(JsonDict):
 
       originalresult = result[:]
       for _ in result[:]:
-        if not LSB_JOBID() and not restful().getA("requests", _):
+        if not LSB_JOBID() and not restful().get("requests", _):
           result.remove(_)
 
       if result != originalresult:
@@ -604,7 +604,7 @@ class MCSampleBase(JsonDict):
 
   def updaterequest(self):
     mcm = restful()
-    req = mcm.getA("requests", self.prepid)
+    req = mcm.get("requests", self.prepid)
     req["dataset_name"] = self.datasetname
     req["mcdb_id"] = 0
     req["total_events"] = self.nevents
@@ -669,7 +669,7 @@ class MCSampleBase(JsonDict):
   def getprepid(self):
     if LSB_JOBID(): return
     query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.datasetname, self.extensionnumber, self.pwg, self.campaign)
-    output = restful().getA('requests', query=query)
+    output = restful().get('requests', query=query)
     prepids = {_["prepid"] for _ in output}
     prepids -= frozenset(self.badprepid)
     if not prepids:
@@ -683,7 +683,7 @@ class MCSampleBase(JsonDict):
   @cache
   def fullinfo(self):
     if not self.prepid: raise ValueError("Can only call fullinfo once the prepid has been set")
-    result = restful().getA("requests", query="prepid="+self.prepid)
+    result = restful().get("requests", query="prepid="+self.prepid)
     if not result:
       raise ValueError("mcm query for prepid="+self.prepid+" returned None!")
     if len(result) == 0:

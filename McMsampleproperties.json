@@ -1472,6 +1472,7 @@
                     "badprepid": [
                         "HIG-PhaseIISummer17wmLHEGENOnly-00093"
                     ],
+                    "finished": true,
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
                     "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00012",
@@ -1492,6 +1493,7 @@
                     "sizeperevent": 932.9590857142857,
                     "timeperevent": 723.0292031495153
                 },
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00917",
@@ -1513,12 +1515,12 @@
                     "sizeperevent": 1075.658105263158,
                     "timeperevent": 647.7900641959953
                 },
-                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
+                "needsupdate": true,
                 "prepid": "HIG-RunIIFall17wmLHEGS-01146",
-                "sizeperevent": 637.5397052631579,
-                "timeperevent": 642.3556466273117
+                "resettimeperevent": true,
+                "sizeperevent": 637.5397052631579
             }
         }
     },
@@ -3650,6 +3652,7 @@
                     "badprepid": [
                         "HIG-RunIIFall17wmLHEGS-01646"
                     ],
+                    "finished": true,
                     "matchefficiency": 0.14835550966597078,
                     "matchefficiencyerror": 0.00018236587065478363,
                     "prepid": "HIG-RunIIFall17wmLHEGS-00609",
@@ -3788,6 +3791,7 @@
                 "timeperevent": 100
             },
             "165": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00291",
@@ -3795,6 +3799,7 @@
                 "timeperevent": 61.48898696475189
             },
             "170": {
+                "finished": true,
                 "matchefficiency": 0.14835550966597078,
                 "matchefficiencyerror": 0.00018236587065478363,
                 "prepid": "HIG-RunIIFall17wmLHEGS-00292",
@@ -4077,6 +4082,7 @@
         },
         "HIG-PhaseIITDRFall17wmLHEGS-00001": {
             "PhaseIISummer17wmLHEGENOnly": {
+                "finished": true,
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
                 "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00029",

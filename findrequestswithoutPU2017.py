@@ -11,7 +11,7 @@ import rest
 
 mcm = rest.restful()
 
-requests = mcm.getA("requests", query="prepid=HIG-RunIIFall17wmLHEGS-*&actor="+args.user)
+requests = mcm.get("requests", query="prepid=HIG-RunIIFall17wmLHEGS-*&actor="+args.user)
 
 firstchain = "HIG-chain_RunIIFall17wmLHEGS_flowRunIIFall17DRPremix_flowRunIIFall17MiniAODv2_flowRunIIFall17NanoAOD-[0-9]*"
 secondchain = "HIG-chain_RunIIFall17wmLHEGS_flowRunIIFall17DRPremixPU2017_flowRunIIFall17MiniAODv2_flowRunIIFall17NanoAOD-[0-9]*"
