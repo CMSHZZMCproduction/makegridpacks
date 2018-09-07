@@ -4,3 +4,5 @@ STDOUT
 McMsampleproperties.json.tmp
 *.tgz
 *.tar.gz
+*.txz
+*.tar.xz

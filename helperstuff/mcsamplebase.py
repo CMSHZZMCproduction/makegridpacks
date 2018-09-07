@@ -220,7 +220,7 @@ class MCSampleBase(JsonDict):
         with cdtemp():
           kwargs["oldfilename"] = self.tmptarball
           kwargs["newfilename"] = os.path.abspath(os.path.basename(self.tmptarball))
-          kwargs["sample"] = self
+          #kwargs["sample"] = self #???
           patches.dopatch(**kwargs)
           shutil.move(os.path.basename(self.tmptarball), self.tmptarball)
 

@@ -1,9 +1,10 @@
+from addJHUGentomadgraph import addJHUGentomadgraph
 from patchmcfmgridpack import patchmcfmgridpack
 from prunepwgrwl import prunepwgrwl
 
 functiondict = {
-  "patchmcfmgridpack": patchmcfmgridpack,
-  "prunepwgrwl": prunepwgrwl,
+  function.__name__: function
+    for function in (addJHUGentomadgraph, patchmcfmgridpack, prunepwgrwl)
 }
 
 def dopatch(functionname, oldfilename, newfilename, **kwargs):

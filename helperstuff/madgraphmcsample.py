@@ -14,82 +14,12 @@ class MadGraphMCSample(MCSampleBase):
     if self.cut: result.append(self.cut)
     return tuple(result)
   @property
-#  def identifiers(self):
-#    return self.signalbkgbsi, "MadGraph", self.mass, self.width, self.finalstate
-  @property
   def nevents(self):
     return 500000
   @property
   def hasfilter(self):
     return False
-  @property
-  def tmptarball(self):
-    return os.path.join(here, "workdir", str(self).replace(" ", ""), os.path.basename(self.cvmfstarball))
-  @property
-  def tarballversion(self):
-    v = 1
-    """
-    if the first tarball is copied to eos and then is found to be bad, add something like
-    if self.(whatever) == (whatever): v += 1
-    """
-    return v
 
-  def cvmfstarball_anyversion(self, version):
-    folder = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2"
-    tarballname = self.datasetname + ".tgz"
-    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
-
-  @property
-  def datasetname(self):
-     return "ZZTo2L2Q_13TeV_amcatnloFXFX_madspin_pythia8"
-
-#  @property
-#  def signalbkgbsitag(self):
-#    if self.signalbkgbsi == 'SIG':      return ''
-#    elif self.signalbkgbsi == 'BSI':    return 'Contin'
-#    assert False
-
-#  @property
-#  def widthtag(self):
-#    if self.width == 1: return ""
-#    assert False, self.width
-
-  @property
-  def defaulttimeperevent(self):
-    return 60
-  @property
-  def tags(self):
-    return ["HZZ", "Fall17P2A"]
-  @property
-  def xsec(self):
-    assert False, "need to fill this"
-
-  @property
-  def genproductionscommit(self): return "2e9528a99c5fabcc08a3eb33880e44b42ddaca70"
-#    """
-#    Sumit fill this
-#    it has to be AFTER they merge your PR (because your PR has phantom stuff, but master has pythia stuff, so we need the merge)
-#    """
-
-  @classmethod
-  def allsamples(cls):
-     yield cls("2L2Q")
-
-  @property
-  def responsible(self):
-    "skeshri"
-
-  @property
-  def makegridpackcommand(self):
-    """
-    if you implement this, you also HAVE to change tmptarball to be the correct name
-    the directory doesn't matter, but the final filename should be whatever is created
-    by the script
-    """
-    assert False
-  @property
-  def makinggridpacksubmitsjob(self):
-    assert False
   @property
   def makegridpackscriptstolink(self):
     for filename in glob.iglob(os.path.join(genproductions, "bin", "MadGraph5_aMCatNLO", "*")):
@@ -131,6 +61,76 @@ class MadGraphMCSample(MCSampleBase):
   @property
   def generators(self):
     return ["madgraph"]
+
+class ZZ2L2QMadGraphMCSample(MadGraphMCSample):
+  @property
+  def tmptarball(self):
+    return os.path.join(here, "workdir", str(self).replace(" ", ""), os.path.basename(self.cvmfstarball))
+  @property
+  def tarballversion(self):
+    v = 1
+    """
+    if the first tarball is copied to eos and then is found to be bad, add something like
+    if self.(whatever) == (whatever): v += 1
+    """
+    return v
+
+  def cvmfstarball_anyversion(self, version):
+    folder = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2"
+    tarballname = self.datasetname + ".tgz"
+    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
+
+  @property
+  def makegridpackcommand(self):
+    """
+    if you implement this, you also HAVE to change tmptarball to be the correct name
+    the directory doesn't matter, but the final filename should be whatever is created
+    by the script
+    """
+    assert False
+  @property
+  def makinggridpacksubmitsjob(self):
+    assert False
+
+  @property
+  def datasetname(self):
+     return "ZZTo2L2Q_13TeV_amcatnloFXFX_madspin_pythia8"
+
+#  @property
+#  def signalbkgbsitag(self):
+#    if self.signalbkgbsi == 'SIG':      return ''
+#    elif self.signalbkgbsi == 'BSI':    return 'Contin'
+#    assert False
+
+#  @property
+#  def widthtag(self):
+#    if self.width == 1: return ""
+#    assert False, self.width
+
+  @property
+  def defaulttimeperevent(self):
+    return 60
+  @property
+  def tags(self):
+    return ["HZZ", "Fall17P2A"]
+  @property
+  def xsec(self):
+    assert False, "need to fill this"
+
+  @property
+  def genproductionscommit(self): return "2e9528a99c5fabcc08a3eb33880e44b42ddaca70"
+#    """
+#    Sumit fill this
+#    it has to be AFTER they merge your PR (because your PR has phantom stuff, but master has pythia stuff, so we need the merge)
+#    """
+
+  @classmethod
+  def allsamples(cls):
+     yield cls("2L2Q")
+
+  @property
+  def responsible(self):
+    return "skeshri"
 
   @property
   def fragmentname(self):
