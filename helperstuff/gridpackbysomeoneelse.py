@@ -73,37 +73,48 @@ class GridpackBySomeoneElse(MCSampleBase):
 class MadGraphGridpackBySomeoneElse(GridpackBySomeoneElse, MadGraphMCSample):
   pass
 
-class MadGraphHZZdFromLucien(MadGraphGridpackBySomeoneElse):
-  def __init__(self, Zdmass, eps):
+class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
+  def __init__(self, Zdmass, eps, year):
     self.__Zdmass = Zdmass
     self.__eps = eps
+    self.__year = year
   @property
   def identifiers(self):
-    return "Lucien", "HZZd", "madgraph", self.__Zdmass, self.__eps
+    return "Jake", "HZZd", "madgraph", self.__Zdmass, self.__eps, self.__year
 
   @property
   def originaltarball(self):
-    return "/afs/cern.ch/work/d/drosenzw/public/HZZd4l_gridpacks/HAHM_variablesw_v3_MZd{}_eps{:e}.tar.xz".format(self.__Zdmass, self.__eps).replace("e-0", "e-")
+    return "/afs/cern.ch/work/d/drosenzw/public/HZZd4l_gridpacks/HAHM_variablesw_v3_MZd{}_eps{:.0e}_lhaid{}.tar.xz".format(self.__Zdmass, self.__eps, self.lhapdf).replace("e-0", "e-")
+  @property
+  def lhapdf(self):
+    if self.__year == 2016: return 263000
+    if self.__year == 2017: return 306000
+    assert False, self
 
   @classmethod
   def allsamples(cls):
-    for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 35:
+    for Zdmass in 20,:#1, 2, 3, 4, 7, 10, 15, 20, 25, 35:
       for eps in 1e-2,:
-        yield cls(Zdmass, eps)
+        for year in 2016, 2017:
+          yield cls(Zdmass, eps, year)
 
   @property
   def generators(self):
     return "madgraph",
   @property
   def responsible(self):
-    return "nobody for the moment"
+    return "hroskes"
 
   @property
   def cardsurl(self):
     assert False
-  @property
-  def cvmfstarball_anyversion(self):
-    assert False
+
+  def cvmfstarball_anyversion(self, version):
+    if self.__year == 2017: year = "2017"
+    if self.__year == 2016: year = "slc6_amd64_gcc481"
+    tarballname = "ggH125_LO_HtoZZd_MZd{}_eps{:.0e}".format(self.__Zdmass, self.__eps)
+    folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/", year, "13TeV/madgraph/V5_2.4.2/")
+    return os.path.join(folder, tarballname, "v{}".format(version), tarballname+".tar.xz")
   @property
   def fragmentname(self):
     assert False
