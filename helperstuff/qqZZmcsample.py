@@ -2,12 +2,14 @@ import os
 
 from utilities import genproductions
 
+from mcsamplebase import MCSampleBase_DefaultCampaign
 from powhegmcsample import POWHEGMCSample
 
-class QQZZMCSample(POWHEGMCSample):
-  def __init__(self, finalstate, cut=None):
+class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
+  def __init__(self, year, finalstate, cut=None):
     self.finalstate = finalstate
     self.cut = cut
+    super(QQZZMCSample, self).__init__(year=year)
   @property
   def identifiers(self):
     result = ["qqZZ", self.finalstate]
@@ -44,6 +46,9 @@ class QQZZMCSample(POWHEGMCSample):
   def tarballversion(self):
     v = 1
     return v
+  @property
+  def nfinalparticles(self):
+    return 2
 
   def cvmfstarball_anyversion(self, version):
     maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/"
@@ -78,7 +83,8 @@ class QQZZMCSample(POWHEGMCSample):
   @property
   def defaulttimeperevent(self): return 15
   @property
-  def genproductionscommit(self): return "e7ce1fb0c66604d64d6343d905444f43494dadbb"
+  def genproductionscommit(self):
+    return "ce68f8a7ab05f530e0a99124088c08d1cc2bf355"
   @property
   def hasfilter(self): return False #the mass cut filter is done within powheg
   @property
@@ -91,24 +97,23 @@ class QQZZMCSample(POWHEGMCSample):
   def tags(self):
     result = ["HZZ"]
     if self.finalstate in ("4l", "2l2nu") and self.cut is None:
-      result.append("Fall17P1C")
+      if self.year == 2017:
+        result.append("Fall17P1C")
       result.append("HTT")
     if self.finalstate == "4l" and self.cut == "100-160":
-      result.append("Fall17P3")
+      if self.year == 2017:
+        result.append("Fall17P3")
     return result
   @property
   def xsec(self):
-    assert False, "need to fill this"
+    if self.finalstate == "4l" and self.cut is None: return 1.325
+    if self.finalstate == "2l2nu" and self.cut is None: return 0.6008
+    assert False, "need to fill this\n"+self.cvmfstarball
 
   @classmethod
   def allsamples(cls):
-    return
-    yield cls("4l", "100-160")
-    yield cls("4l", "800+")
-    yield cls("4l", "10-40")
+    yield cls(2018, "4l")
+    yield cls(2018, "2l2nu")
   @property
   def responsible(self):
-    if self.finalstate == "4l" and self.cut == "100-160": return "hroskes"
-    if self.finalstate == "4l" and self.cut == "800+": return "hroskes"
-    if self.finalstate == "4l" and self.cut == "10-40": return "hroskes"
-    assert False, self
+    return "hroskes"

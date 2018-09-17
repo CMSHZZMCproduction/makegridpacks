@@ -202,6 +202,9 @@ class POWHEGMCSample(MCSampleBase):
   @property
   def fragmentname(self):
     return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_{:d}p_LHE_pythia8_cff.py".format(self.nfinalparticles)
+  @abc.abstractproperty
+  def nfinalparticles(self):
+    pass
 
   @property
   def makegridpackscriptstolink(self):

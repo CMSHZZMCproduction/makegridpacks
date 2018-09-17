@@ -5005,5 +5005,21 @@
                 }
             }
         }
+    },
+    "2018": {
+        "qqZZ": {
+            "2l2nu": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0,
+                "needsupdate": true,
+                "prepid": "HIG-RunIIFall18wmLHEGS-00022"
+            },
+            "4l": {
+                "matchefficiency": 1,
+                "matchefficiencyerror": 0,
+                "needsupdate": true,
+                "prepid": "HIG-RunIIFall18wmLHEGS-00021"
+            }
+        }
     }
 }

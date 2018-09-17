@@ -63,7 +63,7 @@ class MCSampleBase(JsonDict):
   @property
   def neventsfortest(self): return None
   @property
-  def nthreads(self): return 1
+  def nthreads(self): return 8
   @property
   def notes(self): return ""
   @property
@@ -633,7 +633,7 @@ class MCSampleBase(JsonDict):
     req["extension"] = self.extensionnumber
     req["notes"] = self.notes
     try:
-      answer = mcm.updateA('requests', req)
+      answer = mcm.update('requests', req)
     except pycurl.error as e:
 #      if e[0] == 52 and e[1] == "Empty reply from server":
 #        self.badprepid += [self.prepid]
@@ -661,7 +661,7 @@ class MCSampleBase(JsonDict):
       "dataset_name": self.datasetname,
       "extension": self.extensionnumber,
     }
-    answer = mcm.putA("requests", req)
+    answer = mcm.put("requests", req)
     if not (answer and answer.get("results")):
       raise RuntimeError("Failed to create the request on McM\n{}\n{}".format(self, answer))
     self.getprepid()
