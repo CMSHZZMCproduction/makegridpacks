@@ -12,6 +12,7 @@ class PythiaVariationSample(MCSampleBase):
     """
     self.mainsample = mainsample
     self.variation = variation
+    super(PythiaVariationSample, self).__init__(year=mainsample.year)
     if self.matchefficiency is None:
       self.matchefficiency = self.mainsample.matchefficiency
     if self.matchefficiencyerror is None:
@@ -73,6 +74,9 @@ class PythiaVariationSample(MCSampleBase):
   @property
   def xsec(self):
     return self.mainsample.xsec
+  @property
+  def campaign(self):
+    return self.mainsample.campaign
   @property
   def datasetname(self):
     result = self.mainsample.datasetname
@@ -155,7 +159,7 @@ class PythiaVariationSample(MCSampleBase):
   @classmethod
   def nominalsamples(cls):
     for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
-      yield POWHEGJHUGenMassScanMCSample(productionmode, "4l", 125)
+      yield POWHEGJHUGenMassScanMCSample(2017, productionmode, "4l", 125)
     for sample in MINLOMCSample.allsamples():
       if sample.energy == 13:
         yield sample

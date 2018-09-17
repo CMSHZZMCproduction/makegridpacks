@@ -3,13 +3,15 @@ import contextlib, csv, os, re, subprocess, urllib
 from utilities import cache, cd, genproductions, here, makecards
 
 from mcfmmcsample import MCFMMCSample
+from mcsamplebase import MCSampleBase_DefaultCampaign
 
-class MCFMAnomCoupMCSample(MCFMMCSample):
-  def __init__(self, signalbkgbsi, width, coupling, finalstate):
+class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
+  def __init__(self, year, signalbkgbsi, width, coupling, finalstate):
     self.signalbkgbsi = signalbkgbsi
     self.width = int(width)
     self.coupling = coupling
     self.finalstate = finalstate
+    super(MCFMAnomCoupMCSample, self).__init__(year=year)
   @property
   def identifiers(self):
     return self.signalbkgbsi, self.width, self.coupling, self.finalstate
@@ -147,7 +149,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
       for finalstate in ["ELTL",'MUTL','ELMU',"ELNU","MUMU","MUNU","TLTL","ELEL"]:
         for coupling in cls.getcouplings(signalbkgbsi):
           for width in cls.getwidths(signalbkgbsi, coupling):
-            yield cls(signalbkgbsi, width, coupling, finalstate)
+            yield cls(2017, signalbkgbsi, width, coupling, finalstate)
 
   @property
   def responsible(self):

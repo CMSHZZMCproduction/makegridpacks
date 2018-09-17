@@ -2,14 +2,15 @@ import abc, contextlib, glob, os, re, subprocess, urllib
 
 from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
 
-from mcsamplebase import MCSampleBase
+from mcsamplebase import MCSampleBase_DefaultCampaign
 
-class PhantomMCSample(MCSampleBase):
-  def __init__(self, signalbkgbsi, finalstate, mass, width):
+class PhantomMCSample(MCSampleBase_DefaultCampaign):
+  def __init__(self, year, signalbkgbsi, finalstate, mass, width):
     self.signalbkgbsi = signalbkgbsi
     self.finalstate = finalstate
     self.mass = mass
     self.width = width
+    super(PhantomMCSample, self).__init__(year=year)
   @property
   def identifiers(self):
     return self.signalbkgbsi, "PHANTOM", self.mass, self.width, self.finalstate
@@ -106,7 +107,7 @@ class PhantomMCSample(MCSampleBase):
       for finalstate in ["2e2mu","4e","4mu","2e2nue","2e2num","2e2nut","2mu2nue","2mu2num","2mu2nut"]:
         for mass in 125,:
           for width in 1,:
-            yield cls(signalbkgbsi, finalstate, mass, width)
+            yield cls(2017, signalbkgbsi, finalstate, mass, width)
 
   @property
   def responsible(self):

@@ -2,24 +2,9 @@ import abc, contextlib, glob, os, re, subprocess, urllib
 
 from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
 
-from mcsamplebase import MCSampleBase
+from mcsamplebase import MCSampleBase, MCSampleBase_DefaultCampaign
 
 class MadGraphMCSample(MCSampleBase):
-  def __init__(self, finalstate, cut=None):
-    self.finalstate = finalstate
-    self.cut = cut
-  @property
-  def identifiers(self):
-    result = ["ZZ2L2Q", self.finalstate]
-    if self.cut: result.append(self.cut)
-    return tuple(result)
-  @property
-  def nevents(self):
-    return 500000
-  @property
-  def hasfilter(self):
-    return False
-
   @property
   def makegridpackscriptstolink(self):
     for filename in glob.iglob(os.path.join(genproductions, "bin", "MadGraph5_aMCatNLO", "*")):
@@ -62,7 +47,23 @@ class MadGraphMCSample(MCSampleBase):
   def generators(self):
     return ["madgraph"]
 
-class ZZ2L2QMadGraphMCSample(MadGraphMCSample):
+class ZZ2L2QMadGraphMCSample(MadGraphMCSample, MCSampleBase_DefaultCampaign):
+  def __init__(self, year, finalstate, cut=None):
+    self.finalstate = finalstate
+    self.cut = cut
+    super(ZZ2L2QMadGraphMCSample, self).__init__(year=year)
+  @property
+  def identifiers(self):
+    result = ["ZZ2L2Q", self.finalstate]
+    if self.cut: result.append(self.cut)
+    return tuple(result)
+  @property
+  def nevents(self):
+    return 500000
+  @property
+  def hasfilter(self):
+    return False
+
   @property
   def tmptarball(self):
     return os.path.join(here, "workdir", str(self).replace(" ", ""), os.path.basename(self.cvmfstarball))
@@ -126,7 +127,7 @@ class ZZ2L2QMadGraphMCSample(MadGraphMCSample):
 
   @classmethod
   def allsamples(cls):
-     yield cls("2L2Q")
+     yield cls(2017, "2L2Q")
 
   @property
   def responsible(self):

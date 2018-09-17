@@ -57,7 +57,7 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
         decaymode = "4l"
         for mass in cls.getmasses(productionmode, decaymode):
             for kind in cls.getkind(productionmode, decaymode):
-                yield cls(productionmode, decaymode, mass, kind)
+                yield cls(2017, productionmode, decaymode, mass, kind)
 
   @property
   def responsible(self):

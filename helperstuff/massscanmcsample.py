@@ -2,13 +2,14 @@ import abc, os
 
 from utilities import genproductions
 
-from mcsamplebase import MCSampleBase
+from mcsamplebase import MCSampleBase_DefaultCampaign
 
-class MassScanMCSample(MCSampleBase):
-  def __init__(self, productionmode, decaymode, mass):
+class MassScanMCSample(MCSampleBase_DefaultCampaign):
+  def __init__(self, year, productionmode, decaymode, mass):
     self.productionmode = productionmode
     self.decaymode = decaymode
     self.mass = int(str(mass))
+    super(MassScanMCSample, self).__init__(year=year)
   @property
   def identifiers(self):
     return self.productionmode, self.decaymode, self.mass

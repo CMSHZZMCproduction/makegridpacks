@@ -4,7 +4,7 @@ from utilities import cdtemp, mkdir_p, genproductions
 
 import patches
 
-from mcsamplebase import MCSampleBase
+from mcsamplebase import MCSampleBase, MCSampleBase_DefaultCampaign
 from madgraphmcsample import MadGraphMCSample
 from madgraphjhugenmcsample import MadGraphJHUGenMCSample
 
@@ -73,22 +73,22 @@ class GridpackBySomeoneElse(MCSampleBase):
 class MadGraphGridpackBySomeoneElse(GridpackBySomeoneElse, MadGraphMCSample):
   pass
 
-class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
-  def __init__(self, Zdmass, eps, year):
-    self.__Zdmass = Zdmass
-    self.__eps = eps
-    self.__year = year
+class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCampaign):
+  def __init__(self, year, Zdmass, eps):
+    self.__Zdmass = int(str(Zdmass))
+    self.__eps = float(eps)
+    super(MadGraphHZZdFromJake, self).__init__(year=year)
   @property
   def identifiers(self):
-    return "Jake", "HZZd", "madgraph", self.__Zdmass, self.__eps, self.__year
+    return "Jake", "HZZd", "madgraph", self.__Zdmass, self.__eps
 
   @property
   def originaltarball(self):
     return "/afs/cern.ch/work/d/drosenzw/public/HZZd4l_gridpacks/HAHM_variablesw_v3_MZd{}_eps{:.0e}_lhaid{}.tar.xz".format(self.__Zdmass, self.__eps, self.lhapdf).replace("e-0", "e-")
   @property
   def lhapdf(self):
-    if self.__year == 2016: return 263000
-    if self.__year == 2017: return 306000
+    if self.year == 2016: return 263000
+    if self.year == 2017: return 306000
     assert False, self
 
   @classmethod
@@ -96,7 +96,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
     for Zdmass in 20,:#1, 2, 3, 4, 7, 10, 15, 20, 25, 35:
       for eps in 1e-2,:
         for year in 2016, 2017:
-          yield cls(Zdmass, eps, year)
+          yield cls(year, Zdmass, eps)
 
   @property
   def generators(self):
@@ -110,8 +110,8 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
     assert False
 
   def cvmfstarball_anyversion(self, version):
-    if self.__year == 2017: year = "2017"
-    if self.__year == 2016: year = "slc6_amd64_gcc481"
+    if self.year == 2017: year = "2017"
+    if self.year == 2016: year = "slc6_amd64_gcc481"
     tarballname = "ggH125_LO_HtoZZd_MZd{}_eps{:.0e}".format(self.__Zdmass, self.__eps)
     folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/", year, "13TeV/madgraph/V5_2.4.2/")
     return os.path.join(folder, tarballname, "v{}".format(version), tarballname+".tar.xz")
@@ -128,9 +128,10 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
   def xsec(self):
     assert False
 
-class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample):
-  def __init__(self, coupling):
+class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MCSampleBase_DefaultCampaign):
+  def __init__(self, year, coupling):
     self.__coupling = coupling
+    super(MadGraphHJJFromThomasPlusJHUGen, self).__init__(year=year)
   @property
   def identifiers(self):
     return "Thomas", "HJJ", "madgraphJHUGen", self.__coupling
@@ -160,7 +161,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
   @classmethod
   def allsamples(cls):
     for coupling in "SM", "a3", "a3mix":
-      yield cls(coupling)
+      yield cls(2017, coupling)
 
   @property
   def generators(self):

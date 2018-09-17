@@ -7,7 +7,11 @@ from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDic
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
-  def __init__(self): pass
+  def __init__(self, year):
+    self.__year = int(year)
+  @property
+  def year(self):
+    return self.__year
   @abc.abstractproperty
   def identifiers(self):
     """example: productionmode, decaymode, mass"""
@@ -93,9 +97,9 @@ class MCSampleBase(JsonDict):
   def __hash__(self):
     return hash(self.keys)
   def __str__(self):
-    return " ".join(str(_) for _ in self.identifiers)
+    return " ".join(str(_) for _ in self.keys)
   def __repr__(self):
-    return type(self).__name__+"(" +  ", ".join(repr(_) for _ in self.identifiers) + ")"
+    return type(self).__name__+"(" +  ", ".join(repr(_) for _ in self.keys) + ")"
 
   @property
   def eostarball(self):
@@ -400,7 +404,7 @@ class MCSampleBase(JsonDict):
   #see JsonDict in utilities for how that works
   @property
   def keys(self):
-    return tuple(str(_) for _ in self.identifiers)
+    return (str(self.year),) + tuple(str(_) for _ in self.identifiers)
   dictfile = "McMsampleproperties.json"
   @property
   def default(self): return {}
@@ -644,8 +648,8 @@ class MCSampleBase(JsonDict):
 
   @property
   def pwg(self): return "HIG"
-  @property
-  def campaign(self): return "RunIIFall17wmLHEGS"
+  @abc.abstractproperty
+  def campaign(self): pass
 
   def createrequest(self, clonequeue):
     if LSB_JOBID(): return "run locally to submit to McM"
@@ -736,3 +740,11 @@ class MCSampleBase(JsonDict):
     if success:
       self.needsoptionreset = False
     return success
+
+class MCSampleBase_DefaultCampaign(MCSampleBase):
+  @property
+  def campaign(self):
+    if self.year == 2017:
+      return "RunIIFall17wmLHEGS"
+    if self.year == 2018:
+      return "RunIIFall18wmLHEGS"

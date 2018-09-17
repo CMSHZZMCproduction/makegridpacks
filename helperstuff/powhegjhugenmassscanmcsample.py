@@ -204,7 +204,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
       for decaymode in "4l", "2l2q", "2l2nu":
         for mass in cls.getmasses(productionmode, decaymode):
-          yield cls(productionmode, decaymode, mass)
+          yield cls(2017, productionmode, decaymode, mass)
 
   @property
   def responsible(self):

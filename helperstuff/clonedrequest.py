@@ -3,9 +3,11 @@ from utilities import cache, LSB_JOBID, restful
 from mcsamplebase import MCSampleBase
 
 class ClonedRequest(MCSampleBase):
-  def __init__(self, originalprepid, newcampaign):
+  def __init__(self, year, originalprepid, newcampaign):
     self.originalprepid = originalprepid
     self.newcampaign = newcampaign
+
+    super(ClonedRequest, self).__init__(year=year)
 
     if self.matchefficiency is None:
       assert self.originalfullinfo["generator_parameters"][0]["filter_efficiency"] == 1, self.originalfullinfo["generator_parameters"][0]["filter_efficiency"]
@@ -119,10 +121,10 @@ class ClonedRequest(MCSampleBase):
     assert False, self
   @classmethod
   def allsamples(cls):
-    yield cls("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
-    yield cls("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS")
+    yield cls(2017, "HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
+    yield cls(2017, "BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS")
     for _ in 1, 2, 3, 4, 50, 51, 35:
-      yield cls("HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_), "PhaseIISummer17wmLHEGENOnly")
+      yield cls(2017, "HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_), "PhaseIISummer17wmLHEGENOnly")
 
   def createrequest(self, clonequeue):
     self.needsupdate = True

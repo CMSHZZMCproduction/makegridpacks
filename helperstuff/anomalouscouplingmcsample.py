@@ -2,14 +2,15 @@ import abc, contextlib, csv, os, urllib
 
 from utilities import genproductions
 
-from mcsamplebase import MCSampleBase
+from mcsamplebase import MCSampleBase_DefaultCampaign
 
-class AnomalousCouplingMCSample(MCSampleBase):
-  def __init__(self, productionmode, decaymode, mass,kind):
+class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
+  def __init__(self, year, productionmode, decaymode, mass,kind):
     self.productionmode = productionmode
     self.decaymode = decaymode
     self.mass = int(str(mass))
     self.kind = kind
+    super(AnomalousCouplingMCSample, self).__init__(year=year)
   @property
   def identifiers(self):
     return self.productionmode, self.decaymode, self.mass, self.kind

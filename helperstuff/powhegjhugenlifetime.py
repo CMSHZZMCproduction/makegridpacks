@@ -3,15 +3,17 @@ import contextlib, csv, os, re, subprocess, urllib
 from utilities import cache, cd, genproductions, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
+from mcsamplebase import MCSampleBase_DefaultCampaign
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
 from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 
-class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
-  def __init__(self, productionmode, decaymode, mass, lifetime):
+class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
+  def __init__(self, year, productionmode, decaymode, mass, lifetime):
     self.productionmode = productionmode
     self.decaymode = decaymode
     self.mass = int(str(mass))
     self.lifetime = int(str(lifetime))
+    super(POWHEGJHUGenLifetimeMCSample, self).__init__(year=year)
   @property
   def identifiers(self):
     return self.productionmode, self.decaymode, self.mass, "lifetime", self.lifetime
@@ -82,7 +84,7 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample):
   @classmethod
   def allsamples(cls):
     for lifetime in 50, 200, 800:
-      yield cls("ggH", "4l", 125, lifetime)
+      yield cls(2017, "ggH", "4l", 125, lifetime)
 
   @property
   def responsible(self):

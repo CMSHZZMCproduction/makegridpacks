@@ -3,14 +3,16 @@ import contextlib, csv, os, re, subprocess, urllib
 from utilities import cache, cd, genproductions, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
+from mcsamplebase import MCSampleBase_DefaultCampaign
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
 from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 
-class MINLOMCSample(POWHEGJHUGenMCSample):
-  def __init__(self, decaymode, mass, energy=13):
+class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
+  def __init__(self, year, decaymode, mass, energy=13):
     self.decaymode = decaymode
     self.mass = int(str(mass))
     self.energy = int(str(energy))
+    super(MINLOMCSample, self).__init__(year=year)
 
   @property
   def identifiers(self):
@@ -112,8 +114,11 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
 
   @property
   def campaign(self):
-    if self.energy == 14: return "PhaseIISummer17wmLHEGENOnly"
-    return super(MINLOMCSample, self).campaign
+    if self.energy == 13:
+      return super(MINLOMCSample, self).campaign
+    if self.energy == 14:
+      if year == 2017: return "PhaseIISummer17wmLHEGENOnly"
+    assert False
 
   @property
   def nevents(self):
@@ -145,8 +150,8 @@ class MINLOMCSample(POWHEGJHUGenMCSample):
   def allsamples(cls):
     for mass in 125, 300:
         for decaymode in "4l",:
-            yield cls(decaymode, mass)
-    yield cls("4l", 125, energy=14)
+            yield cls(2017, decaymode, mass)
+    yield cls(2017, "4l", 125, energy=14)
 
   @property
   def responsible(self):
