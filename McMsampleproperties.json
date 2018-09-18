@@ -5011,14 +5011,16 @@
             "2l2nu": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
-                "prepid": "HIG-RunIIFall18wmLHEGS-00022"
+                "prepid": "HIG-RunIIFall18wmLHEGS-00022",
+                "sizeperevent": 571.9866666666667,
+                "timeperevent": 19.243980963854032
             },
             "4l": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
-                "needsupdate": true,
-                "prepid": "HIG-RunIIFall18wmLHEGS-00021"
+                "prepid": "HIG-RunIIFall18wmLHEGS-00021",
+                "sizeperevent": 536.784,
+                "timeperevent": 17.71472908864805
             }
         }
     }

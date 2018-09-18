@@ -63,8 +63,6 @@ class MCSampleBase(JsonDict):
   @property
   def neventsfortest(self): return None
   @property
-  def nthreads(self): return 8
-  @property
   def notes(self): return ""
   @property
   def creategridpackqueue(self): return "1nd"
@@ -364,6 +362,8 @@ class MCSampleBase(JsonDict):
           badrequestqueue.add(self)
         return "needs update on McM, sending it there"
       if not self.dovalidation: return "not starting the validation"
+      if self.nthreads > 1 and self.validation["history"][-1]["action"] == "failed":
+        self.nthreads /= 2
       approvalqueue.validate(self)
       return "starting the validation"
     if (self.approval, self.status) == ("validation", "new"):
@@ -595,7 +595,25 @@ class MCSampleBase(JsonDict):
   def needspatch(self):
     with cd(here), self.writingdict():
       del self.value["needspatch"]
+  @property
+  def nthreads(self):
+    with cd(here):
+      return self.value.get("nthreads", 8)
+  @nthreads.setter
+  def nthreads(self, value):
+    if value == self.nthreads: return
+    with cd(here), self.writingdict():
+      self.value["nthreads"] = int(value)
+      del self.timeperevent
+  @nthreads.deleter
+  def nthreads(self):
+    with cd(here), self.writingdict():
+      del self.value["nthreads"]
 
+  @property
+  def memory(self):
+    if self.nthreads == 1: return 2.3
+    return 4
   @property
   def filterefficiency(self): return 1
   @property
@@ -626,7 +644,7 @@ class MCSampleBase(JsonDict):
     req["sequences"][0]["nThreads"] = self.nthreads
     req["keep_output"][0] = bool(self.keepoutput)
     req["tags"] = self.tags
-    req["memory"] = 2300
+    req["memory"] = self.memory
     req["validation"].update({
       "double_time": self.doublevalidationtime,
     })
