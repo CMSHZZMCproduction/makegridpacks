@@ -1,6 +1,6 @@
-import abc, contextlib, glob, os, re, subprocess, urllib
+import abc, contextlib, glob, itertools, os, re, subprocess, urllib
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
+from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
 
 from mcsamplebase import MCSampleBase, MCSampleBase_DefaultCampaign
 
@@ -16,32 +16,86 @@ class MadGraphMCSample(MCSampleBase):
   @property
   @cache
   def cardsurl(self):
-    card = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", self.genproductionscommit, "Sumit fill this")
+    def getcontents(f):
+      contents = ""
+      for line in f:
+        if not line.startswith("#") and "define p = g u c d s u~ c~ d~ s~" not in line and "define j = g u c d s u~ c~ d~ s~" not in line:
+          contents += line
+      return contents
 
-    with cdtemp():
-      wget(card)
-      with open(os.path.basename(card)) as f:
-        gitcardcontents = f.read()
+    gitcardcontents = []
+    if self.madgraphcardscript is None:
+      cardurls = tuple(
+        os.path.join(
+          "https://raw.githubusercontent.com/cms-sw/genproductions/",
+          self.genproductionscommit,
+          _.replace(genproductions, "")
+        ) for _ in self.madgraphcards
+      )
+      with cdtemp():
+        for cardurl in cardurls:
+          wget(cardurl)
+          with open(os.path.basename(card)) as f:
+            gitcardcontents.append(getcontents(f))
+    else:
+      scripturls = tuple(
+        os.path.join(
+          "https://raw.githubusercontent.com/cms-sw/genproductions/",
+          self.genproductionscommit,
+          _.replace(genproductions+"/", "")
+        ) for _ in self.madgraphcardscript
+      )
+      with cdtemp():
+        wget(scripturls[0])
+        for _ in scripturls[1:]:
+          relpath = os.path.relpath(os.path.dirname(_), os.path.dirname(scripturls[0]))
+          assert ".." not in relpath, relpath
+          mkdir_p(relpath)
+          with cd(relpath):
+            wget(_)
+        subprocess.check_call(["chmod", "u+x", os.path.basename(scripturls[0])])
+        subprocess.check_call(["./"+os.path.basename(scripturls[0])])
+        for _ in self.madgraphcards:
+          with open(_) as f:
+            gitcardcontents.append(getcontents(f))
+
+
     with cdtemp():
       subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
       if glob.glob("core.*") and self.cvmfstarball != "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/HJJ_M125_13TeV/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_13TeV_M125.tgz":
         raise ValueError("There is a core dump in the tarball\n{}".format(self))
-      cardnameintarball = "Sumit fill htis"
-      try:
-        with open(cardnameintarball) as f:
-          cardcontents = f.read()
-      except IOError:
-        raise ValueError("no "+cardnameintarball+" in the tarball\n{}".format(self))
+      cardnamesintarball = tuple(
+        os.path.join("InputCards", os.path.basename(_))
+        for _ in self.madgraphcards
+      )
+      cardcontents = []
+      for cardnameintarball in cardnamesintarball:
+        try:
+          with open(cardnameintarball) as f:
+            cardcontents.append(getcontents(f))
+        except IOError:
+          raise ValueError("no "+cardnameintarball+" in the tarball\n{}".format(self))
+      for _ in glob.iglob("InputCards/*"):
+        if _ not in cardnamesintarball and not _.endswith(".tar.gz"):
+          raise ValueError("unknown thing "+_+" in InputCards\n{}".format(self))
 
-    if cardcontents != gitcardcontents:
-      with cd(here):
-        with open("cardcontents", "w") as f:
-          f.write(cardcontents)
-        with open("powheggitcard", "w") as f:
-          f.write(gitcardcontents)
-      raise ValueError("cardcontents != gitcardcontents\n{}\nSee ./cardcontents and ./gitcardcontents".format(self))
+    for name, cc, gcc in itertools.izip(cardnamesintarball, cardcontents, gitcardcontents):
+      _, suffix = os.path.splitext(os.path.basename(name))
+      if cc != gcc:
+        with cd(here):
+          with open("cardcontents"+suffix, "w") as f:
+            f.write(cc)
+          with open("gitcardcontents"+suffix, "w") as f:
+            f.write(gcc)
+        raise ValueError(name + " in tarball != " + name + " in git\n{}\nSee ./cardcontents{} and ./gitcardcontents{}".format(self, suffix, suffix))
 
-    return card
+    if self.madgraphcardscript:
+      return "#    ".join((scripturls[0],) + tuple(self.madgraphcards))
+    else:
+      return "# ".join(self.madgraphcards)
+
+  @abc.abstractproperty
+  def madgraphcards(self): return []
 
   @property
   def generators(self):
@@ -96,6 +150,10 @@ class ZZ2L2QMadGraphMCSample(MadGraphMCSample, MCSampleBase_DefaultCampaign):
   @property
   def datasetname(self):
      return "ZZTo2L2Q_13TeV_amcatnloFXFX_madspin_pythia8"
+
+  @property
+  def madgraphcards(self):
+    assert False
 
 #  @property
 #  def signalbkgbsitag(self):

@@ -12,18 +12,7 @@ class GridpackBySomeoneElse(MCSampleBase):
   @property
   def nevents(self):
     assert False
-  @property
-  def tarballversion(self):
-    v = 1
-    """
-    if the first tarball is copied to eos and then is found to be bad, add something like
-    if self.(whatever) == (whatever): v += 1
-    """
-    return v
 
-  @property
-  def datasetname(self):
-    assert False
   @property
   def defaulttimeperevent(self):
     return 60
@@ -83,6 +72,15 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     return "Jake", "HZZd", "madgraph", self.__Zdmass, self.__eps
 
   @property
+  def tarballversion(self):
+    v = 1
+    """
+    if the first tarball is copied to eos and then is found to be bad, add something like
+    if self.(whatever) == (whatever): v += 1
+    """
+    return v
+
+  @property
   def originaltarball(self):
     return "/afs/cern.ch/work/d/drosenzw/public/HZZd4l_gridpacks/HAHM_variablesw_v3_MZd{}_eps{:.0e}_lhaid{}.tar.xz".format(self.__Zdmass, self.__eps, self.lhapdf).replace("e-0", "e-")
   @property
@@ -105,10 +103,6 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
   def responsible(self):
     return "hroskes"
 
-  @property
-  def cardsurl(self):
-    assert False
-
   def cvmfstarball_anyversion(self, version):
     if self.year == 2017: year = "2017"
     if self.year == 2016: year = "slc6_amd64_gcc481"
@@ -120,13 +114,30 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     assert False
   @property
   def genproductionscommit(self):
-    assert False
+    return "d8baa8f97b649dae9b2fc18f7bfe36290962f41b"
   @property
   def hasfilter(self):
-    assert False
+    return False
   @property
   def xsec(self):
     assert False
+
+  @property
+  def madgraphcardscript(self):
+    if self.year == 2017:
+      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
+    elif self.year == 2016:
+      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/")
+    return (os.path.join(maindir, "makecards.sh"),) + tuple(os.path.join(maindir, "HAHMcards_eps_MZD_lhaid_template", os.path.basename(_)) for _ in self.madgraphcards)
+  @property
+  def madgraphcards(self):
+    folder = "HAHMcards_eps{:.0e}_MZD{}_lhaid{}".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-02", "e-2")
+    basenames = "HAHM_variablesw_v3_customizecards.dat", "HAHM_variablesw_v3_extramodels.dat", "HAHM_variablesw_v3_proc_card.dat", "HAHM_variablesw_v3_run_card.dat"
+    return tuple(os.path.join(folder, basename) for basename in basenames)
+  @property
+  def datasetname(self):
+    assert self.__eps == 1e-2
+    return "HToZZdTo4L_M125_MZd{}_eps1e-2_13TeV_madgraph_pythia8".format(self.__Zdmass)
 
 class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MCSampleBase_DefaultCampaign):
   def __init__(self, year, coupling):
@@ -137,6 +148,16 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     return "Thomas", "HJJ", "madgraphJHUGen", self.__coupling
 
   @property
+  def tarballversion(self):
+    v = 1
+    """
+    if the first tarball is copied to eos and then is found to be bad, add something like
+    if self.(whatever) == (whatever): v += 1
+    """
+    if self.__coupling in ("a3", "a3mix") and self.year == 2017: v += 1  #tarball eventually used for HTT was different than the original one
+    return v
+
+  @property
   def patchkwargs(self):
     return {
       "functionname": "addJHUGentomadgraph",
@@ -145,17 +166,26 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     }
 
   @property
+  def madgraphcards(self):
+    assert False
+
+  @property
   def decaycard(self):
     return os.path.join(genproductions, "bin", "JHUGen", "cards", "decay", "ZZ4l_notaus.input")
 
   @property
   def originaltarball(self):
     if self.__coupling == "SM":
+        #from HIG-RunIIFall17wmLHEGS-01577
         return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/ggh012j_5f_NLO_FXFX_125/v2/ggh012j_5f_NLO_FXFX_125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
     if self.__coupling == "a3":
-        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/ggh012j_5f_NLO_FXFX_125_pseudoscalar/ggh012j_5f_NLO_FXFX_125_pseudoscalar_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+        #from HIG-RunIIFall17wmLHEGS-01580
+        #why is it in pre2017? no idea but it uses 306000
+        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/pre2017/13TeV/madgraph/v2.4.2/GluGluToMaxmixHToTauTau/v1/GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz"
     if self.__coupling == "a3mix":
-        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/ggh012j_5f_NLO_FXFX_125_maxmix/ggh012j_5f_NLO_FXFX_125_maxmix_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+        #from HIG-RunIIFall17wmLHEGS-01583
+        #why is it in pre2017? no idea but it uses 306000
+        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/pre2017/13TeV/madgraph/v2.4.2/GluGluToPseudoscalarHToTauTau/v1/GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz"
     assert False, self
 
   @classmethod
@@ -178,8 +208,13 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     return result
 
   @property
-  def cardsurl(self):
-    assert False
+  def datasetname(self):
+    if self.__coupling == "SM":
+      return "GluGluHiggs0PMToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"
+    if self.__coupling == "a3":
+      return "GluGluHiggs0MToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"
+    if self.__coupling == "a3mix":
+      return "GluGluHiggs0Mf05ph0ToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"
   @property
   def fragmentname(self):
     assert False

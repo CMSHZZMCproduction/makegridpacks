@@ -73,7 +73,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def decaycard(self):
-    return POWHEGJHUGenMassScanMCSample("ggH", self.decaymode, self.mass).decaycard
+    return POWHEGJHUGenMassScanMCSample(self.year, "ggH", self.decaymode, self.mass).decaycard
 
   @property
   def timepereventqueue(self): return "1nw"

@@ -362,8 +362,10 @@ class MCSampleBase(JsonDict):
           badrequestqueue.add(self)
         return "needs update on McM, sending it there"
       if not self.dovalidation: return "not starting the validation"
-      if self.nthreads > 1 and self.validation["history"][-1]["action"] == "failed":
+      if self.nthreads > 1 and self.fullinfo["history"][-1]["action"] == "failed":
         self.nthreads /= 2
+        self.updaterequest()
+        return "validation failed, decreasing the number of threads"
       approvalqueue.validate(self)
       return "starting the validation"
     if (self.approval, self.status) == ("validation", "new"):
@@ -604,7 +606,7 @@ class MCSampleBase(JsonDict):
     if value == self.nthreads: return
     with cd(here), self.writingdict():
       self.value["nthreads"] = int(value)
-      del self.timeperevent
+    del self.timeperevent
   @nthreads.deleter
   def nthreads(self):
     with cd(here), self.writingdict():

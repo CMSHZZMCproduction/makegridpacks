@@ -71,13 +71,13 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   @property
   def datasetname(self):
     if self.decaymode == "2l2nu":
-      result = type(self)(self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Nu")
+      result = type(self)(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Nu")
     elif self.decaymode == "2l2q":
-      result = type(self)(self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Q")
+      result = type(self)(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Q")
       if self.mass == 125:
         if self.productionmode in ("bbH", "tqH"): result = result.replace("2L2Q", "2L2X")
     elif self.productionmode in ("bbH", "tqH") and self.mass != 125:
-      result = type(self)(self.productionmode, self.decaymode, 125).datasetname.replace("M125", "M{:d}".format(self.mass))
+      result = type(self)(self.year, self.productionmode, self.decaymode, 125).datasetname.replace("M125", "M{:d}".format(self.mass))
     else:
       result = self.olddatasetname.replace("JHUgenV702", "JHUGenV7011")
 

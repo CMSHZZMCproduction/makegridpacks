@@ -1,4 +1,19 @@
 {
+    "2016": {
+        "Jake": {
+            "HZZd": {
+                "madgraph": {
+                    "20": {
+                        "0.01": {
+                            "matchefficiency": 1,
+                            "matchefficiencyerror": 0,
+                            "needsupdate": true
+                        }
+                    }
+                }
+            }
+        }
+    },
     "2017": {
         "BKG": {
             "1": {
@@ -1466,6 +1481,19 @@
                 }
             }
         },
+        "Jake": {
+            "HZZd": {
+                "madgraph": {
+                    "20": {
+                        "0.01": {
+                            "matchefficiency": 1,
+                            "matchefficiencyerror": 0,
+                            "needsupdate": true
+                        }
+                    }
+                }
+            }
+        },
         "MINLO": {
             "4l": {
                 "125": {
@@ -1520,8 +1548,8 @@
                     "matchefficiencyerror": 0,
                     "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-01146",
-                    "resettimeperevent": true,
-                    "sizeperevent": 637.5397052631579
+                    "sizeperevent": 666.4111157894737,
+                    "timeperevent": 371.4765449709505
                 }
             }
         },
@@ -2150,6 +2178,15 @@
                             "matchefficiencyerror": 0,
                             "needsupdate": true
                         }
+                    }
+                }
+            }
+        },
+        "Thomas": {
+            "HJJ": {
+                "madgraphJHUGen": {
+                    "SM": {
+                        "needsupdate": true
                     }
                 }
             }
@@ -5011,16 +5048,18 @@
             "2l2nu": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
+                "nthreads": 4,
                 "prepid": "HIG-RunIIFall18wmLHEGS-00022",
-                "sizeperevent": 571.9866666666667,
-                "timeperevent": 19.243980963854032
+                "sizeperevent": 565.8693333333333,
+                "timeperevent": 15.704479388656026
             },
             "4l": {
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
+                "nthreads": 2,
                 "prepid": "HIG-RunIIFall18wmLHEGS-00021",
-                "sizeperevent": 536.784,
-                "timeperevent": 17.71472908864805
+                "sizeperevent": 544.8960000000001,
+                "timeperevent": 17.113295147867426
             }
         }
     }
