@@ -683,7 +683,7 @@ class MCSampleBase(JsonDict):
     }
     answer = mcm.put("requests", req)
     if not (answer and answer.get("results")):
-      raise RuntimeError("Failed to create the request on McM\n{}\n{}".format(self, answer))
+      raise RuntimeError("Failed to create the request on McM\n{}\n\n{}\n\n{}".format(self, req, answer))
     self.getprepid()
     if self.prepid != answer["prepid"]:
       raise RuntimeError("Wrong prepid?? {} {}".format(self.prepid, answer["prepid"]))
@@ -764,7 +764,10 @@ class MCSampleBase(JsonDict):
 class MCSampleBase_DefaultCampaign(MCSampleBase):
   @property
   def campaign(self):
+    if self.year == 2016:
+      return "RunIISummer15wmLHEGS"
     if self.year == 2017:
       return "RunIIFall17wmLHEGS"
     if self.year == 2018:
       return "RunIIFall18wmLHEGS"
+    assert False, self.year
