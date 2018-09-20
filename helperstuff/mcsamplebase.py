@@ -50,6 +50,8 @@ class MCSampleBase(JsonDict):
   def fragmentname(self): pass
   @abc.abstractproperty
   def genproductionscommit(self): pass
+  @property
+  def genproductionscommitforfragment(self): return self.genproductionscommit
   @abc.abstractproperty
   def makegridpackscriptstolink(self): pass
   @abc.abstractproperty
@@ -624,7 +626,7 @@ class MCSampleBase(JsonDict):
   @property
   @cache
   def fullfragment(self):
-    return createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommit)
+    return createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommitforfragment)
 
   def updaterequest(self):
     mcm = restful()

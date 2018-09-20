@@ -12,6 +12,9 @@ class MadGraphMCSample(MCSampleBase):
         yield filename
   def createtarball(self):
     return "making a madgraph tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)
+  @property
+  def tmptarball(self):
+    return os.path.join(here, "workdir", str(self).replace(" ", "_"), "dummy.tgz")
 
   @property
   @cache

@@ -10,15 +10,8 @@ from madgraphjhugenmcsample import MadGraphJHUGenMCSample
 
 class GridpackBySomeoneElse(MCSampleBase):
   @property
-  def nevents(self):
-    assert False
-
-  @property
   def defaulttimeperevent(self):
     return 60
-  @property
-  def tags(self):
-    assert False
 
   def createtarball(self):
     mkdir_p(os.path.dirname(self.foreostarball))
@@ -45,9 +38,6 @@ class GridpackBySomeoneElse(MCSampleBase):
     assert False
   @property
   def makinggridpacksubmitsjob(self):
-    assert False
-  @property
-  def tmptarball(self):
     assert False
 
   @property
@@ -111,23 +101,35 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     return os.path.join(folder, tarballname, "v{}".format(version), tarballname+".tar.xz")
   @property
   def fragmentname(self):
-    assert False
+    if self.year == 2017:
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py"
+    if self.year == 2016:
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff.py"
+    assert False, self.year
   @property
   def genproductionscommit(self):
-    return "d8baa8f97b649dae9b2fc18f7bfe36290962f41b"
+    return "d61e214e3781a8cfec0f2d9b92f43d51638cd27a"
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2018:
+      return "a93def45caca7548931ed014f933375828aaf8c8" #get the scale variations
+    return super(MadGraphHZZdFromJake, self).genproductionscommitforfragment
   @property
   def hasfilter(self):
     return False
   @property
   def xsec(self):
-    assert False
+    return 1 #unknown for unknown signal
+  @property
+  def tags(self):
+    return ["HZZ"]
 
   @property
   def madgraphcardscript(self):
     if self.year == 2017:
       maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
     elif self.year == 2016:
-      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/")
+      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
     return (os.path.join(maindir, "makecards.sh"),) + tuple(os.path.join(maindir, "HAHMcards_eps_MZD_lhaid_template", os.path.basename(_)) for _ in self.madgraphcards)
   @property
   def madgraphcards(self):
@@ -138,6 +140,11 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
   def datasetname(self):
     assert self.__eps == 1e-2
     return "HToZZdTo4L_M125_MZd{}_eps1e-2_13TeV_madgraph_pythia8".format(self.__Zdmass)
+
+  @property
+  def nevents(self):
+    return 500000
+
 
 class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MCSampleBase_DefaultCampaign):
   def __init__(self, year, coupling):
@@ -217,13 +224,22 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
       return "GluGluHiggs0Mf05ph0ToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"
   @property
   def fragmentname(self):
-    assert False
+    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_aMCatNLO_FXFX_5f_max2j_LHE_pythia8_cff.py"
   @property
   def genproductionscommit(self):
-    assert False
+    if self.year == 2018:
+      return "d2377ae8a03e2d36bdeb3255fc60761a9b247865"
+    if self.year in (2016, 2017):
+      return "d61e214e3781a8cfec0f2d9b92f43d51638cd27a"
   @property
   def hasfilter(self):
     assert False
   @property
   def xsec(self):
     assert False
+  @property
+  def tags(self):
+    assert False
+  @property
+  def nevents(self):
+    return 500000
