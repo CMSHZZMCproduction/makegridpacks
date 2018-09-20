@@ -169,7 +169,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     if the first tarball is copied to eos and then is found to be bad, add something like
     if self.(whatever) == (whatever): v += 1
     """
-    if self.__coupling in ("a3", "a3mix") and self.year == 2017: v += 1  #tarball eventually used for HTT was different than the original one
+    if self.year == 2017: v += 1  #tarball eventually used for HTT was different than the original one for a3 and a3mix, and chmod u+x runcmsgrid.sh
     return v
 
   @property

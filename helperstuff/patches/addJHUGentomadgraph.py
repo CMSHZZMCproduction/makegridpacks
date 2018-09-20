@@ -32,6 +32,7 @@ def addJHUGentomadgraph(oldfilename, newfilename, JHUGenversion, decaycard):
         newf.write(line)
       if not sawexit:
         newf.write(JHUGenpart)
+    os.chmod("runcmsgrid.sh", os.stat("original_runcmsgrid.sh").st_mode)
 
     tmpdir = os.getcwd()
 
