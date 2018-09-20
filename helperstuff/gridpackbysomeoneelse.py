@@ -17,11 +17,11 @@ class GridpackBySomeoneElse(MCSampleBase):
     mkdir_p(self.workdir)
     with KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
       if not kwof: return "another process is already copying the tarball"
-      mkdir_p(os.path.dirname(self.foreostarball))
       if not os.path.exists(self.originaltarball):
         return "original tarball does not exist"
       if datetime.datetime.fromtimestamp(os.path.getmtime(self.originaltarball)) <= self.modifiedafter:
         return "original tarball is an older version than we want"
+      mkdir_p(os.path.dirname(self.foreostarball))
       if self.patchkwargs:
         kwargs = self.patchkwargs
         for _ in "oldfilename", "newfilename", "sample": assert _ not in kwargs, _
