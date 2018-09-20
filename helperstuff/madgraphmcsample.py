@@ -57,7 +57,11 @@ class MadGraphMCSample(MCSampleBase):
           with cd(relpath):
             wget(_)
         subprocess.check_call(["chmod", "u+x", os.path.basename(scripturls[0])])
-        subprocess.check_call(["./"+os.path.basename(scripturls[0])])
+        try:
+          subprocess.check_output(["./"+os.path.basename(scripturls[0])], stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+          print e.output
+          raise
         for _ in self.madgraphcards:
           with open(_) as f:
             gitcardcontents.append(getcontents(f))

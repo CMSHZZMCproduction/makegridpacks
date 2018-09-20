@@ -178,14 +178,19 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     }
 
   @property
+  def madgraphcardscript(self):
+    maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/")
+    script = os.path.join(maindir, "ggh012j_5f_NLO_FXFX.sh")
+    cards = [os.path.join(maindir, "ggh012j_5f_NLO_FXFX_", os.path.basename(card).replace("125", "")) for card in self.madgraphcards + ["ggh012j_5f_NLO_FXFX_125_MadLoopParams.dat"]]
+    return [script]+cards
+  @property
   def madgraphcards(self):
     return [
       os.path.join(
-        genproductions,
-        "bin/MadGraph5_aMCatNLO/cards/production/13TeV/higgs/ggh012j_5f_NLO_FXFX_125/",
+        "ggh012j_5f_NLO_FXFX_125",
         _,
       ) for _ in (
-        "ggh012j_5f_NLO_FXFX_125_MadLoopParams.dat",
+        "ggh012j_5f_NLO_FXFX_125_extramodels.dat",
         "ggh012j_5f_NLO_FXFX_125_customizecards.dat",
         "ggh012j_5f_NLO_FXFX_125_proc_card.dat",
         "ggh012j_5f_NLO_FXFX_125_run_card.dat",
@@ -243,7 +248,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_aMCatNLO_FXFX_5f_max2j_LHE_pythia8_cff.py"
   @property
   def genproductionscommit(self):
-    return "7282e21844f34c9ce1c242356bd78443593d80a6"
+    return "dce987f3bf6bd65c6d172b551b64209b241a8c1d"
   @property
   def genproductionscommitforfragment(self):
     if self.year == 2018:
