@@ -83,7 +83,7 @@ class MadGraphMCSample(MCSampleBase):
         except IOError:
           raise ValueError("no "+cardnameintarball+" in the tarball\n{}".format(self))
       for _ in glob.iglob("InputCards/*"):
-        if _ not in cardnamesintarball and not _.endswith(".tar.gz"):
+        if _ not in cardnamesintarball and not _.endswith(".tar.gz") and _ not in self.otherthingsininputcards:
           raise ValueError("unknown thing "+_+" in InputCards\n{}".format(self))
 
     for name, cc, gcc in itertools.izip(cardnamesintarball, cardcontents, gitcardcontents):
@@ -106,6 +106,9 @@ class MadGraphMCSample(MCSampleBase):
 
   @abc.abstractproperty
   def madgraphcards(self): return []
+
+  @property
+  def otherthingsininputcards(self): return []
 
   @property
   def generators(self):

@@ -11,6 +11,8 @@ class MadGraphJHUGenMCSample(MadGraphMCSample):
   def hasfilter(self): return "filter" in self.decaycard.lower()
   @property
   def makegridpackcommand(self): assert False, self
+  @property
+  def otherthingsininputcards(self): return ["InputCards/JHUGen.input"]
 
   @property
   @cache

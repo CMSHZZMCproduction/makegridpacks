@@ -1,6 +1,6 @@
 import abc, datetime, os, re, shutil
 
-from utilities import cdtemp, mkdir_p, genproductions
+from utilities import cdtemp, genproductions, KeepWhileOpenFile, mkdir_p
 
 import patches
 
@@ -14,23 +14,26 @@ class GridpackBySomeoneElse(MCSampleBase):
     return 60
 
   def createtarball(self):
-    mkdir_p(os.path.dirname(self.foreostarball))
-    if not os.path.exists(self.originaltarball):
-      return "original tarball does not exist"
-    if datetime.datetime.fromtimestamp(os.path.getmtime(self.originaltarball)) <= self.modifiedafter:
-      return "original tarball is an older version than we want"
-    if self.patchkwargs:
-      kwargs = self.patchkwargs
-      for _ in "oldfilename", "newfilename", "sample": assert _ not in kwargs, _
-      with cdtemp():
-        kwargs["oldfilename"] = self.originaltarball
-        kwargs["newfilename"] = os.path.abspath(os.path.basename(self.originaltarball))
-        #kwargs["sample"] = self  #???
-        patches.dopatch(**kwargs)
-        shutil.move(os.path.basename(self.originaltarball), self.foreostarball)
-    else:
-      shutil.copy(self.originaltarball, self.foreostarball)
-    return "gridpack is copied from "+self.originaltarball+" to this folder, to be copied to eos"
+    mkdir_p(self.workdir)
+    with KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
+      if not kwof: return "another process is already copying the tarball"
+      mkdir_p(os.path.dirname(self.foreostarball))
+      if not os.path.exists(self.originaltarball):
+        return "original tarball does not exist"
+      if datetime.datetime.fromtimestamp(os.path.getmtime(self.originaltarball)) <= self.modifiedafter:
+        return "original tarball is an older version than we want"
+      if self.patchkwargs:
+        kwargs = self.patchkwargs
+        for _ in "oldfilename", "newfilename", "sample": assert _ not in kwargs, _
+        with cdtemp():
+          kwargs["oldfilename"] = self.originaltarball
+          kwargs["newfilename"] = os.path.abspath(os.path.basename(self.originaltarball))
+          #kwargs["sample"] = self  #???
+          patches.dopatch(**kwargs)
+          shutil.move(os.path.basename(self.originaltarball), self.foreostarball)
+      else:
+        shutil.copy(self.originaltarball, self.foreostarball)
+      return "gridpack is copied from "+self.originaltarball+" to this folder, to be copied to eos"
 
   @abc.abstractproperty
   def originaltarball(self):
@@ -207,13 +210,13 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
         #from HIG-RunIIFall17wmLHEGS-01577
         return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/ggh012j_5f_NLO_FXFX_125/v2/ggh012j_5f_NLO_FXFX_125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
     if self.__coupling == "a3":
-        #from HIG-RunIIFall17wmLHEGS-01580
-        #why is it in pre2017? no idea but it uses 306000
-        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/pre2017/13TeV/madgraph/v2.4.2/GluGluToMaxmixHToTauTau/v1/GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz"
-    if self.__coupling == "a3mix":
         #from HIG-RunIIFall17wmLHEGS-01583
         #why is it in pre2017? no idea but it uses 306000
         return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/pre2017/13TeV/madgraph/v2.4.2/GluGluToPseudoscalarHToTauTau/v1/GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz"
+    if self.__coupling == "a3mix":
+        #from HIG-RunIIFall17wmLHEGS-01580
+        #why is it in pre2017? no idea but it uses 306000
+        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/pre2017/13TeV/madgraph/v2.4.2/GluGluToMaxmixHToTauTau/v1/GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz"
     assert False, self
 
   @classmethod
@@ -229,10 +232,23 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     return "hroskes"
 
   def cvmfstarball_anyversion(self, version):
-    result = os.path.dirname(self.originaltarball)
-    if re.match("v[0-9]*$", os.path.basename(result)): result = os.path.dirname(result)
-    result += "_HZZ4l"
-    result = os.path.join(result, "v{}".format(version), os.path.basename(self.originaltarball))
+    maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/"
+    folder = {
+      "SM": "ggh012j_5f_NLO_FXFX_125_HZZ4l",
+      "a3": "ggh012j_5f_NLO_FXFX_125_pseudoscalar_HZZ4l",
+      "a3mix": "ggh012j_5f_NLO_FXFX_125_maxmix_HZZ4l",
+    }[self.__coupling]
+    if self.tarballversion >= 2:
+      basename = {
+        "SM": "ggh012j_5f_NLO_FXFX_JHUGenV714_HZZ4l_125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
+        "a3": "GluGluToMaxmixHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
+        "a3mix": "GluGluToPseudoscalarHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
+      }[self.__coupling]
+    else:
+      basename = folder.replace("HZZ4l", "slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz")
+    
+
+    result = os.path.join(maindir, folder, "v{}".format(version), basename)
     return result
 
   @property
@@ -257,13 +273,13 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
       return "d61e214e3781a8cfec0f2d9b92f43d51638cd27a"
   @property
   def hasfilter(self):
-    assert False
+    return False
   @property
   def xsec(self):
-    assert False
+    return 1 #unknown for unknown signal
   @property
   def tags(self):
-    assert False
+    return ["HZZ"]
   @property
   def nevents(self):
     return 500000

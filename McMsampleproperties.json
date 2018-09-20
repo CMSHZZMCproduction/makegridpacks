@@ -2187,7 +2187,9 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
-                        "needsupdate": true
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0,
+                        "prepid": "HIG-RunIIFall17wmLHEGS-03070"
                     }
                 }
             }
