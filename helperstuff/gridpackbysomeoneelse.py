@@ -1,4 +1,4 @@
-import abc, os, re, shutil
+import abc, datetime, os, re, shutil
 
 from utilities import cdtemp, mkdir_p, genproductions
 
@@ -15,6 +15,10 @@ class GridpackBySomeoneElse(MCSampleBase):
 
   def createtarball(self):
     mkdir_p(os.path.dirname(self.foreostarball))
+    if not os.path.exists(self.originaltarball):
+      return "original tarball does not exist"
+    if datetime.datetime.fromtimestamp(os.path.getmtime(self.originaltarball)) <= self.modifiedafter:
+      return "original tarball is an older version than we want"
     if self.patchkwargs:
       kwargs = self.patchkwargs
       for _ in "oldfilename", "newfilename", "sample": assert _ not in kwargs, _
@@ -28,25 +32,17 @@ class GridpackBySomeoneElse(MCSampleBase):
       shutil.copy(self.originaltarball, self.foreostarball)
     return "gridpack is copied from "+self.originaltarball+" to this folder, to be copied to eos"
 
-  @property
-  def makegridpackcommand(self):
-    """
-    if you implement this, you also HAVE to change tmptarball to be the correct name
-    the directory doesn't matter, but the final filename should be whatever is created
-    by the script
-    """
-    assert False
-  @property
-  def makinggridpacksubmitsjob(self):
-    assert False
-
-  @property
-  def makegridpackscriptstolink(self):
-    return ()
-
   @abc.abstractproperty
   def originaltarball(self):
     pass
+
+  @property
+  def modifiedafter(self):
+    """
+    if the original tarball was modified before this time, ignore it
+    until it's replaced
+    """
+    return datetime.datetime(year=1900, month=1, day=1)
 
 
 class MadGraphGridpackBySomeoneElse(GridpackBySomeoneElse, MadGraphMCSample):
@@ -68,6 +64,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     if the first tarball is copied to eos and then is found to be bad, add something like
     if self.(whatever) == (whatever): v += 1
     """
+    if self.year in (2016, 2017) and self.__Zdmass == 20 and self.__eps == 1e-2: v += 1 #comments on PR --> new tarball
     return v
 
   @property
@@ -81,7 +78,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
 
   @classmethod
   def allsamples(cls):
-    for Zdmass in 20,:#1, 2, 3, 4, 7, 10, 15, 20, 25, 35:
+    for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 35:
       for eps in 1e-2,:
         for year in 2016, 2017:
           yield cls(year, Zdmass, eps)
@@ -143,7 +140,15 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
 
   @property
   def nevents(self):
-    return 500000
+    return 100000
+
+  @property
+  def modifiedafter(self):
+    """
+    if the original tarball was modified before this time, ignore it
+    until it's replaced
+    """
+    return datetime.datetime(year=2018, month=9, day=19)
 
 
 class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MCSampleBase_DefaultCampaign):
@@ -174,7 +179,18 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
 
   @property
   def madgraphcards(self):
-    assert False
+    return [
+      os.path.join(
+        genproductions,
+        "bin/MadGraph5_aMCatNLO/cards/production/13TeV/higgs/ggh012j_5f_NLO_FXFX_125/",
+        _,
+      ) for _ in (
+        "ggh012j_5f_NLO_FXFX_125_MadLoopParams.dat",
+        "ggh012j_5f_NLO_FXFX_125_customizecards.dat",
+        "ggh012j_5f_NLO_FXFX_125_proc_card.dat",
+        "ggh012j_5f_NLO_FXFX_125_run_card.dat",
+      )
+    ]
 
   @property
   def decaycard(self):
@@ -227,6 +243,9 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_aMCatNLO_FXFX_5f_max2j_LHE_pythia8_cff.py"
   @property
   def genproductionscommit(self):
+    return "7282e21844f34c9ce1c242356bd78443593d80a6"
+  @property
+  def genproductionscommitforfragment(self):
     if self.year == 2018:
       return "d2377ae8a03e2d36bdeb3255fc60761a9b247865"
     if self.year in (2016, 2017):

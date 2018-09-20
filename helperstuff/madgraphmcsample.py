@@ -22,7 +22,7 @@ class MadGraphMCSample(MCSampleBase):
     def getcontents(f):
       contents = ""
       for line in f:
-        if not line.startswith("#") and "define p = g u c d s u~ c~ d~ s~" not in line and "define j = g u c d s u~ c~ d~ s~" not in line:
+        if not line.startswith("#"):
           contents += line
       return contents
 
@@ -32,13 +32,13 @@ class MadGraphMCSample(MCSampleBase):
         os.path.join(
           "https://raw.githubusercontent.com/cms-sw/genproductions/",
           self.genproductionscommit,
-          _.replace(genproductions, "")
+          _.replace(genproductions+"/", "")
         ) for _ in self.madgraphcards
       )
       with cdtemp():
         for cardurl in cardurls:
           wget(cardurl)
-          with open(os.path.basename(card)) as f:
+          with open(os.path.basename(cardurl)) as f:
             gitcardcontents.append(getcontents(f))
     else:
       scripturls = tuple(
@@ -97,12 +97,28 @@ class MadGraphMCSample(MCSampleBase):
     else:
       return "# ".join(self.madgraphcards)
 
+  @property
+  def madgraphcardscript(self): return None
+
   @abc.abstractproperty
   def madgraphcards(self): return []
 
   @property
   def generators(self):
     return ["madgraph"]
+
+  @property
+  def makegridpackcommand(self):
+    """
+    if you implement this, you also HAVE to change tmptarball to be the correct name
+    the directory doesn't matter, but the final filename should be whatever is created
+    by the script
+    """
+    assert False
+  @property
+  def makinggridpacksubmitsjob(self):
+    assert False
+
 
 class ZZ2L2QMadGraphMCSample(MadGraphMCSample, MCSampleBase_DefaultCampaign):
   def __init__(self, year, finalstate, cut=None):
@@ -137,18 +153,6 @@ class ZZ2L2QMadGraphMCSample(MadGraphMCSample, MCSampleBase_DefaultCampaign):
     folder = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2"
     tarballname = self.datasetname + ".tgz"
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
-
-  @property
-  def makegridpackcommand(self):
-    """
-    if you implement this, you also HAVE to change tmptarball to be the correct name
-    the directory doesn't matter, but the final filename should be whatever is created
-    by the script
-    """
-    assert False
-  @property
-  def makinggridpacksubmitsjob(self):
-    assert False
 
   @property
   def datasetname(self):

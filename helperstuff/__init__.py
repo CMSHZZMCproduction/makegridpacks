@@ -19,7 +19,7 @@ def allsamples(filter=lambda sample: True, onlymysamples=True, __docheck=True):
         yield sample
 
 from utilities import cache
-from collections import Counter
+from collections import Counter, defaultdict
 @cache
 def __checkforduplicates():
   bad = set()
@@ -28,3 +28,13 @@ def __checkforduplicates():
       bad.add(", ".join(str(_) for _ in k))
   if bad:
     raise ValueError("Multiple samples with these identifiers:\n" + "\n".join(bad))
+
+  dct = defaultdict(set)
+  for s in allsamples(onlymysamples=False, __docheck=False):
+    try:
+      dct[s.cvmfstarball_anyversion(2)].add(s)
+    except AssertionError:
+      pass
+  for k, samples in dct.iteritems():
+    if len({s.cvmfstarball for s in samples}) != 1:
+      raise ValueError("These samples have the same cvmfstarball_anyversion but different cvmfstarball:\n" + "\n".join(str(_) for _ in samples))
