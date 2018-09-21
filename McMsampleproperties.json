@@ -2341,9 +2341,6 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
-                        "matchefficiency": 1,
-                        "matchefficiencyerror": 0,
-                        "nthreads": 4,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03070",
                         "sizeperevent": 648.9472
                     },

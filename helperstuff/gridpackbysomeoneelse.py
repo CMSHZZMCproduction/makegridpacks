@@ -273,7 +273,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
       return "d61e214e3781a8cfec0f2d9b92f43d51638cd27a"
   @property
   def hasfilter(self):
-    return False
+    return True
   @property
   def xsec(self):
     return 1 #unknown for unknown signal
