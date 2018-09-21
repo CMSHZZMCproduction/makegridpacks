@@ -67,23 +67,23 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     if the first tarball is copied to eos and then is found to be bad, add something like
     if self.(whatever) == (whatever): v += 1
     """
-    if self.year in (2016, 2017) and self.__Zdmass == 20 and self.__eps == 1e-2: v += 1 #comments on PR --> new tarball
+    if self.year in (2016, 2017, 2018) and self.__Zdmass == 20 and self.__eps == 1e-2: v += 1 #comments on PR --> new tarball
     return v
 
   @property
   def originaltarball(self):
-    return "/afs/cern.ch/work/d/drosenzw/public/HZZd4l_gridpacks/HAHM_variablesw_v3_MZd{}_eps{:.0e}_lhaid{}.tar.xz".format(self.__Zdmass, self.__eps, self.lhapdf).replace("e-0", "e-")
+    return "/afs/cern.ch/work/d/drosenzw/public/HZZd4l_gridpacks/HAHM_variablesw_v3_eps{:.0e}_MZd{}_lhaid{}.tar.xz".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-0", "e-")
   @property
   def lhapdf(self):
     if self.year == 2016: return 263000
-    if self.year == 2017: return 306000
+    if self.year in (2017, 2018): return 306000
     assert False, self
 
   @classmethod
   def allsamples(cls):
     for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 35:
       for eps in 1e-2,:
-        for year in 2016, 2017:
+        for year in 2016, 2017, 2018:
           yield cls(year, Zdmass, eps)
 
   @property
@@ -94,21 +94,21 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     return "hroskes"
 
   def cvmfstarball_anyversion(self, version):
-    if self.year == 2017: year = "2017"
+    if self.year in (2017, 2018): year = "2017"
     if self.year == 2016: year = "slc6_amd64_gcc481"
     tarballname = "ggH125_LO_HtoZZd_MZd{}_eps{:.0e}".format(self.__Zdmass, self.__eps)
     folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/", year, "13TeV/madgraph/V5_2.4.2/")
     return os.path.join(folder, tarballname, "v{}".format(version), tarballname+".tar.xz")
   @property
   def fragmentname(self):
-    if self.year == 2017:
+    if self.year in (2017, 2018):
       return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py"
     if self.year == 2016:
       return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff.py"
     assert False, self.year
   @property
   def genproductionscommit(self):
-    return "d61e214e3781a8cfec0f2d9b92f43d51638cd27a"
+    return "34b9e3dc408110faa10cf6317a0d901cd74e3ae1"
   @property
   def genproductionscommitforfragment(self):
     if self.year == 2018:
@@ -126,7 +126,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
 
   @property
   def madgraphcardscript(self):
-    if self.year == 2017:
+    if self.year in (2017, 2018):
       maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
     elif self.year == 2016:
       maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")

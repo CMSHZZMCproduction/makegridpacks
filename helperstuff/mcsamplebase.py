@@ -602,7 +602,7 @@ class MCSampleBase(JsonDict):
   @property
   def nthreads(self):
     with cd(here):
-      return self.value.get("nthreads", 8)
+      return self.value.get("nthreads", 8 if self.year >= 2017 else 1)
   @nthreads.setter
   def nthreads(self, value):
     if value == self.nthreads: return

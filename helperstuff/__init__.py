@@ -29,12 +29,17 @@ def __checkforduplicates():
   if bad:
     raise ValueError("Multiple samples with these identifiers:\n" + "\n".join(bad))
 
+  from clonedrequest import ClonedRequest
+
   dct = defaultdict(set)
   for s in allsamples(onlymysamples=False, __docheck=False):
     try:
       dct[s.cvmfstarball_anyversion(2)].add(s)
-    except AssertionError:
-      pass
+    except:
+      if isinstance(s, ClonedRequest):
+        pass
+      else:
+        raise
   for k, samples in dct.iteritems():
     if len({s.cvmfstarball for s in samples}) != 1:
       raise ValueError("These samples have the same cvmfstarball_anyversion but different cvmfstarball:\n" + "\n".join(str(_) for _ in samples))
