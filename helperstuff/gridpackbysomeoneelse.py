@@ -158,6 +158,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
   def __init__(self, year, coupling):
     self.__coupling = coupling
     super(MadGraphHJJFromThomasPlusJHUGen, self).__init__(year=year)
+
   @property
   def identifiers(self):
     return "Thomas", "HJJ", "madgraphJHUGen", self.__coupling
@@ -283,3 +284,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
   @property
   def nevents(self):
     return 500000
+
+  @property
+  def dovalidation(self):
+    return False
