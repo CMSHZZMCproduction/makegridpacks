@@ -97,9 +97,9 @@ class MadGraphMCSample(MCSampleBase):
         raise ValueError(name + " in tarball != " + name + " in git\n{}\nSee ./cardcontents{} and ./gitcardcontents{}".format(self, suffix, suffix))
 
     if self.madgraphcardscript:
-      return "#    ".join((scripturls[0],) + tuple(self.madgraphcards))
+      return "\n#    ".join((scripturls[0],) + tuple(self.madgraphcards))
     else:
-      return "# ".join(self.madgraphcards)
+      return "\n# ".join(self.madgraphcards)
 
   @property
   def madgraphcardscript(self): return None
