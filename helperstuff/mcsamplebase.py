@@ -300,7 +300,7 @@ class MCSampleBase(JsonDict):
             if match: nevents = int(match.group(1))
             match = re.match('<Metric Name="Timing-tstoragefile-write-totalMegabytes" Value="([0-9.]*)"/>', line)
             if match: totalsize = float(match.group(1))
-            if year >= 2017:
+            if self.year >= 2017:
               match = re.match('<Metric Name="EventThroughput" Value="([0-9.eE+-]*)"/>', line)
               if match: self.timeperevent = 1/float(match.group(1))
             else:
