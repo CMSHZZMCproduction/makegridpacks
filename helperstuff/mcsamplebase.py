@@ -233,14 +233,12 @@ class MCSampleBase(JsonDict):
       return "tarball is created and moved to this folder, to be copied to eos"
 
   def findmatchefficiency(self):
-    if self.checkcardsurl(): return self.checkcardsurl() #if the cards are wrong, catch it now!
-    self.updaterequest()
     #figure out the filter efficiency
     if not self.hasfilter:
       self.matchefficiency, self.matchefficiencyerror = 1, 0
       return "filter efficiency is set to 1 +/- 0"
     else:
-      if not self.implementsfilter(): raise ValueError("Can't find match efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
+      if not self.implementsfilter: raise ValueError("Can't find match efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
       mkdir_p(self.workdir)
       jobsrunning = False
       eventsprocessed = eventsaccepted = 0
@@ -341,7 +339,7 @@ class MCSampleBase(JsonDict):
       else:
         return "found prepid: {}".format(self.prepid)
 
-    if self.matchefficiency is None or self.matchefficiencyerror is None:
+    if (self.matchefficiency is None or self.matchefficiencyerror is None) and not self.needsupdate:
       return self.findmatchefficiency()
 
     if not (self.sizeperevent and self.timeperevent) and not self.needsupdate:

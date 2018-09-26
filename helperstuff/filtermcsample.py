@@ -1,4 +1,4 @@
-import abc, os, re, shutil, subprocess
+import abc, os, re, shutil, stat, subprocess
 
 from utilities import cdtemp, wget
 
@@ -15,7 +15,9 @@ class FilterImplementation(MCSampleBase):
 
 class GenericFilter(FilterImplementation):
   def __init__(self, *args, **kwargs):
-    self.__sizeperevent = self.__timeperevent = None
+    self.__sizesperevent = {}
+    self.__timesperevent = {}
+    self.__nevents = {}
     return super(GenericFilter, self).__init__(*args, **kwargs)
 
   @property
@@ -46,18 +48,21 @@ class GenericFilter(FilterImplementation):
         if match: totalsize = float(match.group(1))
         if self.year >= 2017:
           match = re.match('<Metric Name="EventThroughput" Value="([0-9.eE+-]*)"/>', line)
-          if match: self.__timeperevent = 1/float(match.group(1))
+          if match: self.__timesperevent[jobindex] = 1/float(match.group(1))
         else:
           match = re.match('<Metric Name="AvgEventTime" Value="([0-9.eE+-]*)"/>', line)
-          if match: self.__timeperevent = float(match.group(1))
+          if match: self.__timesperevent[jobindex] = float(match.group(1))
         if nevents is not None is not totalsize:
-          self.__sizeperevent = totalsize * 1024 / nevents
+          self.__sizesperevent[jobindex] = totalsize * 1024 / nevents
+        self.__nevents[jobindex] = nevents
 
   def findmatchefficiency(self):
     result = super(GenericFilter, self).findmatchefficiency()
     if self.matchefficiency is not None is not self.matchefficiencyerror:
-      if self.sizeperevent is None is not self.__sizeperevent: self.sizeperevent = self.__sizeperevent
-      if self.timeperevent is None is not self.__timeperevent: self.timeperevent = self.__timeperevent
+      if self.sizeperevent is None and len(self.__sizesperevent) == 100:
+        self.sizeperevent = sum(self.__sizesperevent[i] * self.__nevents[i] for i in range(100)) / sum(self.__nevents[i] for i in range(100))
+      if self.timeperevent is None and len(self.__timesperevent) == 100:
+        self.timeperevent = sum(self.__timesperevent[i] * self.__nevents[i] for i in range(100)) / sum(self.__nevents[i] for i in range(100))
     return result
 
 class JHUGenFilter(FilterImplementation):
