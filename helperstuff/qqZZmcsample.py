@@ -75,7 +75,9 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
   @property
   def datasetname(self):
     if self.finalstate == "4l":
-      if self.cut is None: return "ZZTo4L_13TeV_powheg_pythia8"
+      if self.cut is None:
+        if self.year >= 2018: return "ZZTo4L_TuneCP5_13TeV_powheg_pythia8"
+        return "ZZTo4L_13TeV_powheg_pythia8"
       elif self.cut == "100-160": return "ZZTo4L_mZZ100-160GeV_13TeV_powheg_pythia8"
     elif self.finalstate == "2l2nu":
       if self.cut is None: return "ZZTo2L2Nu_13TeV_powheg_pythia8"
