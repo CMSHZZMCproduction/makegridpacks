@@ -52,9 +52,8 @@ class GenericFilter(FilterImplementation):
         else:
           match = re.match('<Metric Name="AvgEventTime" Value="([0-9.eE+-]*)"/>', line)
           if match: self.__timesperevent[jobindex] = float(match.group(1))
-        if nevents is not None is not totalsize:
-          self.__sizesperevent[jobindex] = totalsize * 1024 / nevents
-        self.__nevents[jobindex] = nevents
+    self.__sizesperevent[jobindex] = totalsize * 1024 / nevents
+    self.__nevents[jobindex] = nevents
 
   def findmatchefficiency(self):
     result = super(GenericFilter, self).findmatchefficiency()

@@ -253,7 +253,6 @@ class MCSampleBase(JsonDict):
               if not LSB_JOBID():
                 self.submitLSF(self.filterefficiencyqueue)
                 jobsrunning = True
-                break
                 continue
               if LSB_QUEUE() != self.filterefficiencyqueue:
                 jobsrunning = True
