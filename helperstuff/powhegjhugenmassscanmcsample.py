@@ -2,8 +2,9 @@ import contextlib, csv, os, re, subprocess, urllib
 
 from utilities import cache, cd, genproductions, makecards
 
+from filtermcsample import JHUGenFilter
 from massscanmcsample import MassScanMCSample
-from powhegjhugenmcsample import POWHEGJHUGenMCSample, JHUGenFilter
+from powhegjhugenmcsample import POWHEGJHUGenMCSample
 
 class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGenFilter):
   @property

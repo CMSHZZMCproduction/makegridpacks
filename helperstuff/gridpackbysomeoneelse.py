@@ -4,6 +4,7 @@ from utilities import cdtemp, genproductions, KeepWhileOpenFile, mkdir_p
 
 import patches
 
+from filtermcsample import GenericFilter
 from mcsamplebase import MCSampleBase, MCSampleBase_DefaultCampaign
 from madgraphmcsample import MadGraphMCSample
 from madgraphjhugenmcsample import MadGraphJHUGenMCSample
@@ -154,7 +155,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     return datetime.datetime(year=2018, month=9, day=19)
 
 
-class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MCSampleBase_DefaultCampaign):
+class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MCSampleBase_DefaultCampaign, GenericFilter):
   def __init__(self, year, coupling):
     self.__coupling = coupling
     super(MadGraphHJJFromThomasPlusJHUGen, self).__init__(year=year)
@@ -246,7 +247,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     return "madgraph", "JHUGen v7.1.4"
   @property
   def responsible(self):
-    return "nobody"
+    return "hroskes"
 
   def cvmfstarball_anyversion(self, version):
     maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/"

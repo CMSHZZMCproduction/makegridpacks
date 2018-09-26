@@ -240,6 +240,7 @@ class MCSampleBase(JsonDict):
       self.matchefficiency, self.matchefficiencyerror = 1, 0
       return "filter efficiency is set to 1 +/- 0"
     else:
+      if not self.implementsfilter(): raise ValueError("Can't find match efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
       mkdir_p(self.workdir)
       jobsrunning = False
       eventsprocessed = eventsaccepted = 0
@@ -254,6 +255,7 @@ class MCSampleBase(JsonDict):
               if not LSB_JOBID():
                 self.submitLSF(self.filterefficiencyqueue)
                 jobsrunning = True
+                break
                 continue
               if LSB_QUEUE() != self.filterefficiencyqueue:
                 jobsrunning = True
@@ -269,16 +271,7 @@ class MCSampleBase(JsonDict):
         #shutil.rmtree(self.workdir)
         return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
 
-  def dofilterjob(self):
-    #not abstract because not needed unless hasfilter is true
-    assert False
-  @property
-  def filterresultsfile(self):
-    #not abstract because not needed unless hasfilter is true
-    assert False
-  def getfilterresults(self):
-    #not abstract because not needed unless hasfilter is true
-    assert False
+  implementsfilter = False
 
   def getsizeandtime(self):
     mkdir_p(self.workdir)
@@ -295,6 +288,7 @@ class MCSampleBase(JsonDict):
         os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
         subprocess.check_call(["./"+self.prepid], stderr=subprocess.STDOUT)
         with open(self.prepid+"_rt.xml") as f:
+          self.sizeperevent, self.timeperevent = self.readsizeandtime(f)
           nevents = totalsize = None
           for line in f:
             line = line.strip()
