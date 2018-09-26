@@ -183,23 +183,39 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
 
   @property
   def madgraphcardscript(self):
-    maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/")
-    script = os.path.join(maindir, "ggh012j_5f_NLO_FXFX.sh")
-    cards = [os.path.join(maindir, "ggh012j_5f_NLO_FXFX_", os.path.basename(card).replace("125", "")) for card in self.madgraphcards + ["ggh012j_5f_NLO_FXFX_125_MadLoopParams.dat"]]
-    return [script]+cards
+    if self.__coupling == "SM":
+      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/")
+      script = os.path.join(maindir, "ggh012j_5f_NLO_FXFX.sh")
+      cards = [os.path.join(maindir, "ggh012j_5f_NLO_FXFX_", os.path.basename(card).replace("125", "")) for card in self.madgraphcards + ["ggh012j_5f_NLO_FXFX_125_MadLoopParams.dat"]]
+      return [script]+cards
   @property
   def madgraphcards(self):
-    return [
-      os.path.join(
-        "ggh012j_5f_NLO_FXFX_125",
-        _,
-      ) for _ in (
-        "ggh012j_5f_NLO_FXFX_125_extramodels.dat",
-        "ggh012j_5f_NLO_FXFX_125_customizecards.dat",
-        "ggh012j_5f_NLO_FXFX_125_proc_card.dat",
-        "ggh012j_5f_NLO_FXFX_125_run_card.dat",
-      )
-    ]
+    if self.__coupling == "SM":
+      return [
+        os.path.join(
+          "ggh012j_5f_NLO_FXFX_125",
+          _,
+        ) for _ in (
+          "ggh012j_5f_NLO_FXFX_125_extramodels.dat",
+          "ggh012j_5f_NLO_FXFX_125_customizecards.dat",
+          "ggh012j_5f_NLO_FXFX_125_proc_card.dat",
+          "ggh012j_5f_NLO_FXFX_125_run_card.dat",
+        )
+      ]
+    elif self.__coupling == "a3":
+      folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/GluGluToPseudoscalarHToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8/")
+      return [
+        os.path.join(folder, "GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_"+_+".dat")
+          for _ in ("extramodels", "param_card", "proc_card", "run_card")
+      ]
+    elif self.__coupling == "a3mix":
+      folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/GluGluToMaxmixHToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8/")
+      return [
+        os.path.join(folder, "GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_"+_+".dat")
+          for _ in ("extramodels", "param_card", "proc_card", "run_card")
+      ]
+    else:
+      assert False, self
 
   @property
   def decaycard(self):
@@ -230,7 +246,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     return "madgraph", "JHUGen v7.1.4"
   @property
   def responsible(self):
-    return "hroskes"
+    return "nobody"
 
   def cvmfstarball_anyversion(self, version):
     maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/"
@@ -265,7 +281,10 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_aMCatNLO_FXFX_5f_max2j_LHE_pythia8_cff.py"
   @property
   def genproductionscommit(self):
-    return "dce987f3bf6bd65c6d172b551b64209b241a8c1d"
+    if self.__coupling == "SM":
+      return "dce987f3bf6bd65c6d172b551b64209b241a8c1d"
+    else:
+      return "7d0525c9f6633a9ee00d4e79162d82e369250ccc"
   @property
   def genproductionscommitforfragment(self):
     if self.year == 2018:

@@ -22,8 +22,14 @@ class MadGraphMCSample(MCSampleBase):
     def getcontents(f):
       contents = ""
       for line in f:
-        if not line.startswith("#"):
-          contents += line
+        line = line.split("!")[0]
+        line = line.split("#")[0]
+        line = line.strip()
+        line = re.sub(" *= *", " = ", line)
+        if not line: continue
+        if line.startswith("define p = "): continue
+        if line.startswith("define j = "): continue
+        contents += line+"\n"
       return contents
 
     gitcardcontents = []
@@ -32,7 +38,7 @@ class MadGraphMCSample(MCSampleBase):
         os.path.join(
           "https://raw.githubusercontent.com/cms-sw/genproductions/",
           self.genproductionscommit,
-          _.replace(genproductions+"/", "")
+          (_[0] if len(_) == 2 else _).replace(genproductions+"/", "")
         ) for _ in self.madgraphcards
       )
       with cdtemp():
@@ -63,6 +69,7 @@ class MadGraphMCSample(MCSampleBase):
           print e.output
           raise
         for _ in self.madgraphcards:
+          if len(_) == 2: _ = _[0]
           with open(_) as f:
             gitcardcontents.append(getcontents(f))
 
@@ -72,7 +79,7 @@ class MadGraphMCSample(MCSampleBase):
       if glob.glob("core.*") and self.cvmfstarball != "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/HJJ_M125_13TeV/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_13TeV_M125.tgz":
         raise ValueError("There is a core dump in the tarball\n{}".format(self))
       cardnamesintarball = tuple(
-        os.path.join("InputCards", os.path.basename(_))
+        os.path.join("InputCards", os.path.basename(_[1] if len(_) == 2 else _))
         for _ in self.madgraphcards
       )
       cardcontents = []

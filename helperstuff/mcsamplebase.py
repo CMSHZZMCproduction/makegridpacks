@@ -234,6 +234,7 @@ class MCSampleBase(JsonDict):
 
   def findmatchefficiency(self):
     if self.checkcardsurl(): return self.checkcardsurl() #if the cards are wrong, catch it now!
+    self.updaterequest()
     #figure out the filter efficiency
     if not self.hasfilter:
       self.matchefficiency, self.matchefficiencyerror = 1, 0
@@ -245,11 +246,11 @@ class MCSampleBase(JsonDict):
       with cd(self.workdir):
         for i in range(100):
           mkdir_p(str(i))
-          with cd(str(i)), KeepWhileOpenFile("cmsgrid_final.lhe.tmp", message=LSB_JOBID(), deleteifjobdied=True) as kwof:
+          with cd(str(i)), KeepWhileOpenFile("runningfilterjob.tmp", message=LSB_JOBID(), deleteifjobdied=True) as kwof:
             if not kwof:
               jobsrunning = True
               continue
-            if not os.path.exists("cmsgrid_final.lhe"):
+            if not os.path.exists(self.filterresultsfile):
               if not LSB_JOBID():
                 self.submitLSF(self.filterefficiencyqueue)
                 jobsrunning = True
@@ -257,26 +258,27 @@ class MCSampleBase(JsonDict):
               if LSB_QUEUE() != self.filterefficiencyqueue:
                 jobsrunning = True
                 continue
-              with cdtemp():
-                subprocess.check_call(["tar", "xvaf", self.cvmfstarball])
-                if os.path.exists("powheg.input"):
-                  with open("powheg.input") as f:
-                    powheginput = f.read()
-                  powheginput = re.sub("^(rwl_|lhapdf6maxsets)", r"#\1", powheginput, flags=re.MULTILINE)
-                  with open("powheg.input", "w") as f:
-                    f.write(powheginput)
-                subprocess.check_call(["./runcmsgrid.sh", "1000", str(abs(hash(self))%2147483647 + i), "1"])
-                shutil.move("cmsgrid_final.lhe", os.path.join(self.workdir, str(i), ""))
-            with open("cmsgrid_final.lhe") as f:
-              for line in f:
-                if "events processed:" in line: eventsprocessed += int(line.split()[-1])
-                if "events accepted:" in line: eventsaccepted += int(line.split()[-1])
+              self.dofilterjob(i)
+            processed, accepted = self.getfilterresults(i)
+            eventsprocessed += processed
+            eventsaccepted += accepted
 
         if jobsrunning: return "some filter efficiency jobs are still running"
         self.matchefficiency = 1.0*eventsaccepted / eventsprocessed
         self.matchefficiencyerror = (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5
         #shutil.rmtree(self.workdir)
         return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
+
+  def dofilterjob(self):
+    #not abstract because not needed unless hasfilter is true
+    assert False
+  @property
+  def filterresultsfile(self):
+    #not abstract because not needed unless hasfilter is true
+    assert False
+  def getfilterresults(self):
+    #not abstract because not needed unless hasfilter is true
+    assert False
 
   def getsizeandtime(self):
     mkdir_p(self.workdir)
@@ -334,9 +336,6 @@ class MCSampleBase(JsonDict):
       else:
         return "gridpack exists on cvmfs, but it's wrong!"
 
-    if self.matchefficiency is None or self.matchefficiencyerror is None:
-      return self.findmatchefficiency()
-
     if self.badprepid:
       badrequestqueue.add(self)
 
@@ -347,6 +346,9 @@ class MCSampleBase(JsonDict):
         return self.createrequest(clonequeue)
       else:
         return "found prepid: {}".format(self.prepid)
+
+    if self.matchefficiency is None or self.matchefficiencyerror is None:
+      return self.findmatchefficiency()
 
     if not (self.sizeperevent and self.timeperevent) and not self.needsupdate:
       return self.getsizeandtime()
@@ -642,13 +644,14 @@ class MCSampleBase(JsonDict):
     req["time_event"] = [(self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent)]
     req["size_event"] = [self.sizeperevent if self.sizeperevent is not None else 600]
     req["generators"] = self.generators
-    req["generator_parameters"][0].update({
-      "match_efficiency_error": self.matchefficiencyerror,
-      "match_efficiency": self.matchefficiency,
-      "filter_efficiency": self.filterefficiency,
-      "filter_efficiency_error": self.filterefficiencyerror,
-      "cross_section": self.xsec,
-    })
+    if self.matchefficiency is not None is not self.matchefficiencyerror:
+      req["generator_parameters"][0].update({
+        "match_efficiency_error": self.matchefficiencyerror,
+        "match_efficiency": self.matchefficiency,
+        "filter_efficiency": self.filterefficiency,
+        "filter_efficiency_error": self.filterefficiencyerror,
+        "cross_section": self.xsec,
+      })
     req["sequences"][0]["nThreads"] = self.nthreads
     req["keep_output"][0] = bool(self.keepoutput)
     req["tags"] = self.tags

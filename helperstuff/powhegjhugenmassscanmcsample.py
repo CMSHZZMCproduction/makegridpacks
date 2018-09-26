@@ -3,9 +3,9 @@ import contextlib, csv, os, re, subprocess, urllib
 from utilities import cache, cd, genproductions, makecards
 
 from massscanmcsample import MassScanMCSample
-from powhegjhugenmcsample import POWHEGJHUGenMCSample
+from powhegjhugenmcsample import POWHEGJHUGenMCSample, JHUGenFilter
 
-class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
+class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGenFilter):
   @property
   def powhegprocess(self):
     if self.productionmode == "ggH": return "gg_H_quark-mass-effects"
