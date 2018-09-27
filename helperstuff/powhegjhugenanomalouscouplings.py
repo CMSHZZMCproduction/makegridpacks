@@ -14,7 +14,7 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
 
   @property
   def powhegcard(self):
-    return POWHEGJHUGenMassScanMCSample(self.productionmode, self.decaymode, self.mass).powhegcard
+    return POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, self.decaymode, self.mass).powhegcard
 
   @property
   def powhegcardusesscript(self): return True

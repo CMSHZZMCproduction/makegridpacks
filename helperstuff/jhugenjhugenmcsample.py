@@ -15,7 +15,7 @@ class JHUGenJHUGenMCSample(MCSampleBase):
              "JHUGen_"+self.shortname+"_"+scramarch+"_"+cmsswversion+".tgz")
   @property
   def shortname(self):
-    return re.sub(r"\W", "", str(self))
+    return re.sub(r"\W", "", str(self)).replace(str(self.year), "", 1)
   @property
   def linkmela(self): return False
   @property
