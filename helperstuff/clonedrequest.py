@@ -157,31 +157,3 @@ class ClonedRequest(MCSampleBase):
       raise RuntimeError("Multiple prepids for {} ({})".format(self, self.datasetname, query))
     assert len(prepids) == 1, prepids
     self.prepid = prepids.pop()
-
-class RunIIFall17DRPremix_nonsubmitted(ClonedRequest):
-  def __init__(self, *args, **kwargs):
-    self.__originalsample = kwargs.pop("originalsample")
-    super(RunIIFall17DRPremix_nonsubmitted, self).__init__(*args, **kwargs)
-
-  @classmethod
-  def allsamples(cls):
-    cls.__inallsamples = True
-    requests = []
-    Request = namedtuple("Request", "dataset prepid url")
-    with open(os.path.join(here, "data", "ListRunIIFall17DRPremix_nonsubmitted.txt")) as f:
-      next(f); next(f); next(f)  #cookie and header
-      for line in f:
-        requests.append(Request(*line.split()))
-
-    from . import allsamples
-    for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 != cls, __docheck=False):
-      if any(_.prepid == s.prepid for _ in requests):
-        yield cls(s.year, s.prepid, s.campaign, originalsample=s)
-
-  @property
-  def extensionnumber(self):
-    return self.__originalsample.extensionnumber+1
-
-  @property
-  def responsible(self):
-    return "hroskes"

@@ -88,7 +88,7 @@ class JHUGenJHUGenMCSample(MCSampleBase):
                              )]
           productioncard = "\n".join(line for line in productioncardlines)
       except IOError:
-        raise ValueError("no JHUGen.input in the tarball\n{}".format(self))
+        raise ValueError("no JHUGen.input in the tarball\n{}\n{}".format(self, self.cvmfstarball))
       try:
         with open(os.path.join(self.shortname+"_JHUGen", "JHUGen_decay.input")) as f:
           decaycard = f.read()

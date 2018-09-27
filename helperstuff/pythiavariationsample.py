@@ -1,10 +1,12 @@
+from collections import namedtuple
 import contextlib, csv, os, re, subprocess, urllib
 
 from mcsamplebase import MCSampleBase
-from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 from minlomcsample import MINLOMCSample
+from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+from utilities import here
 
-class PythiaVariationSample(MCSampleBase):
+class VariationSample(MCSampleBase):
   def __init__(self, mainsample, variation):
     """
     mainsample - nominal sample that this is similar to
@@ -12,7 +14,7 @@ class PythiaVariationSample(MCSampleBase):
     """
     self.mainsample = mainsample
     self.variation = variation
-    super(PythiaVariationSample, self).__init__(year=mainsample.year)
+    super(VariationSample, self).__init__(year=mainsample.year)
     if self.matchefficiency is None:
       self.matchefficiency = self.mainsample.matchefficiency
     if self.matchefficiencyerror is None:
@@ -78,6 +80,74 @@ class PythiaVariationSample(MCSampleBase):
   def campaign(self):
     return self.mainsample.campaign
   @property
+  def generators(self):
+    return self.mainsample.generators
+  @property
+  def cardsurl(self):
+    return self.mainsample.cardsurl
+  @property
+  def defaulttimeperevent(self):
+    if self.mainsample.timeperevent is not None:
+      return self.mainsample.timeperevent
+    return self.mainsample.defaulttimeperevent
+  @property
+  def tags(self):
+    return self.mainsample.tags
+  @property
+  def makegridpackscriptstolink(self):
+    return self.mainsample.makegridpackscriptstolink
+  @property
+  def doublevalidationtime(self):
+    return self.mainsample.doublevalidationtime
+  @property
+  def neventsfortest(self): return self.mainsample.neventsfortest
+  @property
+  def creategridpackqueue(self): return self.mainsample.creategridpackqueue
+  @property
+  def timepereventqueue(self): return self.mainsample.timepereventqueue
+  @property
+  def filterefficiencyqueue(self): return self.mainsample.filterefficiencyqueue
+  @property
+  def dovalidation(self): return self.mainsample.dovalidation
+  @property
+  def fragmentname(self): return self.mainsample.fragmentname
+
+class ExtensionSample(VariationSample):
+  @property
+  def datasetname(self): return self.mainsample.datasetname
+  @property
+  def fragmentname(self): return self.mainsample.fragmentname
+  @property
+  def genproductionscommit(self): return self.mainsample.genproductionscommit
+  @property
+  def extensionnumber(self): return self.mainsample.extensionnumber+1
+
+class RedoSample(ExtensionSample):
+  @property
+  def nevents(self): return self.mainsample.nevents
+
+class RunIIFall17DRPremix_nonsubmitted(RedoSample):
+  @classmethod
+  def allsamples(cls):
+    cls.__inallsamples = True
+    requests = []
+    Request = namedtuple("Request", "dataset prepid url")
+    with open(os.path.join(here, "data", "ListRunIIFall17DRPremix_nonsubmitted.txt")) as f:
+      next(f); next(f); next(f)  #cookie and header
+      for line in f:
+        requests.append(Request(*line.split()))
+
+    from . import allsamples
+    for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 != cls, __docheck=False):
+      if any(_.prepid == s.prepid for _ in requests):
+        yield cls(mainsample=s, variation="RunIIFall17DRPremix_nonsubmitted")
+
+  @property
+  def responsible(self):
+    return "hroskes"
+
+class PythiaVariationSample(VariationSample):
+  @property
   def datasetname(self):
     result = self.mainsample.datasetname
     if self.variation != "ScaleExtension":
@@ -96,17 +166,6 @@ class PythiaVariationSample(MCSampleBase):
       if self.mainsample.mass in (125, 300):
         return 1000000
     raise ValueError("No nevents for {}".format(self))
-  @property
-  def generators(self):
-    return self.mainsample.generators
-  @property
-  def cardsurl(self):
-    return self.mainsample.cardsurl
-  @property
-  def defaulttimeperevent(self):
-    if self.mainsample.timeperevent is not None:
-      return self.mainsample.timeperevent
-    return self.mainsample.defaulttimeperevent
   @property
   def tags(self):
     return "HZZ", "Fall17P2A"
@@ -129,20 +188,6 @@ class PythiaVariationSample(MCSampleBase):
   def genproductionscommit(self):
     return "fd7d34a91c3160348fd0446ded445fa28f555e09"
   @property
-  def makegridpackscriptstolink(self):
-    return self.mainsample.makegridpackscriptstolink
-  @property
-  def doublevalidationtime(self):
-    return self.mainsample.doublevalidationtime
-  @property
-  def neventsfortest(self): return self.mainsample.neventsfortest
-  @property
-  def creategridpackqueue(self): return self.mainsample.creategridpackqueue
-  @property
-  def timepereventqueue(self): return self.mainsample.timepereventqueue
-  @property
-  def filterefficiencyqueue(self): return self.mainsample.filterefficiencyqueue
-  @property
   def extensionnumber(self):
     result = super(PythiaVariationSample, self).extensionnumber
     if self.variation == "ScaleExtension": result += 1
@@ -154,7 +199,7 @@ class PythiaVariationSample(MCSampleBase):
   @property
   def dovalidation(self):
     if self.prepid == "HIG-RunIIFall17wmLHEGS-00509": return False
-    return self.mainsample.dovalidation
+    return super(PythiaVariationSample, self).dovalidation
 
   @classmethod
   def nominalsamples(cls):
