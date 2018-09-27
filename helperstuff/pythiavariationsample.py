@@ -111,8 +111,8 @@ class VariationSample(MCSampleBase):
 class ExtensionSample(VariationSample):
   def __init__(self, *args, **kwargs):
     super(ExtensionSample, self).__init__(*args, **kwargs)
-    if self.timeperevent is None and self.mainsample.timeperevent is not None:
-      self.timeperevent = self.mainsample.timeperevent
+    if self.timeperevent is None and self.mainsample.timeperevent is not None and not self.resettimeperevent:
+      self.timeperevent = self.mainsample.timeperevent * self.mainsample.nthreads / self.nthreads
     if self.sizeperevent is None and self.mainsample.sizeperevent is not None:
       self.sizeperevent = self.mainsample.sizeperevent
   @property

@@ -598,10 +598,12 @@ class MCSampleBase(JsonDict):
   @property
   def nthreads(self):
     with cd(here):
+      if "nthreads" not in self.value and (self.finished or self.status in ("submitted", "approved")):
+        self.value["nthreads"] = self.fullinfo["sequences"][0]["nThreads"]
       return self.value.get("nthreads", 8 if self.year >= 2017 else 1)
   @nthreads.setter
   def nthreads(self, value):
-    if value == self.nthreads: return
+    if "nthreads" in self.value and value == self.nthreads: return
     with cd(here), self.writingdict():
       self.value["nthreads"] = int(value)
     del self.timeperevent
