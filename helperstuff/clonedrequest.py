@@ -159,9 +159,12 @@ class ClonedRequest(MCSampleBase):
     self.prepid = prepids.pop()
 
 class RunIIFall17DRPremix_nonsubmitted(ClonedRequest):
+  def __init__(self, *args, **kwargs):
+    self.__originalsample = kwargs.pop("originalsample")
+    super(RunIIFall17DRPremix_nonsubmitted, self).__init__(*args, **kwargs)
+
   @classmethod
   def allsamples(cls):
-    print ">>>>>>>>>>>>>>>>>>>>>>>>>"
     cls.__inallsamples = True
     requests = []
     Request = namedtuple("Request", "dataset prepid url")
@@ -173,9 +176,12 @@ class RunIIFall17DRPremix_nonsubmitted(ClonedRequest):
     from . import allsamples
     for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 != cls, __docheck=False):
       if any(_.prepid == s.prepid for _ in requests):
-        print s
-        yield cls(s.year, s.prepid, s.campaign)
-    print "<<<<<<<<<<<<<<<<<<<<<<<<<"
+        yield cls(s.year, s.prepid, s.campaign, originalsample=s)
 
+  @property
+  def extensionnumber(self):
+    return self.__originalsample.extensionnumber+1
+
+  @property
   def responsible(self):
     return "hroskes"
