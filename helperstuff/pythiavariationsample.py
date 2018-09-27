@@ -19,10 +19,6 @@ class VariationSample(MCSampleBase):
       self.matchefficiency = self.mainsample.matchefficiency
     if self.matchefficiencyerror is None:
       self.matchefficiencyerror = self.mainsample.matchefficiencyerror
-    #if self.timeperevent is None and self.mainsample.timeperevent is not None:
-    #  self.timeperevent = self.mainsample.timeperevent
-    #if self.sizeperevent is None and self.mainsample.sizeperevent is not None:
-    #  self.sizeperevent = self.mainsample.sizeperevent
     if (self.matchefficiency, self.matchefficiencyerror) != (self.mainsample.matchefficiency, self.mainsample.matchefficiencyerror) and self.mainsample.matchefficiency is not None is not self.mainsample.matchefficiencyerror:
       raise ValueError("Match efficiency doesn't match!\n{}, {}\n{} +/- {}, {} +/- {}".format(
         self, self.mainsample, self.matchefficiency, self.matchefficiencyerror, self.mainsample.matchefficiency, self.mainsample.matchefficiencyerror
@@ -113,6 +109,12 @@ class VariationSample(MCSampleBase):
   def fragmentname(self): return self.mainsample.fragmentname
 
 class ExtensionSample(VariationSample):
+  def __init__(self, *args, **kwargs):
+    super(ExtensionSample, self).__init__(*args, **kwargs)
+    if self.timeperevent is None and self.mainsample.timeperevent is not None:
+      self.timeperevent = self.mainsample.timeperevent
+    if self.sizeperevent is None and self.mainsample.sizeperevent is not None:
+      self.sizeperevent = self.mainsample.sizeperevent
   @property
   def datasetname(self): return self.mainsample.datasetname
   @property
