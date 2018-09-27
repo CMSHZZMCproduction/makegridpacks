@@ -2361,15 +2361,25 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
+                        "matchefficiency": 0.30785882352941174,
+                        "matchefficiencyerror": 0.0022391267641623585,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03070",
                         "sizeperevent": 729.7156129032259,
                         "timeperevent": 13.546959859003241
                     },
                     "a3": {
-                        "prepid": "HIG-RunIIFall17wmLHEGS-03083"
+                        "matchefficiency": 0.31354166666666666,
+                        "matchefficiencyerror": 0.004734990429532694,
+                        "prepid": "HIG-RunIIFall17wmLHEGS-03083",
+                        "sizeperevent": 707.4845937541527,
+                        "timeperevent": 7.515609809735453
                     },
                     "a3mix": {
-                        "prepid": "HIG-RunIIFall17wmLHEGS-03084"
+                        "matchefficiency": 0.3307291666666667,
+                        "matchefficiencyerror": 0.004801772513252256,
+                        "prepid": "HIG-RunIIFall17wmLHEGS-03084",
+                        "sizeperevent": 688.7914229921257,
+                        "timeperevent": 6.758483790300642
                     }
                 }
             }

@@ -304,7 +304,3 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
   @property
   def nevents(self):
     return 500000
-
-  @property
-  def dovalidation(self):
-    return False
