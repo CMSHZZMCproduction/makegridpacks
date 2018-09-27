@@ -2372,14 +2372,16 @@
                         "matchefficiencyerror": 0.004734990429532694,
                         "nthreads": 4,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03083",
-                        "sizeperevent": 707.4845937541527
+                        "sizeperevent": 722.7448888888889,
+                        "timeperevent": 10.62803164602703
                     },
                     "a3mix": {
                         "matchefficiency": 0.3307291666666667,
                         "matchefficiencyerror": 0.004801772513252256,
                         "nthreads": 4,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03084",
-                        "sizeperevent": 688.7914229921257
+                        "sizeperevent": 730.3004159999999,
+                        "timeperevent": 7.99162477723346
                     }
                 }
             }
