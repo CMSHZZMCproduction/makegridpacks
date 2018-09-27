@@ -1,4 +1,7 @@
-from utilities import cache, LSB_JOBID, restful
+from collections import namedtuple
+import os
+
+from utilities import cache, here, LSB_JOBID, restful
 
 from mcsamplebase import MCSampleBase
 
@@ -97,8 +100,6 @@ class ClonedRequest(MCSampleBase):
   def extension(self):
     if self.newcampaign not in self.originalprepid: return 0
     assert False
-  
-    
 
   @property
   def nevents(self):
@@ -157,3 +158,24 @@ class ClonedRequest(MCSampleBase):
     assert len(prepids) == 1, prepids
     self.prepid = prepids.pop()
 
+class RunIIFall17DRPremix_nonsubmitted(ClonedRequest):
+  @classmethod
+  def allsamples(cls):
+    print ">>>>>>>>>>>>>>>>>>>>>>>>>"
+    cls.__inallsamples = True
+    requests = []
+    Request = namedtuple("Request", "dataset prepid url")
+    with open(os.path.join(here, "data", "ListRunIIFall17DRPremix_nonsubmitted.txt")) as f:
+      next(f); next(f); next(f)  #cookie and header
+      for line in f:
+        requests.append(Request(*line.split()))
+
+    from . import allsamples
+    for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 != cls, __docheck=False):
+      if any(_.prepid == s.prepid for _ in requests):
+        print s
+        yield cls(s.year, s.prepid, s.campaign)
+    print "<<<<<<<<<<<<<<<<<<<<<<<<<"
+
+  def responsible(self):
+    return "hroskes"

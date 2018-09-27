@@ -285,7 +285,6 @@ class MCSampleBase(JsonDict):
         os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
         subprocess.check_call(["./"+self.prepid], stderr=subprocess.STDOUT)
         with open(self.prepid+"_rt.xml") as f:
-          self.sizeperevent, self.timeperevent = self.readsizeandtime(f)
           nevents = totalsize = None
           for line in f:
             line = line.strip()
