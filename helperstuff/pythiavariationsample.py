@@ -145,6 +145,11 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSample):
         yield cls(mainsample=s, variation="RunIIFall17DRPremix_nonsubmitted")
 
   @property
+  def doublevalidationtime(self):
+    if self.prepid in ("HIG-RunIIFall17wmLHEGS-03116", "HIG-RunIIFall17wmLHEGS-03155"): return True
+    return super(RunIIFall17DRPremix_nonsubmitted, self).doublevalidationtime
+
+  @property
   def responsible(self):
     return "hroskes"
 
