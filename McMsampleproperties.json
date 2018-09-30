@@ -2829,10 +2829,9 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "matchefficiency": 1,
                             "matchefficiencyerror": 0,
-                            "nthreads": 1,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03116",
-                            "sizeperevent": 716.121088,
-                            "timeperevent": 238.41141704593952
+                            "resettimeperevent": true,
+                            "sizeperevent": 716.121088
                         },
                         "finished": true,
                         "matchefficiency": 1,
@@ -5538,10 +5537,9 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "matchefficiency": 0.15411950306736202,
                             "matchefficiencyerror": 0.0003805893835507585,
-                            "nthreads": 1,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03155",
-                            "sizeperevent": 950.6633142857144,
-                            "timeperevent": 52.769334684228305
+                            "resettimeperevent": true,
+                            "sizeperevent": 950.6633142857144
                         },
                         "finished": true,
                         "matchefficiency": 0.15411950306736202,
