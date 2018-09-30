@@ -68,6 +68,12 @@ def LSB_JOBID():
 def LSB_QUEUE():
   return os.environ.get("LSB_QUEUE", None)
 
+def queuematches(queue1, queue2=None):
+  if queue2 is None: queue2 = LSB_QUEUE()
+  if queue1 == queue2: return True
+  if queue1 == "cmscaf" + queue2 or "cmscaf" + queue1 == queue2: return True
+  return False
+
 class KeepWhileOpenFile(object):
   def __init__(self, name, message=None, deleteifjobdied=False):
     logging.debug("creating KeepWhileOpenFile {}".format(name))

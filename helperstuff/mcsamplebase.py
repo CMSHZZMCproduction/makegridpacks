@@ -3,7 +3,7 @@ import abc, filecmp, glob, os, pycurl, re, shutil, stat, subprocess
 from McMScripts.manageRequests import createLHEProducer
 
 import patches
-from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, LSB_JOBID, LSB_QUEUE, mkdir_p, restful, wget
+from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, queuematches, restful, wget
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
@@ -197,7 +197,7 @@ class MCSampleBase(JsonDict):
                 shutil.rmtree(_)
         if not self.makinggridpacksubmitsjob and self.creategridpackqueue is not None:
           if not LSB_JOBID(): self.submitLSF(self.creategridpackqueue); return "need to create the gridpack, submitting to LSF"
-          if LSB_QUEUE() != self.creategridpackqueue: return "need to create the gridpack, but on the wrong queue"
+          if not queuematches(self.creategridpackqueue): return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))
 
@@ -254,7 +254,7 @@ class MCSampleBase(JsonDict):
                 self.submitLSF(self.filterefficiencyqueue)
                 jobsrunning = True
                 continue
-              if LSB_QUEUE() != self.filterefficiencyqueue:
+              if not queuematches(self.filterefficiencyqueue):
                 jobsrunning = True
                 continue
               self.dofilterjob(i)
@@ -275,7 +275,7 @@ class MCSampleBase(JsonDict):
     with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), message=LSB_JOBID(), deleteifjobdied=True) as kwof:
       if not kwof: return "job to get the size and time is already running"
       if not LSB_JOBID(): self.submitLSF(self.timepereventqueue); return "need to get time and size per event, submitting to LSF"
-      if LSB_QUEUE() != self.timepereventqueue: return "need to get time and size per event, but on the wrong queue"
+      if not queuematches(self.timepereventqueue): return "need to get time and size per event, but on the wrong queue"
       with cdtemp():
         wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
         with open(self.prepid) as f:
