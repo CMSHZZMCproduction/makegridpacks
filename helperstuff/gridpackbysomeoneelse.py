@@ -171,7 +171,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     if the first tarball is copied to eos and then is found to be bad, add something like
     if self.(whatever) == (whatever): v += 1
     """
-    if self.year == 2017: v += 1  #tarball eventually used for HTT was different than the original one for a3 and a3mix, and chmod u+x runcmsgrid.sh
+    if self.year in (2017, 2018): v += 1  #tarball eventually used for HTT was different than the original one for a3 and a3mix, and chmod u+x runcmsgrid.sh
     return v
 
   @property
@@ -191,32 +191,32 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
       return [script]+cards
   @property
   def madgraphcards(self):
-    if self.__coupling == "SM":
-      return [
-        os.path.join(
-          "ggh012j_5f_NLO_FXFX_125",
-          _,
-        ) for _ in (
-          "ggh012j_5f_NLO_FXFX_125_extramodels.dat",
-          "ggh012j_5f_NLO_FXFX_125_customizecards.dat",
-          "ggh012j_5f_NLO_FXFX_125_proc_card.dat",
-          "ggh012j_5f_NLO_FXFX_125_run_card.dat",
-        )
-      ]
-    elif self.__coupling == "a3":
-      folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/GluGluToPseudoscalarHToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8/")
-      return [
-        os.path.join(folder, "GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_"+_+".dat")
-          for _ in ("extramodels", "param_card", "proc_card", "run_card")
-      ]
-    elif self.__coupling == "a3mix":
-      folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/GluGluToMaxmixHToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8/")
-      return [
-        os.path.join(folder, "GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_"+_+".dat")
-          for _ in ("extramodels", "param_card", "proc_card", "run_card")
-      ]
-    else:
-      assert False, self
+    if self.year in (2017, 2018):
+      if self.__coupling == "SM":
+        return [
+          os.path.join(
+            "ggh012j_5f_NLO_FXFX_125",
+            _,
+          ) for _ in (
+            "ggh012j_5f_NLO_FXFX_125_extramodels.dat",
+            "ggh012j_5f_NLO_FXFX_125_customizecards.dat",
+            "ggh012j_5f_NLO_FXFX_125_proc_card.dat",
+            "ggh012j_5f_NLO_FXFX_125_run_card.dat",
+          )
+        ]
+      elif self.__coupling == "a3":
+        folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/GluGluToPseudoscalarHToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8/")
+        return [
+          os.path.join(folder, "GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_"+_+".dat")
+            for _ in ("extramodels", "param_card", "proc_card", "run_card")
+        ]
+      elif self.__coupling == "a3mix":
+        folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/GluGluToMaxmixHToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8/")
+        return [
+          os.path.join(folder, "GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_"+_+".dat")
+            for _ in ("extramodels", "param_card", "proc_card", "run_card")
+        ]
+    assert False, self
 
   @property
   def decaycard(self):
@@ -224,14 +224,15 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
 
   @property
   def originaltarball(self):
-    if self.__coupling == "SM":
+    if self.year in (2017, 2018):
+      if self.__coupling == "SM":
         #from HIG-RunIIFall17wmLHEGS-01577
         return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/ggh012j_5f_NLO_FXFX_125/v2/ggh012j_5f_NLO_FXFX_125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
-    if self.__coupling == "a3":
+      if self.__coupling == "a3":
         #from HIG-RunIIFall17wmLHEGS-01583
         #why is it in pre2017? no idea but it uses 306000
         return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/pre2017/13TeV/madgraph/v2.4.2/GluGluToPseudoscalarHToTauTau/v1/GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz"
-    if self.__coupling == "a3mix":
+      if self.__coupling == "a3mix":
         #from HIG-RunIIFall17wmLHEGS-01580
         #why is it in pre2017? no idea but it uses 306000
         return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/pre2017/13TeV/madgraph/v2.4.2/GluGluToMaxmixHToTauTau/v1/GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz"
@@ -239,8 +240,9 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
 
   @classmethod
   def allsamples(cls):
-    for coupling in "SM", "a3", "a3mix":
-      yield cls(2017, coupling)
+    for year in 2017, 2018:
+      for coupling in "SM", "a3", "a3mix":
+        yield cls(year, coupling)
 
   @property
   def generators(self):

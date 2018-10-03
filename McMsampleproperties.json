@@ -5727,7 +5727,19 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
+                        "matchefficiency": 0.30785882352941174,
+                        "matchefficiencyerror": 0.0022391267641623585,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00034"
+                    },
+                    "a3": {
+                        "matchefficiency": 0.31354166666666666,
+                        "matchefficiencyerror": 0.004734990429532694,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00035"
+                    },
+                    "a3mix": {
+                        "matchefficiency": 0.3307291666666667,
+                        "matchefficiencyerror": 0.004801772513252256,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00036"
                     }
                 }
             }
