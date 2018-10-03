@@ -28,7 +28,7 @@ class POWHEGJHUGenMCSample(POWHEGMCSample):
 
     with cdtemp():
       subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
-      if glob.glob("core.*") and self.cvmfstarball != "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/HJJ_M125_13TeV/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_13TeV_M125.tgz":
+      if glob.glob("core.*"):
         raise ValueError("There is a core dump in the tarball\n{}".format(self))
       try:
         with open("JHUGen.input") as f:
@@ -43,4 +43,9 @@ class POWHEGJHUGenMCSample(POWHEGMCSample):
 
   @property
   def generators(self):
-    return super(POWHEGJHUGenMCSample, self).generators + ["JHUGen v7.0.11"]
+    assert re.match(r"v[0-9]+[.][0-9]+[.][0-9]+", self.JHUGenversion), self.JHUGenversion
+    return super(POWHEGJHUGenMCSample, self).generators + ["JHUGen {}".format(self.JHUGenversion)]
+
+  @abc.abstractproperty
+  def JHUGenversion(self):
+    pass

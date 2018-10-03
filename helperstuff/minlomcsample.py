@@ -156,3 +156,9 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   @property
   def responsible(self):
      return "hroskes"
+
+  @property
+  def JHUGenversion(self):
+    if self.year in (2017, 2018):
+      return "v7.0.11"
+    assert False, self

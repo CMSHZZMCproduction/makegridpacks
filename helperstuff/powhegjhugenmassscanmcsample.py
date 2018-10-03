@@ -80,29 +80,31 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGe
   def tarballversion(self):
     v = 1
 
-    v+=1 #JHUGen version
-    if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 400: v+=1
-    if self.productionmode == "ggH" and self.decaymode == "4l" and self.mass in (300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000): v+=1  #core dumps in v2
-    if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass in (300, 400, 1000, 1500): v+=1   #core dumps in v1
-    if self.productionmode == "ggH" and self.decaymode == "2l2q" and self.mass == 750: v+=1   #core dumps in v1
-    if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass == 145: v+=1   #core dumps in v2
-    if self.decaymode == "4l": v+=1  #v1 messed up the JHUGen decay card
-    if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 2500: v+=1  #v1 is corrupted
-    if self.productionmode == "ggH" and self.decaymode == "2l2q" and self.mass == 800: v+=1  #same
-    if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass == 125: v+=1  #trimming pwg-rwl.dat
-    if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (125, 165, 170): v+=1  #same (and changing the pdfs for 125)
+    if self.year in (2017, 2018):
+      v+=1 #JHUGen version
+      if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 400: v+=1
+      if self.productionmode == "ggH" and self.decaymode == "4l" and self.mass in (300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000): v+=1  #core dumps in v2
+      if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass in (300, 400, 1000, 1500): v+=1   #core dumps in v1
+      if self.productionmode == "ggH" and self.decaymode == "2l2q" and self.mass == 750: v+=1   #core dumps in v1
+      if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass == 145: v+=1   #core dumps in v2
+      if self.decaymode == "4l": v+=1  #v1 messed up the JHUGen decay card
+      if self.productionmode == "ggH" and self.decaymode == "2l2nu" and self.mass == 2500: v+=1  #v1 is corrupted
+      if self.productionmode == "ggH" and self.decaymode == "2l2q" and self.mass == 800: v+=1  #same
+      if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass == 125: v+=1  #trimming pwg-rwl.dat
+      if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (125, 165, 170): v+=1  #same (and changing the pdfs for 125)
 
     return v
 
   def cvmfstarball_anyversion(self, version):
-    folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2", self.powhegprocess+"_ZZ_NNPDF31_13TeV")
-    tarballname = os.path.basename(self.powhegcard.replace("_ZZ", "")).replace(".input", ".tgz")
-    if self.decaymode != "4l":
-      decaymode = self.decaymode
-      if "ZZ2l2any_withtaus.input" in self.decaycard: decaymode == "2l2X"
-      elif "ZZany_filter2lOSSF.input" in self.decaycard: decaymode = "_filter2l"
-      tarballname = tarballname.replace("NNPDF31", "ZZ"+self.decaymode+"_NNPDF31")
-    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
+    if self.year in (2017, 2018):
+      folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2", self.powhegprocess+"_ZZ_NNPDF31_13TeV")
+      tarballname = os.path.basename(self.powhegcard.replace("_ZZ", "")).replace(".input", ".tgz")
+      if self.decaymode != "4l":
+        decaymode = self.decaymode
+        if "ZZ2l2any_withtaus.input" in self.decaycard: decaymode == "2l2X"
+        elif "ZZany_filter2lOSSF.input" in self.decaycard: decaymode = "_filter2l"
+        tarballname = tarballname.replace("NNPDF31", "ZZ"+self.decaymode+"_NNPDF31")
+      return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
   @property
   @cache
@@ -140,11 +142,17 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGe
     if self.decaymode == "2l2q" and self.mass == 125:
       if self.productionmode in ("VBF", "WplusH", "WminusH"): dm = "2L2X"
       if self.productionmode in ("ZH", "ttH"): dm = "Filter"
-    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV7011_"]
+    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGen"+self.JHUGenversion.replace(".", "").replace("v", "V")+"_"]
     if any(_ not in result for _ in searchfor):
       raise ValueError("Dataset name doesn't make sense:\n{}\n{}\n{}".format(result, searchfor, self))
 
     return result
+
+  @property
+  def JHUGenversion(self):
+    if self.year in (2017, 2018):
+      return "v7.0.11"
+    assert False, self
 
   @property
   def nfinalparticles(self):
@@ -172,15 +180,22 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGe
   @property
   def tags(self):
     result = ["HZZ"]
-    if self.productionmode in ("ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH") and self.decaymode == "4l" and self.mass in (120, 125, 130):
-      result.append("Fall17P1S")
-    else:
-      result.append("Fall17P2A")
+    if self.year == 2017:
+      if self.productionmode in ("ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH") and self.decaymode == "4l" and self.mass in (120, 125, 130):
+        result.append("Fall17P1S")
+      else:
+        result.append("Fall17P2A")
     return result
 
   @property
   def genproductionscommit(self):
     return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2018:
+      return "7d0525c9f6633a9ee00d4e79162d82e369250ccc"
+    return super(POWHEGJHUGenMassScanMCSample, self).genproductionscommitforfragment
 
   @classmethod
   def getmasses(cls, productionmode, decaymode):
@@ -205,7 +220,8 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGe
     for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
       for decaymode in "4l", "2l2q", "2l2nu":
         for mass in cls.getmasses(productionmode, decaymode):
-          yield cls(2017, productionmode, decaymode, mass)
+          for year in 2017, 2018:
+            yield cls(year, productionmode, decaymode, mass)
 
   @property
   def responsible(self):

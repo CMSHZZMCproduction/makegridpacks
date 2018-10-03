@@ -88,7 +88,14 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCam
 
   @property
   def responsible(self):
-     return "wahung"
+     return "hroskes"
 
   @property
   def nevents(self): return 500000
+
+  @property
+  def JHUGenversion(self):
+    if self.year in (2017, 2018):
+      return "v7.0.11"
+    assert False, self
+
