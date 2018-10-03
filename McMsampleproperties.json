@@ -2829,10 +2829,10 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "matchefficiency": 1,
                             "matchefficiencyerror": 0,
-                            "nthreads": 4,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03116",
                             "sizeperevent": 810.8919466666666,
-                            "timeperevent": 59.60285426148488
+                            "timeperevent": 163.2056194958905
                         },
                         "finished": true,
                         "matchefficiency": 1,
@@ -5538,9 +5538,10 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "matchefficiency": 0.15411950306736202,
                             "matchefficiencyerror": 0.0003805893835507585,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03155",
                             "sizeperevent": 1022.7814400000001,
-                            "timeperevent": 64.24835845444149
+                            "timeperevent": 65.96001503888343
                         },
                         "finished": true,
                         "matchefficiency": 0.15411950306736202,
@@ -5718,6 +5719,15 @@
                             "sizeperevent": 625.3002666666666,
                             "timeperevent": 5.720856526639168
                         }
+                    }
+                }
+            }
+        },
+        "Thomas": {
+            "HJJ": {
+                "madgraphJHUGen": {
+                    "SM": {
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00034"
                     }
                 }
             }
