@@ -548,20 +548,25 @@ class MCSampleBase(JsonDict):
           result.remove(_)
 
       if result != originalresult:
+        print result, originalresult, self.value["badprepid"]
         self.badprepid = result
+        print result, originalresult, self.value["badprepid"]
 
       return result
 
   @badprepid.setter
   def badprepid(self, value):
+    print value, bool(value)
     if value:
       with cd(here), self.writingdict():
         self.value["badprepid"] = value
     elif self.value["badprepid"]:
+      print "heshy 1"
       del self.badprepid
   @badprepid.deleter
   def badprepid(self):
     with cd(here), self.writingdict():
+      print "heshy 2"
       del self.value["badprepid"]
   @property
   def finished(self):
