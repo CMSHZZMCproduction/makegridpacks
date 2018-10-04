@@ -57,7 +57,7 @@ class GenericFilter(FilterImplementation):
 
   def findmatchefficiency(self):
     result = super(GenericFilter, self).findmatchefficiency()
-    if self.matchefficiency is not None is not self.matchefficiencyerror:
+    if self.matchefficiency is not None:
       if self.sizeperevent is None and len(self.__sizesperevent) == 100:
         self.sizeperevent = sum(self.__sizesperevent[i] * self.__nevents[i] for i in range(100)) / sum(self.__nevents[i] for i in range(100))
       if self.timeperevent is None and len(self.__timesperevent) == 100:

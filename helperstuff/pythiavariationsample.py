@@ -17,11 +17,9 @@ class VariationSample(MCSampleBase):
     super(VariationSample, self).__init__(year=mainsample.year)
     if self.matchefficiency is None:
       self.matchefficiency = self.mainsample.matchefficiency
-    if self.matchefficiencyerror is None:
-      self.matchefficiencyerror = self.mainsample.matchefficiencyerror
-    if (self.matchefficiency, self.matchefficiencyerror) != (self.mainsample.matchefficiency, self.mainsample.matchefficiencyerror) and self.mainsample.matchefficiency is not None is not self.mainsample.matchefficiencyerror:
-      raise ValueError("Match efficiency doesn't match!\n{}, {}\n{} +/- {}, {} +/- {}".format(
-        self, self.mainsample, self.matchefficiency, self.matchefficiencyerror, self.mainsample.matchefficiency, self.mainsample.matchefficiencyerror
+    if (self.matchefficiencynominal, self.matchefficiencyerror) != (self.mainsample.matchefficiencynominal, self.mainsample.matchefficiencyerror) and self.mainsample.matchefficiencynominal is not None is not self.mainsample.matchefficiencyerror:
+      raise ValueError("Match efficiency doesn't match!\n{}, {}\n{}, {}".format(
+        self, self.mainsample, self.matchefficiency, self.mainsample.matchefficiency
       ))
   @property
   def identifiers(self):

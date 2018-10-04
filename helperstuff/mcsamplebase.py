@@ -1,5 +1,7 @@
 import abc, filecmp, glob, os, pycurl, re, shutil, stat, subprocess
 
+import uncertainties
+
 from McMScripts.manageRequests import createLHEProducer
 
 import patches
@@ -235,7 +237,7 @@ class MCSampleBase(JsonDict):
   def findmatchefficiency(self):
     #figure out the filter efficiency
     if not self.hasfilter:
-      self.matchefficiency, self.matchefficiencyerror = 1, 0
+      self.matchefficiency = 1
       return "filter efficiency is set to 1 +/- 0"
     else:
       if not self.implementsfilter: raise ValueError("Can't find match efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
@@ -263,10 +265,9 @@ class MCSampleBase(JsonDict):
             eventsaccepted += accepted
 
         if jobsrunning: return "some filter efficiency jobs are still running"
-        self.matchefficiency = 1.0*eventsaccepted / eventsprocessed
-        self.matchefficiencyerror = (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5
+        self.matchefficiency = uncertainties.ufloat(1.0*eventsaccepted / eventsprocessed, (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5)
         #shutil.rmtree(self.workdir)
-        return "match efficiency is measured to be {} +/- {}".format(self.matchefficiency, self.matchefficiencyerror)
+        return "match efficiency is measured to be {}".format(self.matchefficiency)
 
   implementsfilter = False
 
@@ -465,15 +466,28 @@ class MCSampleBase(JsonDict):
       del self.value["sizeperevent"]
   @property
   def matchefficiency(self):
-    with cd(here):
-      return self.value.get("matchefficiency")
+    if self.matchefficiencynominal is None or self.matchefficiencyerror is None: return None
+    return uncertainties.ufloat(self.matchefficiencynominal, self.matchefficiencyerror)
   @matchefficiency.setter
   def matchefficiency(self, value):
+    nominal, error = uncertainties.nominal_value(value), uncertainties.std_dev(value)
+    if error == 0 and nominal != 1: raise ValueError("Are you sure you want to set the matchefficiency to {} with no error?".format(uncertainties.ufloat(nominal, error)))
+    self.matchefficiencynominal = nominal
+    self.matchefficiencyerror = error
+  @matchefficiency.deleter
+  def matchefficiency(self):
+    del self.matchefficiencynominal, self.matchefficiencyerror
+  @property
+  def matchefficiencynominal(self):
+    with cd(here):
+      return self.value.get("matchefficiency")
+  @matchefficiencynominal.setter
+  def matchefficiencynominal(self, value):
     with cd(here), self.writingdict():
       self.value["matchefficiency"] = value
     self.needsupdate = True
-  @matchefficiency.deleter
-  def matchefficiency(self):
+  @matchefficiencynominal.deleter
+  def matchefficiencynominal(self):
     with cd(here), self.writingdict():
       del self.value["matchefficiency"]
   @property
@@ -636,10 +650,10 @@ class MCSampleBase(JsonDict):
     req["time_event"] = [(self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent)]
     req["size_event"] = [self.sizeperevent if self.sizeperevent is not None else 600]
     req["generators"] = self.generators
-    if self.matchefficiency is not None is not self.matchefficiencyerror:
+    if self.matchefficiency is not None:
       req["generator_parameters"][0].update({
-        "match_efficiency_error": self.matchefficiencyerror,
-        "match_efficiency": self.matchefficiency,
+        "match_efficiency_error": self.matchefficiency.std_dev,
+        "match_efficiency": self.matchefficiency.nominal_value,
         "filter_efficiency": self.filterefficiency,
         "filter_efficiency_error": self.filterefficiencyerror,
         "cross_section": self.xsec,
