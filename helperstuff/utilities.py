@@ -397,3 +397,33 @@ if not LSB_JOBID():
   import rest
 
 assert not os.path.exists(os.path.join(here, "helperstuff", "rest.pyc"))
+
+def submitLSF(queue):
+  jobname = "makegridpacks"
+  if __pendingjobsdct[queue, jobname] > 0:
+    __pendingjobsdct[queue, jobname] -= 1
+    return False
+  with cd(here):
+    job = "cd "+here+" && eval $(scram ru -sh) && ./makegridpacks.py"
+    pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
+    subprocess.check_call(["bsub", "-q", queue, "-J", jobname], stdin=pipe.stdout)
+    return True
+
+class KeyDefaultDict(collections.defaultdict):
+  """
+  http://stackoverflow.com/a/2912455
+  """
+  def __missing__(self, key):
+    if self.default_factory is None:
+      raise KeyError( key )
+    else:
+      ret = self[key] = self.default_factory(key)
+      return ret
+
+
+def __npendingjobs(queueandjobname):
+  queue, jobname = queueandjobname
+  output = subprocess.check_output(["bjobs", "-q", queue, "-J", jobname], stderr=subprocess.STDOUT)
+  return len(list(line for line in output.split("\n") if "PEND" in line.split()))
+
+__pendingjobsdct = KeyDefaultDict(__npendingjobs)
