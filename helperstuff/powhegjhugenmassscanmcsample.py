@@ -74,7 +74,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGe
 
   @property
   def doublevalidationtime(self):
-    return self.productionmode == "ZH"
+    return self.productionmode in ("ZH", "ttH")
 
   @property
   def tarballversion(self):
@@ -92,6 +92,10 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGe
       if self.productionmode == "ggH" and self.decaymode == "2l2q" and self.mass == 800: v+=1  #same
       if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass == 125: v+=1  #trimming pwg-rwl.dat
       if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (125, 165, 170): v+=1  #same (and changing the pdfs for 125)
+
+    if self.year == 2018:
+      if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass not in (125, 165, 170): v+=1  #trimming pwg-rwl.dat for these as well
+      if self.productionmode == "ZH" and self.decaymode == "2l2q" and self.mass == 125: v+=1  #same
 
     return v
 

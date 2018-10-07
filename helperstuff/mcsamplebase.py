@@ -230,6 +230,8 @@ class MCSampleBase(JsonDict):
           patches.dopatch(**kwargs)
           shutil.move(os.path.basename(self.tmptarball), self.tmptarball)
 
+      if self.timeperevent is not None:
+        del self.timeperevent
       shutil.move(self.tmptarball, self.foreostarball)
       shutil.rmtree(os.path.dirname(self.tmptarball))
       return "tarball is created and moved to this folder, to be copied to eos"
