@@ -78,3 +78,8 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   @property
   def responsible(self):
      return "skeshri"
+
+  @property
+  def JHUGenversion(self):
+    if self.year == 2017: return "v7.0.11"
+    assert False, self

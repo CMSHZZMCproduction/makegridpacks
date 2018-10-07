@@ -2,13 +2,11 @@ import abc, contextlib, glob, os, re, subprocess, urllib
 
 from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
 
-from mcsamplebase import MCSampleBase
+from helperstuff.mcsamplebase import MCSampleBase
+from jhugenmcsample import JHUGenMCSample
+from jhugendecaymcsample import JHUGenDecayMCSample
 
-class JHUGenJHUGenMCSample(MCSampleBase):
-  @abc.abstractproperty
-  def productioncard(self): pass
-  @property
-  def hasfilter(self): return "filter" in self.decaycard.lower()
+class JHUGenJHUGenMCSample(JHUGenMCSample, JHUGenDecayMCSample):
   @property
   def tmptarball(self):
     return os.path.join(here, "workdir",self.productionmode+"_"+self.decaymode, os.path.basename(self.productioncard).replace(".input", ""),
@@ -17,24 +15,11 @@ class JHUGenJHUGenMCSample(MCSampleBase):
   def shortname(self):
     return re.sub(r"\W", "", str(self)).replace(str(self.year), "", 1)
   @property
-  def linkmela(self): return False
-  @property
   def makegridpackcommand(self):
-    args = {
-      "--card": self.productioncard,
-      "--decay-card": self.decaycard,
-      "--name": self.shortname,
-      "-n": "10",
-      "-s": str(hash(self) % 2147483647),
-    }
-    if self.linkmela: args["--link-mela"] = None
-    return ["./install.py"] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
+    return super(JHUGenJHUGenMCSample, self).makegridpackcommand + ["--decay-card", self.decaycard]
   @property
   def makinggridpacksubmitsjob(self):
     return None
-  @abc.abstractproperty
-  def productioncardusesscript(self):
-    pass
 
   @property
   @cache
@@ -63,12 +48,6 @@ class JHUGenJHUGenMCSample(MCSampleBase):
         wget(productioncard)
       with open(os.path.basename(productioncard)) as f:
         productiongitcard = f.read()
-        productiongitcardlines = [re.sub(" *([#!].*)?$", "", line) for line in productiongitcard.split("\n")]
-        productiongitcardlines = [re.sub("(iseed|ncall2|fakevirt) *", r"\1 ", line) for line in productiongitcardlines
-                              if line and all(_ not in line for _ in
-                              ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets", "xgriditeration")
-                              )]
-        productiongitcard = "\n".join(line for line in productiongitcardlines)
       with contextlib.closing(urllib.urlopen(decaycard)) as f:
         decaygitcard = f.read()
 
@@ -81,12 +60,6 @@ class JHUGenJHUGenMCSample(MCSampleBase):
       try:
         with open(os.path.join(self.shortname+"_JHUGen", "JHUGen.input")) as f:
           productioncard = f.read()
-          productioncardlines = [re.sub(" *([#!].*)?$", "", line) for line in productioncard.split("\n")]
-          productioncardlines = [re.sub("(iseed|ncall2|fakevirt) *", r"\1 ", line) for line in productioncardlines
-                             if line and all(_ not in line for _ in
-                             ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets", "xgriditeration")
-                             )]
-          productioncard = "\n".join(line for line in productioncardlines)
       except IOError:
         raise ValueError("no JHUGen.input in the tarball\n{}\n{}".format(self, self.cvmfstarball))
       try:
@@ -106,13 +79,3 @@ class JHUGenJHUGenMCSample(MCSampleBase):
       raise ValueError("decaycard != decaygitcard\n{}\n{}\n{}".format(self, decaycard, decaygitcard))
 
     return result
-
-  @property
-  def generators(self):
-    return ["JHUGen v7.0.11"]
-
-  @property
-  def makegridpackscriptstolink(self):
-    for filename in glob.iglob(os.path.join(genproductions, "bin", "JHUGen", "*")):
-      if (filename.endswith(".py") or filename.endswith(".sh") or filename.endswith("patches")) and not os.path.exists(os.path.basename(filename)):
-        yield filename

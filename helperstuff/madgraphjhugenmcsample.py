@@ -5,10 +5,6 @@ from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, mak
 from madgraphmcsample import MadGraphMCSample
 
 class MadGraphJHUGenMCSample(MadGraphMCSample):
-  @abc.abstractproperty
-  def decaycard(self): pass
-  @property
-  def hasfilter(self): return "filter" in self.decaycard.lower()
   @property
   def makegridpackcommand(self): assert False, self
   @property
@@ -38,7 +34,3 @@ class MadGraphJHUGenMCSample(MadGraphMCSample):
       raise ValueError("JHUGencard != JHUGengitcard\n{}\n{}\n{}".format(self, JHUGencard, JHUGengitcard))
 
     return result
-
-  @property
-  def generators(self):
-    return super(MadGraphJHUGenMCSample, self).generators + ["JHUGen v7.1.4"]

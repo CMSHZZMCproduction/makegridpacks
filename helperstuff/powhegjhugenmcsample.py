@@ -3,12 +3,9 @@ import abc, contextlib, glob, os, re, subprocess, urllib
 from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
 
 from powhegmcsample import POWHEGMCSample
+from jhugendecaymcsample import JHUGenDecayMCSample
 
-class POWHEGJHUGenMCSample(POWHEGMCSample):
-  @abc.abstractproperty
-  def decaycard(self): pass
-  @property
-  def hasfilter(self): return "filter" in self.decaycard.lower()
+class POWHEGJHUGenMCSample(POWHEGMCSample, JHUGenDecayMCSample):
   @property
   def makegridpackcommand(self):
     return super(POWHEGJHUGenMCSample, self).makegridpackcommand + ["-g", self.decaycard]
@@ -40,12 +37,3 @@ class POWHEGJHUGenMCSample(POWHEGMCSample):
       raise ValueError("JHUGencard != JHUGengitcard\n{}\n{}\n{}".format(self, JHUGencard, JHUGengitcard))
 
     return result
-
-  @property
-  def generators(self):
-    assert re.match(r"v[0-9]+[.][0-9]+[.][0-9]+", self.JHUGenversion), self.JHUGenversion
-    return super(POWHEGJHUGenMCSample, self).generators + ["JHUGen {}".format(self.JHUGenversion)]
-
-  @abc.abstractproperty
-  def JHUGenversion(self):
-    pass

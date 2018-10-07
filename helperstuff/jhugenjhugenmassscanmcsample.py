@@ -85,7 +85,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     dm = self.decaymode.upper().replace("NU", "Nu")
     if self.decaymode == "2l2q" and self.mass == 125:
       if self.productionmode in ("bbH", "tqH"): dm = "2L2X"
-    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV7011_"]
+    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGen{}_".format(self.JHUGenversion.replace("v", "V").replace(".", ""))]
     shouldntbethere = ["powheg"]
     if any(_ not in result for _ in searchfor) or any(_.lower() in result.lower() for _ in shouldntbethere):
       raise ValueError("Dataset name doesn't make sense:\n{}\n{}\nNOT {}\n{}".format(result, searchfor, shouldntbethere, self))
@@ -164,3 +164,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
           if self.mass == 125: return 500000
 
     raise ValueError("No nevents for {}".format(self))
+
+  @property
+  def JHUGenversion(self):
+    if self.year in (2017, 2018): return "v7.0.11"

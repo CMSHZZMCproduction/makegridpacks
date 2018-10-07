@@ -6971,10 +6971,8 @@
                 "115": {
                     "matchefficiency": 0.151500269022,
                     "matchefficiencyerror": 0.000317064542205,
-                    "needsupdate": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00255",
-                    "resettimeperevent": true,
                     "sizeperevent": 661.7855999999999
                 },
                 "120": {
@@ -7039,10 +7037,8 @@
                 "150": {
                     "matchefficiency": 0.148952618917,
                     "matchefficiencyerror": 0.000313051550898,
-                    "needsupdate": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00264",
-                    "resettimeperevent": true,
                     "sizeperevent": 875.1615999999999
                 },
                 "1500": {
@@ -7110,10 +7106,8 @@
                 "200": {
                     "matchefficiency": 0.148699054776,
                     "matchefficiencyerror": 4.79851663246e-05,
-                    "needsupdate": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00272",
-                    "resettimeperevent": true,
                     "sizeperevent": 670.9443047619048
                 },
                 "2000": {
@@ -7153,10 +7147,8 @@
                 "2500": {
                     "matchefficiency": 0.148699054776,
                     "matchefficiencyerror": 4.79851663246e-05,
-                    "needsupdate": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00291",
-                    "resettimeperevent": true,
                     "sizeperevent": 852.3460923076923
                 },
                 "270": {
