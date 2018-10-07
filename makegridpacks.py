@@ -8,6 +8,7 @@ if __name__ == "__main__":
   g = parser.add_mutually_exclusive_group()
   g.add_argument("--suppressfinished", type=eval, help='example (and default): lambda x: x.year==2017', default='lambda x: x.year==2017')
   g.add_argument("--dontsuppressfinished", action="store_const", dest="suppressfinished", const=lambda x: False)
+  parser.add_argument("--cprofile", action="store_true")
   args = parser.parse_args()
 
 from helperstuff import allsamples
@@ -22,4 +23,8 @@ def makegridpacks(args):
       sys.stdout.flush()
 
 if __name__ == "__main__":
-  makegridpacks(args)
+  if args.cprofile:
+    import cProfile
+    cProfile.run("makegridpacks(args)")
+  else:
+    makegridpacks(args)
