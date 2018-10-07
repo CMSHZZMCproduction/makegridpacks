@@ -29,8 +29,9 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
     return v
 
   def cvmfstarball_anyversion(self, version):
-    folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2", self.powhegprocess+"_ZZ_NNPDF31_13TeV", "anomalouscouplings")
-    tarballname = self.datasetname+".tgz"
+    if self.year in (2017, 2018):
+      folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2", self.powhegprocess+"_ZZ_NNPDF31_13TeV", "anomalouscouplings")
+      tarballname = self.datasetname+".tgz"
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
   @property
@@ -40,7 +41,9 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
 
   @property
   def tags(self):
-    return ["HZZ", "Fall17P2A"]
+    result = "HZZ"
+    if self.year == 2017: result.append("Fall17P2A")
+    return result
 
   @property
   def genproductionscommit(self):
@@ -54,10 +57,11 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
   @classmethod
   def allsamples(cls):
     for productionmode in "ggH", :
-        decaymode = "4l"
-        for mass in cls.getmasses(productionmode, decaymode):
-            for kind in cls.getkind(productionmode, decaymode):
-                yield cls(2017, productionmode, decaymode, mass, kind)
+      decaymode = "4l"
+      for mass in cls.getmasses(productionmode, decaymode):
+        for kind in cls.getkind(productionmode, decaymode):
+          for year in 2017, 2018:
+            yield cls(year, productionmode, decaymode, mass, kind)
 
   @property
   def responsible(self):

@@ -7193,10 +7193,8 @@
                 "450": {
                     "matchefficiency": 0.148699054776,
                     "matchefficiencyerror": 4.79851663246e-05,
-                    "needsupdate": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00280",
-                    "resettimeperevent": true,
                     "sizeperevent": 880.7789714285715
                 },
                 "500": {
@@ -7551,6 +7549,51 @@
                     "timeperevent": 4.717136886595313
                 },
                 "125": {
+                    "L1": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00304"
+                    },
+                    "L1Zg": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00305"
+                    },
+                    "L1Zgmix": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00306"
+                    },
+                    "L1mix": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00307"
+                    },
+                    "SM": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00308"
+                    },
+                    "a2": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00309"
+                    },
+                    "a2mix": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00310"
+                    },
+                    "a3": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00311"
+                    },
+                    "a3mix": {
+                        "matchefficiency": 1,
+                        "matchefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00312"
+                    },
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0.0,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00040",
