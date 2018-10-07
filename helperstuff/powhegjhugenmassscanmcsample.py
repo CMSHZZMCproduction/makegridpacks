@@ -230,3 +230,74 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGe
   @property
   def responsible(self):
     return "hroskes"
+
+  @property
+  def nevents(self):
+    if self.year == 2017:
+      if self.decaymode == "4l":
+        if self.productionmode == "ggH":
+          if 124 <= self.mass <= 126: return 1000000
+          return 500000
+        elif self.productionmode in ("VBF", "ZH", "ttH"):
+          if 124 <= self.mass <= 126 or self.mass >= 1500: return 500000
+          return 200000
+        elif self.productionmode == "WplusH":
+          if 124 <= self.mass <= 126: return 300000
+          return 180000
+        elif self.productionmode == "WminusH":
+          if 124 <= self.mass <= 126: return 200000
+          return 120000
+      elif self.decaymode == "2l2nu":
+        if self.productionmode in ("ggH", "VBF"):
+          if 200 <= self.mass <= 1000: return 250000
+          elif self.mass > 1000: return 500000
+      elif self.decaymode == "2l2q":
+        if self.productionmode == "ggH":
+          if self.mass == 125: return 1000000
+          elif 200 <= self.mass <= 1000: return 200000
+          elif self.mass > 1000: return 500000
+        elif self.productionmode == "VBF":
+          if self.mass == 125: return 500000
+          elif 200 <= self.mass <= 1000: return 100000
+          elif self.mass > 1000: return 500000
+        elif self.productionmode in ("ZH", "ttH"):
+          if self.mass == 125: return 500000
+        elif self.productionmode == "WplusH":
+          if self.mass == 125: return 300000
+        elif self.productionmode == "WminusH":
+          if self.mass == 125: return 200000
+    if self.year == 2018:
+      if self.decaymode == "4l":
+        if self.productionmode == "ggH":
+          if 124 <= self.mass <= 126: return 1000000
+          return 500000
+        elif self.productionmode in ("VBF", "ZH", "ttH"):
+          if 124 <= self.mass <= 126 or self.mass >= 1500: return 500000
+          return 200000
+        elif self.productionmode == "WplusH":
+          if 124 <= self.mass <= 126: return 300000
+          return 180000
+        elif self.productionmode == "WminusH":
+          if 124 <= self.mass <= 126: return 200000
+          return 120000
+      elif self.decaymode == "2l2nu":
+        if self.productionmode in ("ggH", "VBF"):
+          if 200 <= self.mass <= 1000: return 250000
+          elif self.mass > 1000: return 500000
+      elif self.decaymode == "2l2q":
+        if self.productionmode == "ggH":
+          if self.mass == 125: return 1000000
+          elif 200 <= self.mass <= 1000: return 200000
+          elif self.mass > 1000: return 500000
+        elif self.productionmode == "VBF":
+          if self.mass == 125: return 500000
+          elif 200 <= self.mass <= 1000: return 100000
+          elif self.mass > 1000: return 500000
+        elif self.productionmode in ("ZH", "ttH"):
+          if self.mass == 125: return 500000
+        elif self.productionmode == "WplusH":
+          if self.mass == 125: return 300000
+        elif self.productionmode == "WminusH":
+          if self.mass == 125: return 200000
+
+    raise ValueError("No nevents for {}".format(self))

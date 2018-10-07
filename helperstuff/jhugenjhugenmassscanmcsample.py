@@ -139,3 +139,28 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   @property
   def responsible(self):
     return "hroskes"
+
+  @property
+  def nevents(self):
+    if self.year == 2017:
+      if self.decaymode == "4l":
+        if self.productionmode == "bbH":
+          if 124 <= self.mass <= 126: return 500000
+          return 200000
+        elif self.productionmode == "tqH":
+          if self.mass == 125: return 1000000
+      elif self.decaymode == "2l2q":
+        if self.productionmode in ("bbH", "tqH"):
+          if self.mass == 125: return 500000
+    if self.year == 2018:
+      if self.decaymode == "4l":
+        if self.productionmode == "bbH":
+          if 124 <= self.mass <= 126: return 500000
+          return 200000
+        elif self.productionmode == "tqH":
+          if self.mass == 125: return 1000000
+      elif self.decaymode == "2l2q":
+        if self.productionmode in ("bbH", "tqH"):
+          if self.mass == 125: return 500000
+
+    raise ValueError("No nevents for {}".format(self))
