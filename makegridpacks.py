@@ -26,5 +26,6 @@ if __name__ == "__main__":
   if args.cprofile:
     import cProfile
     cProfile.run("makegridpacks(args)")
+    #results for bbb42613d781d40e6f848a8727cd70c2e6357342 are in data/cprofileresults.txt
   else:
     makegridpacks(args)
