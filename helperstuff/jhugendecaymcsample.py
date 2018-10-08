@@ -1,12 +1,20 @@
 import abc, re
 
-from helperstuff.mcsamplebase import MCSampleBase
+from filtermcsample import JHUGenFilter
 
-class JHUGenDecayMCSample(MCSampleBase):
+class JHUGenDecayMCSample(JHUGenFilter):
   @abc.abstractproperty
   def decaycard(self): pass
   @property
-  def hasfilter(self): return "filter" in self.decaycard.lower()
+  def hasJHUGenfilter(self): return "filter" in self.decaycard.lower()
+  @abc.abstractproperty
+  def hasnonJHUGenfilter(self):
+    return super(JHUGenDecayMCSample, self).hasfilter
+  @property
+  def hasfilter(self):
+    result = self.hasJHUGenfilter or self.hasnonJHUGenfilter
+    if super(JHUGenDecayMCSample, self).hasfilter: assert result, self
+    return result
 
   @property
   def decaygenerators(self):

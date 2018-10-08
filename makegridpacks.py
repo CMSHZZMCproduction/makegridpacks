@@ -9,6 +9,7 @@ if __name__ == "__main__":
   g.add_argument("--suppressfinished", type=eval, help='example (and default): lambda x: x.year==2017', default='lambda x: x.year==2017')
   g.add_argument("--dontsuppressfinished", action="store_const", dest="suppressfinished", const=lambda x: False)
   parser.add_argument("--cprofile", action="store_true")
+  parser.add_argument("--setneedsupdate", action="store_true")
   args = parser.parse_args()
 
 from helperstuff import allsamples
@@ -19,7 +20,7 @@ def makegridpacks(args):
   with ApprovalQueue() as approvalqueue, BadRequestQueue() as badrequestqueue, CloneQueue() as clonequeue:
     for sample in allsamples(filter=args.filter):
       if args.suppressfinished(sample) and sample.finished: continue
-      print sample, sample.makegridpack(approvalqueue, badrequestqueue, clonequeue)
+      print sample, sample.makegridpack(approvalqueue, badrequestqueue, clonequeue, setneedsupdate=args.setneedsupdate)
       sys.stdout.flush()
 
 if __name__ == "__main__":

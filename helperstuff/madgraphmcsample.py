@@ -119,7 +119,7 @@ class MadGraphMCSample(MCSampleBase):
 
   @property
   def productiongenerators(self):
-    return super(MadgraphMCSample, self).productiongenerators + ["madgraph"]
+    return super(MadGraphMCSample, self).productiongenerators + ["madgraph"]
 
   @property
   def makegridpackcommand(self):

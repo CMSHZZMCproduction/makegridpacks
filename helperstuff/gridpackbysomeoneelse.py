@@ -4,7 +4,6 @@ from utilities import cdtemp, genproductions, KeepWhileOpenFile, mkdir_p
 
 import patches
 
-from filtermcsample import GenericFilter
 from mcsamplebase import MCSampleBase, MCSampleBase_DefaultCampaign
 from madgraphmcsample import MadGraphMCSample
 from madgraphjhugenmcsample import MadGraphJHUGenMCSample
@@ -152,7 +151,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     return datetime.datetime(year=2018, month=9, day=19)
 
 
-class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MCSampleBase_DefaultCampaign, GenericFilter):
+class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MCSampleBase_DefaultCampaign):
   def __init__(self, year, coupling):
     self.__coupling = coupling
     super(MadGraphHJJFromThomasPlusJHUGen, self).__init__(year=year)
@@ -291,7 +290,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     if self.year in (2016, 2017):
       return "d61e214e3781a8cfec0f2d9b92f43d51638cd27a"
   @property
-  def hasfilter(self):
+  def hasnonJHUGenfilter(self):
     return True
   @property
   def xsec(self):

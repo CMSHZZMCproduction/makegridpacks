@@ -2,11 +2,10 @@ import contextlib, csv, os, re, subprocess, urllib
 
 from utilities import cache, cd, genproductions, makecards
 
-from filtermcsample import JHUGenFilter
 from massscanmcsample import MassScanMCSample
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
 
-class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGenFilter):
+class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def powhegprocess(self):
     if self.productionmode == "ggH": return "gg_H_quark-mass-effects"
@@ -269,16 +268,16 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGe
     if self.year == 2018:
       if self.decaymode == "4l":
         if self.productionmode == "ggH":
-          if 124 <= self.mass <= 126: return 1000000
+          if 105 <= self.mass <= 140: return 1000000
           return 500000
         elif self.productionmode in ("VBF", "ZH", "ttH"):
-          if 124 <= self.mass <= 126 or self.mass >= 1500: return 500000
+          if 105 <= self.mass <= 140 or self.mass >= 1500: return 500000
           return 200000
         elif self.productionmode == "WplusH":
-          if 124 <= self.mass <= 126: return 300000
+          if 105 <= self.mass <= 140: return 300000
           return 180000
         elif self.productionmode == "WminusH":
-          if 124 <= self.mass <= 126: return 200000
+          if 105 <= self.mass <= 140: return 200000
           return 120000
       elif self.decaymode == "2l2nu":
         if self.productionmode in ("ggH", "VBF"):
@@ -301,3 +300,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample, JHUGe
           if self.mass == 125: return 200000
 
     raise ValueError("No nevents for {}".format(self))
+
+  @property
+  def hasnonJHUGenfilter(self): return False
+

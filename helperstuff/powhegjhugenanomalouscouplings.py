@@ -45,7 +45,7 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
 
   @property
   def tags(self):
-    result = "HZZ"
+    result = ["HZZ"]
     if self.year == 2017: result.append("Fall17P2A")
     return result
 
@@ -76,3 +76,7 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
     if self.year in (2017, 2018):
       return "v7.0.11"
     assert False, self
+
+  @property
+  def hasnonJHUGenfilter(self): return False
+

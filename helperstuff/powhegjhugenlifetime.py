@@ -23,18 +23,18 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCam
  
   @property
   def powhegprocess(self):
-    return POWHEGJHUGenMassScanMCSample(self.productionmode, self.decaymode, self.mass).powhegprocess
+    return POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, self.decaymode, self.mass).powhegprocess
 
   @property
   def powhegsubmissionstrategy(self): return "onestep"
 
   @property
   def powhegcard(self):
-    return POWHEGJHUGenMassScanMCSample(self.productionmode, self.decaymode, self.mass).powhegcard
+    return POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, self.decaymode, self.mass).powhegcard
 
   @property
   def decaycard(self):
-    decaymode = os.path.basename(POWHEGJHUGenMassScanMCSample(self.productionmode, self.decaymode, self.mass).decaycard).replace(".input", "")
+    decaymode = os.path.basename(POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, self.decaymode, self.mass).decaycard).replace(".input", "")
     return os.path.join(genproductions, "bin/JHUGen/cards/decay/lifetime", "{}_CTau{}um.input".format(decaymode, self.lifetime))
 
   @property
@@ -98,4 +98,7 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCam
     if self.year in (2017, 2018):
       return "v7.0.11"
     assert False, self
+
+  @property
+  def hasnonJHUGenfilter(self): return False
 

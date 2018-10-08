@@ -93,10 +93,13 @@ class ClonedRequest(MCSampleBase):
     return self.originalfullinfo["sequences"][0]["nThreads"]
   @property
   def keepoutput(self):
-    return self.originalfullinfo["keep_output"][0]
+    return False #self.originalfullinfo["keep_output"][0]
   @property
   def tags(self):
     return self.originalfullinfo["tags"]
+  @property
+  def notes(self):
+    return self.originalfullinfo["notes"]
   @property
   def doublevalidationtime(self):
     return self.originalfullinfo["validation"].get("double_time", False)

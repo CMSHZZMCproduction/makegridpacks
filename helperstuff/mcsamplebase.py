@@ -1,4 +1,4 @@
-import abc, filecmp, glob, os, pycurl, re, shutil, stat, subprocess
+import abc, filecmp, glob, itertools, os, pycurl, re, shutil, stat, subprocess
 
 import uncertainties
 
@@ -324,7 +324,7 @@ class MCSampleBase(JsonDict):
     self.updaterequest()
     return "size and time per event are found to be {} and {}, sent it to McM".format(self.sizeperevent, self.timeperevent)
 
-  def makegridpack(self, approvalqueue, badrequestqueue, clonequeue):
+  def makegridpack(self, approvalqueue, badrequestqueue, clonequeue, setneedsupdate=False):
     if self.finished: return "finished!"
     if not self.cvmfstarballexists:
       if not os.path.exists(self.eostarball):
@@ -379,21 +379,33 @@ class MCSampleBase(JsonDict):
         self.nthreads /= 2
         self.updaterequest()
         return "validation failed, decreasing the number of threads"
+      if setneedsupdate and not self.needsupdate:
+        result = self.setneedsupdate()
+        if result: return result
       approvalqueue.validate(self)
       return "starting the validation"
     if (self.approval, self.status) == ("validation", "new"):
+      if setneedsupdate and not self.needsupdate:
+        result = self.setneedsupdate()
+        if result: return result
       return "validation is running"
     if (self.approval, self.status) == ("validation", "validation"):
+      self.gettimepereventfromMcM()
+      if setneedsupdate and not self.needsupdate:
+        result = self.setneedsupdate()
+        if result: return result
       if self.needsupdate:
         approvalqueue.reset(self)
         return "needs update on McM, resetting the request"
-      self.gettimepereventfromMcM()
       approvalqueue.define(self)
       return "defining the request"
     if (self.approval, self.status) == ("define", "defined"):
       if self.needsupdate:
         approvalqueue.reset(self)
         return "needs update on McM, resetting the request"
+      if setneedsupdate and not self.needsupdate:
+        result = self.setneedsupdate()
+        if result: return result
       return "request is defined"
     if (self.approval, self.status) in (("submit", "approved"), ("approve", "approved")):
       if self.needsupdate:
@@ -654,7 +666,7 @@ class MCSampleBase(JsonDict):
   def fullfragment(self):
     return createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommitforfragment)
 
-  def updaterequest(self):
+  def getdictforupdate(self):
     mcm = restful()
     req = mcm.get("requests", self.prepid)
     req["dataset_name"] = self.datasetname
@@ -681,6 +693,11 @@ class MCSampleBase(JsonDict):
     })
     req["extension"] = self.extensionnumber
     req["notes"] = self.notes
+    return req
+
+  def updaterequest(self):
+    mcm = restful()
+    req = self.getdictforupdate()
     try:
       answer = mcm.update('requests', req)
     except pycurl.error as e:
@@ -749,8 +766,12 @@ class MCSampleBase(JsonDict):
     if self.timeperevent is None or self.resettimeperevent: return
     needsupdate = self.needsupdate
     timeperevent = self.fullinfo["time_event"][0]
-    if timeperevent != self.defaulttimeperevent:
-      self.timeperevent = timeperevent
+    sizeperevent = self.fullinfo["size_event"][0]
+    try:
+      if timeperevent != self.defaulttimeperevent:
+        self.timeperevent = timeperevent
+      self.sizeperevent = sizeperevent
+    finally:
       self.needsupdate = needsupdate #don't need to reupdate on McM, unless that was already necessary
 
   @property
@@ -782,6 +803,39 @@ class MCSampleBase(JsonDict):
     if success:
       self.needsoptionreset = False
     return success
+
+  def setneedsupdate(self):
+    old = self.fullinfo
+    validated = self.status in ("validation", "defined", "approved", "submitted", "done")
+    if validated:
+      self.gettimepereventfromMcM()
+    new = self.getdictforupdate()
+    different = set()
+    differentsequences = set()
+    for key in set(old.keys()) | set(new.keys()):
+      if old.get(key) != new.get(key):
+        if key == "memory" and validated:
+          pass
+        elif key in ("time_event", "size_event") and not validated:
+          pass
+        elif key in ("total_events", "generators", "tags", "memory"):
+          different.add(key)
+        elif key == "sequences":
+          assert len(old[key]) == len(new[key]) == 1
+          for skey in set(old[key][0].keys()) | set(new[key][0].keys()):
+            if old[key][0].get(skey) != new[key][0].get(skey):
+              if skey == "nThreads":
+                differentsequences.add(skey)
+              elif skey == "procModifiers" and old[key][0].get(skey) is None and new[key][0].get(skey) == "":
+                pass  #not sure what this is about
+              else:
+                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(skey, old[key][0].get(skey), new[key][0].get(skey), self.prepid))
+        else:
+          raise ValueError("Don't know what to do with {} ({} --> {}) for {}".format(key, old.get(key), new.get(key), self.prepid))
+    if different or differentsequences:
+      self.needsupdate = True
+      return "there is a change in some parameters, setting needsupdate = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((skey, old["sequences"][0].get(skey), new["sequences"][0].get(skey)) for skey in differentsequences)))
+
 
 class MCSampleBase_DefaultCampaign(MCSampleBase):
   @property

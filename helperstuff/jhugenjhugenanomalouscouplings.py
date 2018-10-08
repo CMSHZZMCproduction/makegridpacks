@@ -3,10 +3,9 @@ import contextlib, csv, os, re, subprocess, urllib
 from utilities import cache, cd, genproductions, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
-from filtermcsample import JHUGenFilter
 from jhugenjhugenmcsample import JHUGenJHUGenMCSample
 
-class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSample, JHUGenFilter):
+class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSample):
   @property
   def productioncard(self):
     folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "2017", "13TeV", "anomalouscouplings", self.productionmode+"_NNPDF31_13TeV")
@@ -88,3 +87,6 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   def JHUGenversion(self):
     if self.year in (2017, 2018): return "v7.0.11"
     assert False, self
+
+  @property
+  def hasnonJHUGenfilter(self): return False

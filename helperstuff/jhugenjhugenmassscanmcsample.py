@@ -155,7 +155,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     if self.year == 2018:
       if self.decaymode == "4l":
         if self.productionmode == "bbH":
-          if 124 <= self.mass <= 126: return 500000
+          if 105 <= self.mass <= 140: return 500000
           return 200000
         elif self.productionmode == "tqH":
           if self.mass == 125: return 1000000
@@ -168,3 +168,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   @property
   def JHUGenversion(self):
     if self.year in (2017, 2018): return "v7.0.11"
+
+  @property
+  def hasnonJHUGenfilter(self): return False
+

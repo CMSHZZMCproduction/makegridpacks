@@ -66,6 +66,7 @@ class GenericFilter(FilterImplementation):
 
 class JHUGenFilter(FilterImplementation):
   def dofilterjob(self, jobindex):
+    if self.hasnonJHUGenfilter: return super(JHUGenFilter, self).dofilterjob(jobindex)
     oldpath = os.path.join(os.getcwd(), "")
     with cdtemp():
       subprocess.check_call(["tar", "xvaf", self.cvmfstarball])
@@ -80,10 +81,15 @@ class JHUGenFilter(FilterImplementation):
 
   @property
   def filterresultsfile(self):
+    if self.hasnonJHUGenfilter: return super(JHUGenFilter, self).filterresultsfile
     return "cmsgrid_final.lhe"
   def getfilterresults(self, jobindex):
+    if self.hasnonJHUGenfilter: return super(JHUGenFilter, self).getfilterresults(jobindex)
     with open("cmsgrid_final.lhe") as f:
       for line in f:
         if "events processed:" in line: eventsprocessed = int(line.split()[-1])
         if "events accepted:" in line: eventsaccepted = int(line.split()[-1])
     return eventsprocessed, eventsaccepted
+
+  @abc.abstractproperty
+  def hasnonJHUGenfilter(self): pass
