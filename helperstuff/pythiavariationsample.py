@@ -74,8 +74,11 @@ class VariationSample(MCSampleBase):
   def campaign(self):
     return self.mainsample.campaign
   @property
-  def generators(self):
-    return self.mainsample.generators
+  def productiongenerators(self):
+    return self.mainsample.productiongenerators
+  @property
+  def decaygenerators(self):
+    return self.mainsample.decaygenerators
   @property
   def cardsurl(self):
     return self.mainsample.cardsurl

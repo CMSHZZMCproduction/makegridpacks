@@ -40,8 +40,20 @@ class MCSampleBase(JsonDict):
     return 0
   @abc.abstractproperty
   def nevents(self): pass
+  @property
+  def generators(self):
+    result = self.productiongenerators+self.decaygenerators
+    newresult = []
+    seen = set()
+    for _ in result:
+      if _ in seen: continue
+      seen.add(_)
+      newresult.append(_)
+    return newresult
   @abc.abstractproperty
-  def generators(self): pass
+  def productiongenerators(self): return []
+  @property
+  def decaygenerators(self): return []
   @abc.abstractproperty
   def cardsurl(self): pass
   @abc.abstractproperty

@@ -196,8 +196,8 @@ class POWHEGMCSample(MCSampleBase):
     return result
 
   @property
-  def generators(self):
-    return ["powheg {}".format(self.powhegprocess)]
+  def productiongenerators(self):
+    return ["powheg {}".format(self.powhegprocess)] + super(POWHEGMCSample, self).productiongenerators
 
   @property
   def fragmentname(self):

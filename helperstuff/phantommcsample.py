@@ -182,7 +182,7 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign):
     return card
 
   @property
-  def generators(self):
+  def productiongenerators(self):
     return ["phantom"]
 
   @property

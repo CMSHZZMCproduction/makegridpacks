@@ -9,9 +9,9 @@ class JHUGenDecayMCSample(MCSampleBase):
   def hasfilter(self): return "filter" in self.decaycard.lower()
 
   @property
-  def generators(self):
+  def decaygenerators(self):
     assert re.match(r"v[0-9]+[.][0-9]+[.][0-9]+", self.JHUGenversion), self.JHUGenversion
-    return super(JHUGenDecayMCSample, self).generators + ["JHUGen {}".format(self.JHUGenversion)]
+    return super(JHUGenDecayMCSample, self).decaygenerators + ["JHUGen {}".format(self.JHUGenversion)]
 
   @abc.abstractproperty
   def JHUGenversion(self):

@@ -35,6 +35,10 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
   @property
+  def foldernameforrunpwg(self):
+    return super(POWHEGJHUGenAnomCoupMCSample, self).foldernameforrunpwg+"_"+self.kind
+
+  @property
   def defaulttimeperevent(self):
     return 30
     assert False
@@ -72,4 +76,3 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
     if self.year in (2017, 2018):
       return "v7.0.11"
     assert False, self
-

@@ -3,9 +3,10 @@ import contextlib, csv, os, re, subprocess, urllib
 from utilities import cache, cd, genproductions, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
+from filtermcsample import JHUGenFilter
 from jhugenjhugenmcsample import JHUGenJHUGenMCSample
 
-class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSample):
+class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSample, JHUGenFilter):
   @property
   def productioncard(self):
     folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "2017", "13TeV", "anomalouscouplings", self.productionmode+"_NNPDF31_13TeV")
@@ -35,11 +36,12 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
 
   def cvmfstarball_anyversion(self, version):
-    folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V7011", self.productionmode+"_ZZ_NNPDF31_13TeV")
+    if self.year in (2017, 2018):
+      folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V7011", self.productionmode+"_ZZ_NNPDF31_13TeV")
 
-    tarballname = self.datasetname+".tgz"
+      tarballname = self.datasetname+".tgz"
 
-    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
+      return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
   @property
   def doublevalidationtime(self):
@@ -52,7 +54,9 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def tags(self):
-    return ["HZZ", "Fall17P2A"]
+    result = ["HZZ"]
+    if self.year == 2017: result.append("Fall17P2A")
+    return result
 
   @property
   def genproductionscommit(self):
@@ -70,16 +74,17 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   def allsamples(cls):
     for productionmode in "HJJ", "VBF", "ZH","WH","ttH" :
     #for productionmode in "HJJ", "VBF"  :
-        decaymode = "4l" 
-        for mass in cls.getmasses(productionmode, decaymode) :
-            for kind in cls.getkind(productionmode, decaymode) :
-                yield cls(2017, productionmode, decaymode, mass, kind)
+      decaymode = "4l" 
+      for mass in cls.getmasses(productionmode, decaymode):
+        for kind in cls.getkind(productionmode, decaymode):
+          for year in 2017, 2018:
+            yield cls(year, productionmode, decaymode, mass, kind)
 
   @property
   def responsible(self):
-     return "skeshri"
+     return "hroskes"
 
   @property
   def JHUGenversion(self):
-    if self.year == 2017: return "v7.0.11"
+    if self.year in (2017, 2018): return "v7.0.11"
     assert False, self

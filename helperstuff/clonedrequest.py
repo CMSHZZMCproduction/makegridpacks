@@ -79,6 +79,10 @@ class ClonedRequest(MCSampleBase):
   def generators(self):
     return self.originalfullinfo["generators"]
   @property
+  def productiongenerators(self): assert False
+  @property
+  def decaygenerators(self): assert False
+  @property
   def xsec(self):
     return self.originalfullinfo["generator_parameters"][0]["cross_section"]
   @property

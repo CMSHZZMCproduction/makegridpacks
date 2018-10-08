@@ -148,7 +148,7 @@ class MyMCSample(MCSampleBase):
     """
 
   @property
-  def generators(self):
+  def productiongenerators(self):
     "fill this, it's a list of generators, they get reported on the McM request"
 
   @property

@@ -1,12 +1,24 @@
-import abc, glob, os
+import abc, glob, os, re
 
 from helperstuff.mcsamplebase import MCSampleBase
 
-class JHUGenMCSample(MCSampleBase):
+class UsesJHUGenLibraries(MCSampleBase):
+  @property
+  def JHUGenversion(self):
+    return 
+  @property
+  def productiongenerators(self):
+    assert re.match(r"v[0-9]+[.][0-9]+[.][0-9]+", self.JHUGenversion), self.JHUGenversion
+    return super(UsesJHUGenLibraries, self).productiongenerators + ["JHUGen {}".format(self.JHUGenversion)]
+
+class JHUGenMCSample(UsesJHUGenLibraries):
   @abc.abstractproperty
   def productioncard(self): pass
   @abc.abstractproperty
   def productioncardusesscript(self):
+    pass
+  @abc.abstractproperty
+  def JHUGenversion(self):
     pass
   @property
   def linkmela(self): return False

@@ -88,9 +88,6 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
           yield cls(year, Zdmass, eps)
 
   @property
-  def generators(self):
-    return "madgraph",
-  @property
   def responsible(self):
     return "hroskes"
 
@@ -245,8 +242,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
         yield cls(year, coupling)
 
   @property
-  def generators(self):
-    return "madgraph", "JHUGen v7.1.4"
+  def JHUGenversion(self): return "v7.1.4"
   @property
   def responsible(self):
     return "hroskes"

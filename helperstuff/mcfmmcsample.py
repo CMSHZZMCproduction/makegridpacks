@@ -1,6 +1,7 @@
 
 from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget, KeepWhileOpenFile, LSB_JOBID, jobended
 
+from jhugenmcsample import UsesJHUGenLibraries
 from mcsamplebase import MCSampleBase
 
 import abc, os, contextlib, urllib, re, filecmp, glob, pycurl, shutil, stat, subprocess, itertools, os
@@ -32,7 +33,7 @@ def differentproductioncards(productioncard, gitproductioncard):
 			
 			
 
-class MCFMMCSample(MCSampleBase):
+class MCFMMCSample(UsesJHUGenLibraries):
 
   def checkandfixtarball(self):
     mkdir_p(self.workdir)
@@ -224,8 +225,10 @@ class MCFMMCSample(MCSampleBase):
     return result
 
   @property
-  def generators(self):
-    return ["MCFM701", "JHUGen v7.0.11"]
+  def productiongenerators(self):
+    return ["MCFM701"] + super(MCFMMCSample, self).productiongenerators
+  @property
+  def JHUGenversion(self): return "JHUGen v7.0.11"
 
   @property
   def makegridpackscriptstolink(self):
