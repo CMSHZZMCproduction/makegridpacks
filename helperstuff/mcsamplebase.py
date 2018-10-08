@@ -369,7 +369,7 @@ class MCSampleBase(JsonDict):
         if not self.optionreset():
           return "need to do option reset but failed"
         return "needed option reset, sent it to McM"
-      if self.needsupdate:
+      if self.needsupdateiffailed:
         self.updaterequest()
         if self.badprepid:
           badrequestqueue.add(self)
@@ -397,6 +397,7 @@ class MCSampleBase(JsonDict):
       if self.needsupdate:
         approvalqueue.reset(self)
         return "needs update on McM, resetting the request"
+      self.needsupdateiffailed = False
       approvalqueue.define(self)
       return "defining the request"
     if (self.approval, self.status) == ("define", "defined"):
@@ -406,18 +407,22 @@ class MCSampleBase(JsonDict):
       if setneedsupdate and not self.needsupdate:
         result = self.setneedsupdate()
         if result: return result
+      self.needsupdateiffailed = False
       return "request is defined"
     if (self.approval, self.status) in (("submit", "approved"), ("approve", "approved")):
       if self.needsupdate:
         return "{} is already approved, but needs update!".format(self)
+      self.needsupdateiffailed = False
       return "approved"
     if (self.approval, self.status) == ("submit", "submitted"):
       if self.needsupdate:
         return "{} is already submitted, but needs update!".format(self)
+      self.needsupdateiffailed = False
       return "submitted"
     if (self.approval, self.status) == ("submit", "done"):
       if self.needsupdate:
         return "{} is already finished, but needs update!".format(self)
+      self.needsupdateiffailed = False
       self.gettimepereventfromMcM()
       self.finished = True
       return "finished!"
@@ -456,7 +461,7 @@ class MCSampleBase(JsonDict):
   def timeperevent(self, value):
     with cd(here), self.writingdict():
       self.value["timeperevent"] = value
-    self.needsupdate = True
+    self.needsupdateiffailed = True
   @timeperevent.deleter
   def timeperevent(self):
     with cd(here), self.writingdict():
@@ -485,7 +490,7 @@ class MCSampleBase(JsonDict):
   def sizeperevent(self, value):
     with cd(here), self.writingdict():
       self.value["sizeperevent"] = value
-    self.needsupdate = True
+    self.needsupdateiffailed = True
   @sizeperevent.deleter
   def sizeperevent(self):
     with cd(here), self.writingdict():
@@ -546,6 +551,24 @@ class MCSampleBase(JsonDict):
   def needsupdate(self):
     with cd(here), self.writingdict():
       del self.value["needsupdate"]
+  @property
+  def needsupdateiffailed(self):
+    if self.needsupdate: return True
+    with cd(here):
+      return self.value.get("needsupdateiffailed", False)
+  @needsupdateiffailed.setter
+  def needsupdateiffailed(self, value):
+    if value:
+      with cd(here), self.writingdict():
+        self.value["needsupdateiffailed"] = True
+    else:
+      if self.needsupdateiffailed:
+        del self.needsupdateiffailed
+      self.needsupdate = False
+  @needsupdateiffailed.deleter
+  def needsupdateiffailed(self):
+    with cd(here), self.writingdict():
+      del self.value["needsupdateiffailed"]
   @property
   def needsoptionreset(self):
     with cd(here):
@@ -710,6 +733,7 @@ class MCSampleBase(JsonDict):
     if not (answer and answer.get("results")):
       raise RuntimeError("Failed to modify the request on McM\n{}\n{}".format(self, answer))
     self.needsupdate = False
+    self.needsupdateiffailed = False
     self.resettimeperevent = False
 
   @property
@@ -765,6 +789,7 @@ class MCSampleBase(JsonDict):
   def gettimepereventfromMcM(self):
     if self.timeperevent is None or self.resettimeperevent: return
     needsupdate = self.needsupdate
+    needsupdateiffailed = self.needsupdateiffailed
     timeperevent = self.fullinfo["time_event"][0]
     sizeperevent = self.fullinfo["size_event"][0]
     try:
@@ -772,7 +797,9 @@ class MCSampleBase(JsonDict):
         self.timeperevent = timeperevent
       self.sizeperevent = sizeperevent
     finally:
-      self.needsupdate = needsupdate #don't need to reupdate on McM, unless that was already necessary
+      #don't need to reupdate on McM, unless that was already necessary
+      self.needsupdate = needsupdate
+      self.needsupdateiffailed = needsupdateiffailed
 
   @property
   def approval(self):
