@@ -6122,7 +6122,8 @@
                         "matchefficiencyerror": 0.0,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00322",
-                        "sizeperevent": 647.1733333333333
+                        "sizeperevent": 660.9920000000001,
+                        "timeperevent": 68.06795905031584
                     },
                     "a3": {
                         "matchefficiency": 1,
@@ -8192,9 +8193,11 @@
                 "135": {
                     "matchefficiency": 0.153328436188,
                     "matchefficiencyerror": 0.000318002294109,
+                    "needsupdate": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00300",
-                    "sizeperevent": 956.7670857142858
+                    "sizeperevent": 931.6205714285713,
+                    "timeperevent": 92.76609955657804
                 },
                 "140": {
                     "matchefficiency": 0.154013895423,

@@ -863,6 +863,34 @@ class MCSampleBase(JsonDict):
       self.needsupdate = True
       return "there is a change in some parameters, setting needsupdate = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((skey, old["sequences"][0].get(skey), new["sequences"][0].get(skey)) for skey in differentsequences)))
 
+  def request_fragment_check(self):
+    with cdtemp():
+      with open(os.path.join(genproductions, "bin", "utils", "request_fragment_check.py")) as f:
+        contents = f.read()
+      cookies = [line for line in contents.split("\n") if "os.system" in line and "cookie" in line.lower()]
+      assert len(cookies) == 2
+      for cookie in cookies: contents = contents.replace(cookie, "#I already ate the cookie")
+      with open("request_fragment_check.py", "w") as f:
+        f.write(contents)
+
+      pipe = subprocess.Popen(["python", "request_fragment_check.py", self.prepid], stdout=subprocess.PIPE, bufsize=1)
+      output = ""
+      with pipe.stdout:
+        for line in iter(pipe.stdout.readline, b''):
+          print line,
+          output += line
+
+      for line in output.split("\n"):
+        if line.strip() == self.prepid: continue
+        elif "cookie" in line: continue
+        elif not line.strip().strip("*"): continue
+        elif line.startswith("* [OK]"): continue
+        elif line.startswith("* [ERROR]"): raise ValueError("request_fragment_check gave an error!\n"+line)
+        elif line.startswith("* [WARNING]"):
+          raise ValueError("request_fragment_check gave an unhandled warning!\n"+line)
+        else:
+          raise ValueError("Unknown line in request_fragment_check output!\n"+line)
+
 
 class MCSampleBase_DefaultCampaign(MCSampleBase):
   @property
