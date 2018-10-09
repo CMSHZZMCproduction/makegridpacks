@@ -5,6 +5,7 @@ from utilities import cdtemp, genproductions, KeepWhileOpenFile, mkdir_p
 import patches
 
 from mcsamplebase import MCSampleBase, MCSampleBase_DefaultCampaign
+from madgraphfxfxmcsample import MadGraphFXFXMCSample
 from madgraphmcsample import MadGraphMCSample
 from madgraphjhugenmcsample import MadGraphJHUGenMCSample
 
@@ -151,7 +152,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     return datetime.datetime(year=2018, month=9, day=19)
 
 
-class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MCSampleBase_DefaultCampaign):
+class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MadGraphFXFXMCSample, MCSampleBase_DefaultCampaign):
   def __init__(self, year, coupling):
     self.__coupling = coupling
     super(MadGraphHJJFromThomasPlusJHUGen, self).__init__(year=year)
@@ -275,8 +276,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     if self.__coupling == "a3mix":
       return "GluGluHiggs0Mf05ph0ToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"
   @property
-  def fragmentname(self):
-    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_aMCatNLO_FXFX_5f_max2j_LHE_pythia8_cff.py"
+  def nmaxjets(self): return 2
   @property
   def genproductionscommit(self):
     if self.__coupling == "SM":

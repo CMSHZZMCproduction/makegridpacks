@@ -895,9 +895,16 @@ class MCSampleBase(JsonDict):
         else:
           if line.strip() == "*                        as number of final state particles (BEFORE THE DECAYS)": continue
           if line.strip() == "*                                   in the LHE other than emitted extra parton.": continue
+          if line.strip() == "*           which may not have all the necessary GEN code.": continue
+          if line.strip() == "*                   'JetMatching:nJetMax' is set correctly as number of partons": continue
+          if line.strip() == "*                              in born matrix element for highest multiplicity.": continue
+          if line.strip() == "*                as number of partons in born matrix element for highest multiplicity.": continue
           return "Unknown line in request_fragment_check output!\n"+line
 
   def handle_request_fragment_check_warning(self, line):
+    if line.strip() == "* [WARNING] Large time/event - please check":
+      print "time/event is", self.timeperevent
+      return "please check it"
     return "request_fragment_check gave an unhandled warning!"
 
 class MCSampleBase_DefaultCampaign(MCSampleBase):
