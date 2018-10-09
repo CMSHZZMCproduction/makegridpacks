@@ -382,6 +382,8 @@ class MCSampleBase(JsonDict):
       if setneedsupdate and not self.needsupdate:
         result = self.setneedsupdate()
         if result: return result
+      check = self.request_fragment_check()
+      if check: return check
       approvalqueue.validate(self)
       return "starting the validation"
     if (self.approval, self.status) == ("validation", "new"):
@@ -677,8 +679,8 @@ class MCSampleBase(JsonDict):
 
   @property
   def memory(self):
-    if self.nthreads == 1: return 2.3
-    return 4
+    if self.nthreads == 1: return 2300
+    return 4000
   @property
   def filterefficiency(self): return 1
   @property
@@ -845,7 +847,7 @@ class MCSampleBase(JsonDict):
           pass
         elif key in ("time_event", "size_event") and not validated:
           pass
-        elif key in ("total_events", "generators", "tags", "memory"):
+        elif key in ("total_events", "generators", "tags", "memory", "fragment"):
           different.add(key)
         elif key == "sequences":
           assert len(old[key]) == len(new[key]) == 1
@@ -885,12 +887,18 @@ class MCSampleBase(JsonDict):
         elif "cookie" in line: continue
         elif not line.strip().strip("*"): continue
         elif line.startswith("* [OK]"): continue
-        elif line.startswith("* [ERROR]"): raise ValueError("request_fragment_check gave an error!\n"+line)
+        elif line.startswith("* [ERROR]"): return "request_fragment_check gave an error!\n"+line
         elif line.startswith("* [WARNING]"):
-          raise ValueError("request_fragment_check gave an unhandled warning!\n"+line)
+          result = self.handle_request_fragment_check_warning(line)
+          if result == "ok": continue
+          return result+"\n"+line
         else:
-          raise ValueError("Unknown line in request_fragment_check output!\n"+line)
+          if line.strip() == "*                        as number of final state particles (BEFORE THE DECAYS)": continue
+          if line.strip() == "*                                   in the LHE other than emitted extra parton.": continue
+          return "Unknown line in request_fragment_check output!\n"+line
 
+  def handle_request_fragment_check_warning(self, line):
+    return "request_fragment_check gave an unhandled warning!"
 
 class MCSampleBase_DefaultCampaign(MCSampleBase):
   @property

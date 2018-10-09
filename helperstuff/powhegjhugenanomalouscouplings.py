@@ -51,7 +51,11 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
 
   @property
   def genproductionscommit(self):
-    return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    if self.year == 2017:
+      return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    if self.year == 2018:
+      return "f256d395f40acf771f12fd6dbecd622341e9731a"
+    assert False, self.year
 
   @property
   def nfinalparticles(self):
