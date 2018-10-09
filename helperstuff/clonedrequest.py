@@ -164,3 +164,10 @@ class ClonedRequest(MCSampleBase):
       raise RuntimeError("Multiple prepids for {} ({})".format(self, self.datasetname, query))
     assert len(prepids) == 1, prepids
     self.prepid = prepids.pop()
+
+  def handle_request_fragment_check_warning(self, line):
+    if self.prepid == "BTV-RunIIFall17wmLHEGS-00006":
+      if line.strip() == "* [WARNING] Are you sure you want to use CMSSW_10_0_3release which is not standard": return "ok"
+      if line.strip() == "* [WARNING] This is a MadGraph LO sample with Jet matching sample. Please check": return "ok"
+      if line.strip() == "* [WARNING] Do you really want to have tune CP5 in this campaign?": return "ok"
+    return super(ClonedRequest, self).handle_request_fragment_check_warning(line)

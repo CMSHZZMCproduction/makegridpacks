@@ -308,5 +308,6 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if line.strip() == "* [WARNING] Large time/event - please check":
       print "time/event is", self.timeperevent
       if self.timeperevent <= 250 and self.productionmode == "ZH": return "ok"
+      if self.timeperevent <= 165: return "ok"
       return "please check it"
     return super(POWHEGJHUGenMassScanMCSample, self).handle_request_fragment_check_warning(line)
