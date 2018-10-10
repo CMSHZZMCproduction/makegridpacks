@@ -106,7 +106,7 @@ class MadGraphMCSample(MCSampleBase):
     if self.madgraphcardscript:
       return "\n#    ".join((scripturls[0],) + tuple(self.madgraphcards))
     else:
-      return "\n# ".join(self.madgraphcards)
+      return "\n# ".join(cardurls)
 
   @property
   def madgraphcardscript(self): return None

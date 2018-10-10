@@ -7115,8 +7115,8 @@
                     "matchefficiencyerror": 0.001406451554444731,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00293",
-                    "resettimeperevent": true,
-                    "sizeperevent": 721.4302608695652
+                    "sizeperevent": 721.4302608695652,
+                    "timeperevent": 237.11347539592023
                 }
             },
             "4l": {
@@ -7438,8 +7438,8 @@
                     "matchefficiencyerror": 4.79851663246e-05,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00281",
-                    "resettimeperevent": true,
-                    "sizeperevent": 770.1935157894736
+                    "sizeperevent": 770.1935157894736,
+                    "timeperevent": 377.07106281249764
                 },
                 "550": {
                     "matchefficiency": 0.148699054776,
@@ -7454,16 +7454,14 @@
                     "matchefficiencyerror": 4.79851663246e-05,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00283",
-                    "resettimeperevent": true,
-                    "sizeperevent": 718.2677333333334
+                    "sizeperevent": 718.2677333333334,
+                    "timeperevent": 381.1934404232772
                 },
                 "700": {
                     "matchefficiency": 0.148699054776,
                     "matchefficiencyerror": 4.79851663246e-05,
-                    "needsupdateiffailed": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00284",
-                    "resettimeperevent": true,
                     "sizeperevent": 877.5740235294118,
                     "timeperevent": 319.2582991194856
                 },
@@ -7472,8 +7470,8 @@
                     "matchefficiencyerror": 4.79851663246e-05,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00285",
-                    "resettimeperevent": true,
-                    "sizeperevent": 763.2737745454546
+                    "sizeperevent": 763.2737745454546,
+                    "timeperevent": 360.78420053829
                 },
                 "800": {
                     "matchefficiency": 0.148699054776,
