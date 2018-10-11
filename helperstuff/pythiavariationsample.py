@@ -141,7 +141,7 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSample):
         requests.append(Request(*line.split()))
 
     from . import allsamples
-    for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 != cls, __docheck=False):
+    for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 != cls, __docheck=False, includefinished=True):
       if any(_.prepid == s.prepid for _ in requests):
         yield cls(mainsample=s, variation="RunIIFall17DRPremix_nonsubmitted")
 

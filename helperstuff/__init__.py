@@ -1,4 +1,4 @@
-def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda cls: True, __docheck=True):
+def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda cls: True, __docheck=True, includefinished=False):
   import getpass
   from utilities import recursivesubclasses
   from mcsamplebase import MCSampleBase
@@ -15,7 +15,7 @@ def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda 
     if "allsamples" in subcls.__abstractmethods__: continue
     if not clsfilter(subcls): continue
     for sample in subcls.allsamples():
-      if filter(sample) and (not onlymysamples or sample.responsible == getpass.getuser()):
+      if (not sample.finished or includefinished) and filter(sample) and (not onlymysamples or sample.responsible == getpass.getuser()):
         yield sample
 
 from utilities import cache
