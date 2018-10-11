@@ -82,7 +82,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
 
   @classmethod
   def allsamples(cls):
-    for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 35:
+    for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 30, 35:
       for eps in 1e-2,:
         for year in 2016, 2017, 2018:
           yield cls(year, Zdmass, eps)

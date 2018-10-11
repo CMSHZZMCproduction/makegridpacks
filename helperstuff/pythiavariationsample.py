@@ -139,6 +139,9 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSample):
       next(f); next(f); next(f)  #cookie and header
       for line in f:
         requests.append(Request(*line.split()))
+    with open(os.path.join(here, "data", "ListRunIIFall17DRPremix_nonsubmitted_2.txt")) as f:
+      for line in f:
+        requests.append(Request(*line.split()))
 
     from . import allsamples
     for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 != cls, __docheck=False, includefinished=True):
@@ -153,6 +156,29 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSample):
   @property
   def responsible(self):
     return "hroskes"
+
+  def handle_request_fragment_check_warning(self, *args, **kwargs):
+    return self.mainsample.handle_request_fragment_check_warning(*args, **kwargs)
+
+  @property
+  def extensionnumber(self):
+    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+    result = super(RunIIFall17DRPremix_nonsubmitted, self).extensionnumber
+    if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.mass == 125:
+      result += 1
+      if self.mainsample.productionmode == "ggH":
+        result += 1
+    return result
+
+  @property
+  def genproductionscommitforfragment(self):
+    return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+
+  @property
+  def dovalidation(self):
+    if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH": return False
+    if isinstance(self.mainsample, PythiaVariationSample) and self.mainsample.mainsample.productionmode == "ZH": return False
+    return super(RunIIFall17DRPremix_nonsubmitted, self).dovalidation
 
 class PythiaVariationSample(VariationSample):
   @property

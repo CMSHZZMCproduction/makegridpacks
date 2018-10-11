@@ -309,3 +309,8 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
       if self.timeperevent <= 260 and self.productionmode == "ZH": return "ok"
       if self.timeperevent <= 165: return "ok"
     return super(POWHEGJHUGenMassScanMCSample, self).handle_request_fragment_check_warning(line)
+
+  @property
+  def dovalidation(self):
+    if self.productionmode == "ZH" and self.year == 2018: return False
+    return super(POWHEGJHUGenMassScanMCSample, self).dovalidation

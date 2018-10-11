@@ -35,7 +35,7 @@ def __checkforduplicates():
   for s in allsamples(onlymysamples=False, __docheck=False):
     if s.finished: continue
     try:
-      dct[s.cvmfstarball_anyversion(2)].add(s)
+      dct[s.year, s.cvmfstarball_anyversion(2)].add(s)
     except:
       if isinstance(s, ClonedRequest):
         pass
@@ -43,4 +43,4 @@ def __checkforduplicates():
         raise
   for k, samples in dct.iteritems():
     if len({s.cvmfstarball for s in samples}) != 1:
-      raise ValueError("These samples have the same cvmfstarball_anyversion but different cvmfstarball, and none are finished:\n" + "\n".join(str(_) for _ in samples))
+      raise ValueError("These samples for the same year have the same cvmfstarball_anyversion but different cvmfstarball, and none are finished:\n" + "\n".join(str(_) for _ in samples))

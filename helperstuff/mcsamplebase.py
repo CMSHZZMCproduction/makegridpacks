@@ -663,7 +663,7 @@ class MCSampleBase(JsonDict):
   @property
   def nthreads(self):
     with cd(here):
-      if "nthreads" not in self.value and (self.finished or self.status in ("submitted", "approved")):
+      if "nthreads" not in self.value and self.prepid and (self.finished or self.status in ("submitted", "approved")):
         self.value["nthreads"] = self.fullinfo["sequences"][0]["nThreads"]
       return self.value.get("nthreads", 8 if self.year >= 2017 else 1)
   @nthreads.setter
