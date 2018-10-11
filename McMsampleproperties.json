@@ -8200,11 +8200,10 @@
                 "130": {
                     "matchefficiency": 0.15355776319,
                     "matchefficiencyerror": 0.000318423458146,
-                    "needsupdate": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00299",
-                    "sizeperevent": 961.6604640883977,
-                    "timeperevent": 120.62289663823987
+                    "sizeperevent": 939,
+                    "timeperevent": 80.6120063522261
                 },
                 "135": {
                     "matchefficiency": 0.153328436188,
