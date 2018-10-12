@@ -4725,11 +4725,10 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "matchefficiency": 1.0,
                         "matchefficiencyerror": 0.0,
-                        "needsupdateiffailed": true,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03254",
-                        "sizeperevent": 625,
-                        "timeperevent": 66.56194254373119
+                        "sizeperevent": 650,
+                        "timeperevent": 68.26124945391
                     },
                     "finished": true,
                     "matchefficiency": 1,

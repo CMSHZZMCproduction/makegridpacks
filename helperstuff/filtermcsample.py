@@ -29,7 +29,11 @@ class GenericFilter(FilterImplementation):
     with cdtemp():
       wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
       with open(self.prepid) as f:
-        testjob = f.read()
+        testjob = eval(f.read())
+      lines = testjob.split("\n")
+      cmsdriverindex = {i for i, line in enumerate(lines) if "cmsDriver.py" in line}
+      assert len(cmsdriverindex) == 1, cmsdriverindex
+      lines.insert(cmsdriverindex+1, 'sed -i "/Services/aprocess.RandomNumberGeneratorService.externalLHEProducer.initialSeed = {}" *_cfg.py'.format(abs(hash(self))%2147483647 + jobindex))
       with open(self.prepid, "w") as newf:
         newf.write(eval(testjob))
       os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
