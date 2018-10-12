@@ -153,4 +153,4 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def responsible(self):
-     return "wahung"
+     return "hroskes"

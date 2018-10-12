@@ -228,7 +228,6 @@ class PythiaVariationSample(VariationSample):
     return result
   @property
   def responsible(self):
-    if isinstance(self.mainsample, MINLOMCSample): return "wahung"
     return "hroskes"
   @property
   def dovalidation(self):
