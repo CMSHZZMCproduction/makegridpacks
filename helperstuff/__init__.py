@@ -1,4 +1,4 @@
-def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda cls: True, __docheck=True, includefinished=False):
+def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda cls: True, __docheck=True, includefinished=True):
   import getpass
   from utilities import recursivesubclasses
   from mcsamplebase import MCSampleBase
@@ -28,19 +28,3 @@ def __checkforduplicates():
       bad.add(", ".join(str(_) for _ in k))
   if bad:
     raise ValueError("Multiple samples with these identifiers:\n" + "\n".join(bad))
-
-  from clonedrequest import ClonedRequest
-
-  dct = defaultdict(set)
-  for s in allsamples(onlymysamples=False, __docheck=False):
-    if s.finished: continue
-    try:
-      dct[s.year, s.cvmfstarball_anyversion(2)].add(s)
-    except:
-      if isinstance(s, ClonedRequest):
-        pass
-      else:
-        raise
-  for k, samples in dct.iteritems():
-    if len({s.cvmfstarball for s in samples}) != 1:
-      raise ValueError("These samples for the same year have the same cvmfstarball_anyversion but different cvmfstarball, and none are finished:\n" + "\n".join(str(_) for _ in samples))

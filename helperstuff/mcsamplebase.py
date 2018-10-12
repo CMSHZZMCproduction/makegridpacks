@@ -875,7 +875,7 @@ class MCSampleBase(JsonDict):
       with open("request_fragment_check.py", "w") as f:
         f.write(contents)
 
-      pipe = subprocess.Popen(["python", "request_fragment_check.py", self.prepid], stdout=subprocess.PIPE, bufsize=1)
+      pipe = subprocess.Popen(["python", "request_fragment_check.py", "--prepid", self.prepid], stdout=subprocess.PIPE, bufsize=1)
       output = ""
       with pipe.stdout:
         for line in iter(pipe.stdout.readline, b''):
@@ -886,6 +886,7 @@ class MCSampleBase(JsonDict):
         if line.strip() == self.prepid: continue
         elif "cookie" in line: continue
         elif not line.strip().strip("*"): continue
+        elif "will be checked:" in line: continue
         elif line.startswith("* [OK]"): continue
         elif line.startswith("* [ERROR]"): return "request_fragment_check gave an error!\n"+line
         elif line.startswith("* [WARNING]"):
