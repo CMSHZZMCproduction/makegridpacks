@@ -108,6 +108,10 @@ class VariationSample(MCSampleBase):
   def dovalidation(self): return self.mainsample.dovalidation
   @property
   def fragmentname(self): return self.mainsample.fragmentname
+  def handle_request_fragment_check_warning(self, *args, **kwargs):
+    return self.mainsample.handle_request_fragment_check_warning(*args, **kwargs)
+  def handle_request_fragment_check_caution(self, *args, **kwargs):
+    return self.mainsample.handle_request_fragment_check_caution(*args, **kwargs)
 
 class ExtensionSample(VariationSample):
   def __init__(self, *args, **kwargs):
@@ -156,9 +160,6 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSample):
   @property
   def responsible(self):
     return "hroskes"
-
-  def handle_request_fragment_check_warning(self, *args, **kwargs):
-    return self.mainsample.handle_request_fragment_check_warning(*args, **kwargs)
 
   @property
   def extensionnumber(self):

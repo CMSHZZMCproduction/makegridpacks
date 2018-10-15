@@ -893,8 +893,12 @@ class MCSampleBase(JsonDict):
           result = self.handle_request_fragment_check_warning(line)
           if result == "ok": continue
           return result+"\n"+line
+        elif line.startswith("* [Caution: To check manually]"):
+          result = self.handle_request_fragment_check_caution(line)
+          if result == "ok": continue
+          return result+"\n"+line
         else:
-          if line.strip() == "*                        as number of final state particles (BEFORE THE DECAYS)": continue
+          if line.strip() == "*               set correctly as number of final state particles (BEFORE THE DECAYS)": continue
           if line.strip() == "*                                   in the LHE other than emitted extra parton.": continue
           if line.strip() == "*           which may not have all the necessary GEN code.": continue
           if line.strip() == "*                   'JetMatching:nJetMax' is set correctly as number of partons": continue
@@ -907,6 +911,9 @@ class MCSampleBase(JsonDict):
       print "time/event is", self.timeperevent
       return "please check it"
     return "request_fragment_check gave an unhandled warning!"
+
+  def handle_request_fragment_check_caution(self, line):
+    return "request_fragment_check gave an unhandled caution!"
 
 class MCSampleBase_DefaultCampaign(MCSampleBase):
   @property

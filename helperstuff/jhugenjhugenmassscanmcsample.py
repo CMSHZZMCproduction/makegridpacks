@@ -172,3 +172,8 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   @property
   def hasnonJHUGenfilter(self): return False
 
+  def handle_request_fragment_check_warning(self, line):
+    if line.strip() == "* [WARNING] Large time/event - please check":
+      if self.timeperevent <= 180 and self.productionmode == "bbH": return "ok"
+    return super(POWHEGJHUGenMassScanMCSample, self).handle_request_fragment_check_warning(line)
+
