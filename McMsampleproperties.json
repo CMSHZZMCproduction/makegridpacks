@@ -4789,8 +4789,8 @@
                         "matchefficiencyerror": 0.0,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03260",
-                        "sizeperevent": 683,
-                        "timeperevent": 169.13862771065794
+                        "sizeperevent": 638,
+                        "timeperevent": 142.05433294126337
                     },
                     "finished": true,
                     "matchefficiency": 1,
