@@ -184,6 +184,104 @@ The final class has to define all the abstract stuff.  Once you do that,
 import it in the `allsamples` function in `helperstuff/__init__.py`.
 Then, when you try to run `makegridpacks.py`, it will tell you if there are
 any abstract methods or properties you missed, and if not it will loop
-over the samples defined by the class
+over the samples defined by the class.
 
-(will fill this more later)
+Here are the most important functions to define:
+
+### Bookeeping
+
+#### `__init__`
+
+The identifiers (next bullet), or something equivalent to them, should be given as
+inputs to this function.  You should also take the year as an input argument and
+call `super(MyClass, self).__init__(year)`, which will set the year in the base
+class.
+
+#### `identifiers`
+
+These, together with the year, uniquely identify the sample.  An example is
+`return self.productionmode, self.decaymode, self.mass` in `MassScanMCSample`.
+Information about the sample is saved in `McMsampleproperties.json`, and its place
+in the structure is determined by these identifiers.
+
+Typically, most of the information will come from `__init__`, but you can also
+add constant strings that are the same for the whole class.
+
+When you run the `allsamples` function, it will automatically check that no
+two samples have the same identifiers.
+
+#### `allsamples`
+
+This is a classmethod that returns a list of samples of this class.
+See e.g. `POWHEGJHUGenMassScanMCSamples` for an example of what it can
+look like.
+
+### Gridpack information
+
+#### `cvmfstarball_anyversion`
+
+This gives the place where the gridpack where be stored on cvmfs.  It has to start with
+`/cvmfs/cms.cern.ch/phys_generator/gridpacks/`, typically in `2017` or `pre2017`, with a
+folder that indicates which generator it is.  Eventually, it should have a folder indicating
+the process, followed by `"v{}".format(tarballversion)`, followed by the gridpack.
+
+Example:
+```"/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V7011/HJJ_ZZ_NNPDF31_13TeV/JJHiggs0PMToZZTo4L_M125_13TeV_JHUGenV7011_pythia8/v{}/JJHiggs0PMToZZTo4L_M125_13TeV_JHUGenV7011_pythia8.tgz".format(tarballversion)```
+
+This way, if there's a bug in the tarball and you have to redo it, all you have to do is increment
+the tarball version.  This function also lets you access old gridpacks, which can be used if you
+need to patch them.
+
+#### `tarballversion`
+
+This function should start out looking like this:
+```
+v = 1
+return v
+```
+If necessary, you can add lines before `return v` that look like
+```if self.mass == ... and self.productionmode == ... and self.decaymode == ...: v+=1 #reason why the previous tarball was bad```
+
+#### `hasfilter`
+
+Here you should say whether or not the sample has a filter (from Pythia, JHUGen, etc.).
+In the case of samples with JHUGen decay, it's automatically determined whether they have
+a filter from JHUGen, but you have to define `hasnonJHUGenfilter` to say whether there's
+(also) a filter from Pythia.
+
+#### `genproductionscommit`
+
+This is the commit id to use for the input cards on github.  The most recent one
+that changed the input cards, or any one more recent than that, should be fine.
+
+#### gridpack creation stuff
+
+To be documented later.  These things should be defined in the MC generator base
+classes, like `POWHEGMCSample`, and don't need to be touched when making new MC samples.
+
+This includes `tmptarball`, `makegridpackcommand`, `makinggridpacksubmitsjob`,
+and `cardsurl`.
+
+##### `cardsurl`
+
+This function is particularly important because, at the same time as it finds the
+urls of the input cards, it also cross checks the gridpack to make sure that the
+card used there is identical to the one on genproductions.
+
+It's defined in the MC generator base classes.
+
+### Pythia and general request information
+
+#### `fragmentname`
+
+This is the path of the pythia fragment, starting with `Configuration/GenProduction/python/`,
+which is equivalent to `genproductions/python` in the genproductions repository on github.
+
+#### `genproductionscommitforfragment`
+
+This is the commit on genproductions to use for the pythia fragment.  It defaults
+to `genproductionscommit` but you can change it if necessary.
+
+#### `nevents`
+
+The number of events to be requested.
