@@ -228,7 +228,7 @@ class MCFMMCSample(UsesJHUGenLibraries):
   def productiongenerators(self):
     return ["MCFM701"] + super(MCFMMCSample, self).productiongenerators
   @property
-  def JHUGenversion(self): return "JHUGen v7.0.11"
+  def JHUGenversion(self): return "v7.0.11"
 
   @property
   def makegridpackscriptstolink(self):
