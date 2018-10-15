@@ -16,7 +16,9 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     raise ValueError("Unknown productionmode "+self.productionmode)
 
   @property
-  def powhegsubmissionstrategy(self): return "onestep"
+  def powhegsubmissionstrategy(self):
+    if self.productionmode == "ZH": return "multicore"
+    return "onestep"
 
   @property
   def powhegcard(self):
@@ -56,6 +58,10 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def creategridpackqueue(self):
+    if self.powhegsubmissionstrategy == "multicore":
+      if self.multicore_upto[0] == 0: return "1nh"
+      if self.multicore_upto[0] in (2, 3): return "1nw"
+      return "1nd"
     if self.productionmode in ("ZH", "ttH"): return "1nw"
     return super(POWHEGJHUGenMassScanMCSample, self).creategridpackqueue
 
@@ -95,7 +101,8 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if self.year == 2018:
       if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass not in (125, 165, 170): v+=1  #trimming pwg-rwl.dat for these as well
       if self.productionmode == "ZH" and self.decaymode == "2l2q" and self.mass == 125: v+=1  #same
-
+      if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (115, 120, 125, 126, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 210, 230, 250, 270, 300, 350, 400, 500, 550, 600, 700, 750, 800, 900, 1500, 2000, 2500, 3000): v+=1  #trying multicore
+      if self.productionmode == "ZH" and self.decaymode == "2l2q" and self.mass == 125: v+=1  #same
     return v
 
   def cvmfstarball_anyversion(self, version):

@@ -33,7 +33,7 @@ class VariationSample(MCSampleBase):
   def tmptarball(self):
     return self.mainsample.tmptarball
   def createtarball(self):
-    return "this is a variation sample, the gridpack is the same as for the main sample"
+    return self.mainsample.createtarball()
   def patchtarball(self):
     samples = (
       [self.mainsample] +
@@ -180,6 +180,14 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSample):
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH": return False
     if isinstance(self.mainsample, PythiaVariationSample) and self.mainsample.mainsample.productionmode == "ZH": return False
     return super(RunIIFall17DRPremix_nonsubmitted, self).dovalidation
+
+  @property
+  def tarballversion(self):
+    v = super(RunIIFall17DRPremix_nonsubmitted, self).tarballversion
+    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+
+    if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.mainsample.decaymode == "4l" and self.mainsample.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #try multicore
+    return v
 
 class PythiaVariationSample(VariationSample):
   @property
