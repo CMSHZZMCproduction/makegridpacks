@@ -313,4 +313,5 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def dovalidation(self):
     if self.productionmode == "ZH" and self.year == 2018: return False
+    if self.productionmode == "ttH" and self.year == 2018 and self.mass == 140: return False
     return super(POWHEGJHUGenMassScanMCSample, self).dovalidation
