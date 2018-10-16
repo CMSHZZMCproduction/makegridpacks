@@ -17,9 +17,6 @@ class JHUGenJHUGenMCSample(JHUGenMCSample, JHUGenDecayMCSample):
   @property
   def makegridpackcommand(self):
     return super(JHUGenJHUGenMCSample, self).makegridpackcommand + ["--decay-card", self.decaycard]
-  @property
-  def makinggridpacksubmitsjob(self):
-    return None
 
   @property
   @cache

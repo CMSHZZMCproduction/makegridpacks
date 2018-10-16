@@ -32,6 +32,9 @@ class JHUGenMCSample(UsesJHUGenLibraries):
     }
     if self.linkmela: args["--link-mela"] = None
     return ["./install.py"] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
+  @property
+  def makinggridpacksubmitsjob(self):
+    return None
   @abc.abstractproperty
   def shortname(self): pass
 
