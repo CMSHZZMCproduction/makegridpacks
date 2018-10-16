@@ -15,7 +15,7 @@ class GridpackBySomeoneElse(MCSampleBase):
     return 60
 
   def createtarball(self):
-    mkdir_p(self.workdir)
+    mkdir_p(self.workdirforgridpack)
     with KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
       if not kwof: return "another process is already copying the tarball"
       if not os.path.exists(self.originaltarball):

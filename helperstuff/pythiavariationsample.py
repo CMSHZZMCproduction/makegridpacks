@@ -1,5 +1,5 @@
 from collections import namedtuple
-import contextlib, csv, os, re, subprocess, urllib
+import abc, contextlib, csv, os, re, subprocess, urllib
 
 from mcsamplebase import MCSampleBase
 from minlomcsample import MINLOMCSample
@@ -32,8 +32,6 @@ class VariationSample(MCSampleBase):
   @property
   def tmptarball(self):
     return self.mainsample.tmptarball
-  def createtarball(self):
-    return self.mainsample.createtarball()
   def patchtarball(self):
     samples = (
       [self.mainsample] +
@@ -53,6 +51,15 @@ class VariationSample(MCSampleBase):
       return result
     else:
       raise ValueError("Unknown result from patchtarball:\n{}".format(result))
+  @property
+  def makinggridpacksubmitsjob(self):
+    return self.mainsample.makinggridpacksubmitsjob
+  @property
+  def inthemiddleofmultistepgridpackcreation(self):
+    return self.mainsample.inthemiddleofmultistepgridpackcreation
+  @property
+  def gridpackjobsrunning(self):
+    return self.mainsample.gridpackjobsrunning
   def findmatchefficiency(self):
     return "this is a variation sample, the filter efficiency is the same as for the main sample"
   @property
@@ -64,6 +71,8 @@ class VariationSample(MCSampleBase):
   @property
   def makinggridpacksubmitsjob(self):
     return self.mainsample.makinggridpacksubmitsjob
+  def processmakegridpackstdout(self, stdout):
+    return self.mainsample.processmakegridpackstdout(stdout)
   @property
   def hasfilter(self):
     return self.mainsample.hasfilter
@@ -129,11 +138,39 @@ class ExtensionSample(VariationSample):
   @property
   def extensionnumber(self): return self.mainsample.extensionnumber+1
 
-class RedoSample(ExtensionSample):
+class RedoSampleBase(ExtensionSample):
+  def __init__(self, mainsample, reason=None):
+    self.__reason = reason
+    return super(RedoSampleBase, self).__init__(mainsample=mainsample, variation=self.variationname)
+
+  @abc.abstractproperty
+  def variationname(self): "can be a class variable"
+
   @property
   def nevents(self): return self.mainsample.nevents
 
-class RunIIFall17DRPremix_nonsubmitted(RedoSample):
+  @property
+  def notes(self):
+    result = "Redo of " + self.mainsample.prepid
+    if reason is not None: result += " "+reason
+    return result
+
+class RedoSample(RedoSampleBase):
+  @classmethod
+  def allsamples(cls):
+    from qqZZmcsample import QQZZMCSample
+    yield cls(QQZZMCSample(2018, "4l"), reason="because it was prematurely force completed")
+    yield cls(QQZZMCSample(2018, "2l2nu"), reason="because it was prematurely force completed")
+
+  variationname = "Redo"
+
+  @property
+  def responsible(self):
+    return self.mainsample.responsible
+
+class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
+  variationname = "RunIIFall17DRPremix_nonsubmitted"
+
   @classmethod
   def allsamples(cls):
     cls.__inallsamples = True
@@ -150,7 +187,7 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSample):
     from . import allsamples
     for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 != cls, __docheck=False, includefinished=True):
       if any(_.prepid == s.prepid for _ in requests):
-        yield cls(mainsample=s, variation="RunIIFall17DRPremix_nonsubmitted")
+        yield cls(mainsample=s, reason="\n\nRunIIFall17DRPremix_nonsubmitted")
 
   @property
   def doublevalidationtime(self):
@@ -186,6 +223,7 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSample):
     v = super(RunIIFall17DRPremix_nonsubmitted, self).tarballversion
     from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 
+    if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.mainsample.decaymode == "4l" and self.mainsample.mass not in (125, 165, 170): v+=1  #removing some pdfs
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.mainsample.decaymode == "4l" and self.mainsample.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #try multicore
     return v
 

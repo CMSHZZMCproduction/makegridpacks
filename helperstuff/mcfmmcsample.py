@@ -36,8 +36,8 @@ def differentproductioncards(productioncard, gitproductioncard):
 class MCFMMCSample(UsesJHUGenLibraries):
 
   def checkandfixtarball(self):
-    mkdir_p(self.workdir)
-    with KeepWhileOpenFile(os.path.join(self.workdir,self.prepid+'.tmp'),message=LSB_JOBID(),deleteifjobdied=True) as kwof:
+    mkdir_p(self.workdirforgridpack)
+    with KeepWhileOpenFile(os.path.join(self.workdirforgridpack,self.prepid+'.tmp'),message=LSB_JOBID(),deleteifjobdied=True) as kwof:
 	if not kwof: return " check in progress"
 	if not LSB_JOBID(): self.submitLSF(); return "Check if the tarball needs fixing"	
   	with cdtemp():
@@ -57,7 +57,7 @@ class MCFMMCSample(UsesJHUGenLibraries):
 	  internalgridname = str(internalgridname)
 	  print "internal tarball name: "+internalgridname
   	  if self.datasetname+'_grid' == internalgridname:
-	    with open(os.path.join(self.workdir,'INTACT'),'w') as fout:
+	    with open(os.path.join(self.workdirforgridpack,'INTACT'),'w') as fout:
 	      fout.write(LSB_JOBID())
   	    return str(self.identifiers)+"'s gridpack is intact"
   	  else:
@@ -67,7 +67,7 @@ class MCFMMCSample(UsesJHUGenLibraries):
   	    curdirpath = subprocess.check_output(['pwd'])
   	    os.system('tar cvaf '+self.tmptarball+' ./*')
 	    if os.path.exists(self.tmptarball):	
-	      with open(os.path.join(self.workdir,'FIXED'),'w') as fout:
+	      with open(os.path.join(self.workdirforgridpack,'FIXED'),'w') as fout:
 		fout.write(LSB_JOBID())
 
 

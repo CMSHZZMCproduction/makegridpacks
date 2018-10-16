@@ -134,13 +134,16 @@ class MCSampleBase(JsonDict):
         raise
 
   @property
-  def workdir(self):
+  def workdirforgridpack(self):
     result = os.path.dirname(self.tmptarball)
     if os.path.commonprefix((result, os.path.join(here, "workdir"))) != os.path.join(here, "workdir"):
       raise ValueError("{!r}.workdir is supposed to be in the workdir folder".format(self))
     if result == os.path.join(here, "workdir"):
       raise ValueError("{!r}.workdir is supposed to be a subfolder of the workdir folder, not workdir itself".format(self))
     return result
+  @property
+  def workdir(self):
+    return self.workdirforgridpack
 
   @property
   def cvmfstarballexists(self): return os.path.exists(self.cvmfstarball)
@@ -149,7 +152,7 @@ class MCSampleBase(JsonDict):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
 
     if not self.needspatch: assert False
-    mkdir_p(self.workdir)
+    mkdir_p(self.workdirforgridpack)
     with KeepWhileOpenFile(self.tmptarball+".tmp", message=LSB_JOBID()) as kwof:
       if not kwof:
         return "job to patch the tarball is already running"
@@ -175,14 +178,14 @@ class MCSampleBase(JsonDict):
   def createtarball(self):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
 
-    mkdir_p(self.workdir)
-    with cd(self.workdir), KeepWhileOpenFile(self.tmptarball+".tmp", message=LSB_JOBID()) as kwof:
+    mkdir_p(self.workdirforgridpack)
+    with cd(self.workdirforgridpack), KeepWhileOpenFile(self.tmptarball+".tmp", message=LSB_JOBID()) as kwof:
       if not kwof:
-        with open(self.tmptarball+".tmp") as f:
-          try:
+        try:
+          with open(self.tmptarball+".tmp") as f:
             jobid = int(f.read().strip())
-          except ValueError:
-            return "try running again, probably you just got really bad timing"
+        except (ValueError, IOError):
+          return "try running again, probably you just got really bad timing"
         if jobended(str(jobid)):
           if self.makinggridpacksubmitsjob:
             os.remove(self.tmptarball+".tmp")

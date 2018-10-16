@@ -63,7 +63,7 @@ class POWHEGMCSample(MCSampleBase):
           "-n": "10",
           "-q": self.creategridpackqueue,
         })
-        with cd(os.path.join(self.workdir, self.foldernameforrunpwg)):
+        with cd(os.path.join(self.workdirforgridpack, self.foldernameforrunpwg)):
           for _ in glob.iglob("run_{-p}_{-x}_*.*".format(**args)):
             os.remove(_)
       elif self.multicore_upto[0] == 9:
@@ -86,9 +86,9 @@ class POWHEGMCSample(MCSampleBase):
   @property
   def multicore_upto(self):
     assert self.powhegsubmissionstrategy == "multicore", self.powhegsubmissionstrategy
-    if not os.path.exists(os.path.join(self.workdir, self.foldernameforrunpwg, "pwhg_main")):
+    if not os.path.exists(os.path.join(self.workdirforgridpack, self.foldernameforrunpwg, "pwhg_main")):
       return 0, 1
-    with cd(os.path.join(self.workdir, self.foldernameforrunpwg)):
+    with cd(os.path.join(self.workdirforgridpack, self.foldernameforrunpwg)):
       for logfile in glob.iglob("run_*.log"):
         with open(logfile) as f:
           contents = f.read()
@@ -108,7 +108,7 @@ class POWHEGMCSample(MCSampleBase):
     if self.powhegsubmissionstrategy == "multicore":
       matches = [int(_) for _ in re.findall("Job <(.*)> is submitted to queue <.*>[.]", stdout)]
       for match in matches:
-        with open(os.path.join(self.workdir, "jobisrunning_{}".format(match)), 'w') as f:
+        with open(os.path.join(self.workdirforgridpack, "jobisrunning_{}".format(match)), 'w') as f:
           pass
     super(POWHEGMCSample, self).processmakegridpackstdout(stdout)
     #else don't need to do anything
@@ -127,7 +127,7 @@ class POWHEGMCSample(MCSampleBase):
   @property
   def gridpackjobsrunning(self):
     if self.powhegsubmissionstrategy == "multicore" and self.multicore_upto[0] in (1, 2, 3, 9):
-      for filename in glob.iglob(os.path.join(self.workdir, "jobisrunning_*")):
+      for filename in glob.iglob(os.path.join(self.workdirforgridpack, "jobisrunning_*")):
         jobid = int(os.path.basename(filename.replace("jobisrunning_", "")))
         if jobended(str(jobid)):
           os.remove(filename)

@@ -36,7 +36,7 @@ class MyMCSample(MCSampleBase):
   def tmptarball(self):
     """
     fill this
-    it has to be os.path.join(here, workdir, ...)
+    it has to be os.path.join(here, "workdir", ...)
     the directory doesn't matter too much as long as it's different for every sample
     the final tarball name (....tgz) has to be whatever is created by the script that makes the tarball
     """
