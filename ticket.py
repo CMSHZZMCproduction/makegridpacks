@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-import argparse
-import pprint
+import argparse, itertools, math, pprint
 
 from helperstuff import allsamples
 from helperstuff.utilities import restful
@@ -24,17 +23,29 @@ def maketicket(block, chain, tags, filter=lambda sample: True, modifyticket=None
     raise ValueError("The prepids have to be all the same except for the final number, but there are multiple different ones:\n"+", ".join(firstpart))
   firstpart = firstpart.pop()
 
-  if modifyticket is not None:
-    ticket = restful().get("mccms", modifyticket)
-  else:
-    ticket = {
-      "prepid": firstpart.split("-")[0],
-      "pwg": firstpart.split("-")[0],
-    }
+  ntickets = int(math.ceil(len(prepids) / 40.))
+  ineachticket = int(math.ceil(1.*len(prepids) / ntickets))
+  i = 0
 
+  tickets = []
+  for i in xrange(ntickets):
+    if i == 0 and modifyticket is not None:
+      tickets.append(restful().get("mccms", modifyticket))
+    else:
+      tickets.append({
+        "prepid": firstpart.split("-")[0],
+        "pwg": firstpart.split("-")[0],
+      })
+
+  ticketrequests = []
   requests = []
   currentrequestrange = []
+
   for prepid in prepids:
+    if i == 0:
+      requests = []
+      currentrequestrange = []
+      ticketrequests.append(requests)
     if len(currentrequestrange) == 2:
       if int(prepid.split("-")[-1]) == int(currentrequestrange[1].split("-")[-1])+1:
         currentrequestrange[1] = prepid
@@ -50,24 +61,33 @@ def maketicket(block, chain, tags, filter=lambda sample: True, modifyticket=None
       requests.append(currentrequestrange)
     assert prepid == currentrequestrange[-1]
     assert currentrequestrange is requests[-1]  #is rather than ==, so that we can modify it in place
+    i += 1
+    if i == ineachticket:
+      i = 0
 
-  ticket.update({
-    "block": block,
-    "chains": [chain],
-    "repetitions": 1,
-    "requests": requests,
-    "tags": tags,
-  })
-  if notes is not None: ticket["notes"] = notes
+  for ticket, requests in itertools.izip(tickets, ticketrequests):
+    assert all(1 <= len(lst) <= 2 for lst in requests)
+    requests = [lst if len(lst) == 2 else lst[0] for lst in requests]
 
-  pprint.pprint(ticket)
+    ticket.update({
+      "block": block,
+      "chains": [chain],
+      "repetitions": 1,
+      "requests": requests,
+      "tags": tags,
+    })
+    if notes is not None: ticket["notes"] = notes
+
+    pprint.pprint(ticket)
+
   if dryrun: return
 
-  answer = (restful().updateA if modifyticket else restful().putA)('mccms', ticket)
-  print answer
+  for ticket in tickets:
+    answer = (restful().update if modifyticket else restful().put)('mccms', ticket)
+    print answer
 
-  if not answer['results']:
-    raise RuntimeError(answer)
+    if not answer['results']:
+      raise RuntimeError(answer)
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
@@ -84,7 +104,6 @@ if __name__ == "__main__":
   group.add_argument("--status", action="append", help="make a ticket using requests that have the statuses listed here", choices=("new", "validation", "defined", "approved", "submitted", "done"))
   parser.add_argument("--everyones-samples", action="store_true", help="include samples that you are not the responsible person for")
   args = parser.parse_args()
-  if not args.dry_run: parser.error("I think this script might break mcm.  Don't run it without -n.")
 
   if args.submitted: status = ("approved", "submitted", "done")
   elif args.unvalidated: status = ("new",)
