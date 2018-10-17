@@ -7092,9 +7092,9 @@
                 "900": {
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0.0,
-                    "nthreads": 2,
+                    "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00248",
-                    "sizeperevent": 746.5538782608695
+                    "sizeperevent": 738.595172173913
                 }
             }
         },
@@ -8417,7 +8417,6 @@
                 "Redo": {
                     "matchefficiency": 1.0,
                     "matchefficiencyerror": 0.0,
-                    "needsupdateiffailed": true,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00349",
                     "sizeperevent": 550.04,
                     "timeperevent": 7.080087113391842
@@ -8433,7 +8432,6 @@
                 "Redo": {
                     "matchefficiency": 1.0,
                     "matchefficiencyerror": 0.0,
-                    "needsupdateiffailed": true,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00348",
                     "sizeperevent": 525,
                     "timeperevent": 6.447004334965715

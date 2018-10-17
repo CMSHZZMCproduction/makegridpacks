@@ -152,7 +152,7 @@ class RedoSampleBase(ExtensionSample):
   @property
   def notes(self):
     result = "Redo of " + self.mainsample.prepid
-    if reason is not None: result += " "+reason
+    if self.__reason is not None: result += " "+self.__reason
     return result
 
 class RedoSample(RedoSampleBase):
