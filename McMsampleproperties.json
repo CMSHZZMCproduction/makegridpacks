@@ -8417,9 +8417,12 @@
                 "Redo": {
                     "matchefficiency": 1.0,
                     "matchefficiencyerror": 0.0,
+                    "needsupdateiffailed": true,
+                    "nthreads": 2,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00349",
+                    "resettimeperevent": true,
                     "sizeperevent": 550.04,
-                    "timeperevent": 7.080087113391842
+                    "timeperevent": 28.32034845356737
                 },
                 "matchefficiency": 1,
                 "matchefficiencyerror": 0,
@@ -8432,9 +8435,12 @@
                 "Redo": {
                     "matchefficiency": 1.0,
                     "matchefficiencyerror": 0.0,
+                    "needsupdateiffailed": true,
+                    "nthreads": 2,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00348",
+                    "resettimeperevent": true,
                     "sizeperevent": 525,
-                    "timeperevent": 6.447004334965715
+                    "timeperevent": 25.78801733986286
                 },
                 "finished": true,
                 "matchefficiency": 1,
