@@ -18,10 +18,15 @@ def maketicket(block, chain, tags, filter=lambda sample: True, modifyticket=None
     print "no prepids!"
     return
   prepids.sort()
-  firstpart = {prepid.rsplit("-", 1)[0] for prepid in prepids}
-  if len(firstpart) > 1:
-    raise ValueError("The prepids have to be all the same except for the final number, but there are multiple different ones:\n"+", ".join(firstpart))
-  firstpart = firstpart.pop()
+  firsttwoparts = {prepid.rsplit("-", 1)[0] for prepid in prepids}
+  if len(firsttwoparts) > 1:
+    raise ValueError("The prepids have to be all the same except for the final number, but there are multiple different ones:\n"+", ".join(firsttwoparts))
+  firsttwoparts = firsttwoparts.pop()
+
+  firstpart, middlepart = firsttwoparts.split("-")
+  chainfirstpart = chain.split("_")[1]
+  if middlepart != chainfirstpart:
+    raise ValueError("Chain first part "+chainfirstpart+" is not the same as the request prepids' middle part "+middlepart)
 
   ntickets = int(math.ceil(len(prepids) / 40.))
   ineachticket = int(math.ceil(1.*len(prepids) / ntickets))
@@ -33,8 +38,8 @@ def maketicket(block, chain, tags, filter=lambda sample: True, modifyticket=None
       tickets.append(restful().get("mccms", modifyticket))
     else:
       tickets.append({
-        "prepid": firstpart.split("-")[0],
-        "pwg": firstpart.split("-")[0],
+        "prepid": firstpart,
+        "pwg": firstpart,
       })
 
   ticketrequests = []
