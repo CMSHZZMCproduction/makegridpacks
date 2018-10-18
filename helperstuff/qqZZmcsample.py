@@ -80,7 +80,9 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
         return "ZZTo4L_13TeV_powheg_pythia8"
       elif self.cut == "100-160": return "ZZTo4L_mZZ100-160GeV_13TeV_powheg_pythia8"
     elif self.finalstate == "2l2nu":
-      if self.cut is None: return "ZZTo2L2Nu_13TeV_powheg_pythia8"
+      if self.cut is None:
+        if self.year >= 2018: return "ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8"
+        return "ZZTo2L2Nu_13TeV_powheg_pythia8"
     assert False, self
   @property
   def defaulttimeperevent(self): return 15

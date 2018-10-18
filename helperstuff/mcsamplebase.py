@@ -845,19 +845,26 @@ class MCSampleBase(JsonDict):
     new = self.getdictforupdate()
     different = set()
     differentsequences = set()
+    setneedsupdate = False
+    setneedsupdateiffailed = False
     for key in set(old.keys()) | set(new.keys()):
       if old.get(key) != new.get(key):
         if key == "memory" and validated:
           pass
         elif key in ("time_event", "size_event") and not validated:
           pass
-        elif key in ("total_events", "generators", "tags", "memory", "fragment"):
+        elif key in ("total_events", "generators", "tags", "dataset_name", "fragment", "notes"):
           different.add(key)
+          setneedsupdate = True
+        elif key in ("memory",):
+          different.add(key)
+          setneedsupdateiffailed = True
         elif key == "sequences":
           assert len(old[key]) == len(new[key]) == 1
           for skey in set(old[key][0].keys()) | set(new[key][0].keys()):
             if old[key][0].get(skey) != new[key][0].get(skey):
               if skey == "nThreads":
+                setneedsupdateiffailed = True
                 differentsequences.add(skey)
               elif skey == "procModifiers" and old[key][0].get(skey) is None and new[key][0].get(skey) == "":
                 pass  #not sure what this is about
@@ -865,9 +872,12 @@ class MCSampleBase(JsonDict):
                 raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(skey, old[key][0].get(skey), new[key][0].get(skey), self.prepid))
         else:
           raise ValueError("Don't know what to do with {} ({} --> {}) for {}".format(key, old.get(key), new.get(key), self.prepid))
-    if different or differentsequences:
-      self.needsupdate = True
-      return "there is a change in some parameters, setting needsupdate = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((skey, old["sequences"][0].get(skey), new["sequences"][0].get(skey)) for skey in differentsequences)))
+    if setneedsupdate or setneedsupdateiffailed:
+      if setneedsupdate:
+        self.needsupdate = True
+      else:
+        self.needsupdateiffailed = True
+      return "there is a change in some parameters, setting needsupdate" + "iffailed"*(not setneedsupdate) + " = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((skey, old["sequences"][0].get(skey), new["sequences"][0].get(skey)) for skey in differentsequences)))
 
   def request_fragment_check(self):
     with cdtemp():

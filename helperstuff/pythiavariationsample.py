@@ -219,12 +219,6 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
     return "fd7d34a91c3160348fd0446ded445fa28f555e09"
 
   @property
-  def dovalidation(self):
-    if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH": return False
-    if isinstance(self.mainsample, PythiaVariationSample) and self.mainsample.mainsample.productionmode == "ZH": return False
-    return super(RunIIFall17DRPremix_nonsubmitted, self).dovalidation
-
-  @property
   def tarballversion(self):
     v = super(RunIIFall17DRPremix_nonsubmitted, self).tarballversion
     from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
@@ -240,6 +234,11 @@ class PythiaVariationSample(VariationSample):
     if self.variation != "ScaleExtension":
       result = result.replace("13TeV", "13TeV_"+self.variation.lower())
       assert self.variation.lower() in result
+    return result
+  @property
+  def tarballversion(self):
+    result = super(PythiaVariationSample, self).tarballversion
+    if self.prepid == "HIG-RunIIFall17wmLHEGS-00509": result += 1
     return result
   @property
   def nevents(self):
@@ -282,10 +281,6 @@ class PythiaVariationSample(VariationSample):
   @property
   def responsible(self):
     return "hroskes"
-  @property
-  def dovalidation(self):
-    if self.prepid == "HIG-RunIIFall17wmLHEGS-00509": return False
-    return super(PythiaVariationSample, self).dovalidation
 
   @classmethod
   def nominalsamples(cls):
