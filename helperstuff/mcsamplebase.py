@@ -811,6 +811,7 @@ class MCSampleBase(JsonDict):
     return self.fullinfo["approval"]
   @property
   def status(self):
+    if self.finished: return "done"
     return self.fullinfo["status"]
 
   def delete(self):

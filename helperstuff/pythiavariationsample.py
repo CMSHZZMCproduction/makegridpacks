@@ -185,7 +185,13 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
         requests.append(Request(*line.split()))
 
     from . import allsamples
-    for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 != cls, __docheck=False, includefinished=True):
+    from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
+    from powhegjhugenanomalouscouplings import POWHEGJHUGenAnomCoupMCSample
+    from jhugenjhugenmassscanmcsample import JHUGenJHUGenMassScanMCSample
+    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+    from mcfmanomalouscouplings import MCFMAnomCoupMCSample
+    from pythiavariationsample import PythiaVariationSample
+    for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 in (JHUGenJHUGenAnomCoupMCSample, POWHEGJHUGenAnomCoupMCSample, JHUGenJHUGenMassScanMCSample, POWHEGJHUGenMassScanMCSample, MCFMAnomCoupMCSample, PythiaVariationSample), __docheck=False, includefinished=True, filter=lambda x: x.year == 2017):
       if any(_.prepid == s.prepid for _ in requests):
         yield cls(mainsample=s, reason="\n\nRunIIFall17DRPremix_nonsubmitted")
 
