@@ -130,7 +130,6 @@ class ClonedRequest(MCSampleBase):
   @classmethod
   def allsamples(cls):
     yield cls(2017, "HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
-    yield cls(2017, "BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS")
     for _ in 1, 2, 3, 4, 50, 51, 35:
       yield cls(2017, "HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_), "PhaseIISummer17wmLHEGENOnly")
 

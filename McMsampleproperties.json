@@ -4802,15 +4802,6 @@
             }
         },
         "clone": {
-            "BTV-RunIIFall17wmLHEGS-00006": {
-                "RunIISpring18wmLHEGS": {
-                    "matchefficiency": 1,
-                    "matchefficiencyerror": 0.5,
-                    "prepid": "HIG-RunIISpring18wmLHEGS-00003",
-                    "sizeperevent": 364,
-                    "timeperevent": 2.484256027426187
-                }
-            },
             "HIG-PhaseIITDRFall17wmLHEGS-00001": {
                 "PhaseIISummer17wmLHEGENOnly": {
                     "finished": true,

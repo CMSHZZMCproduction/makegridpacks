@@ -820,7 +820,7 @@ class MCSampleBase(JsonDict):
     if response == "no": return
     if self.prepid:
       restful().approve("requests", self.prepid, 0)
-      restful().deleteA("requests", self.prepid)
+      restful().delete("requests", self.prepid)
     with cd(here), self.writingdict():
       del self.value
 
