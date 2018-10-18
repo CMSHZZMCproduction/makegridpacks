@@ -1706,18 +1706,14 @@
                     "TuneDown": {
                         "matchefficiency": 1,
                         "matchefficiencyerror": 0,
-                        "needsupdate": true,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01148",
-                        "sizeperevent": 1035,
-                        "timeperevent": 713.0480665701674
+                        "sizeperevent": 1035
                     },
                     "TuneUp": {
                         "matchefficiency": 1,
                         "matchefficiencyerror": 0,
-                        "needsupdate": true,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01147",
-                        "sizeperevent": 975,
-                        "timeperevent": 723.0292031495153
+                        "sizeperevent": 975
                     },
                     "finished": true,
                     "matchefficiency": 1,
@@ -1738,17 +1734,13 @@
                     "TuneUp": {
                         "matchefficiency": 1,
                         "matchefficiencyerror": 0,
-                        "needsupdate": true,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01144",
-                        "sizeperevent": 1144,
-                        "timeperevent": 647.7900641959953
+                        "sizeperevent": 1144
                     },
                     "matchefficiency": 1,
                     "matchefficiencyerror": 0,
-                    "nthreads": 1,
                     "prepid": "HIG-RunIIFall17wmLHEGS-01146",
-                    "sizeperevent": 659.1162181818182,
-                    "timeperevent": 634.0269588262893
+                    "sizeperevent": 659.1162181818182
                 }
             }
         },
@@ -5880,7 +5872,6 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "matchefficiency": 0.15411950306736202,
                         "matchefficiencyerror": 0.0003805893835507585,
-                        "needsupdate": true,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03293",
                         "sizeperevent": 862.4896,
