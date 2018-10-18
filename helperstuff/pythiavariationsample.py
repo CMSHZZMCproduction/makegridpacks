@@ -22,6 +22,11 @@ class VariationSample(MCSampleBase):
         self, self.mainsample, self.matchefficiency, self.mainsample.matchefficiency
       ))
   @property
+  def mainmainsample(self):
+    if hasattr(self.mainsample, mainsample):
+      return self.mainsample.mainsample
+    return self.mainsample
+  @property
   def identifiers(self):
     return self.mainsample.identifiers + (self.variation,)
   @property
@@ -34,16 +39,16 @@ class VariationSample(MCSampleBase):
     return self.mainsample.tmptarball
   def patchtarball(self):
     samples = (
-      [self.mainsample] +
-      [s for s in self.allsamples() if s.mainsample == self.mainsample]
+      [self.mainmainsample] +
+      [s for s in self.allsamples() if s.mainmainsample == self.mainmainsample]
     )
 
     needspatchparameters = {
       _.needspatch for _ in samples if _.needspatch
     }
     assert len(needspatchparameters) == 1
-    self.mainsample.needspatch = self.needspatch
-    result = self.mainsample.patchtarball()
+    self.mainmainsample.needspatch = self.needspatch
+    result = self.mainmainsample.patchtarball()
     if result == "tarball is patched and the new version is in this directory to be copied to eos":
       for _ in samples: _.needspatch = False
       return result
@@ -122,9 +127,9 @@ class VariationSample(MCSampleBase):
   def handle_request_fragment_check_caution(self, *args, **kwargs):
     return self.mainsample.handle_request_fragment_check_caution(*args, **kwargs)
 
-class ExtensionSample(VariationSample):
+class ExtensionSampleBase(VariationSample):
   def __init__(self, *args, **kwargs):
-    super(ExtensionSample, self).__init__(*args, **kwargs)
+    super(ExtensionSampleBase, self).__init__(*args, **kwargs)
     if self.timeperevent is None and self.mainsample.timeperevent is not None and not self.resettimeperevent:
       self.timeperevent = self.mainsample.timeperevent * self.mainsample.nthreads / self.nthreads
     if self.sizeperevent is None and self.mainsample.sizeperevent is not None:
@@ -138,7 +143,43 @@ class ExtensionSample(VariationSample):
   @property
   def extensionnumber(self): return self.mainsample.extensionnumber+1
 
-class RedoSampleBase(ExtensionSample):
+class ExtensionSample(ExtensionSampleBase):
+  """
+  for extensions that are identical to the main sample
+  except in the number of events
+  """
+  @property
+  def nevents(self):
+    from qqZZmcsample import QQZZMCSample
+    if isinstance(self.mainmainsample, QQZZMCSample) and self.mainmainsample.cut is None:
+      if self.year == 2018:
+        if self.mainmainsample.finalstate == "4l": return 100000000
+        if self.mainmainsample.finalstate == "2l2nu": return 50000000
+    assert False, self
+
+  @classmethod
+  def samplestoextend(cls):
+    from qqZZmcsample import QQZZMCSample
+    yield RedoSample(QQZZMCSample(2018, "4l"))
+    yield RedoSample(QQZZMCSample(2018, "2l2nu"))
+
+  @classmethod
+  def allsamples(cls):
+    for _ in cls.samplestoextend():
+      yield cls(_, "ext")
+
+  @property
+  def responsible(self):
+    return self.mainsample.responsible
+
+  def process_request_fragment_check_warning(self, line):
+    if self.mainmainsample == QQZZMCSample(2018, "4l"):
+      if line.strip() == "* [WARNING] Is 100000000 events what you really wanted - please check!":
+        #yes it is
+        return "ok"
+    return super(ExtensionSample, self).process_request_fragment_check_warning(line)
+
+class RedoSampleBase(ExtensionSampleBase):
   def __init__(self, mainsample, reason=None):
     self.__reason = reason
     return super(RedoSampleBase, self).__init__(mainsample=mainsample, variation=self.variationname)

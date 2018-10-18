@@ -8403,6 +8403,15 @@
         "qqZZ": {
             "2l2nu": {
                 "Redo": {
+                    "ext": {
+                        "matchefficiency": 1.0,
+                        "matchefficiencyerror": 0.0,
+                        "needsupdate": true,
+                        "needsupdateiffailed": true,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00374",
+                        "sizeperevent": 533,
+                        "timeperevent": 4.530479252217217
+                    },
                     "matchefficiency": 1.0,
                     "matchefficiencyerror": 0.0,
                     "nthreads": 1,
@@ -8419,6 +8428,15 @@
             },
             "4l": {
                 "Redo": {
+                    "ext": {
+                        "matchefficiency": 1.0,
+                        "matchefficiencyerror": 0.0,
+                        "needsupdate": true,
+                        "needsupdateiffailed": true,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00373",
+                        "sizeperevent": 533,
+                        "timeperevent": 6.930833058410289
+                    },
                     "matchefficiency": 1.0,
                     "matchefficiencyerror": 0.0,
                     "nthreads": 2,
