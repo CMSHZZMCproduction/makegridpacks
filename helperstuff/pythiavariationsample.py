@@ -172,7 +172,8 @@ class ExtensionSample(ExtensionSampleBase):
   def responsible(self):
     return self.mainsample.responsible
 
-  def process_request_fragment_check_warning(self, line):
+  def handle_request_fragment_check_warning(self, line):
+    from qqZZmcsample import QQZZMCSample
     if self.mainmainsample == QQZZMCSample(2018, "4l"):
       if line.strip() == "* [WARNING] Is 100000000 events what you really wanted - please check!":
         #yes it is
