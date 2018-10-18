@@ -23,7 +23,7 @@ class VariationSample(MCSampleBase):
       ))
   @property
   def mainmainsample(self):
-    if hasattr(self.mainsample, mainsample):
+    if hasattr(self.mainsample, "mainsample"):
       return self.mainsample.mainsample
     return self.mainsample
   @property

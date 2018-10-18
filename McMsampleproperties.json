@@ -7081,8 +7081,8 @@
                     "matchefficiencyerror": 0.0,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00248",
-                    "sizeperevent": 811.7007582608695,
-                    "timeperevent": 209.95655998773856
+                    "sizeperevent": 786,
+                    "timeperevent": 131.2079396548444
                 }
             }
         },
@@ -8431,8 +8431,6 @@
                     "ext": {
                         "matchefficiency": 1.0,
                         "matchefficiencyerror": 0.0,
-                        "needsupdate": true,
-                        "needsupdateiffailed": true,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00373",
                         "sizeperevent": 533,
                         "timeperevent": 6.930833058410289
