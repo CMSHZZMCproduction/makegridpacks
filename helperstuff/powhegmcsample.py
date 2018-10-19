@@ -96,6 +96,8 @@ class POWHEGMCSample(MCSampleBase):
             os.remove(logfile)
           if not contents.strip() and logfile.startswith("run_1_"):
             os.remove(logfile)
+          if not self.gridpackjobsrunning and "powheginput WARNING: unused variable fakevirt" not in contents:
+            os.remove(logfile)
       for coredump in glob.iglob("core.*"):
         os.remove(coredump)
       for p, x in (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 1), (3, 1):
@@ -126,7 +128,8 @@ class POWHEGMCSample(MCSampleBase):
       assert False, self.powhegsubmissionstrategy
   @property
   def gridpackjobsrunning(self):
-    if self.powhegsubmissionstrategy == "multicore" and self.multicore_upto[0] in (1, 2, 3, 9):
+    #if self.powhegsubmissionstrategy == "multicore" and self.multicore_upto[0] in (1, 2, 3, 9):
+    if self.powhegsubmissionstrategy == "multicore" and os.path.exists(os.path.join(self.workdirforgridpack, self.foldernameforrunpwg, "pwhg_main")):
       for filename in glob.iglob(os.path.join(self.workdirforgridpack, "jobisrunning_*")):
         jobid = int(os.path.basename(filename.replace("jobisrunning_", "")))
         if jobended(str(jobid)):
