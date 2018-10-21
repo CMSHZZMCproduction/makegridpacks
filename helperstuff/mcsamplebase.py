@@ -843,6 +843,7 @@ class MCSampleBase(JsonDict):
     new = self.getdictforupdate()
     different = set()
     differentsequences = set()
+    differentgenparameters = set()
     setneedsupdate = False
     setneedsupdateiffailed = False
     for key in set(old.keys()) | set(new.keys()):
@@ -868,6 +869,15 @@ class MCSampleBase(JsonDict):
                 pass  #not sure what this is about
               else:
                 raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(skey, old[key][0].get(skey), new[key][0].get(skey), self.prepid))
+        elif key == "generator_parameters":
+          assert len(old[key]) == len(new[key]) == 1
+          for gpkey in set(old[key][0].keys()) | set(new[key][0].keys()):
+            if old[key][0].get(gpkey) != new[key][0].get(gpkey):
+              if gpkey in ("filter_efficiency", "filter_efficiency_error", "match_efficiency", "match_efficiency_error"):
+                setneedsupdate = True
+                differentgenparameters.add(gpkey)
+              else:
+                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(gpkey, old[key][0].get(gpkey), new[key][0].get(gpkey), self.prepid))
         else:
           raise ValueError("Don't know what to do with {} ({} --> {}) for {}".format(key, old.get(key), new.get(key), self.prepid))
     if setneedsupdate or setneedsupdateiffailed:
@@ -875,7 +885,7 @@ class MCSampleBase(JsonDict):
         self.needsupdate = True
       else:
         self.needsupdateiffailed = True
-      return "there is a change in some parameters, setting needsupdate" + "iffailed"*(not setneedsupdate) + " = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((skey, old["sequences"][0].get(skey), new["sequences"][0].get(skey)) for skey in differentsequences)))
+      return "there is a change in some parameters, setting needsupdate" + "iffailed"*(not setneedsupdate) + " = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((skey, old["sequences"][0].get(skey), new["sequences"][0].get(skey)) for skey in differentsequences), ((skey, old["generator_parameters"][0].get(skey), new["generator_parameters"][0].get(skey)) for skey in differentgenparameters)))
 
   def request_fragment_check(self):
     with cdtemp():
