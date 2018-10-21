@@ -15,11 +15,11 @@ class VariationSample(MCSampleBase):
     self.mainsample = mainsample
     self.variation = variation
     super(VariationSample, self).__init__(year=mainsample.year)
-    if self.matchefficiency is None:
-      self.matchefficiency = self.mainsample.matchefficiency
-    if (self.matchefficiencynominal, self.matchefficiencyerror) != (self.mainsample.matchefficiencynominal, self.mainsample.matchefficiencyerror) and self.mainsample.matchefficiencynominal is not None is not self.mainsample.matchefficiencyerror:
+    if self.filterefficiency is None:
+      self.filterefficiency = self.mainsample.filterefficiency
+    if (self.filterefficiencynominal, self.filterefficiencyerror) != (self.mainsample.filterefficiencynominal, self.mainsample.filterefficiencyerror) and self.mainsample.filterefficiencynominal is not None is not self.mainsample.filterefficiencyerror:
       raise ValueError("Match efficiency doesn't match!\n{}, {}\n{}, {}".format(
-        self, self.mainsample, self.matchefficiency, self.mainsample.matchefficiency
+        self, self.mainsample, self.filterefficiency, self.mainsample.filterefficiency
       ))
   @property
   def mainmainsample(self):
@@ -65,7 +65,7 @@ class VariationSample(MCSampleBase):
   @property
   def gridpackjobsrunning(self):
     return self.mainsample.gridpackjobsrunning
-  def findmatchefficiency(self):
+  def findfilterefficiency(self):
     return "this is a variation sample, the filter efficiency is the same as for the main sample"
   @property
   def workdir(self):

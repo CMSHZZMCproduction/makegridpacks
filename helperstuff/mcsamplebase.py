@@ -251,10 +251,10 @@ class MCSampleBase(JsonDict):
       shutil.rmtree(os.path.dirname(self.tmptarball))
       return "tarball is created and moved to this folder, to be copied to eos"
 
-  def findmatchefficiency(self):
+  def findfilterefficiency(self):
     #figure out the filter efficiency
     if not self.hasfilter:
-      self.matchefficiency = 1
+      self.filterefficiency = 1
       return "filter efficiency is set to 1 +/- 0"
     else:
       if not self.implementsfilter: raise ValueError("Can't find match efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
@@ -282,9 +282,9 @@ class MCSampleBase(JsonDict):
             eventsaccepted += accepted
 
         if jobsrunning: return "some filter efficiency jobs are still running"
-        self.matchefficiency = uncertainties.ufloat(1.0*eventsaccepted / eventsprocessed, (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5)
+        self.filterefficiency = uncertainties.ufloat(1.0*eventsaccepted / eventsprocessed, (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5)
         #shutil.rmtree(self.workdir)
-        return "match efficiency is measured to be {}".format(self.matchefficiency)
+        return "match efficiency is measured to be {}".format(self.filterefficiency)
 
   implementsfilter = False
 
@@ -355,8 +355,8 @@ class MCSampleBase(JsonDict):
       else:
         return "found prepid: {}".format(self.prepid)
 
-    if (self.matchefficiency is None or self.matchefficiencyerror is None) and not self.needsupdate:
-      return self.findmatchefficiency()
+    if self.filterefficiency is None and not self.needsupdate:
+      return self.findfilterefficiency()
 
     if not (self.sizeperevent and self.timeperevent) and not self.needsupdate:
       return self.getsizeandtime()
@@ -501,44 +501,44 @@ class MCSampleBase(JsonDict):
     with cd(here), self.writingdict():
       del self.value["sizeperevent"]
   @property
-  def matchefficiency(self):
-    if self.matchefficiencynominal is None or self.matchefficiencyerror is None: return None
-    return uncertainties.ufloat(self.matchefficiencynominal, self.matchefficiencyerror)
-  @matchefficiency.setter
-  def matchefficiency(self, value):
+  def filterefficiency(self):
+    if self.filterefficiencynominal is None or self.filterefficiencyerror is None: return None
+    return uncertainties.ufloat(self.filterefficiencynominal, self.filterefficiencyerror)
+  @filterefficiency.setter
+  def filterefficiency(self, value):
     nominal, error = uncertainties.nominal_value(value), uncertainties.std_dev(value)
-    if error == 0 and nominal != 1: raise ValueError("Are you sure you want to set the matchefficiency to {} with no error?".format(uncertainties.ufloat(nominal, error)))
-    self.matchefficiencynominal = nominal
-    self.matchefficiencyerror = error
-  @matchefficiency.deleter
-  def matchefficiency(self):
-    del self.matchefficiencynominal, self.matchefficiencyerror
+    if error == 0 and nominal != 1: raise ValueError("Are you sure you want to set the filterefficiency to {} with no error?".format(uncertainties.ufloat(nominal, error)))
+    self.filterefficiencynominal = nominal
+    self.filterefficiencyerror = error
+  @filterefficiency.deleter
+  def filterefficiency(self):
+    del self.filterefficiencynominal, self.filterefficiencyerror
   @property
-  def matchefficiencynominal(self):
+  def filterefficiencynominal(self):
     with cd(here):
-      return self.value.get("matchefficiency")
-  @matchefficiencynominal.setter
-  def matchefficiencynominal(self, value):
+      return self.value.get("filterefficiency")
+  @filterefficiencynominal.setter
+  def filterefficiencynominal(self, value):
     with cd(here), self.writingdict():
-      self.value["matchefficiency"] = value
+      self.value["filterefficiency"] = value
     self.needsupdate = True
-  @matchefficiencynominal.deleter
-  def matchefficiencynominal(self):
+  @filterefficiencynominal.deleter
+  def filterefficiencynominal(self):
     with cd(here), self.writingdict():
-      del self.value["matchefficiency"]
+      del self.value["filterefficiency"]
   @property
-  def matchefficiencyerror(self):
+  def filterefficiencyerror(self):
     with cd(here):
-      return self.value.get("matchefficiencyerror")
-  @matchefficiencyerror.setter
-  def matchefficiencyerror(self, value):
+      return self.value.get("filterefficiencyerror")
+  @filterefficiencyerror.setter
+  def filterefficiencyerror(self, value):
     with cd(here), self.writingdict():
-      self.value["matchefficiencyerror"] = value
+      self.value["filterefficiencyerror"] = value
     self.needsupdate = True
-  @matchefficiencyerror.deleter
-  def matchefficiencyerror(self):
+  @filterefficiencyerror.deleter
+  def filterefficiencyerror(self):
     with cd(here), self.writingdict():
-      del self.value["matchefficiencyerror"]
+      del self.value["filterefficiencyerror"]
   @property
   def needsupdate(self):
     if self.needsoptionreset:
@@ -685,9 +685,7 @@ class MCSampleBase(JsonDict):
     if self.nthreads == 1: return 2300
     return 4000
   @property
-  def filterefficiency(self): return 1
-  @property
-  def filterefficiencyerror(self): return 0.1
+  def matchefficiency(self): return uncertainties.ufloat(1, 0)
 
   @property
   @cache
@@ -704,12 +702,12 @@ class MCSampleBase(JsonDict):
     req["time_event"] = [(self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent)]
     req["size_event"] = [self.sizeperevent if self.sizeperevent is not None else 600]
     req["generators"] = self.generators
-    if self.matchefficiency is not None:
+    if self.filterefficiency is not None:
       req["generator_parameters"][0].update({
-        "match_efficiency_error": self.matchefficiency.std_dev,
+        "filter_efficiency": self.filterefficiency.nominal_value,
+        "filter_efficiency_error": self.filterefficiency.std_dev,
         "match_efficiency": self.matchefficiency.nominal_value,
-        "filter_efficiency": self.filterefficiency,
-        "filter_efficiency_error": self.filterefficiencyerror,
+        "match_efficiency_error": self.matchefficiency.std_dev,
         "cross_section": self.xsec,
       })
     req["sequences"][0]["nThreads"] = self.nthreads

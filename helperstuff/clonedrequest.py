@@ -12,11 +12,11 @@ class ClonedRequest(MCSampleBase):
 
     super(ClonedRequest, self).__init__(year=year)
 
-    if self.matchefficiency is None:
+    if self.filterefficiency is None:
       assert self.originalfullinfo["generator_parameters"][0]["filter_efficiency"] == 1, self.originalfullinfo["generator_parameters"][0]["filter_efficiency"]
-      self.matchefficiency = self.originalfullinfo["generator_parameters"][0]["match_efficiency"]
-    if self.matchefficiencyerror is None:
-      self.matchefficiencyerror = self.originalfullinfo["generator_parameters"][0]["match_efficiency_error"]
+      self.filterefficiency = self.originalfullinfo["generator_parameters"][0]["match_efficiency"]
+    if self.filterefficiencyerror is None:
+      self.filterefficiencyerror = self.originalfullinfo["generator_parameters"][0]["match_efficiency_error"]
     if self.timeperevent is None:
       self.timeperevent = self.originalfullinfo["time_event"][0]
     if self.sizeperevent is None:

@@ -59,9 +59,9 @@ class GenericFilter(FilterImplementation):
     self.__sizesperevent[jobindex] = totalsize * 1024 / nevents
     self.__nevents[jobindex] = nevents
 
-  def findmatchefficiency(self):
-    result = super(GenericFilter, self).findmatchefficiency()
-    if self.matchefficiency is not None:
+  def findfilterefficiency(self):
+    result = super(GenericFilter, self).findfilterefficiency()
+    if self.filterefficiency is not None:
       if self.sizeperevent is None and len(self.__sizesperevent) == 100:
         self.sizeperevent = sum(self.__sizesperevent[i] * self.__nevents[i] for i in range(100)) / sum(self.__nevents[i] for i in range(100))
       if self.timeperevent is None and len(self.__timesperevent) == 100:
