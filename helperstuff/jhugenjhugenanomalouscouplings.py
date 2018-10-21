@@ -95,7 +95,7 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   @property
   def hasnonJHUGenfilter(self): return False
 
-  def handle_request_fragment_check_warning(self, line):
-    if line.strip() == "* [WARNING] Large time/event - please check":
-      if self.timeperevent <= 205 and self.productionmode == "VBF": return "ok"
-    return super(POWHEGJHUGenMassScanMCSample, self).handle_request_fragment_check_warning(line)
+  @property
+  def maxallowedtimeperevent(self):
+    if self.productionmode == "VBF": return 205
+    return super(JHUGenJHUGenAnomCoupMCSample, self).maxallowedtimeperevent

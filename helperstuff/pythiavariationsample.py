@@ -122,10 +122,15 @@ class VariationSample(MCSampleBase):
   def dovalidation(self): return self.mainsample.dovalidation
   @property
   def fragmentname(self): return self.mainsample.fragmentname
-  def handle_request_fragment_check_warning(self, *args, **kwargs):
-    return self.mainsample.handle_request_fragment_check_warning(*args, **kwargs)
-  def handle_request_fragment_check_caution(self, *args, **kwargs):
-    return self.mainsample.handle_request_fragment_check_caution(*args, **kwargs)
+  def handle_request_fragment_check_warning(self, line):
+    if line.strip() == "* [WARNING] Large time/event - please check":
+      return super(VariationSample, self).handle_request_fragment_check_warning(line)
+    return self.mainsample.handle_request_fragment_check_warning(line)
+  def handle_request_fragment_check_caution(self, line):
+    return self.mainsample.handle_request_fragment_check_caution(line)
+  @property
+  def maxallowedtimeperevent(self):
+    return self.mainsample.maxallowedtimeperevent
 
 class ExtensionSampleBase(VariationSample):
   def __init__(self, *args, **kwargs):

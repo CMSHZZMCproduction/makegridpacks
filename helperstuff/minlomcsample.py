@@ -166,3 +166,6 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   @property
   def hasnonJHUGenfilter(self): return False
 
+  @property
+  def maxallowedtimeperevent(self):
+    return 500
