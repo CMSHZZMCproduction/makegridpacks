@@ -1,5 +1,7 @@
 import abc, collections, contextlib, errno, functools, getpass, itertools, json, logging, os, re, shutil, subprocess, sys, tempfile, time, urllib
 
+from jobsubmission import jobid, jobtype
+
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""
   try:
@@ -43,8 +45,8 @@ def tempfilewrapper(function):
   @functools.wraps(function)
   def newfunction(**kwargs):
     if "dir" not in kwargs:
-      if LSB_JOBID() is not None:
-        kwargs["dir"] = "/pool/lsf/{}/{}/".format(getpass.getuser(), LSB_JOBID())
+      if jobtype() == "LSF":
+        kwargs["dir"] = "/pool/lsf/{}/{}/".format(getpass.getuser(), jobid())
     return function(**kwargs)
   return newfunction
 
@@ -62,22 +64,11 @@ def cdtemp(**kwargs):
     if deleteafter:
       shutil.rmtree(tmpdir)
 
-def LSB_JOBID():
-  return os.environ.get("LSB_JOBID", None)
-
-def LSB_QUEUE():
-  return os.environ.get("LSB_QUEUE", None)
-
-def queuematches(queue1, queue2=None):
-  if queue2 is None: queue2 = LSB_QUEUE()
-  if queue1 == queue2: return True
-  if queue1 == "cmscaf" + queue2 or "cmscaf" + queue1 == queue2: return True
-  return False
-
 class KeepWhileOpenFile(object):
   def __init__(self, name, message=None, deleteifjobdied=False):
     logging.debug("creating KeepWhileOpenFile {}".format(name))
     self.filename = name
+    if message is None: message = jobid()
     self.__message = message
     self.pwd = os.getcwd()
     self.fd = self.f = None
@@ -112,7 +103,7 @@ class KeepWhileOpenFile(object):
           logging.warning("{} doesn't exist!??".format(self.filename))
         self.f = os.fdopen(self.fd, 'w')
         try:
-          if self.__message is not None:
+          if self.__message:
             logging.debug("writing message")
             self.f.write(self.__message+"\n")
             logging.debug("wrote message")
@@ -243,7 +234,7 @@ class JsonDict(object):
   @classmethod
   def getdict(cls, trycache=True, usekwof=True):
     if cls.__dictscache[cls] is None or not trycache:
-      with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(cls.__name__), kwofmessage=LSB_JOBID()) if usekwof else nullcontext():
+      with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(cls.__name__)) if usekwof else nullcontext():
         try:
           with open(cls.dictfile) as f:
             jsonstring = f.read()
@@ -322,7 +313,7 @@ class JsonDict(object):
   @classmethod
   @contextlib.contextmanager
   def writingdict(cls):
-    with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(cls.__name__), kwofmessage=LSB_JOBID()):
+    with OneAtATime(cls.dictfile+".tmp", 5, task="accessing the dict for {}".format(cls.__name__)):
       cls.getdict(trycache=False, usekwof=False)
       try:
         yield
@@ -392,7 +383,7 @@ class OrderedCounter(collections.Counter, collections.OrderedDict):
 if os.path.exists(os.path.join(here, "helperstuff", "rest.pyc")):
   os.remove(os.path.join(here, "helperstuff", "rest.pyc"))
 
-if not LSB_JOBID():
+if not jobid():
   sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
   import rest
 
@@ -408,6 +399,27 @@ def submitLSF(queue):
     pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
     subprocess.check_call(["bsub", "-q", queue, "-J", jobname], stdin=pipe.stdout)
     return True
+
+condortemplate = """
+executable              = helperstuff/condorscript.sh
+arguments               = "--condorjobid $(ClusterId).$(ProcId) --jobflavor {jobflavor}"
+output                  = CONDOR/$(ClusterId).$(ProcId).out
+error                   = CONDOR/$(ClusterId).$(ProcId).err
+log                     = CONDOR/$(ClusterId).log
+
+request_memory          = 4000M
++JobFlavour             = {jobflavor}
+
+#https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
+periodic_remove         = JobStatus == 5
+
+queue
+"""
+
+def submitcondor(jobflavor):
+  with NamedTemporaryFile() as f:
+    f.write(condortemplate.format(jobflavor=jobflavor), bufsize=0)
+    subprocess.check_call(["condor_submit", f.name])
 
 class KeyDefaultDict(collections.defaultdict):
   """

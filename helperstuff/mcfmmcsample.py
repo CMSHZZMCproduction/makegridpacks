@@ -1,10 +1,10 @@
+import abc, os, contextlib, urllib, re, filecmp, glob, pycurl, shutil, stat, subprocess, itertools, os
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget, KeepWhileOpenFile, LSB_JOBID, jobended
+from jobsubmission import jobid, jobtype
+from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget, KeepWhileOpenFile, jobended
 
 from jhugenmcsample import UsesJHUGenLibraries
 from mcsamplebase import MCSampleBase
-
-import abc, os, contextlib, urllib, re, filecmp, glob, pycurl, shutil, stat, subprocess, itertools, os
 
 def differentproductioncards(productioncard, gitproductioncard):
 	allowedtobediff = ['[readin]','[writeout]','[ingridfile]','[outgridfile]']
@@ -37,9 +37,9 @@ class MCFMMCSample(UsesJHUGenLibraries):
 
   def checkandfixtarball(self):
     mkdir_p(self.workdirforgridpack)
-    with KeepWhileOpenFile(os.path.join(self.workdirforgridpack,self.prepid+'.tmp'),message=LSB_JOBID(),deleteifjobdied=True) as kwof:
+    with KeepWhileOpenFile(os.path.join(self.workdirforgridpack,self.prepid+'.tmp'),deleteifjobdied=True) as kwof:
 	if not kwof: return " check in progress"
-	if not LSB_JOBID(): self.submitLSF(); return "Check if the tarball needs fixing"	
+	if not jobtype(): self.submitLSF(); return "Check if the tarball needs fixing"	
   	with cdtemp():
   	  subprocess.call(['cp',self.cvmfstarball,'.'])
   	  subprocess.check_call(['tar','xzvf',self.cvmfstarball])
@@ -58,7 +58,7 @@ class MCFMMCSample(UsesJHUGenLibraries):
 	  print "internal tarball name: "+internalgridname
   	  if self.datasetname+'_grid' == internalgridname:
 	    with open(os.path.join(self.workdirforgridpack,'INTACT'),'w') as fout:
-	      fout.write(LSB_JOBID())
+	      fout.write(jobid())
   	    return str(self.identifiers)+"'s gridpack is intact"
   	  else:
   	    os.system('cp '+self.datasetname+'_grid '+internalgridname)
@@ -68,7 +68,7 @@ class MCFMMCSample(UsesJHUGenLibraries):
   	    os.system('tar cvaf '+self.tmptarball+' ./*')
 	    if os.path.exists(self.tmptarball):	
 	      with open(os.path.join(self.workdirforgridpack,'FIXED'),'w') as fout:
-		fout.write(LSB_JOBID())
+		fout.write(jobid())
 
 
   @property 

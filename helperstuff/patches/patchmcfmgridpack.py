@@ -7,7 +7,7 @@ import shutil
 import stat
 import subprocess
 
-from utilities import cdtemp, genproductions
+from ..utilities import cdtemp, genproductions
 
 def patchmcfmgridpack(oldfilename, newfilename):
   with cdtemp():

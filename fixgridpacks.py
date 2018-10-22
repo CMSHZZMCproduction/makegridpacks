@@ -21,7 +21,7 @@ def JHUGen():
 class MCSampleFix(POWHEGJHUGenMassScanMCSample):
   def fixgridpack(self, jhugen):
     mkdir_p(os.path.dirname(self.foreostarball))
-    with KeepWhileOpenFile(self.foreostarball+".tmp", message=LSB_JOBID()) as kwof:
+    with KeepWhileOpenFile(self.foreostarball+".tmp") as kwof:
       if not kwof: return "another job is currently fixing this one"
       for _ in self.cvmfstarball, self.eostarball, self.foreostarball:
         if os.path.exists(_):

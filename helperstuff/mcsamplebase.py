@@ -5,7 +5,9 @@ import uncertainties
 from McMScripts.manageRequests import createLHEProducer
 
 import patches
-from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, LSB_JOBID, mkdir_p, queuematches, restful, submitLSF, wget
+
+from jobsubmission import jobtype, queuematches
+from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, submitLSF, wget
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
@@ -153,7 +155,7 @@ class MCSampleBase(JsonDict):
 
     if not self.needspatch: assert False
     mkdir_p(self.workdirforgridpack)
-    with KeepWhileOpenFile(self.tmptarball+".tmp", message=LSB_JOBID()) as kwof:
+    with KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
       if not kwof:
         return "job to patch the tarball is already running"
 
@@ -179,7 +181,7 @@ class MCSampleBase(JsonDict):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
 
     mkdir_p(self.workdirforgridpack)
-    with cd(self.workdirforgridpack), KeepWhileOpenFile(self.tmptarball+".tmp", message=LSB_JOBID()) as kwof:
+    with cd(self.workdirforgridpack), KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
       if not kwof:
         try:
           with open(self.tmptarball+".tmp") as f:
@@ -213,7 +215,7 @@ class MCSampleBase(JsonDict):
               except OSError:
                 shutil.rmtree(_)
         if not self.makinggridpacksubmitsjob and self.creategridpackqueue is not None:
-          if not LSB_JOBID(): return "need to create the gridpack, submitting to LSF" if submitLSF(self.creategridpackqueue) else "need to create the gridpack, job is pending on LSF"
+          if not jobtype(): return "need to create the gridpack, submitting to LSF" if submitLSF(self.creategridpackqueue) else "need to create the gridpack, job is pending on LSF"
           if not queuematches(self.creategridpackqueue): return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))
@@ -264,12 +266,12 @@ class MCSampleBase(JsonDict):
       with cd(self.workdir):
         for i in range(100):
           mkdir_p(str(i))
-          with cd(str(i)), KeepWhileOpenFile("runningfilterjob.tmp", message=LSB_JOBID(), deleteifjobdied=True) as kwof:
+          with cd(str(i)), KeepWhileOpenFile("runningfilterjob.tmp", deleteifjobdied=True) as kwof:
             if not kwof:
               jobsrunning = True
               continue
             if not os.path.exists(self.filterresultsfile):
-              if not LSB_JOBID():
+              if not jobtype():
                 submitLSF(self.filterefficiencyqueue)
                 jobsrunning = True
                 continue
@@ -290,9 +292,9 @@ class MCSampleBase(JsonDict):
 
   def getsizeandtime(self):
     mkdir_p(self.workdir)
-    with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), message=LSB_JOBID(), deleteifjobdied=True) as kwof:
+    with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), deleteifjobdied=True) as kwof:
       if not kwof: return "job to get the size and time is already running"
-      if not LSB_JOBID(): return "need to get time and size per event, submitting to LSF" if submitLSF(self.timepereventqueue) else "need to get time and size per event, job is pending on LSF"
+      if not jobtype(): return "need to get time and size per event, submitting to LSF" if submitLSF(self.timepereventqueue) else "need to get time and size per event, job is pending on LSF"
       if not queuematches(self.timepereventqueue): return "need to get time and size per event, but on the wrong queue"
       with cdtemp():
         wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
@@ -323,7 +325,7 @@ class MCSampleBase(JsonDict):
 
     if not (self.sizeperevent and self.timeperevent):
       return "failed to get the size and time"
-    if LSB_JOBID(): return "size and time per event are found to be {} and {}, run locally to send to McM".format(self.sizeperevent, self.timeperevent)
+    if jobtype(): return "size and time per event are found to be {} and {}, run locally to send to McM".format(self.sizeperevent, self.timeperevent)
     self.updaterequest()
     return "size and time per event are found to be {} and {}, sent it to McM".format(self.sizeperevent, self.timeperevent)
 
@@ -361,7 +363,7 @@ class MCSampleBase(JsonDict):
     if not (self.sizeperevent and self.timeperevent) and not self.needsupdate:
       return self.getsizeandtime()
 
-    if LSB_JOBID():
+    if jobtype():
       return "please run locally to check and/or advance the status".format(self.prepid)
 
     if self.badprepid:
@@ -598,7 +600,7 @@ class MCSampleBase(JsonDict):
 
       originalresult = result[:]
       for _ in result[:]:
-        if not LSB_JOBID() and not restful().get("requests", _):
+        if not jobtype() and not restful().get("requests", _):
           result.remove(_)
 
       if result != originalresult:
@@ -745,7 +747,7 @@ class MCSampleBase(JsonDict):
   def campaign(self): pass
 
   def createrequest(self, clonequeue):
-    if LSB_JOBID(): return "run locally to submit to McM"
+    if jobtype(): return "run locally to submit to McM"
     mcm = restful()
     req = {
       "pwg": self.pwg,
@@ -764,7 +766,7 @@ class MCSampleBase(JsonDict):
     return "created request "+self.prepid+" on McM"
 
   def getprepid(self):
-    if LSB_JOBID(): return
+    if jobtype(): return
     query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.datasetname, self.extensionnumber, self.pwg, self.campaign)
     output = restful().get('requests', query=query)
     prepids = {_["prepid"] for _ in output}
