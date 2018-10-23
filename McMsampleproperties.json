@@ -4556,8 +4556,8 @@
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03283",
-                        "sizeperevent": 698.793984,
-                        "timeperevent": 12
+                        "resettimeperevent": true,
+                        "sizeperevent": 698.793984
                     },
                     "filterefficiency": 0.14835550966597078,
                     "filterefficiencyerror": 0.00018236587065478363,
@@ -5885,15 +5885,10 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.15411950306736202,
                         "filterefficiencyerror": 0.0003805893835507585,
-                        "needspatch": {
-                            "functionname": "tweakseed",
-                            "increaseby": 1,
-                            "oldtarballversion": 3
-                        },
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03293",
-                        "sizeperevent": 862.4896,
-                        "timeperevent": 50.10417141446973
+                        "resettimeperevent": true,
+                        "sizeperevent": 862.4896
                     },
                     "filterefficiency": 0.15411950306736202,
                     "filterefficiencyerror": 0.0003805893835507585,
@@ -7736,8 +7731,8 @@
                     "filterefficiencyerror": 4.79851663246e-05,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00279",
-                    "sizeperevent": 672.5085866666667,
-                    "timeperevent": 248.63499388357917
+                    "resettimeperevent": true,
+                    "sizeperevent": 672.5085866666667
                 },
                 "450": {
                     "filterefficiency": 0.148699054776,
@@ -8561,11 +8556,6 @@
                 "140": {
                     "filterefficiency": 0.154013895423,
                     "filterefficiencyerror": 0.000316743049026,
-                    "needspatch": {
-                        "functionname": "tweakseed",
-                        "increaseby": 1,
-                        "oldtarballversion": 3
-                    },
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00301",
                     "resettimeperevent": true,

@@ -1,4 +1,4 @@
-import abc, filecmp, glob, itertools, os, pycurl, re, shutil, stat, subprocess
+import abc, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess
 
 import uncertainties
 
@@ -156,7 +156,7 @@ class MCSampleBase(JsonDict):
 
     if not self.needspatch: assert False
 
-    samples = allsamples(lambda x: x.cvmfstarball == self.cvmfstarball)
+    samples = list(allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball))
 
     mkdir_p(self.workdirforgridpack)
     with KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
@@ -259,7 +259,7 @@ class MCSampleBase(JsonDict):
           patches.dopatch(**kwargs)
           shutil.move(os.path.basename(self.tmptarball), self.tmptarball)
 
-      for _ in allsamples(lambda x: x.cvmfstarball == self.cvmfstarball):
+      for _ in allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball):
         if _.timeperevent is not None:
           del _.timeperevent
       shutil.move(self.tmptarball, self.foreostarball)

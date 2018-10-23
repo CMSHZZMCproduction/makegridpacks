@@ -21,7 +21,7 @@ def tweakseed(oldfilename, newfilename, increaseby, verbose=False):
       contents = contents.replace("${2}", "$(expr ${{2}} + {})".format(increaseby))
       newf.write(contents)
 
-    os.chmod('runcmsgrid.sh', os.stat('somefile').st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+    os.chmod('runcmsgrid.sh', os.stat('runcmsgrid.sh').st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
     subprocess.check_call(["tar", "cvaf", newfilename] + glob.glob("*"))
 
