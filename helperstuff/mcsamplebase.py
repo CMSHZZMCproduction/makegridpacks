@@ -729,7 +729,7 @@ class MCSampleBase(JsonDict):
       })
     req["sequences"][0]["nThreads"] = self.nthreads
     req["keep_output"][0] = bool(self.keepoutput)
-    req["tags"] = self.tags
+    req["tags"] = list(self.tags)
     req["memory"] = self.memory
     req["validation"].update({
       "double_time": self.doublevalidationtime,

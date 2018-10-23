@@ -1717,10 +1717,9 @@
                     "TuneUp": {
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
-                        "nthreads": 4,
+                        "nthreads": 2,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01147",
-                        "sizeperevent": 1043.8428444444444,
-                        "timeperevent": 467.4273267363757
+                        "sizeperevent": 1043.8428444444444
                     },
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0,
@@ -4534,10 +4533,9 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
-                        "needsupdate": true,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03291",
-                        "resettimeperevent": true,
-                        "sizeperevent": 1062.434816
+                        "sizeperevent": 1062.434816,
+                        "timeperevent": 12
                     },
                     "filterefficiency": 0.14835550966597078,
                     "filterefficiencyerror": 0.00018236587065478363,
@@ -4558,10 +4556,9 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
-                        "needsupdate": true,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03283",
-                        "resettimeperevent": true,
-                        "sizeperevent": 698.793984
+                        "sizeperevent": 698.793984,
+                        "timeperevent": 12
                     },
                     "filterefficiency": 0.14835550966597078,
                     "filterefficiencyerror": 0.00018236587065478363,
@@ -5891,8 +5888,8 @@
                         "filterefficiencyerror": 0.0003805893835507585,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03293",
-                        "resettimeperevent": true,
-                        "sizeperevent": 862.4896
+                        "sizeperevent": 862.4896,
+                        "timeperevent": 50.10417141446973
                     },
                     "filterefficiency": 0.15411950306736202,
                     "filterefficiencyerror": 0.0003805893835507585,
