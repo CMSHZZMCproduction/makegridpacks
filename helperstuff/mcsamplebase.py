@@ -354,6 +354,7 @@ class MCSampleBase(JsonDict):
 
     if os.path.exists(self.foreostarball):
       if filecmp.cmp(self.cvmfstarball, self.foreostarball, shallow=False):
+        from . import allsamples
         for _ in allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball):
           _.needsupdate = True
         os.remove(self.foreostarball)
