@@ -354,8 +354,9 @@ class MCSampleBase(JsonDict):
 
     if os.path.exists(self.foreostarball):
       if filecmp.cmp(self.cvmfstarball, self.foreostarball, shallow=False):
+        for _ in allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball):
+          _.needsupdate = True
         os.remove(self.foreostarball)
-        self.needsupdate = True
       else:
         return "gridpack exists on cvmfs, but it's wrong!"
 

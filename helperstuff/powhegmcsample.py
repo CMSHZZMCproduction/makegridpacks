@@ -18,7 +18,13 @@ class POWHEGMCSample(MCSampleBase):
     return os.path.basename(self.powhegcard).replace(".input", "")
   @property
   def creategridpackqueue(self):
-    if self.powhegsubmissionstrategy == "multicore" and self.multicore_upto[0] == 9: return None
+    if self.powhegsubmissionstrategy == "multicore":
+      if self.multicore_upto[0] == 0: return "1nh"
+      if self.multicore_upto[0] == 1: return "1nd"
+      if self.multicore_upto[0] == 2: return "1nw"
+      if self.multicore_upto[0] == 3: return "1nd"
+      if self.multicore_upto[0] == 9: return None
+      assert False, self.multicore_upto
     return super(POWHEGMCSample, self).creategridpackqueue
   @property
   def tmptarball(self):

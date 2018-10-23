@@ -49,13 +49,6 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   def powhegsubmissionstrategy(self):
     return "multicore"
 
-  @property
-  def creategridpackqueue(self):
-    if super(MINLOMCSample, self).creategridpackqueue is None: return None
-    if self.multicore_upto[0] == 0: return "1nh"
-    if self.multicore_upto[0] in (2, 3): return "1nw"
-    return "1nd"
-
   def createtarball(self):
     if self.energy == 13:
       return "making a minlo tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)

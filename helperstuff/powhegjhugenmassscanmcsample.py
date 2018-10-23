@@ -58,11 +58,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def creategridpackqueue(self):
-    if self.powhegsubmissionstrategy == "multicore":
-      if self.multicore_upto[0] == 0: return "1nh"
-      if self.multicore_upto[0] in (2, 3): return "1nw"
-      return "1nd"
-    if self.productionmode in ("ZH", "ttH"): return "1nw"
+    if self.productionmode == "ttH": return "1nw"
     return super(POWHEGJHUGenMassScanMCSample, self).creategridpackqueue
 
   @property
