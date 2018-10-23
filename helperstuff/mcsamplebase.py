@@ -164,12 +164,12 @@ class MCSampleBase(JsonDict):
         return "job to patch the tarball is already running"
 
       kwargs = {
-        _.needspatch for _ in samples if _.needspatch
+        json.dumps(_.needspatch) for _ in samples if _.needspatch
       }
       if len(kwargs) != 1:
         raise ValueError("Different samples, which all use {}, have different needspatch kwargs:\n{}".format(self.cvmfstarball, "\n".join(str(_) for _ in kwargs)))
 
-      kwargs = kwargs.pop()
+      kwargs = json.loads(kwargs.pop())
       if isinstance(kwargs, int):
         kwargs = self.patchkwargs
         kwargs["oldtarballversion"] = self.needspatch
