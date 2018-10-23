@@ -152,14 +152,24 @@ class MCSampleBase(JsonDict):
 
   def patchtarball(self):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
+    from . import allsamples
 
     if not self.needspatch: assert False
+
+    samples = allsamples(lambda x: x.cvmfstarball == self.cvmfstarball)
+
     mkdir_p(self.workdirforgridpack)
     with KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
       if not kwof:
         return "job to patch the tarball is already running"
 
-      kwargs = self.needspatch
+      kwargs = {
+        _.needspatch for _ in samples if _.needspatch
+      }
+      if len(kwargs) != 1:
+        raise ValueError("Different samples, which all use {}, have different needspatch kwargs:\n{}".format(self.cvmfstarball, "\n".join(str(_) for _ in kwargs)))
+
+      kwargs = kwargs.pop()
       if isinstance(kwargs, int):
         kwargs = self.patchkwargs
         kwargs["oldtarballversion"] = self.needspatch
@@ -171,14 +181,16 @@ class MCSampleBase(JsonDict):
       patches.dopatch(**kwargs)
 
       if not os.path.exists(self.foreostarball): raise RuntimeError("Patching failed, gridpack doesn't exist")
-      if self.timeperevent is not None:
-        del self.timeperevent
-      self.needspatch = False
+      for _ in samples:
+        if _.timeperevent is not None:
+          del _.timeperevent
+        _.needspatch = False
 
       return "tarball is patched and the new version is in this directory to be copied to eos"
 
   def createtarball(self):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
+    from . import allsamples
 
     mkdir_p(self.workdirforgridpack)
     with cd(self.workdirforgridpack), KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
@@ -247,8 +259,9 @@ class MCSampleBase(JsonDict):
           patches.dopatch(**kwargs)
           shutil.move(os.path.basename(self.tmptarball), self.tmptarball)
 
-      if self.timeperevent is not None:
-        del self.timeperevent
+      for _ in allsamples(lambda x: x.cvmfstarball == self.cvmfstarball):
+        if _.timeperevent is not None:
+          del _.timeperevent
       shutil.move(self.tmptarball, self.foreostarball)
       shutil.rmtree(os.path.dirname(self.tmptarball))
       return "tarball is created and moved to this folder, to be copied to eos"

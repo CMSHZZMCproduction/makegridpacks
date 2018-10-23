@@ -5885,6 +5885,11 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.15411950306736202,
                         "filterefficiencyerror": 0.0003805893835507585,
+                        "needspatch": {
+                            "functionname": "tweakseed",
+                            "increaseby": 1,
+                            "oldtarballversion": 3
+                        },
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03293",
                         "sizeperevent": 862.4896,
@@ -8556,6 +8561,11 @@
                 "140": {
                     "filterefficiency": 0.154013895423,
                     "filterefficiencyerror": 0.000316743049026,
+                    "needspatch": {
+                        "functionname": "tweakseed",
+                        "increaseby": 1,
+                        "oldtarballversion": 3
+                    },
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00301",
                     "resettimeperevent": true,

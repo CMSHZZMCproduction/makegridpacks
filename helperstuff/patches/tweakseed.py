@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
-import argparse, collections, glob, os, re, shutil, subprocess, sys
+import argparse, glob, os, shutil, stat, subprocess
 
 from ..utilities import cache, cdtemp, OrderedCounter
-
-sys.path.append(os.path.join(os.environ["LHAPDF_DATA_PATH"], "..", "..", "lib", "python2.7", "site-packages"))
 
 def tweakseed(oldfilename, newfilename, increaseby, verbose=False):
   oldfilename = os.path.abspath(oldfilename)
@@ -22,6 +20,8 @@ def tweakseed(oldfilename, newfilename, increaseby, verbose=False):
         raise ValueError("{}\n\n\n${{2}} appears {} times in ^^^ runcmsgrid.sh".format(contents, contents.count("${2}")))
       contents = contents.replace("${2}", "$(expr ${{2}} + {})".format(increaseby))
       newf.write(contents)
+
+    os.chmod('runcmsgrid.sh', os.stat('somefile').st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
     subprocess.check_call(["tar", "cvaf", newfilename] + glob.glob("*"))
 
