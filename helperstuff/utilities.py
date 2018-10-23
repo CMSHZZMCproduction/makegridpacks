@@ -1,7 +1,5 @@
 import abc, collections, contextlib, errno, functools, getpass, itertools, json, logging, os, re, shutil, subprocess, sys, tempfile, time, urllib
 
-from jobsubmission import jobid, jobtype
-
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""
   try:
@@ -45,6 +43,7 @@ def tempfilewrapper(function):
   @functools.wraps(function)
   def newfunction(**kwargs):
     if "dir" not in kwargs:
+      from jobsubmission import jobid, jobtype
       if jobtype() == "LSF":
         kwargs["dir"] = "/pool/lsf/{}/{}/".format(getpass.getuser(), jobid())
     return function(**kwargs)
@@ -66,6 +65,7 @@ def cdtemp(**kwargs):
 
 class KeepWhileOpenFile(object):
   def __init__(self, name, message=None, deleteifjobdied=False):
+    from jobsubmission import jobid
     logging.debug("creating KeepWhileOpenFile {}".format(name))
     self.filename = name
     if message is None: message = jobid()
@@ -383,43 +383,7 @@ class OrderedCounter(collections.Counter, collections.OrderedDict):
 if os.path.exists(os.path.join(here, "helperstuff", "rest.pyc")):
   os.remove(os.path.join(here, "helperstuff", "rest.pyc"))
 
-if not jobid():
-  sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
-  import rest
-
 assert not os.path.exists(os.path.join(here, "helperstuff", "rest.pyc"))
-
-def submitLSF(queue):
-  jobname = "makegridpacks"
-  if __pendingjobsdct[queue, jobname] > 0:
-    __pendingjobsdct[queue, jobname] -= 1
-    return False
-  with cd(here):
-    job = "cd "+here+" && eval $(scram ru -sh) && ./makegridpacks.py"
-    pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
-    subprocess.check_call(["bsub", "-q", queue, "-J", jobname], stdin=pipe.stdout)
-    return True
-
-condortemplate = """
-executable              = helperstuff/condorscript.sh
-arguments               = "--condorjobid $(ClusterId).$(ProcId) --jobflavor {jobflavor}"
-output                  = CONDOR/$(ClusterId).$(ProcId).out
-error                   = CONDOR/$(ClusterId).$(ProcId).err
-log                     = CONDOR/$(ClusterId).log
-
-request_memory          = 4000M
-+JobFlavour             = {jobflavor}
-
-#https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
-periodic_remove         = JobStatus == 5
-
-queue
-"""
-
-def submitcondor(jobflavor):
-  with NamedTemporaryFile() as f:
-    f.write(condortemplate.format(jobflavor=jobflavor), bufsize=0)
-    subprocess.check_call(["condor_submit", f.name])
 
 class KeyDefaultDict(collections.defaultdict):
   """
@@ -432,10 +396,8 @@ class KeyDefaultDict(collections.defaultdict):
       ret = self[key] = self.default_factory(key)
       return ret
 
+from jobsubmission import jobtype
 
-def __npendingjobs(queueandjobname):
-  queue, jobname = queueandjobname
-  output = subprocess.check_output(["bjobs", "-q", queue, "-J", jobname], stderr=subprocess.STDOUT)
-  return len(list(line for line in output.split("\n") if "PEND" in line.split()))
-
-__pendingjobsdct = KeyDefaultDict(__npendingjobs)
+if not jobtype():
+  sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
+  import rest

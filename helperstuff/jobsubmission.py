@@ -1,4 +1,6 @@
-import abc, os
+import abc, datetime, os, subprocess
+
+from utilities import cd, here, NamedTemporaryFile, KeyDefaultDict
 
 def jobtype():
   result = set()
@@ -53,6 +55,8 @@ class JobTimeBase(object):
     return JobTime(self.jobtype, self.jobtime*factor)
   def __div__(self, factor):
     return JobTime(self.jobtype, self.jobtime/factor)
+  def __rmul__(self, factor):
+    return self * factor
 
 class JobQueue(JobTimeBase):
   def __init__(self, queue):
@@ -115,3 +119,53 @@ def jobtime():
 def queuematches(queue):
   if jobtype() is None: return None
   return jobtime() in JobQueue(queue)
+
+
+
+
+def submitLSF(queue):
+  if __pendingjobsdct[queue] > 0:
+    __pendingjobsdct[queue] -= 1
+    return False
+  with cd(here):
+    job = "cd "+here+" && eval $(scram ru -sh) && ./makegridpacks.py"
+    pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
+    subprocess.check_call(["bsub", "-q", queue, "-J", "makegridpacks"], stdin=pipe.stdout)
+    return True
+
+condortemplate = """
+executable              = .makegridpacks_{jobflavor}.sh
+arguments               = "--condorjobid $(ClusterId).$(ProcId) --jobflavor {jobflavor}"
+output                  = CONDOR/$(ClusterId).$(ProcId).out
+error                   = CONDOR/$(ClusterId).$(ProcId).err
+log                     = CONDOR/$(ClusterId).log
+
+request_memory          = 4000M
++JobFlavour             = {jobflavor}
+
+#https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
+periodic_remove         = JobStatus == 5
+
+queue
+"""
+
+def submitcondor(jobflavor):
+  with NamedTemporaryFile() as f:
+    f.write(condortemplate.format(jobflavor=jobflavor), bufsize=0)
+    subprocess.check_call(["condor_submit", f.name])
+
+def __npendingjobs(queue):
+  jobtype = JobQueue(queue).jobtype
+  if jobtype == "LSF":
+    output = subprocess.check_output(["bjobs", "-q", queue, "-J", "makegridpacks"], stderr=subprocess.STDOUT)
+    return len(list(line for line in output.split("\n") if "PEND" in line.split()))
+  if jobtype == "condor":
+    output = subprocess.check_output(["condor_q"])
+    for line in output:
+      line = line.split()
+      if line[2] == ".makegridpacks_{jobflavor}.sh".format(jobflavor=queue):
+        return int(line.split[7])
+    return 0
+  assert False, jobtype
+
+__pendingjobsdct = KeyDefaultDict(__npendingjobs)

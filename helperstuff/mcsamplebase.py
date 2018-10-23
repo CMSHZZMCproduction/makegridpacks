@@ -6,8 +6,8 @@ from McMScripts.manageRequests import createLHEProducer
 
 import patches
 
-from jobsubmission import jobtype, queuematches
-from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, submitLSF, wget
+from jobsubmission import jobtype, queuematches, submitLSF
+from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, wget
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
