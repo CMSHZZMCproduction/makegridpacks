@@ -103,9 +103,9 @@ class JobTime(JobTimeBase):
     self.__jobtype = jobtype
     self.__jobtime = jobtime
   @property
-  def jobtype(self): return self.jobtype
+  def jobtype(self): return self.__jobtype
   @property
-  def jobtime(self): return self.jobtime
+  def jobtime(self): return self.__jobtime
 
 def jobtime():
   if jobtype() is None:
