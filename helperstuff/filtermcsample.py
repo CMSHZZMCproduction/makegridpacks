@@ -68,7 +68,7 @@ class GenericFilter(FilterImplementation):
         self.timeperevent = sum(self.__timesperevent[i] * self.__nevents[i] for i in range(100)) / sum(self.__nevents[i] for i in range(100))
     return result
 
-class JHUGenFilter(FilterImplementation):
+class JHUGenFilter(GenericFilter):
   def dofilterjob(self, jobindex):
     if self.hasnonJHUGenfilter: return super(JHUGenFilter, self).dofilterjob(jobindex)
     oldpath = os.path.join(os.getcwd(), "")

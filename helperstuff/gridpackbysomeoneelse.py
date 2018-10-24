@@ -188,6 +188,13 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
       return [script]+cards
   @property
   def madgraphcards(self):
+    if self.year == 2016:
+      if self.__coupling == "SM":
+        folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/13TeV/higgs/ggh012j_5f_NLO_FXFX_125")
+        return [
+          os.path.join(folder, "ggh012j_5f_NLO_FXFX_125_"+_+".dat")
+            for _ in ("param_card", "proc_card", "run_card")
+        ]
     if self.year in (2017, 2018):
       if self.__coupling == "SM":
         return [
@@ -221,6 +228,10 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
 
   @property
   def originaltarball(self):
+    if self.year == 2016:
+      if self.__coupling == "SM":
+        #from HIG-RunIISummer15wmLHEGS-01711
+        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc481/13TeV/madgraph/V5_2.2.2/ggh012j_5f_NLO_FXFX_125/v1/ggh012j_5f_NLO_FXFX_125_tarball.tar.xz"
     if self.year in (2017, 2018):
       if self.__coupling == "SM":
         #from HIG-RunIIFall17wmLHEGS-01577
@@ -237,8 +248,9 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
 
   @classmethod
   def allsamples(cls):
-    for year in 2017, 2018:
+    for year in 2016, 2017, 2018:
       for coupling in "SM", "a3", "a3mix":
+        if year == 2016: continue
         yield cls(year, coupling)
 
   @property
@@ -248,20 +260,29 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     return "hroskes"
 
   def cvmfstarball_anyversion(self, version):
-    maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/"
+    if self.year in (2017, 2018):
+      maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/"
+    elif self.year == 2016:
+      maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc481/13TeV/madgraph/V5_2.2.2/"
     folder = {
       "SM": "ggh012j_5f_NLO_FXFX_125_HZZ4l",
       "a3": "ggh012j_5f_NLO_FXFX_125_pseudoscalar_HZZ4l",
       "a3mix": "ggh012j_5f_NLO_FXFX_125_maxmix_HZZ4l",
     }[self.__coupling]
-    if self.tarballversion >= 2:
+
+    if self.year in (2017, 2018):
+      if self.tarballversion >= 2:
+        basename = {
+          "SM": "ggh012j_5f_NLO_FXFX_JHUGenV714_HZZ4l_125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
+          "a3": "GluGluToMaxmixHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
+          "a3mix": "GluGluToPseudoscalarHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
+        }[self.__coupling]
+      else:
+        basename = folder.replace("HZZ4l", "slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz")
+    elif self.year == 2016:
       basename = {
-        "SM": "ggh012j_5f_NLO_FXFX_JHUGenV714_HZZ4l_125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
-        "a3": "GluGluToMaxmixHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-        "a3mix": "GluGluToPseudoscalarHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
+        "SM": "ggh012j_5f_NLO_FXFX_JHUGenV714_HZZ4l_125_tarball.tar.xz"
       }[self.__coupling]
-    else:
-      basename = folder.replace("HZZ4l", "slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz")
     
 
     result = os.path.join(maindir, folder, "v{}".format(version), basename)

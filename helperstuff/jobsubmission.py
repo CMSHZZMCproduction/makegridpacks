@@ -160,12 +160,13 @@ def __npendingjobs(queue):
     output = subprocess.check_output(["bjobs", "-q", queue, "-J", "makegridpacks"], stderr=subprocess.STDOUT)
     return len(list(line for line in output.split("\n") if "PEND" in line.split()))
   if jobtype == "condor":
-    output = subprocess.check_output(["condor_q"])
+    output = subprocess.check_output(["condor_q", "-wide:10000"])
+    result = 0
     for line in output:
       line = line.split()
       if line[2] == ".makegridpacks_{jobflavor}.sh".format(jobflavor=queue):
-        return int(line.split[7])
-    return 0
+        result += int(line.split[7])
+    return result
   assert False, jobtype
 
 __pendingjobsdct = KeyDefaultDict(__npendingjobs)
