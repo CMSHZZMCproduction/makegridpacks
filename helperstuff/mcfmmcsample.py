@@ -5,6 +5,7 @@ from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, mak
 
 from jhugenmcsample import UsesJHUGenLibraries
 from mcsamplebase import MCSampleBase
+from mcsamplewithxsec import MCSampleWithXsec
 
 def differentproductioncards(productioncard, gitproductioncard):
 	allowedtobediff = ['[readin]','[writeout]','[ingridfile]','[outgridfile]']
@@ -33,7 +34,7 @@ def differentproductioncards(productioncard, gitproductioncard):
 			
 			
 
-class MCFMMCSample(UsesJHUGenLibraries):
+class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
 
   def checkandfixtarball(self):
     mkdir_p(self.workdirforgridpack)
@@ -97,7 +98,7 @@ class MCFMMCSample(UsesJHUGenLibraries):
   def makinggridpacksubmitsjob(self):
     return 'MCFM_submit_%s.sh'%(self.datasetname)
 
-  def getxsec(self, error=False):
+  def getxsec(self):
     with cdtemp():
       subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
       dats = set(glob.iglob("*.dat")) - {"fferr.dat", "ffperm5.dat", "ffwarn.dat", "hto_output.dat"}
@@ -110,47 +111,7 @@ class MCFMMCSample(UsesJHUGenLibraries):
       if not matches: raise ValueError("Didn't find the cross section in the dat\n\n"+self.cvmfstarball)
       if len(matches) > 1: raise ValueError("Found multiple cross section lines in the dat\n\n"+self.cvmfstarball)
       xsec, xsecerror = matches[0]
-      self.xsec = float(xsec)
-      self.xsecerror = float(xsecerror)
-      return self.xsecerror if error else self.xsec
-
-  @property
-  def notes(self):
-    return "cross section = {} +/- {}".format(self.xsec, self.xsecerror)
-
-  @property
-  def xsec(self):
-    with cd(here):
-      try:
-        return self.value["xsec"]
-      except KeyError:
-        self.getxsec()
-        return self.xsec
-  @xsec.setter
-  def xsec(self, value):
-    with cd(here), self.writingdict():
-      self.value["xsec"] = value
-  @xsec.deleter
-  def xsec(self):
-    with cd(here), self.writingdict():
-      del self.value["xsec"]
-
-  @property
-  def xsecerror(self):
-    with cd(here):
-      try:
-        return self.value["xsecerror"]
-      except KeyError:
-        self.getxsec()
-        return self.xsecerror
-  @xsecerror.setter
-  def xsecerror(self, value):
-    with cd(here), self.writingdict():
-      self.value["xsecerror"] = value
-  @xsecerror.deleter
-  def xsecerror(self):
-    with cd(here), self.writingdict():
-      del self.value["xsecerror"]
+      return uncertainties.ufloat(xsec, xsecerror)
 
   @property
   @cache

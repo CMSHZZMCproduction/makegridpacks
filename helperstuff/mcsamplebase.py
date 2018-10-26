@@ -725,7 +725,7 @@ class MCSampleBase(JsonDict):
         "filter_efficiency_error": self.filterefficiency.std_dev,
         "match_efficiency": self.matchefficiency.nominal_value,
         "match_efficiency_error": self.matchefficiency.std_dev,
-        "cross_section": self.xsec,
+        "cross_section": uncertainties.nominal_value(self.xsec),
       })
     req["sequences"][0]["nThreads"] = self.nthreads
     req["keep_output"][0] = bool(self.keepoutput)
@@ -807,7 +807,7 @@ class MCSampleBase(JsonDict):
     return result[0]
 
   def gettimepereventfromMcM(self):
-    if self.timeperevent is None or self.resettimeperevent: return
+    if (self.timeperevent is None or self.resettimeperevent) and not (self.prepid and self.status in ("approved", "submitted", "done")): return
     needsupdate = self.needsupdate
     needsupdateiffailed = self.needsupdateiffailed
     timeperevent = self.fullinfo["time_event"][0]

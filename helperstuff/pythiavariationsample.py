@@ -200,7 +200,9 @@ class RedoSampleBase(ExtensionSampleBase):
   def notes(self):
     result = "Redo of " + self.mainsample.prepid
     if self.__reason is not None: result += " "+self.__reason
-    return result
+    supernotes = super(RedoSampleBase, self).notes
+    mainnotes = self.mainsample.notes
+    return "\n\n".join(_ for _ in (result, supernotes, mainnotes) if _)
 
 class RedoSample(RedoSampleBase):
   @classmethod

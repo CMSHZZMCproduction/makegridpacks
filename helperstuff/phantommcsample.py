@@ -1,10 +1,13 @@
 import abc, contextlib, glob, os, re, subprocess, urllib
 
+import uncertainties
+
 from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
 
 from mcsamplebase import MCSampleBase_DefaultCampaign
+from mcsamplewithxsec import MCSampleWithXsec
 
-class PhantomMCSample(MCSampleBase_DefaultCampaign):
+class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
   def __init__(self, year, signalbkgbsi, finalstate, mass, width):
     self.signalbkgbsi = signalbkgbsi
     self.finalstate = finalstate
@@ -67,7 +70,7 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign):
   def tags(self):
     return ["HZZ", "Fall17P2A"]
 
-  def getxsec(error=False):
+  def getxsec(self):
     with cdtemp():
       subprocess.check_output(["tar", "xvaf",self.cvmfstarball])
       dats = set(glob.iglob("result"))
@@ -78,28 +81,11 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign):
       if not matches: raise ValueError("Didn't find the cross section in the result\n\n"+self.cvmfstarball)
       if len(matches) > 1: raise ValueError("Found multiple cross section lines in the result\n\n")
       xsec, xsecerror = matches[0]
-      self.xsec = float(xsec)
-      self.xsecerror = float(xsecerror)
-      return xsecerror if error else xsec
-
-
-  @property
-  def xsec(self):
-    value = getxsec()
-    return value
-
-  @property
-  def xsecerror(self):
-    value = getxsec(True)
-    return value
-
-  @property
-  def notes(self):
-    return "cross section = {} +/- {}".format(self.xsec, self.xsecerror)
+      return uncertainties.ufloat(xsec, xsecerror)
 
   @property
   def genproductionscommit(self):
-    return "76336e9844b0df3aaf1496a40755ca772beecbb6"
+    return "59eab4505ac61b2fcd677d82c15aa8d6d0ced28f"
 
   @classmethod
   def allsamples(cls):
