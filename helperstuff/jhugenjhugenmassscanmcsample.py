@@ -23,6 +23,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   def productioncardusesscript(self):
     if self.productionmode == "tqH": return False
     if self.productionmode == "bbH": return True
+    if self.productionmode == "ggZH": return False
     assert False, self
 
   @property
@@ -31,6 +32,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
   @property
   def filter4L(self):
+    if self.productionmode == "ggZH": return True
     return False
 
   @property
@@ -70,6 +72,8 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
   @property
   def datasetname(self):
+    if self.productionmode == "ggZH" and self.decaymode == "4l" and self.mass == 125:
+      return "GluGluToZH_HToZZTo4L_M125_13TeV_powheg2_JHUGenV723_pythia8"
     if self.decaymode == "2l2nu":
       result = type(self)(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Nu")
     elif self.decaymode == "2l2q":
@@ -93,24 +97,22 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     return result
 
   @property
-  def nfinalparticles(self):
-    if self.productionmode == "ggH": return 1
-    if self.productionmode in ("VBF", "ZH", "WplusH", "WminusH", "ttH"): return 3
-    assert False, self.productionmode
-
-  @property
   def defaulttimeperevent(self):
     return 30
     assert False
 
   @property
   def tags(self):
-    return ["HZZ", "Fall17P2A"]
+    result = ["HZZ"]
+    if self.year == 2017: result.append("Fall17P2A")
+    return result
+
 
   @property
   def genproductionscommit(self):
+    if self.productionmode == "ggZH": return "20ac197949817a9bc02aa346f3fe23d157371b74"
     return "fd7d34a91c3160348fd0446ded445fa28f555e09"
-
+ 
   @property
   def fragmentname(self):
     return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_LHE_pythia8_cff.py"
@@ -122,22 +124,26 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
         return 115, 120, 124, 125, 126, 130, 135, 140, 145
       if productionmode == "tqH":
         return 125,
+      if productionmode == "ggZH":
+        return 125,
     if decaymode == "2l2q":
-      if productionmode in ("bbH", "tqH"):
+      if  productionmode == "ggZH": return ()
+      if productionmode in ("bbH", "tqH", "ggZH"):
         return 125,
     if decaymode == "2l2nu":
-      if productionmode in ("bbH", "tqH"):
+      if productionmode in ("bbH", "tqH", "ggZH"):
         return ()
 
   @classmethod
   def allsamples(cls):
-    for productionmode in "bbH", "tqH":
+    for productionmode in "bbH", "tqH", "ggZH":
       for decaymode in "4l", "2l2q", "2l2nu":
         for mass in cls.getmasses(productionmode, decaymode):
           yield cls(2017, productionmode, decaymode, mass)
 
   @property
   def responsible(self):
+    if self.productionmode == "ggZH": return "qguo"
     return "hroskes"
 
   @property
@@ -149,8 +155,10 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
           return 200000
         elif self.productionmode == "tqH":
           if self.mass == 125: return 1000000
+        elif self.productionmode == "ggZH":
+          if self.mass == 125: return 1000000
       elif self.decaymode == "2l2q":
-        if self.productionmode in ("bbH", "tqH"):
+        if self.productionmode in ("bbH", "tqH", "ggZH"):
           if self.mass == 125: return 500000
     if self.year == 2018:
       if self.decaymode == "4l":
@@ -159,18 +167,25 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
           return 200000
         elif self.productionmode == "tqH":
           if self.mass == 125: return 1000000
+        elif self.productionmode == "ggZH":
+          if self.mass == 125: return 1000000
       elif self.decaymode == "2l2q":
-        if self.productionmode in ("bbH", "tqH"):
+        if self.productionmode in ("bbH", "tqH", "ggZH"):
           if self.mass == 125: return 500000
 
     raise ValueError("No nevents for {}".format(self))
 
   @property
   def JHUGenversion(self):
-    if self.year in (2017, 2018): return "v7.0.11"
-
-  @property
+    if self.year in (2017, 2018):
+      if self.productionmode in ("bbH", "tqH"): return "v7.0.11"
+      if self.productionmode == "ggZH": return "v7.2.3"
+ 
   def hasnonJHUGenfilter(self): return False
+
+  def linkmela(self):
+    if self.productionmode == "ggZH": return True
+    return False
 
   def handle_request_fragment_check_warning(self, line):
     if line.strip() == "* [WARNING] Large time/event - please check":

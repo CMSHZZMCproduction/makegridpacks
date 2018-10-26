@@ -1,5 +1,5 @@
 import abc, glob, os, re
-
+from helperstuff.utilities import genproductions
 from helperstuff.mcsamplebase import MCSampleBase
 
 class UsesJHUGenLibraries(MCSampleBase):
