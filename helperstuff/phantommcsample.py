@@ -111,7 +111,7 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign):
 
   @property
   def responsible(self):
-    return "skeshri"
+    return "hroskes"
 
   @property
   def makegridpackcommand(self):
