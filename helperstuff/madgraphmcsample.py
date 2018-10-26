@@ -210,7 +210,7 @@ class ZZ2L2QMadGraphMCSample(MadGraphMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def responsible(self):
-    return "skeshri"
+    return "hroskes"
 
   @property
   def fragmentname(self):
