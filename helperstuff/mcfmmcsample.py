@@ -114,7 +114,6 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
       return uncertainties.ufloat(xsec, xsecerror)
 
   @property
-  @cache
   def cardsurl(self):
     commit = self.genproductionscommit
     productioncardurl = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.productioncard.split("genproductions/")[-1])
@@ -123,29 +122,25 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
       with contextlib.closing(urllib.urlopen(productioncardurl)) as f:
         productiongitcard = f.read()
 
-    with cdtemp():
-      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
-      if glob.glob("core.*"):
-        raise ValueError("There is a core dump in the tarball\n{}".format(self))
-#      for root, dirs, files in os.walk("."):
-#	for ifile in files:
-#	  try:
-#	    os.stat(ifile)
-#	  except Exception as e: 
-#	    if e.args == 'No such file or directory':   continue
-#	    print ifile
-#	    print e.message, e.args
- #   	    raise ValueError("There is a broken symlink in the tarball\n{}".format(self))
-      try:
-        with open("readInput.DAT") as f:
-          productioncard = f.read()
-      except IOError:
-        raise ValueError("no readInput.DAT in the tarball\n{}".format(self)) 
-      try:
-        with open("src/User/mdata.f") as f:
-          mdatacard = f.read()
-      except IOError:
-        raise ValueError("no src/User/mdata.f in the tarball\n{}".format(self))
+#    for root, dirs, files in os.walk("."):
+#      for ifile in files:
+#        try:
+#          os.stat(ifile)
+#        except Exception as e: 
+#          if e.args == 'No such file or directory':   continue
+#          print ifile
+#          print e.message, e.args
+#          raise ValueError("There is a broken symlink in the tarball\n{}".format(self))
+    try:
+      with open("readInput.DAT") as f:
+        productioncard = f.read()
+    except IOError:
+      raise ValueError("no readInput.DAT in the tarball\n{}".format(self)) 
+    try:
+      with open("src/User/mdata.f") as f:
+        mdatacard = f.read()
+    except IOError:
+      raise ValueError("no src/User/mdata.f in the tarball\n{}".format(self))
 
     if differentproductioncards(productioncard,productiongitcard) and not 'BKG' in self.identifiers:
       with cd(here):
@@ -182,6 +177,9 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
     result = (       productioncardurl + "\n"
             + "# " + mdatascript + "\n"
             + "#    --coupling " + self.coupling + " --bsisigbkg " + self.signalbkgbsi)
+
+    moreresult = super(MCFMMCSample, self).cardsurl
+    if moreresult: result += "\n# " + moreresult
 
     return result
 

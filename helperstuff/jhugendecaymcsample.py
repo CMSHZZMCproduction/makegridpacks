@@ -1,5 +1,6 @@
-import abc, re
+import abc, contextlib, os, re, urllib
 
+from utilities import wget
 from filtermcsample import JHUGenFilter
 
 class JHUGenDecayMCSample(JHUGenFilter):
@@ -24,3 +25,29 @@ class JHUGenDecayMCSample(JHUGenFilter):
   @abc.abstractproperty
   def JHUGenversion(self):
     pass
+
+  @abc.abstractproperty
+  def JHUGencardlocationintarball(self):
+    pass
+
+  @property
+  def cardsurl(self):
+    commit = self.genproductionscommit
+    JHUGencard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.decaycard.split("genproductions/")[-1])
+    result = JHUGencard
+    moreresult = super(JHUGenDecayMCSample, self).cardsurl
+    if moreresult: result += "\n# " + moreresult
+
+    with contextlib.closing(urllib.urlopen(JHUGencard)) as f:
+      JHUGengitcard = f.read()
+
+    try:
+      with open(self.JHUGencardlocationintarball) as f:
+        JHUGencard = f.read()
+    except IOError:
+      raise ValueError("no {0.JHUGencardlocationintarball} in the tarball\n{0}".format(self))
+
+    if JHUGencard != JHUGengitcard:
+      raise ValueError("JHUGencard != JHUGengitcard\n{}\n{}\n{}".format(self, JHUGencard, JHUGengitcard))
+
+    return result

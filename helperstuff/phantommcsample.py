@@ -71,17 +71,15 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     return ["HZZ", "Fall17P2A"]
 
   def getxsec(self):
-    with cdtemp():
-      subprocess.check_output(["tar", "xvaf",self.cvmfstarball])
-      dats = set(glob.iglob("result"))
-      if len(dats) != 1:
-        raise ValueError("Expected to find result in the tarball {}\n".foramt(self.cvmfstarball))
-      with open(dats.pop()) as f:
-        matches = re.findall(r"total cross section=\s*([0-9.Ee+-]*)\s*[+]/-\s*([0-9.Ee+-]*)\s*", f.read())
-      if not matches: raise ValueError("Didn't find the cross section in the result\n\n"+self.cvmfstarball)
-      if len(matches) > 1: raise ValueError("Found multiple cross section lines in the result\n\n")
-      xsec, xsecerror = matches[0]
-      return uncertainties.ufloat(xsec, xsecerror)
+    dats = set(glob.iglob("result"))
+    if len(dats) != 1:
+      raise ValueError("Expected to find result in the tarball {}\n".foramt(self.cvmfstarball))
+    with open(dats.pop()) as f:
+      matches = re.findall(r"total cross section=\s*([0-9.Ee+-]*)\s*[+]/-\s*([0-9.Ee+-]*)\s*", f.read())
+    if not matches: raise ValueError("Didn't find the cross section in the result\n\n"+self.cvmfstarball)
+    if len(matches) > 1: raise ValueError("Found multiple cross section lines in the result\n\n")
+    xsec, xsecerror = matches[0]
+    return uncertainties.ufloat(xsec, xsecerror)
 
   @property
   def genproductionscommit(self):
@@ -120,7 +118,6 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     return "making a phantom tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)
 
   @property
-  @cache
   def cardsurl(self):
 
     icard = "VBF_"
@@ -164,6 +161,9 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
         with open("powheggitcard", "w") as f:
           f.write(gitcardcontents)
       raise ValueError("cardcontents != gitcardcontents\n{}\nSee ./cardcontents and ./gitcardcontents".format(self))
+
+    moreresult = super(PhantomMCSample, self).cardsurl
+    if moreresult: card += "\n# " + moreresult
 
     return card
 

@@ -56,8 +56,28 @@ class MCSampleBase(JsonDict):
   def productiongenerators(self): return []
   @property
   def decaygenerators(self): return []
+  @cache
+  def getcardsurl(self):
+    with cdtemp():
+      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
+      self.__calledsupercardsurl = False
+      result = self.cardsurl
+      if not self.__calledsupercardsurl:
+        raise TypeError("super of cardsurl for {} didn't propagate all the way up to MCSampleBase".format(self))
+      return result
   @abc.abstractproperty
-  def cardsurl(self): pass
+  def cardsurl(self):
+    """
+    runs in a tmpdir where the gridpack has been opened.
+    You can and should do all kinds of checks here.
+    At the end it returns the urls of the input cards.
+    """
+    self.__calledsupercardsurl = True
+    for root, dirnames, filenames in os.walk('.'):
+      for filename in filenames:
+        if re.match("core[.].*", filename):
+          raise ValueError("There is a core dump in the tarball\n{}".format(self))
+    return ""
   @abc.abstractproperty
   def defaulttimeperevent(self): pass
   @abc.abstractproperty
@@ -128,7 +148,7 @@ class MCSampleBase(JsonDict):
   @cache
   def checkcardsurl(self):
     try:
-      self.cardsurl
+      self.getcardsurl()
     except Exception as e:
       if str(self) in str(e):
         return str(e).replace(str(self), "").strip()
@@ -707,7 +727,7 @@ class MCSampleBase(JsonDict):
   @property
   @cache
   def fullfragment(self):
-    return createLHEProducer(self.cvmfstarball, self.cardsurl, self.fragmentname, self.genproductionscommitforfragment)
+    return createLHEProducer(self.cvmfstarball, self.getcardsurl(), self.fragmentname, self.genproductionscommitforfragment)
 
   def getdictforupdate(self):
     mcm = restful()

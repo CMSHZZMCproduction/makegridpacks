@@ -17,7 +17,6 @@ class MadGraphMCSample(MCSampleBase):
     return os.path.join(here, "workdir", str(self).replace(" ", "_"), "dummy.tgz")
 
   @property
-  @cache
   def cardsurl(self):
     def getcontents(f):
       contents = ""
@@ -74,24 +73,20 @@ class MadGraphMCSample(MCSampleBase):
             gitcardcontents.append(getcontents(f))
 
 
-    with cdtemp():
-      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
-      if glob.glob("core.*"):
-        raise ValueError("There is a core dump in the tarball\n{}".format(self))
-      cardnamesintarball = tuple(
-        os.path.join("InputCards", os.path.basename(_[1] if len(_) == 2 else _))
-        for _ in self.madgraphcards
-      )
-      cardcontents = []
-      for cardnameintarball in cardnamesintarball:
-        try:
-          with open(cardnameintarball) as f:
-            cardcontents.append(getcontents(f))
-        except IOError:
-          raise ValueError("no "+cardnameintarball+" in the tarball\n{}".format(self))
-      for _ in glob.iglob("InputCards/*"):
-        if _ not in cardnamesintarball and not _.endswith(".tar.gz") and _ not in self.otherthingsininputcards:
-          raise ValueError("unknown thing "+_+" in InputCards\n{}".format(self))
+    cardnamesintarball = tuple(
+      os.path.join("InputCards", os.path.basename(_[1] if len(_) == 2 else _))
+      for _ in self.madgraphcards
+    )
+    cardcontents = []
+    for cardnameintarball in cardnamesintarball:
+      try:
+        with open(cardnameintarball) as f:
+          cardcontents.append(getcontents(f))
+      except IOError:
+        raise ValueError("no "+cardnameintarball+" in the tarball\n{}".format(self))
+    for _ in glob.iglob("InputCards/*"):
+      if _ not in cardnamesintarball and not _.endswith(".tar.gz") and _ not in self.otherthingsininputcards:
+        raise ValueError("unknown thing "+_+" in InputCards\n{}".format(self))
 
     for name, cc, gcc in itertools.izip(cardnamesintarball, cardcontents, gitcardcontents):
       _, suffix = os.path.splitext(os.path.basename(name))
@@ -104,9 +99,15 @@ class MadGraphMCSample(MCSampleBase):
         raise ValueError(name + " in tarball != " + name + " in git\n{}\nSee ./cardcontents{} and ./gitcardcontents{}".format(self, suffix, suffix))
 
     if self.madgraphcardscript:
-      return "\n#    ".join((scripturls[0],) + tuple(self.madgraphcards))
+      result = "\n#    ".join((scripturls[0],) + tuple(self.madgraphcards))
     else:
-      return "\n# ".join(cardurls)
+      result = "\n# ".join(cardurls)
+
+    moreresult = super(MadGraphMCSample, self).cardsurl
+    if moreresult: result += "\n# " + moreresult
+
+    return result
+
 
   @property
   def madgraphcardscript(self): return None

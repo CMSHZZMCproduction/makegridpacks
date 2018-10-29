@@ -147,7 +147,6 @@ class POWHEGMCSample(MCSampleBase):
 
 
   @property
-  @cache
   def cardsurl(self):
     commit = self.genproductionscommit
 
@@ -178,21 +177,17 @@ class POWHEGMCSample(MCSampleBase):
                               )]
         powheggitcard = "\n".join(line for line in powheggitcardlines)
 
-    with cdtemp():
-      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
-      if glob.glob("core.*") and self.cvmfstarball != "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/HJJ_M125_13TeV/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_13TeV_M125.tgz":
-        raise ValueError("There is a core dump in the tarball\n{}".format(self))
-      try:
-        with open("powheg.input") as f:
-          powhegcard = f.read()
-          powhegcardlines = [re.sub(" *([#!].*)?$", "", line) for line in powhegcard.split("\n")]
-          powhegcardlines = [re.sub("(iseed|ncall2|fakevirt) *", r"\1 ", line) for line in powhegcardlines
-                             if line and all(_ not in line for _ in
-                             ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets", "xgriditeration", "fakevirt")
-                             )]
-          powhegcard = "\n".join(line for line in powhegcardlines)
-      except IOError:
-        raise ValueError("no powheg.input in the tarball\n{}".format(self))
+    try:
+      with open("powheg.input") as f:
+        powhegcard = f.read()
+        powhegcardlines = [re.sub(" *([#!].*)?$", "", line) for line in powhegcard.split("\n")]
+        powhegcardlines = [re.sub("(iseed|ncall2|fakevirt) *", r"\1 ", line) for line in powhegcardlines
+                           if line and all(_ not in line for _ in
+                           ("pdfreweight", "storeinfo_rwgt", "withnegweights", "rwl_", "lhapdf6maxsets", "xgriditeration", "fakevirt")
+                           )]
+        powhegcard = "\n".join(line for line in powhegcardlines)
+    except IOError:
+      raise ValueError("no powheg.input in the tarball\n{}".format(self))
 
     if powhegcard != powheggitcard:
       with cd(here):
@@ -201,6 +196,9 @@ class POWHEGMCSample(MCSampleBase):
         with open("powheggitcard", "w") as f:
           f.write(powheggitcard)
       raise ValueError("powhegcard != powheggitcard\n{}\nSee ./powhegcard and ./powheggitcard".format(self))
+
+    moreresult = super(POWHEGMCSample, self).cardsurl
+    if moreresult: result += "\n# "+moreresult
 
     return result
 
