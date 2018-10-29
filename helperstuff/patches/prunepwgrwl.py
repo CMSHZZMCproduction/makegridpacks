@@ -71,6 +71,7 @@ def prunepwgrwl(oldfilename, newfilename, filter, verbose=False):
       print "Removing", sum(remove.values()), "alternate weights:"
       for name, n in remove.iteritems():
         if n>1: print "   {} ({} variations)".format(name, n)
+        else: print "   {}".format(name)
 
 if __name__ == "__main__":
   p = argparse.ArgumentParser()
