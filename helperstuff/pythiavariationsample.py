@@ -37,6 +37,9 @@ class VariationSample(MCSampleBase):
   @property
   def tmptarball(self):
     return self.mainsample.tmptarball
+  @property
+  def patchkwargs(self):
+    return self.mainsample.patchkwargs
   def patchtarball(self):
     samples = (
       [self.mainmainsample] +

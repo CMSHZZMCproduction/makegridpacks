@@ -2,7 +2,7 @@
 
 import argparse, collections, glob, os, re, shutil, subprocess, sys
 
-from ..utilities import cache, cd, cdtemp, OrderedCounter
+from utilities import cache, cd, cdtemp, OrderedCounter
 
 JHUGenpart = """
 echo "Doing JHUGen decay"
