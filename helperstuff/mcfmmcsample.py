@@ -194,3 +194,7 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
     for filename in glob.iglob(os.path.join(genproductions, "bin","MCFM", "*")):
       if (filename.endswith(".py") or filename.endswith(".sh") or filename.endswith("patches")) and not os.path.exists(os.path.basename(filename)):
         yield filename
+
+  @property
+  def JHUGenlocationintarball(self):
+    return None

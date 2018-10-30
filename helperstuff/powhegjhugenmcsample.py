@@ -16,3 +16,8 @@ class POWHEGJHUGenMCSample(POWHEGMCSample, JHUGenDecayMCSample):
   @property
   def JHUGencardlocationintarball(self):
     return "JHUGen.input"
+
+  @property
+  def JHUGenlocationintarball(self):
+    return "./JHUGen"
+

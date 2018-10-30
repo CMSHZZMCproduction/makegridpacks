@@ -9,6 +9,7 @@ if __name__ == "__main__":
   p.add_argument("--raise-error", action="store_true")
   args = p.parse_args()
   for sample in allsamples(lambda x: hasattr(x, "cvmfstarball") and os.path.exists(x.cvmfstarball)):
+    if args.raise_error: print sample
     try:
       sample.getcardsurl()
     except Exception as e:

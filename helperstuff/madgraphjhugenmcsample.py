@@ -14,3 +14,7 @@ class MadGraphJHUGenMCSample(MadGraphMCSample, JHUGenDecayMCSample):
   @property
   def JHUGencardlocationintarball(self):
     return "InputCards/JHUGen.input"
+
+  @property
+  def JHUGenlocationintarball(self):
+    return "./JHUGen"

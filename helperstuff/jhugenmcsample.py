@@ -1,24 +1,47 @@
 import abc, glob, os, re, subprocess
-from helperstuff.utilities import cdtemp, genproductions, wget
+from helperstuff.utilities import cdtemp, genproductions, here, wget
 from helperstuff.mcsamplebase import MCSampleBase
 
 class UsesJHUGenLibraries(MCSampleBase):
-  @property
+  @abc.abstractproperty
   def JHUGenversion(self):
-    return 
+    pass
   @property
   def productiongenerators(self):
     assert re.match(r"v[0-9]+[.][0-9]+[.][0-9]+", self.JHUGenversion), self.JHUGenversion
     return super(UsesJHUGenLibraries, self).productiongenerators + ["JHUGen {}".format(self.JHUGenversion)]
+
+  @abc.abstractproperty
+  def JHUGenlocationintarball(self):
+    pass
+
+  @property
+  def cardsurl(self):
+    result = super(UsesJHUGenLibraries, self).cardsurl
+    if self.JHUGenlocationintarball is not None:
+      try:
+        output = subprocess.check_output(self.JHUGentestargs)
+      except subprocess.CalledProcessError as e:
+        print e.output
+        raise
+      match = re.search(r"JHU Generator (v[0-9]+[.][0-9]+[.][0-9]+)", output)
+      if not match:
+        with cd(here), open("JHUGenoutput.txt", "w") as f:
+          f.write(output)
+        raise RuntimeError("Couldn't find JHU Generator v[0-9]+[.][0-9]+[.][0-9]+, see JHUGenoutput.txt")
+      if match.group(1) != self.JHUGenversion:
+        raise ValueError("Wrong JHUGen version: {} != {}".format(match.group(1), self.JHUGenversion))
+    return result
+
+  @property
+  def JHUGentestargs(self):
+    return [self.JHUGenlocationintarball, "Process=50", "VegasNc0=10000", "VegasNc2=1", "DataFile=deleteme"]
 
 class JHUGenMCSample(UsesJHUGenLibraries):
   @abc.abstractproperty
   def productioncard(self): pass
   @abc.abstractproperty
   def productioncardusesscript(self):
-    pass
-  @abc.abstractproperty
-  def JHUGenversion(self):
     pass
   @property
   def linkmela(self): return False
@@ -86,3 +109,11 @@ class JHUGenMCSample(UsesJHUGenLibraries):
     if moreresult: result += "\n# "+moreresult
 
     return result
+
+  @property
+  def JHUGenlocationintarball(self):
+    return os.path.join(self.shortname+"_JHUGen", "JHUGenerator", "JHUGen")
+
+  @property
+  def JHUGentestargs(self):
+    return super(JHUGenMCSample, self).JHUGentestargs + ["LHAPDF=NNPDF30_lo_as_0130/NNPDF30_lo_as_0130.info"]
