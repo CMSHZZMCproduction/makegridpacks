@@ -1,0 +1,3 @@
+<tool name="py2-Theano" version="0.8.2-mlhled4">
+  <use name="py2-pippkgs_depscipy"/>
+</tool>
