@@ -37,6 +37,9 @@ class VariationSample(MCSampleBase):
   @property
   def tmptarball(self):
     return self.mainsample.tmptarball
+  @property
+  def patchkwargs(self):
+    return self.mainsample.patchkwargs
   def patchtarball(self):
     samples = (
       [self.mainmainsample] +
@@ -93,9 +96,11 @@ class VariationSample(MCSampleBase):
   @property
   def decaygenerators(self):
     return self.mainsample.decaygenerators
+  def getcardsurl(self):
+    return self.mainsample.getcardsurl()
   @property
   def cardsurl(self):
-    return self.mainsample.cardsurl
+    assert False, self
   @property
   def defaulttimeperevent(self):
     if self.mainsample.timeperevent is not None:
@@ -200,7 +205,9 @@ class RedoSampleBase(ExtensionSampleBase):
   def notes(self):
     result = "Redo of " + self.mainsample.prepid
     if self.__reason is not None: result += " "+self.__reason
-    return result
+    supernotes = super(RedoSampleBase, self).notes
+    mainnotes = self.mainsample.notes
+    return "\n\n".join(_ for _ in (result, supernotes, mainnotes) if _)
 
 class RedoSample(RedoSampleBase):
   @classmethod

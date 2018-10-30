@@ -113,7 +113,6 @@ class MyMCSample(MCSampleBase):
     otherwise return False or None
     """
   @property
-  @cache
   def cardsurl(self):
     """
     fill this
@@ -126,15 +125,11 @@ class MyMCSample(MCSampleBase):
       wget(card)
       with open(os.path.basename(card)) as f:
         gitcardcontents = f.read()
-    with cdtemp():
-      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
-      if glob.glob("core.*") and self.cvmfstarball != "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/HJJ_M125_13TeV/HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_13TeV_M125.tgz":
-        raise ValueError("There is a core dump in the tarball\n{}".format(self))
-      try:
-        with open(<card name>) as f:
-          cardcontents = f.read()
-      except IOError:
-        raise ValueError("no <card name> in the tarball\n{}".format(self))
+    try:
+      with open(<card name>) as f:
+        cardcontents = f.read()
+    except IOError:
+      raise ValueError("no <card name> in the tarball\n{}".format(self))
 
     if cardcontents != gitcardcontents:
       with cd(here):

@@ -2,7 +2,7 @@
 
 import argparse, glob, os, shutil, stat, subprocess
 
-from ..utilities import cache, cdtemp, OrderedCounter
+from utilities import cache, cdtemp, OrderedCounter
 
 def tweakseed(oldfilename, newfilename, increaseby, verbose=False):
   oldfilename = os.path.abspath(oldfilename)

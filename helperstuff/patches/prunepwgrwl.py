@@ -2,7 +2,7 @@
 
 import argparse, collections, glob, os, re, shutil, subprocess, sys
 
-from ..utilities import cache, cdtemp, OrderedCounter
+from utilities import cache, cdtemp, OrderedCounter
 
 sys.path.append(os.path.join(os.environ["LHAPDF_DATA_PATH"], "..", "..", "lib", "python2.7", "site-packages"))
 
@@ -32,6 +32,7 @@ class AlternateWeight(collections.namedtuple("AlternateWeight", "lhapdf renscfac
     return self.pdf.memberID
 
 def prunepwgrwl(oldfilename, newfilename, filter, verbose=False):
+  oldfilename = os.path.abspath(oldfilename)
   newfilename = os.path.abspath(newfilename)
 
   with cdtemp():
@@ -70,6 +71,7 @@ def prunepwgrwl(oldfilename, newfilename, filter, verbose=False):
       print "Removing", sum(remove.values()), "alternate weights:"
       for name, n in remove.iteritems():
         if n>1: print "   {} ({} variations)".format(name, n)
+        else: print "   {}".format(name)
 
 if __name__ == "__main__":
   p = argparse.ArgumentParser()

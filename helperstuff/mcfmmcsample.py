@@ -5,6 +5,7 @@ from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, mak
 
 from jhugenmcsample import UsesJHUGenLibraries
 from mcsamplebase import MCSampleBase
+from mcsamplewithxsec import MCSampleWithXsec
 
 def differentproductioncards(productioncard, gitproductioncard):
 	allowedtobediff = ['[readin]','[writeout]','[ingridfile]','[outgridfile]']
@@ -33,7 +34,7 @@ def differentproductioncards(productioncard, gitproductioncard):
 			
 			
 
-class MCFMMCSample(UsesJHUGenLibraries):
+class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
 
   def checkandfixtarball(self):
     mkdir_p(self.workdirforgridpack)
@@ -97,7 +98,7 @@ class MCFMMCSample(UsesJHUGenLibraries):
   def makinggridpacksubmitsjob(self):
     return 'MCFM_submit_%s.sh'%(self.datasetname)
 
-  def getxsec(self, error=False):
+  def getxsec(self):
     with cdtemp():
       subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
       dats = set(glob.iglob("*.dat")) - {"fferr.dat", "ffperm5.dat", "ffwarn.dat", "hto_output.dat"}
@@ -110,50 +111,9 @@ class MCFMMCSample(UsesJHUGenLibraries):
       if not matches: raise ValueError("Didn't find the cross section in the dat\n\n"+self.cvmfstarball)
       if len(matches) > 1: raise ValueError("Found multiple cross section lines in the dat\n\n"+self.cvmfstarball)
       xsec, xsecerror = matches[0]
-      self.xsec = float(xsec)
-      self.xsecerror = float(xsecerror)
-      return self.xsecerror if error else self.xsec
+      return uncertainties.ufloat(xsec, xsecerror)
 
   @property
-  def notes(self):
-    return "cross section = {} +/- {}".format(self.xsec, self.xsecerror)
-
-  @property
-  def xsec(self):
-    with cd(here):
-      try:
-        return self.value["xsec"]
-      except KeyError:
-        self.getxsec()
-        return self.xsec
-  @xsec.setter
-  def xsec(self, value):
-    with cd(here), self.writingdict():
-      self.value["xsec"] = value
-  @xsec.deleter
-  def xsec(self):
-    with cd(here), self.writingdict():
-      del self.value["xsec"]
-
-  @property
-  def xsecerror(self):
-    with cd(here):
-      try:
-        return self.value["xsecerror"]
-      except KeyError:
-        self.getxsec()
-        return self.xsecerror
-  @xsecerror.setter
-  def xsecerror(self, value):
-    with cd(here), self.writingdict():
-      self.value["xsecerror"] = value
-  @xsecerror.deleter
-  def xsecerror(self):
-    with cd(here), self.writingdict():
-      del self.value["xsecerror"]
-
-  @property
-  @cache
   def cardsurl(self):
     commit = self.genproductionscommit
     productioncardurl = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.productioncard.split("genproductions/")[-1])
@@ -162,29 +122,25 @@ class MCFMMCSample(UsesJHUGenLibraries):
       with contextlib.closing(urllib.urlopen(productioncardurl)) as f:
         productiongitcard = f.read()
 
-    with cdtemp():
-      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
-      if glob.glob("core.*"):
-        raise ValueError("There is a core dump in the tarball\n{}".format(self))
-#      for root, dirs, files in os.walk("."):
-#	for ifile in files:
-#	  try:
-#	    os.stat(ifile)
-#	  except Exception as e: 
-#	    if e.args == 'No such file or directory':   continue
-#	    print ifile
-#	    print e.message, e.args
- #   	    raise ValueError("There is a broken symlink in the tarball\n{}".format(self))
-      try:
-        with open("readInput.DAT") as f:
-          productioncard = f.read()
-      except IOError:
-        raise ValueError("no readInput.DAT in the tarball\n{}".format(self)) 
-      try:
-        with open("src/User/mdata.f") as f:
-          mdatacard = f.read()
-      except IOError:
-        raise ValueError("no src/User/mdata.f in the tarball\n{}".format(self))
+#    for root, dirs, files in os.walk("."):
+#      for ifile in files:
+#        try:
+#          os.stat(ifile)
+#        except Exception as e: 
+#          if e.args == 'No such file or directory':   continue
+#          print ifile
+#          print e.message, e.args
+#          raise ValueError("There is a broken symlink in the tarball\n{}".format(self))
+    try:
+      with open("readInput.DAT") as f:
+        productioncard = f.read()
+    except IOError:
+      raise ValueError("no readInput.DAT in the tarball\n{}".format(self)) 
+    try:
+      with open("src/User/mdata.f") as f:
+        mdatacard = f.read()
+    except IOError:
+      raise ValueError("no src/User/mdata.f in the tarball\n{}".format(self))
 
     if differentproductioncards(productioncard,productiongitcard) and not 'BKG' in self.identifiers:
       with cd(here):
@@ -222,6 +178,9 @@ class MCFMMCSample(UsesJHUGenLibraries):
             + "# " + mdatascript + "\n"
             + "#    --coupling " + self.coupling + " --bsisigbkg " + self.signalbkgbsi)
 
+    moreresult = super(MCFMMCSample, self).cardsurl
+    if moreresult: result += "\n# " + moreresult
+
     return result
 
   @property
@@ -235,3 +194,7 @@ class MCFMMCSample(UsesJHUGenLibraries):
     for filename in glob.iglob(os.path.join(genproductions, "bin","MCFM", "*")):
       if (filename.endswith(".py") or filename.endswith(".sh") or filename.endswith("patches")) and not os.path.exists(os.path.basename(filename)):
         yield filename
+
+  @property
+  def JHUGenlocationintarball(self):
+    return None
