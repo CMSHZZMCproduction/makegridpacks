@@ -91,8 +91,12 @@ class JHUGenMCSample(UsesJHUGenLibraries):
       with open(os.path.basename(productioncard)) as f:
         productiongitcard = f.read()
 
+    #accomodate either before or after https://github.com/cms-sw/genproductions/commit/c745241379a09d78f8ec63b3c468ccfeffa8e88b#diff-05dd22003a895cdee21435db7fa1800c
+    folder = self.shortname+"_JHUGen"
+    if not os.path.exists(folder): folder = "."
+
     try:
-      with open(os.path.join(self.shortname+"_JHUGen", "JHUGen.input")) as f:
+      with open(os.path.join(folder, "JHUGen.input")) as f:
         productioncard = f.read()
     except IOError:
       raise ValueError("no JHUGen.input in the tarball\n{}\n{}".format(self, self.cvmfstarball))
@@ -105,6 +109,17 @@ class JHUGenMCSample(UsesJHUGenLibraries):
           f.write(productiongitcard)
       raise ValueError("productioncard != productiongitcard\n{}\n{}\n{}".format(self, productioncard, productiongitcard))
 
+    if os.path.exists("JHUGenMELA"):
+      output = subprocess.check_output(["JHUGenMELA/MELA/setup.sh", "env"])
+      for line in output.split("\n"):
+        line = line.strip()
+        match = re.match("export LD_LIBRARY_PATH=(.*)", line)
+        if match:
+          os.environ["LD_LIBRARY_PATH"] = os.path.expandvars(match.group(1))
+          break
+      else:
+        raise RuntimeError("Didn't find LD_LIBRARY_PATH in setup.sh env???")
+
     moreresult = super(JHUGenMCSample, self).cardsurl
     if moreresult: result += "\n# "+moreresult
 
@@ -112,7 +127,11 @@ class JHUGenMCSample(UsesJHUGenLibraries):
 
   @property
   def JHUGenlocationintarball(self):
-    return os.path.join(self.shortname+"_JHUGen", "JHUGenerator", "JHUGen")
+    #accomodate either before or after https://github.com/cms-sw/genproductions/commit/c745241379a09d78f8ec63b3c468ccfeffa8e88b#diff-05dd22003a895cdee21435db7fa1800c
+    folder = self.shortname+"_JHUGen"
+    if not os.path.exists(folder): folder = "."
+
+    return os.path.join(folder, "JHUGenerator", "JHUGen")
 
   @property
   def JHUGentestargs(self):
