@@ -96,9 +96,11 @@ class VariationSample(MCSampleBase):
   @property
   def decaygenerators(self):
     return self.mainsample.decaygenerators
+  def getcardsurl(self):
+    return self.mainsample.getcardsurl()
   @property
   def cardsurl(self):
-    return self.mainsample.cardsurl
+    assert False, self
   @property
   def defaulttimeperevent(self):
     if self.mainsample.timeperevent is not None:

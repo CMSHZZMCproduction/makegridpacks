@@ -1,5 +1,5 @@
 import abc, glob, os, re, subprocess
-from helperstuff.utilities import cdtemp, genproductions, here, wget
+from helperstuff.utilities import cd, cdtemp, genproductions, here, wget
 from helperstuff.mcsamplebase import MCSampleBase
 
 class UsesJHUGenLibraries(MCSampleBase):
