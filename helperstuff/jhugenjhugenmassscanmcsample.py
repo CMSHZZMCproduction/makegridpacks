@@ -181,6 +181,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
       if self.productionmode in ("bbH", "tqH"): return "v7.0.11"
       if self.productionmode == "ggZH": return "v7.2.3"
  
+  @property
   def hasnonJHUGenfilter(self): return False
 
   def linkmela(self):

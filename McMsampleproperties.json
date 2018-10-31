@@ -7724,8 +7724,8 @@
                     "filterefficiencyerror": 4.79851663246e-05,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00289",
-                    "sizeperevent": 802.9184,
-                    "timeperevent": 380.990117116362
+                    "resettimeperevent": true,
+                    "sizeperevent": 802.9184
                 },
                 "155": {
                     "filterefficiency": 0.148893383823,

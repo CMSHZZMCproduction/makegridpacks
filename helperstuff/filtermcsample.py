@@ -33,6 +33,7 @@ class GenericFilter(FilterImplementation):
       lines = testjob.split("\n")
       cmsdriverindex = {i for i, line in enumerate(lines) if "cmsDriver.py" in line}
       assert len(cmsdriverindex) == 1, cmsdriverindex
+      cmsdriverindex = cmsdriverindex.pop()
       lines.insert(cmsdriverindex+1, 'sed -i "/Services/aprocess.RandomNumberGeneratorService.externalLHEProducer.initialSeed = {}" *_cfg.py'.format(abs(hash(self))%2147483647 + jobindex))
       with open(self.prepid, "w") as newf:
         newf.write(eval(testjob))
