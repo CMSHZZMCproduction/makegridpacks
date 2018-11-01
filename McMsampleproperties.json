@@ -5838,6 +5838,8 @@
         "ggZH": {
             "4l": {
                 "125": {
+                    "filterefficiency": 0.15126,
+                    "filterefficiencyerror": 0.001133050803803607,
                     "prepid": "HIG-RunIIFall17wmLHEGS-03334"
                 }
             }

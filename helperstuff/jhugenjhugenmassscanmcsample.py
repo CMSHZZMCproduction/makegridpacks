@@ -107,11 +107,16 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     if self.year == 2017: result.append("Fall17P2A")
     return result
 
-
   @property
   def genproductionscommit(self):
     if self.productionmode == "ggZH": return "20ac197949817a9bc02aa346f3fe23d157371b74"
     return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2017 and self.productionmode == "ggZH":
+      return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    return super(JHUGenJHUGenMassScanMCSample, self).genproductionscommitforfragment
  
   @property
   def fragmentname(self):
