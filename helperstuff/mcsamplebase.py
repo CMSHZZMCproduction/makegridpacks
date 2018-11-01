@@ -393,9 +393,15 @@ class MCSampleBase(JsonDict):
         return "found prepid: {}".format(self.prepid)
 
     if self.filterefficiency is None and not self.needsupdate:
+      if setneedsupdate and not self.needsupdate:
+        result = self.setneedsupdate()
+        if result: return result
       return self.findfilterefficiency()
 
     if not (self.sizeperevent and self.timeperevent) and not self.needsupdate:
+      if setneedsupdate and not self.needsupdate:
+        result = self.setneedsupdate()
+        if result: return result
       return self.getsizeandtime()
 
     if jobtype():
