@@ -10,6 +10,9 @@ import subprocess
 from utilities import cdtemp, genproductions
 
 def patchmcfmgridpack(oldfilename, newfilename):
+  oldfilename = os.path.abspath(oldfilename)
+  newfilename = os.path.abspath(newfilename)
+
   with cdtemp():
     subprocess.check_call(["tar", "xvaf", oldfilename])
     with open("runcmsgrid.sh") as f:

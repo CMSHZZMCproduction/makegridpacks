@@ -11,9 +11,10 @@ mv cmsgrid_final.lhe undecayed.lhe
 """
 
 def addJHUGentomadgraph(oldfilename, newfilename, JHUGenversion, decaycard):
+  oldfilename = os.path.abspath(oldfilename)
   newfilename = os.path.abspath(newfilename)
 
-  with cdtemp():
+  with cdtemp() as tmpdir:
     subprocess.check_call(["tar", "xvaf", oldfilename])
 
     if not os.path.exists("original_runcmsgrid.sh"):
@@ -33,8 +34,6 @@ def addJHUGentomadgraph(oldfilename, newfilename, JHUGenversion, decaycard):
       if not sawexit:
         newf.write(JHUGenpart)
     os.chmod("runcmsgrid.sh", os.stat("original_runcmsgrid.sh").st_mode)
-
-    tmpdir = os.getcwd()
 
     with cdtemp():
       subprocess.check_call(["wget", "http://spin.pha.jhu.edu/Generator/JHUGenerator."+JHUGenversion+".tar.gz"])
