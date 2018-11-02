@@ -173,11 +173,13 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
 
   @property
   def patchkwargs(self):
-    return {
+    result = super(MadGraphHJJFromThomasPlusJHUGen, self).patchkwargs
+    result.append({
       "functionname": "addJHUGentomadgraph",
       "JHUGenversion": "v7.1.4",
       "decaycard": self.decaycard,
-    }
+    })
+    return result
 
   @property
   def madgraphcardscript(self):

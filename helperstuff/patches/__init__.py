@@ -1,3 +1,5 @@
+import shutil
+
 from itertools import izip
 
 from addJHUGentomadgraph import addJHUGentomadgraph
@@ -8,6 +10,9 @@ from tweakseed import tweakseed
 
 def multiplepatches(oldfilename, newfilename, listofkwargs):
   cdminus = os.getcwd()
+  if len(listofkwargs) == 0:
+    shutil.copy(oldfilename, newfilename)
+    return
   with cdtemp() as tmpdir, cd(cdminus):
     base, extension = os.path.split(oldfilename)
     oldfilenames = [oldfilename] + [os.path.join(tmpdir, "tmp{}.{}".format(i, extension)) for i in range(1, len(listofkwargs))]
