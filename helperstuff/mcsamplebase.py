@@ -721,7 +721,8 @@ class MCSampleBase(JsonDict):
     if "nthreads" in self.value and value == self.nthreads: return
     with cd(here), self.writingdict():
       self.value["nthreads"] = int(value)
-    del self.timeperevent
+    if self.timeperevent:
+      del self.timeperevent
   @nthreads.deleter
   def nthreads(self):
     with cd(here), self.writingdict():
