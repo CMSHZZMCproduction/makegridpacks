@@ -13,6 +13,7 @@ def jobtype():
   assert False, result
 
 def condorsetup(jobid, flavor, time):
+  global __condor_jobid, __condor_jobtime
   if jobid is flavor is time is None: return
 
   __condor_jobid = jobid
@@ -166,6 +167,7 @@ def submitcondor(flavor):
   with cd(here), NamedTemporaryFile(bufsize=0) as f:
     f.write(condortemplate.format(jobflavor=flavor, here=here))
     subprocess.check_call(["condor_submit", f.name])
+    return True
 
 def __npendingjobs(queue):
   jobtype = JobQueue(queue).jobtype
