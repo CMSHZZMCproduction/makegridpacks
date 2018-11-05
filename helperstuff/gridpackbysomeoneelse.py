@@ -198,7 +198,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
       }[self.__coupling]
       folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/GluGluTo{coupling}HToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8")
       return [
-        os.path.join(folder, "GluGluTo{coupling}HToTauTau_M125_13TeV_amcatnloFXFX_pythia8_extramodels.dat").format(coupling=coupling)
+        os.path.join(folder, "GluGluTo{coupling}HToTauTau_M125_13TeV_amcatnloFXFX_pythia8_extramodels.dat").format(coupling=couplingname)
           for _ in ("param_card", "proc_card", "run_card", "extramodels")
       ]
     if self.year in (2017, 2018):
