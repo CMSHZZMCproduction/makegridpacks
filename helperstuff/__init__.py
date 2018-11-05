@@ -23,8 +23,20 @@ from collections import Counter, defaultdict
 @cache
 def __checkforduplicates():
   bad = set()
-  for k, v in Counter(s.keys for s in allsamples(onlymysamples=False, __docheck=False)).iteritems():
+  identifiers = Counter()
+  prepids = Counter()
+  for s in allsamples(onlymysamples=False, __docheck=False):
+    identifiers[s.keys] += 1
+    prepids[s.prepid] += 1
+
+  for k, v in identifiers.iteritems():
     if v > 1:
       bad.add(", ".join(str(_) for _ in k))
   if bad:
     raise ValueError("Multiple samples with these identifiers:\n" + "\n".join(bad))
+
+  for k, v in prepids.iteritems():
+    if k is not None and v > 1:
+      bad.add("{} ({})".format(k, v))
+  if bad:
+    raise ValueError("Multiple samples with these prepids:\n" + "\n".join(bad))

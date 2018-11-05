@@ -1814,6 +1814,7 @@
                         "filterefficiencyerror": 0,
                         "matchefficiency": 1.0,
                         "matchefficiencyerror": 0.0,
+                        "needspatch": 3,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01148",
                         "sizeperevent": 1030,
@@ -1822,6 +1823,7 @@
                     "TuneUp": {
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
+                        "needspatch": 3,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01147",
                         "sizeperevent": 976.7936000000001,
@@ -1836,6 +1838,14 @@
                 },
                 "300": {
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needspatch": 2,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03370",
+                            "sizeperevent": 976,
+                            "timeperevent": 77.82101167315174
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1850,6 +1860,7 @@
                         "filterefficiencyerror": 0,
                         "matchefficiency": 1.0,
                         "matchefficiencyerror": 0.0,
+                        "needspatch": 2,
                         "nthreads": 2,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01144",
                         "sizeperevent": 1001.5543652173914,
@@ -1857,6 +1868,7 @@
                     },
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0,
+                    "needspatch": 2,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall17wmLHEGS-01146",
                     "sizeperevent": 629.6656842105263,
@@ -2950,6 +2962,13 @@
                         "timeperevent": 94.71490812653911
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03364",
+                            "sizeperevent": 1039,
+                            "timeperevent": 8.49542606260789
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2958,6 +2977,13 @@
                         "timeperevent": 67.96340850086312
                     },
                     "TuneUp": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03359",
+                            "sizeperevent": 936,
+                            "timeperevent": 6.99261579771761
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3481,6 +3507,13 @@
                         "timeperevent": 87.76009899339167
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03367",
+                            "sizeperevent": 980,
+                            "timeperevent": 10.487808970852281
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3489,6 +3522,13 @@
                         "timeperevent": 83.90247176681825
                     },
                     "TuneUp": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03361",
+                            "sizeperevent": 1045,
+                            "timeperevent": 11.496261415787586
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3831,6 +3871,13 @@
                         "timeperevent": 77.99642776360842
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03366",
+                            "sizeperevent": 1083,
+                            "timeperevent": 13.432584010066916
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3839,6 +3886,13 @@
                         "timeperevent": 107.46067208053533
                     },
                     "TuneUp": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03360",
+                            "sizeperevent": 1079,
+                            "timeperevent": 10.936228663417879
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -4291,6 +4345,13 @@
                         "timeperevent": 22.454305927028894
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 0.14835550966597078,
+                            "filterefficiencyerror": 0.00018236587065478363,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03365",
+                            "sizeperevent": 852.5789866666667,
+                            "timeperevent": 5.979201594852985
+                        },
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
                         "prepid": "HIG-RunIIFall17wmLHEGS-00510",
@@ -5505,6 +5566,13 @@
                         "timeperevent": 31.366152784530215
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03363",
+                            "sizeperevent": 930,
+                            "timeperevent": 5.110635027065923
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -5513,6 +5581,13 @@
                         "timeperevent": 40.885080216527385
                     },
                     "TuneUp": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03357",
+                            "sizeperevent": 923,
+                            "timeperevent": 5.039692619067777
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -6044,6 +6119,13 @@
                         "timeperevent": 52.769334684228305
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 0.15411950306736202,
+                            "filterefficiencyerror": 0.0003805893835507585,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03368",
+                            "sizeperevent": 1218,
+                            "timeperevent": 11.421574898119552
+                        },
                         "filterefficiency": 0.15411950306736202,
                         "filterefficiencyerror": 0.0003805893835507585,
                         "finished": true,
@@ -6052,6 +6134,13 @@
                         "timeperevent": 91.37259918495641
                     },
                     "TuneUp": {
+                        "Redo": {
+                            "filterefficiency": 0.15411950306736202,
+                            "filterefficiencyerror": 0.0003805893835507585,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03362",
+                            "sizeperevent": 1645,
+                            "timeperevent": 9.716511072936019
+                        },
                         "filterefficiency": 0.15411950306736202,
                         "filterefficiencyerror": 0.0003805893835507585,
                         "finished": true,

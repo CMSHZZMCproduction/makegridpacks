@@ -820,7 +820,7 @@ class MCSampleBase(JsonDict):
     if not prepids:
       return None
     if len(prepids) != 1:
-      raise RuntimeError("Multiple prepids for {} ({})".format(self, self.datasetname, query))
+      raise RuntimeError("Multiple prepids for {} ({} ext {})\n{}".format(self, self.datasetname, self.extensionnumber, query))
     assert len(prepids) == 1, prepids
     self.prepid = prepids.pop()
 

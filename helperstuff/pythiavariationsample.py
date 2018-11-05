@@ -216,11 +216,26 @@ class RedoSample(RedoSampleBase):
     yield cls(QQZZMCSample(2018, "4l"), reason="because it was prematurely force completed")
     yield cls(QQZZMCSample(2018, "2l2nu"), reason="because it was prematurely force completed")
 
+    for systematic in "TuneUp", "TuneDown":
+      for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
+        if productionmode == "ZH" and systematic == "TuneUp": continue
+        yield cls(PythiaVariationSample(POWHEGJHUGenMassScanMCSample(2017, productionmode, "4l", 125), systematic), reason="wrong tune variation settings\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5361/1/1/1/2/1/1/1/2/1.html")
+      for mass in 125, 300:
+        if mass == 125 or systematic == "TuneUp": continue
+        yield cls(PythiaVariationSample(MINLOMCSample(2017, "4l", mass), systematic), reason="wrong tune variation settings\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5361/1/1/1/2/1/1/1/2/1.html")
+    
   variationname = "Redo"
 
   @property
   def responsible(self):
     return self.mainsample.responsible
+
+  @property
+  def tarballversion(self):
+    result = super(RedoSample, self).tarballversion
+    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-01145": result += 1  #parallelize the gridpack
+    return result
+
 
 class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
   variationname = "RunIIFall17DRPremix_nonsubmitted"
@@ -296,6 +311,8 @@ class PythiaVariationSample(VariationSample):
   def tarballversion(self):
     result = super(PythiaVariationSample, self).tarballversion
     if self.prepid == "HIG-RunIIFall17wmLHEGS-00509": result += 1
+    if self.prepid == "HIG-RunIIFall17wmLHEGS-01145": result -= 1  #this one finished, the main one was reset
+    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00917": result += 1
     return result
   @property
   def nevents(self):
@@ -329,7 +346,9 @@ class PythiaVariationSample(VariationSample):
     return result
   @property
   def genproductionscommit(self):
-    return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    if self.year == 2017: return "49196efff87a61016833754619a299772ba3c33d"
+    if self.year == 2018: return "2b8965cf8a27822882b5acdcd39282361bf07961"
+    assert False, self
   @property
   def extensionnumber(self):
     result = super(PythiaVariationSample, self).extensionnumber
