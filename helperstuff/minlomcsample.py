@@ -80,7 +80,14 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
     if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove ALL pdfs
     if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
     if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
+    if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize
     return v
+
+  @property
+  def patchkwargs(self):
+    result = super(MINLOMCSample, self).patchkwargs
+    result.append({"functionname": "parallelizepowheg"})
+    return result
 
   def cvmfstarball_anyversion(self, version):
     if self.energy == 13: year = "2017"

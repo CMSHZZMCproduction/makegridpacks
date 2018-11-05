@@ -95,7 +95,7 @@ class MCSampleBase(JsonDict):
   @abc.abstractproperty
   def responsible(self): "put the lxplus username of whoever makes these gridpacks"
   @property
-  def patchkwargs(self): return None
+  def patchkwargs(self): return []
   @property
   def doublevalidationtime(self): return False
   @property
@@ -192,6 +192,8 @@ class MCSampleBase(JsonDict):
       kwargs = json.loads(kwargs.pop())
       if isinstance(kwargs, int):
         kwargs = self.patchkwargs
+        if isinstance(kwargs, list):
+          kwargs = {"functionname": "multiplepatches", "listofkwargs": kwargs}
         kwargs["oldtarballversion"] = self.needspatch
       if "oldfilename" in kwargs or "newfilename" in kwargs or "sample" in kwargs: assert False, kwargs
       kwargs["oldfilename"] = self.cvmfstarball_anyversion(version=kwargs.pop("oldtarballversion"))
@@ -271,6 +273,8 @@ class MCSampleBase(JsonDict):
       mkdir_p(os.path.dirname(self.foreostarball))
       if self.patchkwargs:
         kwargs = self.patchkwargs
+        if isinstance(kwargs, list):
+          kwargs = {"functionname": "multiplepatches", "listofkwargs": kwargs}
         for _ in "oldfilename", "newfilename", "sample": assert _ not in kwargs, _
         with cdtemp():
           kwargs["oldfilename"] = self.tmptarball
@@ -717,7 +721,8 @@ class MCSampleBase(JsonDict):
     if "nthreads" in self.value and value == self.nthreads: return
     with cd(here), self.writingdict():
       self.value["nthreads"] = int(value)
-    del self.timeperevent
+    if self.timeperevent:
+      del self.timeperevent
   @nthreads.deleter
   def nthreads(self):
     with cd(here), self.writingdict():
@@ -815,7 +820,7 @@ class MCSampleBase(JsonDict):
     if not prepids:
       return None
     if len(prepids) != 1:
-      raise RuntimeError("Multiple prepids for {} ({})".format(self, self.datasetname, query))
+      raise RuntimeError("Multiple prepids for {} ({} ext {})\n{}".format(self, self.datasetname, self.extensionnumber, query))
     assert len(prepids) == 1, prepids
     self.prepid = prepids.pop()
 

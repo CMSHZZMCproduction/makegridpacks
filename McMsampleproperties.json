@@ -109,7 +109,20 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
-                        "prepid": "HIG-RunIISummer15wmLHEGS-02221"
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02221",
+                        "resettimeperevent": true
+                    },
+                    "a3": {
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
+                        "resettimeperevent": true
+                    },
+                    "a3mix": {
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
+                        "resettimeperevent": true
                     }
                 }
             }
@@ -1803,16 +1816,16 @@
                         "matchefficiencyerror": 0.0,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01148",
-                        "sizeperevent": 1030,
-                        "timeperevent": 531.0420638418769
+                        "resettimeperevent": true,
+                        "sizeperevent": 1030
                     },
                     "TuneUp": {
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01147",
-                        "sizeperevent": 976.7936000000001,
-                        "timeperevent": 530.9800298410777
+                        "resettimeperevent": true,
+                        "sizeperevent": 976.7936000000001
                     },
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0,
@@ -1823,6 +1836,13 @@
                 },
                 "300": {
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03370",
+                            "resettimeperevent": true,
+                            "sizeperevent": 976
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1839,15 +1859,15 @@
                         "matchefficiencyerror": 0.0,
                         "nthreads": 2,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01144",
-                        "sizeperevent": 1001.5543652173914,
-                        "timeperevent": 745.739960475782
+                        "resettimeperevent": true,
+                        "sizeperevent": 1001.5543652173914
                     },
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall17wmLHEGS-01146",
-                    "sizeperevent": 629.6656842105263,
-                    "timeperevent": 721.9851704245995
+                    "resettimeperevent": true,
+                    "sizeperevent": 629.6656842105263
                 }
             }
         },
@@ -2937,6 +2957,13 @@
                         "timeperevent": 94.71490812653911
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03364",
+                            "sizeperevent": 1039,
+                            "timeperevent": 8.49542606260789
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2945,6 +2972,13 @@
                         "timeperevent": 67.96340850086312
                     },
                     "TuneUp": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03359",
+                            "sizeperevent": 936,
+                            "timeperevent": 6.99261579771761
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3468,6 +3502,13 @@
                         "timeperevent": 87.76009899339167
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03367",
+                            "sizeperevent": 980,
+                            "timeperevent": 10.487808970852281
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3476,6 +3517,13 @@
                         "timeperevent": 83.90247176681825
                     },
                     "TuneUp": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03361",
+                            "sizeperevent": 1045,
+                            "timeperevent": 11.496261415787586
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3818,6 +3866,13 @@
                         "timeperevent": 77.99642776360842
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03366",
+                            "sizeperevent": 1083,
+                            "timeperevent": 13.432584010066916
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3826,6 +3881,13 @@
                         "timeperevent": 107.46067208053533
                     },
                     "TuneUp": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03360",
+                            "sizeperevent": 1079,
+                            "timeperevent": 10.936228663417879
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -4122,6 +4184,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03288",
                         "resettimeperevent": true,
                         "sizeperevent": 934.309888
@@ -4145,6 +4209,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03265",
                         "resettimeperevent": true,
                         "sizeperevent": 702.5703384615384
@@ -4160,6 +4226,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03266",
                         "resettimeperevent": true,
                         "sizeperevent": 694.730752
@@ -4239,6 +4307,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03295",
                         "resettimeperevent": true,
                         "sizeperevent": 880.9553920000001
@@ -4270,6 +4340,13 @@
                         "timeperevent": 22.454305927028894
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 0.14835550966597078,
+                            "filterefficiencyerror": 0.00018236587065478363,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03365",
+                            "sizeperevent": 852.5789866666667,
+                            "timeperevent": 5.979201594852985
+                        },
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
                         "prepid": "HIG-RunIIFall17wmLHEGS-00510",
@@ -4280,6 +4357,8 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "filterefficiency": 0.14835550966597078,
                             "filterefficiencyerror": 0.00018236587065478363,
+                            "needsupdateiffailed": true,
+                            "nthreads": 8,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03294",
                             "resettimeperevent": true,
                             "sizeperevent": 1223.3045333333332
@@ -4287,6 +4366,8 @@
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
                         "needsupdate": true,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-00509",
                         "resettimeperevent": true,
                         "sizeperevent": 1223.3045333333332
@@ -4365,6 +4446,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03267",
                         "resettimeperevent": true,
                         "sizeperevent": 827.0222222222222
@@ -4380,6 +4463,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03268",
                         "resettimeperevent": true,
                         "sizeperevent": 712.0509155555555
@@ -4395,6 +4480,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03269",
                         "resettimeperevent": true,
                         "sizeperevent": 799.9881846153846
@@ -4410,6 +4497,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03270",
                         "resettimeperevent": true,
                         "sizeperevent": 678.3751314285715
@@ -4425,6 +4514,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03271",
                         "resettimeperevent": true,
                         "sizeperevent": 735.0180977777777
@@ -4440,6 +4531,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03272",
                         "resettimeperevent": true,
                         "sizeperevent": 743.14112
@@ -4463,6 +4556,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03273",
                         "resettimeperevent": true,
                         "sizeperevent": 594.0189866666666
@@ -4478,6 +4573,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03274",
                         "resettimeperevent": true,
                         "sizeperevent": 983.7055999999999
@@ -4509,6 +4606,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03275",
                         "resettimeperevent": true,
                         "sizeperevent": 653.08032
@@ -4524,6 +4623,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03276",
                         "resettimeperevent": true,
                         "sizeperevent": 855.246848
@@ -4539,6 +4640,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03277",
                         "resettimeperevent": true,
                         "sizeperevent": 598.636544
@@ -4554,6 +4657,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03278",
                         "resettimeperevent": true,
                         "sizeperevent": 813.4781155555555
@@ -4569,6 +4674,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03289",
                         "resettimeperevent": true,
                         "sizeperevent": 906.6888533333334
@@ -4584,6 +4691,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03279",
                         "resettimeperevent": true,
                         "sizeperevent": 1013.56288
@@ -4607,6 +4716,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03280",
                         "resettimeperevent": true,
                         "sizeperevent": 1040.66304
@@ -4622,6 +4733,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03290",
                         "resettimeperevent": true,
                         "sizeperevent": 1081.58464
@@ -4637,6 +4750,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03281",
                         "resettimeperevent": true,
                         "sizeperevent": 770.50368
@@ -4652,6 +4767,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03282",
                         "resettimeperevent": true,
                         "sizeperevent": 929.0212072727273
@@ -4667,10 +4784,11 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
-                        "nthreads": 1,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03291",
-                        "sizeperevent": 893.1583999999999,
-                        "timeperevent": 134.46155542438083
+                        "resettimeperevent": true,
+                        "sizeperevent": 893.1583999999999
                     },
                     "filterefficiency": 0.14835550966597078,
                     "filterefficiencyerror": 0.00018236587065478363,
@@ -4691,10 +4809,11 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
-                        "nthreads": 1,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03283",
-                        "sizeperevent": 698.6043076923077,
-                        "timeperevent": 134.33403231808148
+                        "resettimeperevent": true,
+                        "sizeperevent": 698.6043076923077
                     },
                     "filterefficiency": 0.14835550966597078,
                     "filterefficiencyerror": 0.00018236587065478363,
@@ -4707,6 +4826,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03284",
                         "resettimeperevent": true,
                         "sizeperevent": 881.4614755555556
@@ -4730,6 +4851,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03285",
                         "resettimeperevent": true,
                         "sizeperevent": 1124.1130666666666
@@ -4745,6 +4868,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03286",
                         "resettimeperevent": true,
                         "sizeperevent": 843.10016
@@ -4760,6 +4885,8 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needsupdateiffailed": true,
+                        "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03287",
                         "resettimeperevent": true,
                         "sizeperevent": 997.43232
@@ -5434,6 +5561,13 @@
                         "timeperevent": 31.366152784530215
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03363",
+                            "sizeperevent": 930,
+                            "timeperevent": 5.110635027065923
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -5442,6 +5576,13 @@
                         "timeperevent": 40.885080216527385
                     },
                     "TuneUp": {
+                        "Redo": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03357",
+                            "sizeperevent": 923,
+                            "timeperevent": 5.039692619067777
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -5975,6 +6116,13 @@
                         "timeperevent": 52.769334684228305
                     },
                     "TuneDown": {
+                        "Redo": {
+                            "filterefficiency": 0.15411950306736202,
+                            "filterefficiencyerror": 0.0003805893835507585,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03368",
+                            "sizeperevent": 1218,
+                            "timeperevent": 11.421574898119552
+                        },
                         "filterefficiency": 0.15411950306736202,
                         "filterefficiencyerror": 0.0003805893835507585,
                         "finished": true,
@@ -5983,6 +6131,13 @@
                         "timeperevent": 91.37259918495641
                     },
                     "TuneUp": {
+                        "Redo": {
+                            "filterefficiency": 0.15411950306736202,
+                            "filterefficiencyerror": 0.0003805893835507585,
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03362",
+                            "sizeperevent": 1645,
+                            "timeperevent": 9.716511072936019
+                        },
                         "filterefficiency": 0.15411950306736202,
                         "filterefficiencyerror": 0.0003805893835507585,
                         "finished": true,
@@ -7570,7 +7725,8 @@
                 "125": {
                     "filterefficiency": 0.27155,
                     "filterefficiencyerror": 0.001406451554444731,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00293",
                     "resettimeperevent": true,
                     "sizeperevent": 721.4302608695652
@@ -7588,7 +7744,8 @@
                 "115": {
                     "filterefficiency": 0.151500269022,
                     "filterefficiencyerror": 0.000317064542205,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00255",
                     "resettimeperevent": true,
                     "sizeperevent": 667.50976
@@ -7596,7 +7753,8 @@
                 "120": {
                     "filterefficiency": 0.150882730885,
                     "filterefficiencyerror": 0.000316547042032,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00256",
                     "resettimeperevent": true,
                     "sizeperevent": 644.52608
@@ -7677,7 +7835,8 @@
                     },
                     "filterefficiency": 0.150301533517,
                     "filterefficiencyerror": 0.000198361407366,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00258",
                     "resettimeperevent": true,
                     "sizeperevent": 910.2392888888888
@@ -7685,7 +7844,8 @@
                 "126": {
                     "filterefficiency": 0.149949160647,
                     "filterefficiencyerror": 0.000195846329258,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00259",
                     "resettimeperevent": true,
                     "sizeperevent": 795.66848
@@ -7693,7 +7853,8 @@
                 "130": {
                     "filterefficiency": 0.149730397214,
                     "filterefficiencyerror": 0.000313067204368,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00260",
                     "resettimeperevent": true,
                     "sizeperevent": 780.4671999999999
@@ -7701,7 +7862,8 @@
                 "135": {
                     "filterefficiency": 0.149101620862,
                     "filterefficiencyerror": 0.000307244711546,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00261",
                     "resettimeperevent": true,
                     "sizeperevent": 782.848
@@ -7709,7 +7871,8 @@
                 "140": {
                     "filterefficiency": 0.148835749184,
                     "filterefficiencyerror": 0.000314138563982,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00262",
                     "resettimeperevent": true,
                     "sizeperevent": 629.32928
@@ -7717,7 +7880,8 @@
                 "145": {
                     "filterefficiency": 0.149343603958,
                     "filterefficiencyerror": 0.000313105598547,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00263",
                     "resettimeperevent": true,
                     "sizeperevent": 794.2204235294117
@@ -7725,7 +7889,8 @@
                 "150": {
                     "filterefficiency": 0.148952618917,
                     "filterefficiencyerror": 0.000313051550898,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00264",
                     "resettimeperevent": true,
                     "sizeperevent": 692.8896
@@ -7733,7 +7898,8 @@
                 "1500": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00289",
                     "resettimeperevent": true,
                     "sizeperevent": 802.9184
@@ -7741,7 +7907,8 @@
                 "155": {
                     "filterefficiency": 0.148893383823,
                     "filterefficiencyerror": 0.000305192270228,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00265",
                     "resettimeperevent": true,
                     "sizeperevent": 741.7344
@@ -7749,7 +7916,8 @@
                 "160": {
                     "filterefficiency": 0.148609068856,
                     "filterefficiencyerror": 0.000307309106588,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00266",
                     "resettimeperevent": true,
                     "sizeperevent": 659.200930909091
@@ -7757,7 +7925,8 @@
                 "165": {
                     "filterefficiency": 0.14874807231,
                     "filterefficiencyerror": 0.000311224104232,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00267",
                     "resettimeperevent": true,
                     "sizeperevent": 791.7977599999999
@@ -7765,7 +7934,8 @@
                 "170": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00268",
                     "resettimeperevent": true,
                     "sizeperevent": 761
@@ -7773,7 +7943,8 @@
                 "175": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00269",
                     "resettimeperevent": true,
                     "sizeperevent": 739.7171199999999
@@ -7805,7 +7976,8 @@
                 "2000": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00290",
                     "resettimeperevent": true,
                     "sizeperevent": 956.8449422222222
@@ -7813,7 +7985,8 @@
                 "210": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00273",
                     "resettimeperevent": true,
                     "sizeperevent": 815.75936
@@ -7821,7 +7994,8 @@
                 "230": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00274",
                     "resettimeperevent": true,
                     "sizeperevent": 820.5390769230769
@@ -7829,7 +8003,8 @@
                 "250": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00275",
                     "resettimeperevent": true,
                     "sizeperevent": 774.5243428571429
@@ -7837,7 +8012,8 @@
                 "2500": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00291",
                     "resettimeperevent": true,
                     "sizeperevent": 926.2867692307692
@@ -7845,7 +8021,8 @@
                 "270": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00276",
                     "resettimeperevent": true,
                     "sizeperevent": 663.9555764705883
@@ -7853,7 +8030,8 @@
                 "300": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00277",
                     "resettimeperevent": true,
                     "sizeperevent": 902
@@ -7861,15 +8039,17 @@
                 "3000": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00292",
-                    "sizeperevent": 918.6176,
-                    "timeperevent": 249.42943017846673
+                    "resettimeperevent": true,
+                    "sizeperevent": 918.6176
                 },
                 "350": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00278",
                     "resettimeperevent": true,
                     "sizeperevent": 745.1904
@@ -7877,10 +8057,11 @@
                 "400": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00279",
-                    "sizeperevent": 777.1004717948717,
-                    "timeperevent": 242.8410459649532
+                    "resettimeperevent": true,
+                    "sizeperevent": 777.1004717948717
                 },
                 "450": {
                     "filterefficiency": 0.148699054776,
@@ -7893,7 +8074,8 @@
                 "500": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00281",
                     "resettimeperevent": true,
                     "sizeperevent": 770.1935157894736
@@ -7901,7 +8083,8 @@
                 "550": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00282",
                     "resettimeperevent": true,
                     "sizeperevent": 794.9705846153846
@@ -7909,7 +8092,8 @@
                 "600": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00283",
                     "resettimeperevent": true,
                     "sizeperevent": 718.2677333333334
@@ -7917,7 +8101,8 @@
                 "700": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00284",
                     "resettimeperevent": true,
                     "sizeperevent": 877.5740235294118
@@ -7925,7 +8110,8 @@
                 "750": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00285",
                     "resettimeperevent": true,
                     "sizeperevent": 763.2737745454546
@@ -7933,7 +8119,8 @@
                 "800": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00286",
                     "resettimeperevent": true,
                     "sizeperevent": 724.8704
@@ -7941,7 +8128,8 @@
                 "900": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
-                    "nthreads": 1,
+                    "needsupdateiffailed": true,
+                    "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00287",
                     "resettimeperevent": true,
                     "sizeperevent": 785.0211555555557

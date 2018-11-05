@@ -39,8 +39,10 @@ class POWHEGMCSample(MCSampleBase):
     return None
   @property
   def patchkwargs(self):
-    if self.pwgrwlfilter: return {"functionname": "prunepwgrwl", "filter": self.pwgrwlfilter}
-    return super(POWHEGMCSample, self).patchkwargs
+    result = super(POWHEGMCSample, self).patchkwargs
+    if self.pwgrwlfilter:
+      result.append({"functionname": "prunepwgrwl", "filter": self.pwgrwlfilter})
+    return result
   @property
   def makegridpackcommand(self):
     args = {

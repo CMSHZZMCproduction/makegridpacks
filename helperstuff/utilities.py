@@ -58,7 +58,7 @@ def cdtemp(**kwargs):
   tmpdir = mkdtemp(**kwargs)
   try:
     with cd(tmpdir):
-      yield
+      yield tmpdir
   finally:
     if deleteafter:
       shutil.rmtree(tmpdir)

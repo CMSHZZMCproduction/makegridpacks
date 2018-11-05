@@ -42,6 +42,12 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   def powhegcardusesscript(self): return True
 
   @property
+  def patchkwargs(self):
+    result = super(POWHEGJHUGenMassScanMCSample, self).patchkwargs
+    if self.productionmode == "ZH":
+      result.append({"functionname": "parallelizepowheg"})
+    return result
+  @property
   def pwgrwlfilter(self):
     if self.productionmode == "ZH":
       def filter(weight):
@@ -100,6 +106,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
       if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (115, 120, 125, 126, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 210, 230, 250, 270, 300, 350, 400, 500, 550, 600, 700, 750, 800, 900, 1500, 2000, 2500, 3000): v+=1  #trying multicore
       if self.productionmode == "ZH" and self.decaymode == "2l2q" and self.mass == 125: v+=1  #same
       if self.productionmode == "ttH" and self.decaymode == "4l" and self.mass == 140: v+=1  #tweak seed to avoid fluctuation in filter efficiency
+      if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (400, 3000): v+=1 #trying multicore in runcmsgrid.sh, copied the previous one too early
     return v
 
   def cvmfstarball_anyversion(self, version):
