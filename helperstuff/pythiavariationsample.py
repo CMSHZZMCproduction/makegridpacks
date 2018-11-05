@@ -40,25 +40,6 @@ class VariationSample(MCSampleBase):
   @property
   def patchkwargs(self):
     return self.mainsample.patchkwargs
-  def patchtarball(self):
-    samples = (
-      [self.mainmainsample] +
-      [s for s in self.allsamples() if s.mainmainsample == self.mainmainsample]
-    )
-
-    needspatchparameters = {
-      _.needspatch for _ in samples if _.needspatch
-    }
-    assert len(needspatchparameters) == 1
-    self.mainmainsample.needspatch = self.needspatch
-    result = self.mainmainsample.patchtarball()
-    if result == "tarball is patched and the new version is in this directory to be copied to eos":
-      for _ in samples: _.needspatch = False
-      return result
-    elif result == "job to patch the tarball is already running" or result is None:
-      return result
-    else:
-      raise ValueError("Unknown result from patchtarball:\n{}".format(result))
   @property
   def makinggridpacksubmitsjob(self):
     return self.mainsample.makinggridpacksubmitsjob
