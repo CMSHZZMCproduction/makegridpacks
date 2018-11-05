@@ -29,7 +29,11 @@ class GenericFilter(FilterImplementation):
     with cdtemp():
       wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
       with open(self.prepid) as f:
-        testjob = eval(f.read())
+        testjob = f.read()
+        try:
+          testjob = eval(testjob)  #sometimes it's a string within a string
+        except SyntaxError:
+          pass                     #sometimes it's not
       lines = testjob.split("\n")
       cmsdriverindex = {i for i, line in enumerate(lines) if "cmsDriver.py" in line}
       assert len(cmsdriverindex) == 1, cmsdriverindex

@@ -9,9 +9,12 @@ set -euo pipefail
 (eval $(scram ru -sh); echo $CMSSW_BASE) || (echo "run this inside a CMSSW release (but don't cmsenv)"; exit 1)
 
 for i in {1..192}; do (
+  echo -n "it's currently "; date
   source /afs/cern.ch/cms/PPD/PdmV/tools/McM/getCookie.sh
   eval $(scram ru -sh)
   ./makegridpacks.py "$@"
+  echo -n "it's currently "; date
+  echo "will run again in 15 minutes"
 ) || true
 sleep 15m || true
 done

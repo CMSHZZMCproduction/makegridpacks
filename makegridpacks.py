@@ -10,8 +10,9 @@ if __name__ == "__main__":
   g.add_argument("--dontsuppressfinished", action="store_const", dest="suppressfinished", const=lambda x: False)
   parser.add_argument("--cprofile", action="store_true")
   parser.add_argument("--setneedsupdate", action="store_true")
-  parser.add_argument("--jobid")
-  parser.add_argument("--jobflavor")
+  parser.add_argument("--condorjobid")
+  parser.add_argument("--condorjobflavor")
+  parser.add_argument("--condorjobtime")
   args = parser.parse_args()
 
 from helperstuff import allsamples
@@ -19,6 +20,9 @@ from helperstuff.cleanupgridpacks import cleanupgridpacks
 from helperstuff.queues import ApprovalQueue, BadRequestQueue, CloneQueue
 
 def makegridpacks(args):
+  from helperstuff.jobsubmission import condorsetup
+  condorsetup(args.condorjobid, args.condorjobflavor, args.condorjobtime)
+
   with ApprovalQueue() as approvalqueue, BadRequestQueue() as badrequestqueue, CloneQueue() as clonequeue:
     for sample in allsamples(filter=args.filter):
       if args.suppressfinished(sample) and sample.finished: continue
