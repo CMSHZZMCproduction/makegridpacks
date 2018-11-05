@@ -215,6 +215,7 @@ class RedoSample(RedoSampleBase):
   def tarballversion(self):
     result = super(RedoSample, self).tarballversion
     if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-01145": result += 1  #parallelize the gridpack
+    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00510": result += 1  #parallelize the gridpack
     return result
 
 
