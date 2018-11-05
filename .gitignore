@@ -2,6 +2,7 @@
 LSFJOB
 STDOUT
 McMsampleproperties.json.tmp
+AAAA
 *.tgz
 *.tar.gz
 *.txz

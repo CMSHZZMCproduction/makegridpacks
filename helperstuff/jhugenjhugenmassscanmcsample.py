@@ -73,7 +73,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   @property
   def datasetname(self):
     if self.productionmode == "ggZH" and self.decaymode == "4l" and self.mass == 125:
-      return "GluGluToZH_HToZZTo4L_M125_13TeV_powheg2_JHUGenV723_pythia8"
+      return "GluGluToZH_HToZZTo4L_M125_13TeV_JHUGenV723_pythia8"
     if self.decaymode == "2l2nu":
       result = type(self)(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Nu")
     elif self.decaymode == "2l2q":
@@ -144,7 +144,8 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     for productionmode in "bbH", "tqH", "ggZH":
       for decaymode in "4l", "2l2q", "2l2nu":
         for mass in cls.getmasses(productionmode, decaymode):
-          yield cls(2017, productionmode, decaymode, mass)
+          for year in 2017, 2018:
+            yield cls(year, productionmode, decaymode, mass)
 
   @property
   def responsible(self):
