@@ -8719,6 +8719,15 @@
                 }
             }
         },
+        "ggZH": {
+            "4l": {
+                "125": {
+                    "filterefficiency": 0.1505,
+                    "filterefficiencyerror": 0.0011307066374617247,
+                    "prepid": "HIG-RunIIFall18wmLHEGS-00447"
+                }
+            }
+        },
         "qqZZ": {
             "2l2nu": {
                 "Redo": {
