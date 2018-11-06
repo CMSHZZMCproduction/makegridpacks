@@ -1077,6 +1077,7 @@ class MCSampleBase(JsonDict):
           if line.strip() == "*                   'JetMatching:nJetMax' is set correctly as number of partons": continue
           if line.strip() == "*                              in born matrix element for highest multiplicity.": continue
           if line.strip() == "*                as number of partons in born matrix element for highest multiplicity.": continue
+          if line.strip() == "*           correctly as number of partons in born matrix element for highest multiplicity.": continue
           return "Unknown line in request_fragment_check output!\n"+line
 
   @property

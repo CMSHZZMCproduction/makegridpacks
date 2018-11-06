@@ -10,7 +10,7 @@ class MadGraphFXFXMCSample(MadGraphMCSample):
   def nmaxjets(self):
     pass
   def handle_request_fragment_check_warning(self, line):
-    if line.strip() == "* [WARNING] This is a FxFx sample. Please check 'JetMatching:nJetMax' is set correctly":
+    if line.strip() == "* [Caution: To check manunally] This is a FxFx sample. Please check 'JetMatching:nJetMax' is set":
       print "nmaxjets is", self.nmaxjets
       return "ok"
     return super(MadgraphFXFXMCSample, self).handle_request_fragment_check_warning(line)
