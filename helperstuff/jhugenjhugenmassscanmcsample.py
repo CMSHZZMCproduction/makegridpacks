@@ -173,8 +173,8 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
         for decaymode in "4l", "2l2q", "2l2nu":
           for mass in cls.getmasses(productionmode, decaymode):
             yield cls(year, productionmode, decaymode, mass)
-    if year == 2016:
-      for productionmode == "ggZH":
+    for year in 2016,:
+      for productionmode in "ggZH",:
         for decaymode in "4l", "2l2q", "2l2nu":
           for mass in cls.getmasses(productionmode, decaymode):
             yield cls(year, productionmode, decaymode, mass)

@@ -109,7 +109,11 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
-                        "prepid": "HIG-RunIISummer15wmLHEGS-02221"
+                        "filterefficiency": 0.33677083333333335,
+                        "filterefficiencyerror": 0.00482351271496054,
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02221",
+                        "sizeperevent": 764.5169746984226,
+                        "timeperevent": 12.277332635323228
                     },
                     "a3": {
                         "prepid": "HIG-RunIISummer15wmLHEGS-02223"
