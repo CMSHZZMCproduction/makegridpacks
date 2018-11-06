@@ -323,8 +323,3 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if self.productionmode in ("WplusH", "WminusH"): return 210
     return 165
     return super(POWHEGJHUGenMassScanMCSample, self).maxallowedtimeperevent
-
-  @property
-  def dovalidation(self):
-    if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (400, 3000): return False
-    return super(POWHEGJHUGenMassScanMCSample, self).dovalidation
