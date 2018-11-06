@@ -8,12 +8,18 @@ from jhugenjhugenmcsample import JHUGenJHUGenMCSample
 class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   @property
   def productioncard(self):
-    folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "2017", "13TeV", self.productionmode+"_NNPDF31_13TeV")
+    if self.year in (2017, 2018):
+      yearfolder = "2017"
+      pdf = "NNPDF31"
+    elif self.year == 2016:
+      yearfolder = "pre2017"
+      pdf = "NNPDF30"
+    folder = os.path.join(genproductions, "bin", "JHUGen", "cards", yearfolder, "13TeV", self.productionmode+"_"+pdf+"_13TeV")
     if os.path.exists(os.path.join(folder, "makecards.py")):
       makecards(folder)
 
     cardbase = self.productionmode
-    card = os.path.join(folder, cardbase+"_NNPDF31_13TeV_M{:d}.input".format(self.mass))
+    card = os.path.join(folder, cardbase+"_"+pdf+"_13TeV_M{:d}.input".format(self.mass))
 
     if not os.path.exists(card):
       raise IOError(card+" does not exist")
@@ -45,13 +51,24 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     return v
 
   def cvmfstarball_anyversion(self, version):
-    folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V7011", self.productionmode+"_ZZ_NNPDF31_13TeV")
+    if self.year in (2017, 2018):
+      yearfolder = "2017"
+      pdf = "NNPDF31"
+      filename_ = yearfolder+"/13TeV/jhugen/V7011"
+      ##folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V7011", self.productionmode+"_ZZ_NNPDF31_13TeV")
+    elif self.year == 2016:
+      yearfolder = "pre2017"
+      pdf = "NNPDF30"
+      filename_ = "slc6_amd64_gcc481"+"/13TeV/jhugen/V7011"
+    folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks", filename_, self.productionmode+"_ZZ_"+pdf+"_13TeV")
+    ##folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks", yearfolder, "13TeV/jhugen/V7011", self.productionmode+"_ZZ_"+pdf+"_13TeV")
     tarballname = os.path.basename(self.productioncard).replace(".input", ".tgz")
     decaymode = self.decaymode
     if "ZZ2l2any_withtaus.input" in self.decaycard: decaymode == "2l2X"
     elif "ZZany_filter2lOSSF.input" in self.decaycard: decaymode = "_filter2l"
     elif "ZZ2l2any_withtaus_filter4l.input" in self.decaycard: decaymode = "2l2X_filter4l"
-    tarballname = tarballname.replace("NNPDF31", "ZZ"+self.decaymode+"_NNPDF31")
+    ##tarballname = tarballname.replace("NNPDF31", "ZZ"+self.decaymode+"_NNPDF31")
+    tarballname = tarballname.replace(pdf, "ZZ"+self.decaymode+"_"+pdf)
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
   @property
@@ -114,8 +131,13 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
   @property
   def genproductionscommitforfragment(self):
-    if self.year == 2017 and self.productionmode == "ggZH":
-      return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    ##if self.year == 2017 and self.productionmode == "ggZH":
+      ##return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    if self.productionmode == "ggZH":
+      if self.year == 2017:
+        return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+      elif self.year == 2016:
+        return "ef267369910e01ce1eb4f4fabe5b223339829ff5"
     return super(JHUGenJHUGenMassScanMCSample, self).genproductionscommitforfragment
  
   @property
@@ -123,6 +145,8 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     if self.year in (2017, 2018):
       if self.productionmode in ("bbH", "tqH"): return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_LHE_pythia8_cff.py"
       if self.productionmode == "ggZH": return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py"
+    if self.year == 2016:
+      if self.productionmode == "ggZH": return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCUETP8M1_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py"
     ##return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_LHE_pythia8_cff.py"
 
   @classmethod
@@ -144,10 +168,15 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
   @classmethod
   def allsamples(cls):
-    for productionmode in "bbH", "tqH", "ggZH":
-      for decaymode in "4l", "2l2q", "2l2nu":
-        for mass in cls.getmasses(productionmode, decaymode):
-          for year in 2017, 2018:
+    for year in 2017, 2018:
+      for productionmode in "bbH", "tqH", "ggZH":
+        for decaymode in "4l", "2l2q", "2l2nu":
+          for mass in cls.getmasses(productionmode, decaymode):
+            yield cls(year, productionmode, decaymode, mass)
+    if year == 2016:
+      for productionmode == "ggZH":
+        for decaymode in "4l", "2l2q", "2l2nu":
+          for mass in cls.getmasses(productionmode, decaymode):
             yield cls(year, productionmode, decaymode, mass)
 
   @property
@@ -181,6 +210,14 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
       elif self.decaymode == "2l2q":
         if self.productionmode in ("bbH", "tqH", "ggZH"):
           if self.mass == 125: return 500000
+    if self.year == 2016:
+      if self.decaymode == "4l":
+         if self.productionmode == "ggZH":
+           if self.mass == 125: return 1000000
+      elif self.decaymode == "2l2q":
+        if self.productionmode == "ggZH":
+          if self.mass == 125: return 500000
+
 
     raise ValueError("No nevents for {}".format(self))
 
@@ -188,6 +225,8 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   def JHUGenversion(self):
     if self.year in (2017, 2018):
       if self.productionmode in ("bbH", "tqH"): return "v7.0.11"
+      if self.productionmode == "ggZH": return "v7.2.3"
+    if self.year == 2016:
       if self.productionmode == "ggZH": return "v7.2.3"
  
   @property
