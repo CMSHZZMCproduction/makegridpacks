@@ -159,6 +159,24 @@ periodic_remove         = JobStatus == 5
 queue
 """
 
+condortemplate_sizeperevent = """
+executable            = {self.workdir}/{self.prepid}
+output                = {self.workdir}/$(ClusterId).$(ProcId).out
+error                 = {self.workdir}/$(ClusterId).$(ProcId).err
+log                   = {self.workdir}/$(ClusterId).log
+
+request_memory        = 4000M
+request_cpus          = {self.nthreads}
++JobFlavour           = "{self.timepereventflavor}"
+
+#https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
+periodic_remove       = JobStatus == 5
+
+transfer_output_files = {self.prepid}_rt.xml
+
+queue
+"""
+
 def submitcondor(flavor):
   flavor = JobQueue(flavor).condorflavor
   if __pendingjobsdct[flavor] > 0:

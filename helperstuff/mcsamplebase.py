@@ -1,4 +1,4 @@
-import abc, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess
+import abc, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess, tempfile
 
 import uncertainties
 
@@ -6,7 +6,7 @@ from McMScripts.manageRequests import createLHEProducer
 
 import patches
 
-from jobsubmission import jobtype, queuematches, submitLSF
+from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitLSF
 from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, wget
 
 class MCSampleBase(JsonDict):
@@ -106,6 +106,8 @@ class MCSampleBase(JsonDict):
   def creategridpackqueue(self): return "1nd"
   @property
   def timepereventqueue(self): return "1nd"
+  @property
+  def timepereventflavor(self): return JobQueue(self.timepereventqueue).condorflavor
   @property
   def filterefficiencyqueue(self): return "1nd"
   @property
@@ -327,6 +329,64 @@ class MCSampleBase(JsonDict):
 
   implementsfilter = False
 
+  def getsizeandtimecondor(self):
+    mkdir_p(self.workdir)
+    xmlfile = self.prepid+"_rt.xml"
+    with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), deleteifjobdied=True) as kwof:
+      if not kwof: return "job to get the size and time is already running"
+      with cd(self.workdir):
+        if not os.path.exists(xmlfile) or os.stat(xmlfile).st_size == 0:
+          for jobfile in glob.glob("*.log"):
+            with open(jobfile) as f:
+              for line in f:
+                if line.startswith("004") or line.startswith("005") or line.startswith("009"): break
+              else:
+                return "job {} to get the size and time is already running".format(jobfile.replace(".log", ""))
+          wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
+          with open(self.prepid) as f:
+            testjob = f.read()
+            try:
+              testjob = eval(testjob)  #sometimes it's a string
+            except SyntaxError:
+              pass                     #sometimes it's not
+          with open(self.prepid, "w") as newf:
+            newf.write(testjob)
+          os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
+          with tempfile.NamedTemporaryFile(bufsize=0) as f:
+            f.write(condortemplate_sizeperevent.format(self=self))
+            subprocess.check_call(["condor_submit", f.name])
+          return "need to get time and size per event, submitting to condor"
+
+        with open(xmlfile) as f:
+          nevents = totalsize = None
+          for line in f:
+            if "<FrameworkError" in line:
+              abspath = os.path.abspath(xmlfile)
+              with cd(here):
+                return "Job to get the size and time per event failed, please check "+os.path.relpath(abspath)+" and the condor output files in that directory"
+            line = line.strip()
+            match = re.match('<TotalEvents>([0-9]*)</TotalEvents>', line)
+            if match: nevents = int(match.group(1))
+            match = re.match('<Metric Name="Timing-tstoragefile-write-totalMegabytes" Value="([0-9.]*)"/>', line)
+            if match: totalsize = float(match.group(1))
+            if self.year >= 2017:
+              match = re.match('<Metric Name="EventThroughput" Value="([0-9.eE+-]*)"/>', line)
+              if match: self.timeperevent = 1/float(match.group(1))
+            else:
+              match = re.match('<Metric Name="AvgEventTime" Value="([0-9.eE+-]*)"/>', line)
+              if match: self.timeperevent = float(match.group(1))
+          if nevents is not None is not totalsize:
+            self.sizeperevent = totalsize * 1024 / nevents
+
+      if not (self.sizeperevent and self.timeperevent):
+        return "failed to get the size and time"
+
+      shutil.rmtree(self.workdir)
+
+      if jobtype(): return "size and time per event are found to be {} and {}, run locally to send to McM".format(self.sizeperevent, self.timeperevent)
+      self.updaterequest()
+      return "size and time per event are found to be {} and {}, sent it to McM".format(self.sizeperevent, self.timeperevent)
+
   def getsizeandtime(self):
     mkdir_p(self.workdir)
     with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), deleteifjobdied=True) as kwof:
@@ -337,8 +397,12 @@ class MCSampleBase(JsonDict):
         wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
         with open(self.prepid) as f:
           testjob = f.read()
+          try:
+            testjob = eval(testjob)  #sometimes it's a string
+          except SyntaxError:
+            pass                     #sometimes it's not
         with open(self.prepid, "w") as newf:
-          newf.write(eval(testjob))
+          newf.write(testjob)
         os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
         subprocess.check_call(["./"+self.prepid], stderr=subprocess.STDOUT)
         with open(self.prepid+"_rt.xml") as f:
@@ -406,7 +470,7 @@ class MCSampleBase(JsonDict):
       if setneedsupdate and not self.needsupdate:
         result = self.setneedsupdate()
         if result: return result
-      return self.getsizeandtime()
+      return self.getsizeandtimecondor()
 
     if jobtype():
       return "please run locally to check and/or advance the status".format(self.prepid)
