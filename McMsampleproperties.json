@@ -1834,9 +1834,10 @@
                         "Redo": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "needsupdateiffailed": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03370",
-                            "resettimeperevent": true,
-                            "sizeperevent": 976
+                            "sizeperevent": 976,
+                            "timeperevent": 77.82101167315174
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
@@ -4338,10 +4339,10 @@
                         "Redo": {
                             "filterefficiency": 0.14835550966597078,
                             "filterefficiencyerror": 0.00018236587065478363,
-                            "needsupdate": true,
+                            "needsupdateiffailed": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03365",
-                            "resettimeperevent": true,
-                            "sizeperevent": 852.5789866666667
+                            "sizeperevent": 852.5789866666667,
+                            "timeperevent": 5.979201594852985
                         },
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,

@@ -342,6 +342,7 @@ class MCSampleBase(JsonDict):
                 if line.startswith("004") or line.startswith("005") or line.startswith("009"): break
               else:
                 return "job {} to get the size and time is already running".format(jobfile.replace(".log", ""))
+          if jobtype(): return "need to get time and size per event, run locally to submit to condor"
           wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
           with open(self.prepid) as f:
             testjob = f.read()
