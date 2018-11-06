@@ -931,7 +931,7 @@ class MCSampleBase(JsonDict):
   @property
   @cache
   def fullinfo(self):
-    if not self.prepid: raise ValueError("Can only call fullinfo once the prepid has been set")
+    if not self.prepid: raise AttributeError("Can only call fullinfo once the prepid has been set")
     result = restful().get("requests", query="prepid="+self.prepid)
     if not result:
       raise ValueError("mcm query for prepid="+self.prepid+" returned None!")
