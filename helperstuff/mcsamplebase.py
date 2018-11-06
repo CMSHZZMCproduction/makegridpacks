@@ -460,14 +460,14 @@ class MCSampleBase(JsonDict):
       else:
         return "found prepid: {}".format(self.prepid)
 
-    if self.filterefficiency is None and not self.needsupdate:
-      if setneedsupdate and not self.needsupdate:
+    if self.filterefficiency is None and not self.needsupdateiffailed:
+      if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
       return self.findfilterefficiency()
 
-    if not (self.sizeperevent and self.timeperevent) and not self.needsupdate:
-      if setneedsupdate and not self.needsupdate:
+    if not (self.sizeperevent and self.timeperevent) and not self.needsupdateiffailed:
+      if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
       return self.getsizeandtimecondor()
@@ -568,7 +568,10 @@ class MCSampleBase(JsonDict):
   @prepid.deleter
   def prepid(self):
     with cd(here), self.writingdict():
-      del self.value["prepid"]
+      try:
+        del self.value["prepid"]
+      except KeyError:
+        pass
   @property
   def timeperevent(self):
     with cd(here):
@@ -581,7 +584,10 @@ class MCSampleBase(JsonDict):
   @timeperevent.deleter
   def timeperevent(self):
     with cd(here), self.writingdict():
-      del self.value["timeperevent"]
+      try:
+        del self.value["timeperevent"]
+      except KeyError:
+        pass
     self.resettimeperevent = True
   @property
   def resettimeperevent(self):
@@ -597,7 +603,10 @@ class MCSampleBase(JsonDict):
   @resettimeperevent.deleter
   def resettimeperevent(self):
     with cd(here), self.writingdict():
-      del self.value["resettimeperevent"]
+      try:
+        del self.value["resettimeperevent"]
+      except KeyError:
+        pass
   @property
   def sizeperevent(self):
     with cd(here):
@@ -610,7 +619,10 @@ class MCSampleBase(JsonDict):
   @sizeperevent.deleter
   def sizeperevent(self):
     with cd(here), self.writingdict():
-      del self.value["sizeperevent"]
+      try:
+        del self.value["sizeperevent"]
+      except KeyError:
+        pass
   @property
   def filterefficiency(self):
     if self.filterefficiencynominal is None or self.filterefficiencyerror is None: return None
@@ -636,7 +648,10 @@ class MCSampleBase(JsonDict):
   @filterefficiencynominal.deleter
   def filterefficiencynominal(self):
     with cd(here), self.writingdict():
-      del self.value["filterefficiency"]
+      try:
+        del self.value["filterefficiency"]
+      except KeyError:
+        pass
   @property
   def filterefficiencyerror(self):
     with cd(here):
@@ -649,7 +664,10 @@ class MCSampleBase(JsonDict):
   @filterefficiencyerror.deleter
   def filterefficiencyerror(self):
     with cd(here), self.writingdict():
-      del self.value["filterefficiencyerror"]
+      try:
+        del self.value["filterefficiencyerror"]
+      except KeyError:
+        pass
   @property
   def needsupdate(self):
     if self.needsoptionreset:
@@ -666,7 +684,10 @@ class MCSampleBase(JsonDict):
   @needsupdate.deleter
   def needsupdate(self):
     with cd(here), self.writingdict():
-      del self.value["needsupdate"]
+      try:
+        del self.value["needsupdate"]
+      except KeyError:
+        pass
   @property
   def needsupdateiffailed(self):
     if self.needsupdate: return True
@@ -684,7 +705,10 @@ class MCSampleBase(JsonDict):
   @needsupdateiffailed.deleter
   def needsupdateiffailed(self):
     with cd(here), self.writingdict():
-      del self.value["needsupdateiffailed"]
+      try:
+        del self.value["needsupdateiffailed"]
+      except KeyError:
+        pass
   @property
   def needsoptionreset(self):
     with cd(here):
@@ -699,7 +723,10 @@ class MCSampleBase(JsonDict):
   @needsoptionreset.deleter
   def needsoptionreset(self):
     with cd(here), self.writingdict():
-      del self.value["needsoptionreset"]
+      try:
+        del self.value["needsoptionreset"]
+      except KeyError:
+        pass
   @property
   def badprepid(self):
     with cd(here):
@@ -727,7 +754,10 @@ class MCSampleBase(JsonDict):
   @badprepid.deleter
   def badprepid(self):
     with cd(here), self.writingdict():
-      del self.value["badprepid"]
+      try:
+        del self.value["badprepid"]
+      except KeyError:
+        pass
   @property
   def finished(self):
     with cd(here):
@@ -742,7 +772,10 @@ class MCSampleBase(JsonDict):
   @finished.deleter
   def finished(self):
     with cd(here), self.writingdict():
-      del self.value["finished"]
+      try:
+        del self.value["finished"]
+      except KeyError:
+        pass
   @property
   def needspatch(self):
     with cd(here):
@@ -773,7 +806,10 @@ class MCSampleBase(JsonDict):
   @needspatch.deleter
   def needspatch(self):
     with cd(here), self.writingdict():
-      del self.value["needspatch"]
+      try:
+        del self.value["needspatch"]
+      except KeyError:
+        pass
   @property
   def nthreads(self):
     with cd(here):
@@ -790,7 +826,10 @@ class MCSampleBase(JsonDict):
   @nthreads.deleter
   def nthreads(self):
     with cd(here), self.writingdict():
-      del self.value["nthreads"]
+      try:
+        del self.value["nthreads"]
+      except KeyError:
+        pass
 
   @property
   def memory(self):

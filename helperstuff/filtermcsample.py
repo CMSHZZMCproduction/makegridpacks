@@ -38,9 +38,9 @@ class GenericFilter(FilterImplementation):
       cmsdriverindex = {i for i, line in enumerate(lines) if "cmsDriver.py" in line}
       assert len(cmsdriverindex) == 1, cmsdriverindex
       cmsdriverindex = cmsdriverindex.pop()
-      lines.insert(cmsdriverindex+1, 'sed -i "/Services/aprocess.RandomNumberGeneratorService.externalLHEProducer.initialSeed = {}" *_cfg.py'.format(abs(hash(self))%2147483647 + jobindex))
+      lines.insert(cmsdriverindex+1, 'sed -i "/Services/aprocess.RandomNumberGeneratorService.externalLHEProducer.initialSeed = {}" *_cfg.py'.format(abs(hash(self))%900000000 + jobindex))  #The CLHEP::HepJamesRandom engine seed should be in the range 0 to 900000000.
       with open(self.prepid, "w") as newf:
-        newf.write(eval(testjob))
+        newf.write("\n".join(lines))
       os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
       subprocess.check_call(["./"+self.prepid], stderr=subprocess.STDOUT)
       shutil.move(self.prepid+"_rt.xml", olddir)
