@@ -5945,9 +5945,10 @@
                 "125": {
                     "filterefficiency": 0.15126,
                     "filterefficiencyerror": 0.001133050803803607,
+                    "nthreads": 4,
                     "prepid": "HIG-RunIIFall17wmLHEGS-03334",
-                    "sizeperevent": 654,
-                    "timeperevent": 1.2313329918436504
+                    "sizeperevent": 652.0593066666667,
+                    "timeperevent": 2.776412708196248
                 }
             }
         },
@@ -8730,7 +8731,9 @@
                 "125": {
                     "filterefficiency": 0.1505,
                     "filterefficiencyerror": 0.0011307066374617247,
-                    "prepid": "HIG-RunIIFall18wmLHEGS-00447"
+                    "prepid": "HIG-RunIIFall18wmLHEGS-00447",
+                    "sizeperevent": 668,
+                    "timeperevent": 1.220892399090191
                 }
             }
         },
