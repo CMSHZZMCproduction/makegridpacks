@@ -298,7 +298,7 @@ class MCSampleBase(JsonDict):
       self.filterefficiency = 1
       return "filter efficiency is set to 1 +/- 0"
     else:
-      if not self.implementsfilter: raise ValueError("Can't find match efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
+      if not self.implementsfilter: raise ValueError("Can't find filter efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
       mkdir_p(self.workdir)
       jobsrunning = False
       eventsprocessed = eventsaccepted = 0
@@ -325,7 +325,7 @@ class MCSampleBase(JsonDict):
         if jobsrunning: return "some filter efficiency jobs are still running"
         self.filterefficiency = uncertainties.ufloat(1.0*eventsaccepted / eventsprocessed, (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5)
         #shutil.rmtree(self.workdir)
-        return "match efficiency is measured to be {}".format(self.filterefficiency)
+        return "filter efficiency is measured to be {}".format(self.filterefficiency)
 
   implementsfilter = False
 
