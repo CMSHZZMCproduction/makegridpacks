@@ -26,7 +26,10 @@ else
       cat ${card} | sed -e "s#SEED#${seed}#g" | sed -e "s#NEVENTS#${nevt}#g" > powheg.input
     )
   done
-  seq 1 ${ncpu} | parallel --eta -j${ncpu} "cd paralleljob_{} && %(newpowhegcommand)s"
+  #seq 1 ${ncpu} | parallel --eta -j${ncpu} "cd paralleljob_{} && %(newpowhegcommand)s"
+  #no parallel command on condor
+  #https://www.gnu.org/software/parallel/parallel_alternatives.html#DIFFERENCES-BETWEEN-xargs-AND-GNU-Parallel
+  seq 1 ${ncpu} | xargs -d "\n" -P${ncpu} -I {} bash -c "cd paralleljob_{} && %(newpowhegcommand)s"
   (
     cat paralleljob_1/pwgevents.lhe | grep -v "</LesHouchesEvents"
     for i in $(seq 2 $(( ${ncpu} - 1 ))); do
@@ -38,15 +41,19 @@ else
 fi
 """ % {"powhegcommand": powhegcommand, "newpowhegcommand": newpowhegcommand}
 
-def parallelizepowheg(oldfilename, newfilename):
+def parallelizepowheg(oldfilename, newfilename, overwrite=None):
   oldfilename = os.path.abspath(oldfilename)
   newfilename = os.path.abspath(newfilename)
 
   with cdtemp():
     subprocess.check_call(["tar", "xvaf", oldfilename])
 
-    if not os.path.exists("original_runcmsgrid.sh"):
+    if not os.path.exists("original_runcmsgrid.sh") or overwrite=="runcmsgrid.sh":
       shutil.move("runcmsgrid.sh", "original_runcmsgrid.sh")
+    elif overwrite=="original_runcmsgrid.sh":
+      pass
+    elif overwrite is not None:
+      raise ValueError("overwrite has to be either None, runcmsgrid.sh, or original_runcmsgrid.sh")
     else:
       raise IOError("original_runcmsgrid.sh already exists")
 
@@ -62,6 +69,8 @@ def parallelizepowheg(oldfilename, newfilename):
           newf.write(line)
         if "parallel" in line:
           raise IOError("runcmsgrid.sh already has parallel")
+        if "xargs" in line:
+          raise IOError("runcmsgrid.sh already has xargs")
       if not sawpowhegcommand:
         raise IOError("runcmsgrid.sh doesn't have this line:\n"+powhegcommand)
     os.chmod("runcmsgrid.sh", os.stat("original_runcmsgrid.sh").st_mode)

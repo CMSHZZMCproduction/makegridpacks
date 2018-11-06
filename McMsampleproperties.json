@@ -1810,6 +1810,11 @@
                         "filterefficiencyerror": 0,
                         "matchefficiency": 1.0,
                         "matchefficiencyerror": 0.0,
+                        "needspatch": {
+                            "functionname": "parallelizepowheg",
+                            "oldtarballversion": 4,
+                            "overwrite": "original_runcmsgrid.sh"
+                        },
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01148",
                         "sizeperevent": 1030
@@ -1817,6 +1822,11 @@
                     "TuneUp": {
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
+                        "needspatch": {
+                            "functionname": "parallelizepowheg",
+                            "oldtarballversion": 4,
+                            "overwrite": "original_runcmsgrid.sh"
+                        },
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01147",
                         "sizeperevent": 976.7936000000001
@@ -1833,6 +1843,11 @@
                         "Redo": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "needspatch": {
+                                "functionname": "parallelizepowheg",
+                                "oldtarballversion": 3,
+                                "overwrite": "original_runcmsgrid.sh"
+                            },
                             "prepid": "HIG-RunIIFall17wmLHEGS-03370",
                             "sizeperevent": 976,
                             "timeperevent": 77.82101167315174
@@ -1851,12 +1866,22 @@
                         "filterefficiencyerror": 0,
                         "matchefficiency": 1.0,
                         "matchefficiencyerror": 0.0,
+                        "needspatch": {
+                            "functionname": "parallelizepowheg",
+                            "oldtarballversion": 3,
+                            "overwrite": "original_runcmsgrid.sh"
+                        },
                         "nthreads": 2,
                         "prepid": "HIG-RunIIFall17wmLHEGS-01144",
                         "sizeperevent": 1001.5543652173914
                     },
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 3,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall17wmLHEGS-01146",
                     "sizeperevent": 629.6656842105263
@@ -4331,6 +4356,11 @@
                         "Redo": {
                             "filterefficiency": 0.14835550966597078,
                             "filterefficiencyerror": 0.00018236587065478363,
+                            "needspatch": {
+                                "functionname": "parallelizepowheg",
+                                "oldtarballversion": 6,
+                                "overwrite": "original_runcmsgrid.sh"
+                            },
                             "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03365",
                             "sizeperevent": 852.5789866666667,
@@ -4346,12 +4376,22 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "filterefficiency": 0.14835550966597078,
                             "filterefficiencyerror": 0.00018236587065478363,
+                            "needspatch": {
+                                "functionname": "parallelizepowheg",
+                                "oldtarballversion": 6,
+                                "overwrite": "original_runcmsgrid.sh"
+                            },
                             "nthreads": 8,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03294",
                             "sizeperevent": 1223.3045333333332
                         },
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "needspatch": {
+                            "functionname": "parallelizepowheg",
+                            "oldtarballversion": 6,
+                            "overwrite": "original_runcmsgrid.sh"
+                        },
                         "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-00509",
                         "sizeperevent": 1223.3045333333332
@@ -7685,6 +7725,11 @@
                 "125": {
                     "filterefficiency": 0.27155,
                     "filterefficiencyerror": 0.001406451554444731,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 4,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00293",
                     "sizeperevent": 721.4302608695652
@@ -7702,6 +7747,11 @@
                 "115": {
                     "filterefficiency": 0.151500269022,
                     "filterefficiencyerror": 0.000317064542205,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00255",
                     "sizeperevent": 667.50976
@@ -7709,6 +7759,11 @@
                 "120": {
                     "filterefficiency": 0.150882730885,
                     "filterefficiencyerror": 0.000316547042032,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00256",
                     "sizeperevent": 644.52608
@@ -7789,6 +7844,11 @@
                     },
                     "filterefficiency": 0.150301533517,
                     "filterefficiencyerror": 0.000198361407366,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 6,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00258",
                     "sizeperevent": 910.2392888888888
@@ -7796,6 +7856,11 @@
                 "126": {
                     "filterefficiency": 0.149949160647,
                     "filterefficiencyerror": 0.000195846329258,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00259",
                     "sizeperevent": 795.66848
@@ -7803,6 +7868,11 @@
                 "130": {
                     "filterefficiency": 0.149730397214,
                     "filterefficiencyerror": 0.000313067204368,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00260",
                     "sizeperevent": 780.4671999999999
@@ -7810,6 +7880,11 @@
                 "135": {
                     "filterefficiency": 0.149101620862,
                     "filterefficiencyerror": 0.000307244711546,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00261",
                     "sizeperevent": 782.848
@@ -7817,6 +7892,11 @@
                 "140": {
                     "filterefficiency": 0.148835749184,
                     "filterefficiencyerror": 0.000314138563982,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00262",
                     "sizeperevent": 629.32928
@@ -7824,6 +7904,11 @@
                 "145": {
                     "filterefficiency": 0.149343603958,
                     "filterefficiencyerror": 0.000313105598547,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 6,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00263",
                     "sizeperevent": 794.2204235294117
@@ -7831,6 +7916,11 @@
                 "150": {
                     "filterefficiency": 0.148952618917,
                     "filterefficiencyerror": 0.000313051550898,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00264",
                     "sizeperevent": 692.8896
@@ -7838,6 +7928,11 @@
                 "1500": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00289",
                     "sizeperevent": 802.9184
@@ -7845,6 +7940,11 @@
                 "155": {
                     "filterefficiency": 0.148893383823,
                     "filterefficiencyerror": 0.000305192270228,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00265",
                     "sizeperevent": 741.7344
@@ -7852,6 +7952,11 @@
                 "160": {
                     "filterefficiency": 0.148609068856,
                     "filterefficiencyerror": 0.000307309106588,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00266",
                     "sizeperevent": 659.200930909091
@@ -7859,6 +7964,11 @@
                 "165": {
                     "filterefficiency": 0.14874807231,
                     "filterefficiencyerror": 0.000311224104232,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00267",
                     "sizeperevent": 791.7977599999999
@@ -7866,6 +7976,11 @@
                 "170": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00268",
                     "sizeperevent": 761
@@ -7873,6 +7988,11 @@
                 "175": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00269",
                     "sizeperevent": 739.7171199999999
@@ -7904,6 +8024,11 @@
                 "2000": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00290",
                     "sizeperevent": 956.8449422222222
@@ -7911,6 +8036,11 @@
                 "210": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00273",
                     "sizeperevent": 815.75936
@@ -7918,6 +8048,11 @@
                 "230": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00274",
                     "sizeperevent": 820.5390769230769
@@ -7925,6 +8060,11 @@
                 "250": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00275",
                     "sizeperevent": 774.5243428571429
@@ -7932,6 +8072,11 @@
                 "2500": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00291",
                     "sizeperevent": 926.2867692307692
@@ -7939,6 +8084,11 @@
                 "270": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00276",
                     "sizeperevent": 663.9555764705883
@@ -7946,6 +8096,11 @@
                 "300": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00277",
                     "sizeperevent": 902
@@ -7953,6 +8108,11 @@
                 "3000": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 6,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00292",
                     "sizeperevent": 918.6176
@@ -7960,6 +8120,11 @@
                 "350": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00278",
                     "sizeperevent": 745.1904
@@ -7967,6 +8132,11 @@
                 "400": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 6,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00279",
                     "sizeperevent": 777.1004717948717
@@ -7982,6 +8152,11 @@
                 "500": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00281",
                     "sizeperevent": 770.1935157894736
@@ -7989,6 +8164,11 @@
                 "550": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00282",
                     "sizeperevent": 794.9705846153846
@@ -7996,6 +8176,11 @@
                 "600": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00283",
                     "sizeperevent": 718.2677333333334
@@ -8003,6 +8188,11 @@
                 "700": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00284",
                     "sizeperevent": 877.5740235294118
@@ -8010,6 +8200,11 @@
                 "750": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00285",
                     "sizeperevent": 763.2737745454546
@@ -8017,6 +8212,11 @@
                 "800": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00286",
                     "sizeperevent": 724.8704
@@ -8024,6 +8224,11 @@
                 "900": {
                     "filterefficiency": 0.148699054776,
                     "filterefficiencyerror": 4.79851663246e-05,
+                    "needspatch": {
+                        "functionname": "parallelizepowheg",
+                        "oldtarballversion": 5,
+                        "overwrite": "original_runcmsgrid.sh"
+                    },
                     "nthreads": 8,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00287",
                     "sizeperevent": 785.0211555555557

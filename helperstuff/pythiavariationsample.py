@@ -214,8 +214,8 @@ class RedoSample(RedoSampleBase):
   @property
   def tarballversion(self):
     result = super(RedoSample, self).tarballversion
-    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-01145": result += 1  #parallelize the gridpack
-    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00510": result += 1  #parallelize the gridpack
+    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-01145": result += 2  #parallelize the gridpack
+    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00510": result += 2  #parallelize the gridpack
     return result
 
 
@@ -292,9 +292,9 @@ class PythiaVariationSample(VariationSample):
   @property
   def tarballversion(self):
     result = super(PythiaVariationSample, self).tarballversion
-    if self.prepid == "HIG-RunIIFall17wmLHEGS-00509": result += 1
-    if self.prepid == "HIG-RunIIFall17wmLHEGS-01145": result -= 1  #this one finished, the main one was reset
-    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00917": result += 1
+    if self.prepid == "HIG-RunIIFall17wmLHEGS-00509": result += 2
+    if self.prepid == "HIG-RunIIFall17wmLHEGS-01145": result -= 2  #this one finished, the main one was reset
+    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00917": result += 2
     return result
   @property
   def nevents(self):
