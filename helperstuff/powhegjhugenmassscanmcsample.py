@@ -181,8 +181,8 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if self.productionmode in ("ggH", "VBF"): return 30
     if self.productionmode in ("WplusH", "WminusH"): return 50
     if self.productionmode == "ZH":
-      if self.decaymode == "4l": return 120
-      if self.decaymode == "2l2q": return 140
+      if self.decaymode == "4l": return 30
+      if self.decaymode == "2l2q": return 30
     if self.productionmode == "ttH":
       if self.decaymode == "4l": return 10
       if self.decaymode == "2l2q": return 10

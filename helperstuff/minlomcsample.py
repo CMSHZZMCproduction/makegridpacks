@@ -128,7 +128,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def defaulttimeperevent(self):
-    return 300
+    return 30
     assert False
 
   @property
