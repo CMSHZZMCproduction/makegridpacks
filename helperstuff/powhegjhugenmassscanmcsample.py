@@ -320,6 +320,6 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def maxallowedtimeperevent(self):
     if self.productionmode == "ZH": return 260
-    if self.productionmode in ("WplusH", "WminusH"): return 210
+    if self.productionmode in ("WplusH", "WminusH", "VBF"): return 210
     return 165
     return super(POWHEGJHUGenMassScanMCSample, self).maxallowedtimeperevent
