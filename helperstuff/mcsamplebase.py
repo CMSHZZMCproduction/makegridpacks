@@ -1,4 +1,4 @@
-import abc, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess
+import abc, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess, tempfile
 
 import uncertainties
 
@@ -6,7 +6,7 @@ from McMScripts.manageRequests import createLHEProducer
 
 import patches
 
-from jobsubmission import jobtype, queuematches, submitLSF
+from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitLSF
 from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, wget
 
 class MCSampleBase(JsonDict):
@@ -106,6 +106,8 @@ class MCSampleBase(JsonDict):
   def creategridpackqueue(self): return "1nd"
   @property
   def timepereventqueue(self): return "1nd"
+  @property
+  def timepereventflavor(self): return JobQueue(self.timepereventqueue).condorflavor
   @property
   def filterefficiencyqueue(self): return "1nd"
   @property
@@ -296,7 +298,7 @@ class MCSampleBase(JsonDict):
       self.filterefficiency = 1
       return "filter efficiency is set to 1 +/- 0"
     else:
-      if not self.implementsfilter: raise ValueError("Can't find match efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
+      if not self.implementsfilter: raise ValueError("Can't find filter efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
       mkdir_p(self.workdir)
       jobsrunning = False
       eventsprocessed = eventsaccepted = 0
@@ -323,9 +325,68 @@ class MCSampleBase(JsonDict):
         if jobsrunning: return "some filter efficiency jobs are still running"
         self.filterefficiency = uncertainties.ufloat(1.0*eventsaccepted / eventsprocessed, (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5)
         #shutil.rmtree(self.workdir)
-        return "match efficiency is measured to be {}".format(self.filterefficiency)
+        return "filter efficiency is measured to be {}".format(self.filterefficiency)
 
   implementsfilter = False
+
+  def getsizeandtimecondor(self):
+    mkdir_p(self.workdir)
+    xmlfile = self.prepid+"_rt.xml"
+    with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), deleteifjobdied=True) as kwof:
+      if not kwof: return "job to get the size and time is already running"
+      with cd(self.workdir):
+        if not os.path.exists(xmlfile) or os.stat(xmlfile).st_size == 0:
+          for jobfile in glob.glob("*.log"):
+            with open(jobfile) as f:
+              for line in f:
+                if line.startswith("004") or line.startswith("005") or line.startswith("009"): break
+              else:
+                return "job {} to get the size and time is already running".format(jobfile.replace(".log", ""))
+          if jobtype(): return "need to get time and size per event, run locally to submit to condor"
+          wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
+          with open(self.prepid) as f:
+            testjob = f.read()
+            try:
+              testjob = eval(testjob)  #sometimes it's a string
+            except SyntaxError:
+              pass                     #sometimes it's not
+          with open(self.prepid, "w") as newf:
+            newf.write(testjob)
+          os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
+          with tempfile.NamedTemporaryFile(bufsize=0) as f:
+            f.write(condortemplate_sizeperevent.format(self=self))
+            subprocess.check_call(["condor_submit", f.name])
+          return "need to get time and size per event, submitting to condor"
+
+        with open(xmlfile) as f:
+          nevents = totalsize = None
+          for line in f:
+            if "<FrameworkError" in line:
+              abspath = os.path.abspath(xmlfile)
+              with cd(here):
+                return "Job to get the size and time per event failed, please check "+os.path.relpath(abspath)+" and the condor output files in that directory"
+            line = line.strip()
+            match = re.match('<TotalEvents>([0-9]*)</TotalEvents>', line)
+            if match: nevents = int(match.group(1))
+            match = re.match('<Metric Name="Timing-tstoragefile-write-totalMegabytes" Value="([0-9.]*)"/>', line)
+            if match: totalsize = float(match.group(1))
+            if self.year >= 2017:
+              match = re.match('<Metric Name="EventThroughput" Value="([0-9.eE+-]*)"/>', line)
+              if match: self.timeperevent = 1/float(match.group(1))
+            else:
+              match = re.match('<Metric Name="AvgEventTime" Value="([0-9.eE+-]*)"/>', line)
+              if match: self.timeperevent = float(match.group(1))
+          if nevents is not None is not totalsize:
+            self.sizeperevent = totalsize * 1024 / nevents
+
+      if not (self.sizeperevent and self.timeperevent):
+        return "failed to get the size and time"
+
+      shutil.rmtree(self.workdir)
+
+      if jobtype(): return "size and time per event are found to be {} and {}, run locally to send to McM".format(self.sizeperevent, self.timeperevent)
+      self.updaterequest()
+      return "size and time per event are found to be {} and {}, sent it to McM".format(self.sizeperevent, self.timeperevent)
 
   def getsizeandtime(self):
     mkdir_p(self.workdir)
@@ -337,8 +398,12 @@ class MCSampleBase(JsonDict):
         wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
         with open(self.prepid) as f:
           testjob = f.read()
+          try:
+            testjob = eval(testjob)  #sometimes it's a string
+          except SyntaxError:
+            pass                     #sometimes it's not
         with open(self.prepid, "w") as newf:
-          newf.write(eval(testjob))
+          newf.write(testjob)
         os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
         subprocess.check_call(["./"+self.prepid], stderr=subprocess.STDOUT)
         with open(self.prepid+"_rt.xml") as f:
@@ -396,17 +461,17 @@ class MCSampleBase(JsonDict):
       else:
         return "found prepid: {}".format(self.prepid)
 
-    if self.filterefficiency is None and not self.needsupdate:
-      if setneedsupdate and not self.needsupdate:
+    if self.filterefficiency is None and not self.needsupdateiffailed:
+      if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
       return self.findfilterefficiency()
 
-    if not (self.sizeperevent and self.timeperevent) and not self.needsupdate:
-      if setneedsupdate and not self.needsupdate:
+    if not (self.sizeperevent and self.timeperevent) and not self.needsupdateiffailed:
+      if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
-      return self.getsizeandtime()
+      return self.getsizeandtimecondor()
 
     if jobtype():
       return "please run locally to check and/or advance the status".format(self.prepid)
@@ -504,7 +569,10 @@ class MCSampleBase(JsonDict):
   @prepid.deleter
   def prepid(self):
     with cd(here), self.writingdict():
-      del self.value["prepid"]
+      try:
+        del self.value["prepid"]
+      except KeyError:
+        pass
   @property
   def timeperevent(self):
     with cd(here):
@@ -517,7 +585,10 @@ class MCSampleBase(JsonDict):
   @timeperevent.deleter
   def timeperevent(self):
     with cd(here), self.writingdict():
-      del self.value["timeperevent"]
+      try:
+        del self.value["timeperevent"]
+      except KeyError:
+        pass
     self.resettimeperevent = True
   @property
   def resettimeperevent(self):
@@ -533,7 +604,10 @@ class MCSampleBase(JsonDict):
   @resettimeperevent.deleter
   def resettimeperevent(self):
     with cd(here), self.writingdict():
-      del self.value["resettimeperevent"]
+      try:
+        del self.value["resettimeperevent"]
+      except KeyError:
+        pass
   @property
   def sizeperevent(self):
     with cd(here):
@@ -546,7 +620,10 @@ class MCSampleBase(JsonDict):
   @sizeperevent.deleter
   def sizeperevent(self):
     with cd(here), self.writingdict():
-      del self.value["sizeperevent"]
+      try:
+        del self.value["sizeperevent"]
+      except KeyError:
+        pass
   @property
   def filterefficiency(self):
     if self.filterefficiencynominal is None or self.filterefficiencyerror is None: return None
@@ -572,7 +649,10 @@ class MCSampleBase(JsonDict):
   @filterefficiencynominal.deleter
   def filterefficiencynominal(self):
     with cd(here), self.writingdict():
-      del self.value["filterefficiency"]
+      try:
+        del self.value["filterefficiency"]
+      except KeyError:
+        pass
   @property
   def filterefficiencyerror(self):
     with cd(here):
@@ -585,7 +665,10 @@ class MCSampleBase(JsonDict):
   @filterefficiencyerror.deleter
   def filterefficiencyerror(self):
     with cd(here), self.writingdict():
-      del self.value["filterefficiencyerror"]
+      try:
+        del self.value["filterefficiencyerror"]
+      except KeyError:
+        pass
   @property
   def needsupdate(self):
     if self.needsoptionreset:
@@ -602,7 +685,10 @@ class MCSampleBase(JsonDict):
   @needsupdate.deleter
   def needsupdate(self):
     with cd(here), self.writingdict():
-      del self.value["needsupdate"]
+      try:
+        del self.value["needsupdate"]
+      except KeyError:
+        pass
   @property
   def needsupdateiffailed(self):
     if self.needsupdate: return True
@@ -620,7 +706,10 @@ class MCSampleBase(JsonDict):
   @needsupdateiffailed.deleter
   def needsupdateiffailed(self):
     with cd(here), self.writingdict():
-      del self.value["needsupdateiffailed"]
+      try:
+        del self.value["needsupdateiffailed"]
+      except KeyError:
+        pass
   @property
   def needsoptionreset(self):
     with cd(here):
@@ -635,7 +724,10 @@ class MCSampleBase(JsonDict):
   @needsoptionreset.deleter
   def needsoptionreset(self):
     with cd(here), self.writingdict():
-      del self.value["needsoptionreset"]
+      try:
+        del self.value["needsoptionreset"]
+      except KeyError:
+        pass
   @property
   def badprepid(self):
     with cd(here):
@@ -663,7 +755,10 @@ class MCSampleBase(JsonDict):
   @badprepid.deleter
   def badprepid(self):
     with cd(here), self.writingdict():
-      del self.value["badprepid"]
+      try:
+        del self.value["badprepid"]
+      except KeyError:
+        pass
   @property
   def finished(self):
     with cd(here):
@@ -678,7 +773,10 @@ class MCSampleBase(JsonDict):
   @finished.deleter
   def finished(self):
     with cd(here), self.writingdict():
-      del self.value["finished"]
+      try:
+        del self.value["finished"]
+      except KeyError:
+        pass
   @property
   def needspatch(self):
     with cd(here):
@@ -709,7 +807,10 @@ class MCSampleBase(JsonDict):
   @needspatch.deleter
   def needspatch(self):
     with cd(here), self.writingdict():
-      del self.value["needspatch"]
+      try:
+        del self.value["needspatch"]
+      except KeyError:
+        pass
   @property
   def nthreads(self):
     with cd(here):
@@ -726,7 +827,10 @@ class MCSampleBase(JsonDict):
   @nthreads.deleter
   def nthreads(self):
     with cd(here), self.writingdict():
-      del self.value["nthreads"]
+      try:
+        del self.value["nthreads"]
+      except KeyError:
+        pass
 
   @property
   def memory(self):
@@ -827,7 +931,7 @@ class MCSampleBase(JsonDict):
   @property
   @cache
   def fullinfo(self):
-    if not self.prepid: raise ValueError("Can only call fullinfo once the prepid has been set")
+    if not self.prepid: raise AttributeError("Can only call fullinfo once the prepid has been set")
     result = restful().get("requests", query="prepid="+self.prepid)
     if not result:
       raise ValueError("mcm query for prepid="+self.prepid+" returned None!")
@@ -974,6 +1078,7 @@ class MCSampleBase(JsonDict):
           if line.strip() == "*                   'JetMatching:nJetMax' is set correctly as number of partons": continue
           if line.strip() == "*                              in born matrix element for highest multiplicity.": continue
           if line.strip() == "*                as number of partons in born matrix element for highest multiplicity.": continue
+          if line.strip() == "*           correctly as number of partons in born matrix element for highest multiplicity.": continue
           return "Unknown line in request_fragment_check output!\n"+line
 
   @property

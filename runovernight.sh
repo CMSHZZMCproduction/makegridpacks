@@ -10,11 +10,12 @@ set -euo pipefail
 
 for i in {1..192}; do (
   echo -n "it's currently "; date
+  echo "running for time ${i}/192"
   source /afs/cern.ch/cms/PPD/PdmV/tools/McM/getCookie.sh
   eval $(scram ru -sh)
   ./makegridpacks.py "$@"
   echo -n "it's currently "; date
-  echo "will run again in 15 minutes"
+  echo "will run again in 15 minutes, which will be time $((${i}+1))/192"
 ) || true
 sleep 15m || true
 done

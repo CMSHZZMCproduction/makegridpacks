@@ -121,10 +121,10 @@ class VariationSample(MCSampleBase):
 class ExtensionSampleBase(VariationSample):
   def __init__(self, *args, **kwargs):
     super(ExtensionSampleBase, self).__init__(*args, **kwargs)
-    if self.timeperevent is None and self.mainsample.timeperevent is not None and not self.resettimeperevent:
-      self.timeperevent = self.mainsample.timeperevent * self.mainsample.nthreads / self.nthreads
-    if self.sizeperevent is None and self.mainsample.sizeperevent is not None:
-      self.sizeperevent = self.mainsample.sizeperevent
+#    if self.timeperevent is None and self.mainsample.timeperevent is not None and not self.resettimeperevent:
+#      self.timeperevent = self.mainsample.timeperevent * self.mainsample.nthreads / self.nthreads
+#    if self.sizeperevent is None and self.mainsample.sizeperevent is not None:
+#      self.sizeperevent = self.mainsample.sizeperevent
   @property
   def datasetname(self): return self.mainsample.datasetname
   @property
@@ -214,8 +214,8 @@ class RedoSample(RedoSampleBase):
   @property
   def tarballversion(self):
     result = super(RedoSample, self).tarballversion
-    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-01145": result += 1  #parallelize the gridpack
-    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00510": result += 1  #parallelize the gridpack
+    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-01145": result += 2  #parallelize the gridpack
+    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00510": result += 2  #parallelize the gridpack
     return result
 
 
@@ -278,6 +278,7 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.mainsample.decaymode == "4l" and self.mainsample.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #try multicore
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ttH" and self.mainsample.decaymode == "4l" and self.mainsample.mass == 140: v+=1  #tweak seed to avoid fluctuation in filter efficiency
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.mainsample.decaymode == "4l" and self.mainsample.mass in (400, 3000): v+=1 #trying multicore in runcmsgrid.sh, copied the previous one too early
+    if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.mainsample.decaymode == "4l" and self.mainsample.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #xargs instead of parallel
 
     return v
 
@@ -292,9 +293,9 @@ class PythiaVariationSample(VariationSample):
   @property
   def tarballversion(self):
     result = super(PythiaVariationSample, self).tarballversion
-    if self.prepid == "HIG-RunIIFall17wmLHEGS-00509": result += 1
-    if self.prepid == "HIG-RunIIFall17wmLHEGS-01145": result -= 1  #this one finished, the main one was reset
-    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00917": result += 1
+    if self.prepid == "HIG-RunIIFall17wmLHEGS-00509": result += 2
+    if self.prepid == "HIG-RunIIFall17wmLHEGS-01145": result -= 2  #this one finished, the main one was reset
+    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00917": result += 2
     return result
   @property
   def nevents(self):

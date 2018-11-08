@@ -107,6 +107,8 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
       if self.productionmode == "ZH" and self.decaymode == "2l2q" and self.mass == 125: v+=1  #same
       if self.productionmode == "ttH" and self.decaymode == "4l" and self.mass == 140: v+=1  #tweak seed to avoid fluctuation in filter efficiency
       if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (400, 3000): v+=1 #trying multicore in runcmsgrid.sh, copied the previous one too early
+      if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (115, 120, 125, 126, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 210, 230, 250, 270, 300, 350, 400, 500, 550, 600, 700, 750, 800, 900, 1500, 2000, 2500, 3000): v+=1  #xargs instead of parallel
+      if self.productionmode == "ZH" and self.decaymode == "2l2q" and self.mass == 125: v+=1  #same
     return v
 
   def cvmfstarball_anyversion(self, version):
@@ -179,8 +181,8 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if self.productionmode in ("ggH", "VBF"): return 30
     if self.productionmode in ("WplusH", "WminusH"): return 50
     if self.productionmode == "ZH":
-      if self.decaymode == "4l": return 120
-      if self.decaymode == "2l2q": return 140
+      if self.decaymode == "4l": return 30
+      if self.decaymode == "2l2q": return 30
     if self.productionmode == "ttH":
       if self.decaymode == "4l": return 10
       if self.decaymode == "2l2q": return 10
@@ -318,11 +320,6 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def maxallowedtimeperevent(self):
     if self.productionmode == "ZH": return 260
-    if self.productionmode in ("WplusH", "WminusH"): return 210
+    if self.productionmode in ("WplusH", "WminusH", "VBF"): return 210
     return 165
     return super(POWHEGJHUGenMassScanMCSample, self).maxallowedtimeperevent
-
-  @property
-  def dovalidation(self):
-    if self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (400, 3000): return False
-    return super(POWHEGJHUGenMassScanMCSample, self).dovalidation

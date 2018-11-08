@@ -126,7 +126,9 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
   @property
   def defaulttimeperevent(self):
-    return 30
+    if self.productionmode == "bbH": return 100
+    if self.productionmode == "tqH": return 30
+    if self.productionmode == "ggZH": return 3
     assert False
 
   @property
@@ -142,13 +144,13 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
   @property
   def genproductionscommitforfragment(self):
-    ##if self.year == 2017 and self.productionmode == "ggZH":
-      ##return "fd7d34a91c3160348fd0446ded445fa28f555e09"
     if self.productionmode == "ggZH":
       if self.year == 2017:
         return "fd7d34a91c3160348fd0446ded445fa28f555e09"
       elif self.year == 2016:
         return "ef267369910e01ce1eb4f4fabe5b223339829ff5"
+    if self.year == 2018:
+      return "20ac197949817a9bc02aa346f3fe23d157371b74"
     return super(JHUGenJHUGenMassScanMCSample, self).genproductionscommitforfragment
  
   @property
@@ -250,5 +252,5 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   def handle_request_fragment_check_warning(self, line):
     if line.strip() == "* [WARNING] Large time/event - please check":
       if self.timeperevent <= 180 and self.productionmode == "bbH": return "ok"
-    return super(POWHEGJHUGenMassScanMCSample, self).handle_request_fragment_check_warning(line)
+    return super(JHUGenJHUGenMassScanMCSample, self).handle_request_fragment_check_warning(line)
 

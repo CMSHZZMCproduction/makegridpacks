@@ -81,6 +81,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
     if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
     if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
     if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize
+    if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize with xargs
     return v
 
   @property
@@ -127,7 +128,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def defaulttimeperevent(self):
-    return 300
+    return 30
     assert False
 
   @property
