@@ -36,6 +36,8 @@ class MassScanMCSample(MCSampleBase_DefaultCampaign):
           filename = "ZZ2l2any_withtaus.input"
         elif self.productionmode in ("ZH", "ttH"):
           filename = "ZZany_filter2lOSSF.input"
+        elif self.productionmode == "ggZH":
+          filename = "ZZany_filter2l2jet.input"
       elif self.reweightdecay:
         filename = "ZZ2l2q_notaus_reweightdecay_CPS.input"
 
