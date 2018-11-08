@@ -11,15 +11,25 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     if self.year in (2017, 2018):
       yearfolder = "2017"
       pdf = "NNPDF31"
+      filename_ = yearfolder+"/13TeV"
+      filename__ = self.productionmode+"_"+pdf+"_13TeV"
+      #if self.decaymode == "2l2q":
+      ##  filename__ = self.productionmode+"_"+pdf+"_13TeV_"+self.decaymode
     elif self.year == 2016:
       yearfolder = "pre2017"
       pdf = "NNPDF30"
-    folder = os.path.join(genproductions, "bin", "JHUGen", "cards", yearfolder, "13TeV", self.productionmode+"_"+pdf+"_13TeV")
+      filename_ = yearfolder
+      filename__ = self.productionmode+"_"+pdf+"_13TeV"
+    folder = os.path.join(genproductions, "bin", "JHUGen", "cards", filename_, filename__)
+    ##folder = os.path.join(genproductions, "bin", "JHUGen", "cards", filename_, self.productionmode+"_"+pdf+"_13TeV")
+    ##folder = os.path.join(genproductions, "bin", "JHUGen", "cards", yearfolder, "13TeV", self.productionmode+"_"+pdf+"_13TeV")
     if os.path.exists(os.path.join(folder, "makecards.py")):
       makecards(folder)
 
     cardbase = self.productionmode
     card = os.path.join(folder, cardbase+"_"+pdf+"_13TeV_M{:d}.input".format(self.mass))
+    ##if self.decaymode == "2l2q":
+    ##  card = os.path.join(folder, cardbase+"_"+pdf+"_13TeV_M{0:d}_{1}.input".format(self.mass,self.decaymode))
 
     if not os.path.exists(card):
       raise IOError(card+" does not exist")
@@ -47,7 +57,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
     if self.productionmode == "bbH" and self.decaymode in ("4l", "2l2q"): v += 1 #https://github.com/cms-sw/genproductions/commit/c3b983b4edd969369a26d62d4bcd0d9c6dd1d528
     if self.productionmode == "tqH" and self.decaymode in ("4l", "2l2q") and self.mass == 125: v += 1 #https://github.com/cms-sw/genproductions/commit/c3b983b4edd969369a26d62d4bcd0d9c6dd1d528
-
+    if self.productionmode == "ggZH" and self.decaymode in ("4l", "2l2q") and self.mass == 125: v +=1
     return v
 
   def cvmfstarball_anyversion(self, version):
@@ -67,6 +77,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     if "ZZ2l2any_withtaus.input" in self.decaycard: decaymode == "2l2X"
     elif "ZZany_filter2lOSSF.input" in self.decaycard: decaymode = "_filter2l"
     elif "ZZ2l2any_withtaus_filter4l.input" in self.decaycard: decaymode = "2l2X_filter4l"
+    elif "ZZany_filter2l2jet.input" in self.decaycard: decaymode = "_filter2l2q"
     ##tarballname = tarballname.replace("NNPDF31", "ZZ"+self.decaymode+"_NNPDF31")
     tarballname = tarballname.replace(pdf, "ZZ"+self.decaymode+"_"+pdf)
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
@@ -96,7 +107,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     elif self.decaymode == "2l2q":
       result = type(self)(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Q")
       if self.mass == 125:
-        if self.productionmode in ("bbH", "tqH"): result = result.replace("2L2Q", "2L2X")
+        if self.productionmode in ("bbH", "tqH", "ggZH"): result = result.replace("2L2Q", "2L2X")##############
     elif self.productionmode in ("bbH", "tqH") and self.mass != 125:
       result = type(self)(self.year, self.productionmode, self.decaymode, 125).datasetname.replace("M125", "M{:d}".format(self.mass))
     else:
@@ -105,7 +116,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     pm = self.productionmode
     dm = self.decaymode.upper().replace("NU", "Nu")
     if self.decaymode == "2l2q" and self.mass == 125:
-      if self.productionmode in ("bbH", "tqH"): dm = "2L2X"
+      if self.productionmode in ("bbH", "tqH", "ggZH"): dm = "2L2X"###############
     searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGen{}_".format(self.JHUGenversion.replace("v", "V").replace(".", ""))]
     shouldntbethere = ["powheg"]
     if any(_ not in result for _ in searchfor) or any(_.lower() in result.lower() for _ in shouldntbethere):
@@ -126,7 +137,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
   @property
   def genproductionscommit(self):
-    if self.productionmode == "ggZH": return "20ac197949817a9bc02aa346f3fe23d157371b74"
+    if self.productionmode == "ggZH": return "a1a5e590a31ccb03b2f7904adf279c45aa38c393"
     return "fd7d34a91c3160348fd0446ded445fa28f555e09"
 
   @property
@@ -159,7 +170,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
       if productionmode == "ggZH":
         return 125,
     if decaymode == "2l2q":
-      if  productionmode == "ggZH": return ()
+      ##if productionmode == "ggZH": return ()########
       if productionmode in ("bbH", "tqH", "ggZH"):
         return 125,
     if decaymode == "2l2nu":
@@ -173,8 +184,8 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
         for decaymode in "4l", "2l2q", "2l2nu":
           for mass in cls.getmasses(productionmode, decaymode):
             yield cls(year, productionmode, decaymode, mass)
-    if year == 2016:
-      for productionmode == "ggZH":
+    for year in 2016,:
+      for productionmode in "ggZH",:
         for decaymode in "4l", "2l2q", "2l2nu":
           for mass in cls.getmasses(productionmode, decaymode):
             yield cls(year, productionmode, decaymode, mass)

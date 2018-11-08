@@ -122,6 +122,13 @@
                     }
                 }
             }
+        },
+        "ggZH": {
+            "4l": {
+                "125": {
+                    "prepid": "HIG-RunIISummer15wmLHEGS-02225"
+                }
+            }
         }
     },
     "2017": {
@@ -5943,8 +5950,8 @@
                     "filterefficiencyerror": 0.001133050803803607,
                     "nthreads": 4,
                     "prepid": "HIG-RunIIFall17wmLHEGS-03334",
-                    "sizeperevent": 652.0593066666667,
-                    "timeperevent": 2.776412708196248
+                    "sizeperevent": 635,
+                    "timeperevent": 2.2684121341901884
                 }
             }
         },
