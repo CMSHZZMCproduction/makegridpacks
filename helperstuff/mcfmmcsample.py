@@ -1,5 +1,7 @@
 import abc, os, contextlib, urllib, re, filecmp, glob, pycurl, shutil, stat, subprocess, itertools, os
 
+import uncertainties
+
 from jobsubmission import jobid, jobtype
 from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget, KeepWhileOpenFile, jobended
 

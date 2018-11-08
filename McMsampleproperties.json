@@ -6205,6 +6205,68 @@
         }
     },
     "2018": {
+        "BKG": {
+            "1": {
+                "0PM": {
+                    "ELEL": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00474",
+                        "xsec": 1.37763,
+                        "xsecerror": 0.0348474
+                    },
+                    "ELMU": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00469",
+                        "xsec": 3.27659,
+                        "xsecerror": 0.00958021
+                    },
+                    "ELNU": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00470",
+                        "xsec": 17.7081,
+                        "xsecerror": 0.0171695
+                    },
+                    "ELTL": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00467",
+                        "xsec": 3.27659,
+                        "xsecerror": 0.00958021
+                    },
+                    "MUMU": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00471",
+                        "xsec": 1.37763,
+                        "xsecerror": 0.0348474
+                    },
+                    "MUNU": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00472",
+                        "xsec": 17.7081,
+                        "xsecerror": 0.0171695
+                    },
+                    "MUTL": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00468",
+                        "xsec": 3.27659,
+                        "xsecerror": 0.00958021
+                    },
+                    "TLTL": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00473",
+                        "xsec": 1.37763,
+                        "xsecerror": 0.0348474
+                    }
+                }
+            }
+        },
         "HJJ": {
             "4l": {
                 "125": {
@@ -9043,12 +9105,16 @@
                     "TuneDown": {
                         "filterefficiency": 0.154289847279,
                         "filterefficiencyerror": 0.000202214809929,
-                        "prepid": "HIG-RunIIFall18wmLHEGS-00466"
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00466",
+                        "sizeperevent": 955.1914666666667,
+                        "timeperevent": 57.47588886462129
                     },
                     "TuneUp": {
                         "filterefficiency": 0.154289847279,
                         "filterefficiencyerror": 0.000202214809929,
-                        "prepid": "HIG-RunIIFall18wmLHEGS-00465"
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00465",
+                        "sizeperevent": 1028.9408,
+                        "timeperevent": 59.516015759840975
                     },
                     "filterefficiency": 0.154289847279,
                     "filterefficiencyerror": 0.000202214809929,
