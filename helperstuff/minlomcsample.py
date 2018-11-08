@@ -74,14 +74,17 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   @property
   def tarballversion(self):
     v = 1
-    if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1
-    if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some pdfs
-    if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some more pdfs
-    if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove ALL pdfs
-    if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
-    if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
-    if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize
-    if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize with xargs
+    if self.year in (2017, 2018):
+      if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1
+      if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some pdfs
+      if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some more pdfs
+      if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove ALL pdfs
+      if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
+      if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
+      if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize
+      if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize with xargs
+    if self.year == 2018:
+      if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=2  #parallelize with xargs
     return v
 
   @property
@@ -133,11 +136,18 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def tags(self):
-    return ["HZZ", "Fall17P2A"]
+    result = ["HZZ"]
+    if self.year == 2017 and self.energy == 13: result.append("Fall17P2A")
+    return result
 
   @property
   def genproductionscommit(self):
     return "1383619647949814646806a6fc8b0ecd3228f293"
+
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2018: return "20f59357146e08e48132cfd73d0fd72ca08b6b30"
+    return super(MINLOMCSample, self).genproductionscommitforfragment
 
   @property
   def nfinalparticles(self):
@@ -150,8 +160,9 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   @classmethod
   def allsamples(cls):
     for mass in 125, 300:
-        for decaymode in "4l",:
-            yield cls(2017, decaymode, mass)
+      for decaymode in "4l",:
+        for year in 2017, 2018:
+          yield cls(year, decaymode, mass)
     yield cls(2017, "4l", 125, energy=14)
 
   @property

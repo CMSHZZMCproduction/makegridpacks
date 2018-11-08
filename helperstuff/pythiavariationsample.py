@@ -15,10 +15,10 @@ class VariationSample(MCSampleBase):
     self.mainsample = mainsample
     self.variation = variation
     super(VariationSample, self).__init__(year=mainsample.year)
-    if self.filterefficiency is None:
+    if self.filterefficiency is None and self.mainsample.filterefficiency is not None:
       self.filterefficiency = self.mainsample.filterefficiency
     if (self.filterefficiencynominal, self.filterefficiencyerror) != (self.mainsample.filterefficiencynominal, self.mainsample.filterefficiencyerror) and self.mainsample.filterefficiencynominal is not None is not self.mainsample.filterefficiencyerror:
-      raise ValueError("Match efficiency doesn't match!\n{}, {}\n{}, {}".format(
+      raise ValueError("Filter efficiency doesn't match!\n{}, {}\n{}, {}".format(
         self, self.mainsample, self.filterefficiency, self.mainsample.filterefficiency
       ))
   @property
@@ -311,7 +311,9 @@ class PythiaVariationSample(VariationSample):
     raise ValueError("No nevents for {}".format(self))
   @property
   def tags(self):
-    return "HZZ", "Fall17P2A"
+    result = ["HZZ"]
+    if self.year == 2017: result.append("Fall17P2A")
+    return result
   @property
   def fragmentname(self):
     result = self.mainsample.fragmentname
@@ -345,6 +347,7 @@ class PythiaVariationSample(VariationSample):
   def nominalsamples(cls):
     for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
       yield POWHEGJHUGenMassScanMCSample(2017, productionmode, "4l", 125)
+      yield POWHEGJHUGenMassScanMCSample(2018, productionmode, "4l", 125)
     for sample in MINLOMCSample.allsamples():
       if sample.energy == 13:
         yield sample
@@ -354,4 +357,5 @@ class PythiaVariationSample(VariationSample):
     for nominal in cls.nominalsamples():
       for systematic in "TuneUp", "TuneDown", "ScaleExtension":
         if isinstance(nominal, MINLOMCSample) and systematic == "ScaleExtension": continue
+        if nominal.year != 2017 and systematic == "ScaleExtension": continue
         yield cls(nominal, systematic)

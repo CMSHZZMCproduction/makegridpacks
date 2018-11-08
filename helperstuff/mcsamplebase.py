@@ -462,12 +462,14 @@ class MCSampleBase(JsonDict):
         return "found prepid: {}".format(self.prepid)
 
     if self.filterefficiency is None and not self.needsupdateiffailed:
+      if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): self.needsupdate=True; return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
       if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
       return self.findfilterefficiency()
 
     if not (self.sizeperevent and self.timeperevent) and not self.needsupdateiffailed:
+      if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): self.needsupdate=True; return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
       if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
@@ -480,6 +482,7 @@ class MCSampleBase(JsonDict):
       badrequestqueue.add(self)
 
     if (self.approval, self.status) == ("none", "new"):
+      if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): self.needsupdate=True; return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
       if self.needsoptionreset:
         if not self.optionreset():
           return "need to do option reset but failed"
@@ -507,6 +510,7 @@ class MCSampleBase(JsonDict):
         if result: return result
       return "validation is running"
     if (self.approval, self.status) == ("validation", "validation"):
+      if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
       self.gettimepereventfromMcM()
       if setneedsupdate and not self.needsupdate:
         result = self.setneedsupdate()
