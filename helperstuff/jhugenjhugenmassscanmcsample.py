@@ -115,7 +115,9 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
   @property
   def defaulttimeperevent(self):
-    return 30
+    if self.productionmode == "bbH": return 100
+    if self.productionmode == "tqH": return 30
+    if self.productionmode == "ggZH": return 3
     assert False
 
   @property
