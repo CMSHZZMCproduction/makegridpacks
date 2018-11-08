@@ -133,6 +133,11 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
     return "138efefa8acdcc246a0df4512bef3f660574cb77"
 
   @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2018: return "20f59357146e08e48132cfd73d0fd72ca08b6b30"
+    return super(MCFMAnomCoupMCSample, self).genproductionscommitforfragment
+
+  @property
   def fragmentname(self):
     return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_LHE_pythia8_cff.py"
 

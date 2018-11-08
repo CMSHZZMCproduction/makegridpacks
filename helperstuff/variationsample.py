@@ -146,13 +146,31 @@ class ExtensionSample(ExtensionSampleBase):
       if self.year == 2018:
         if self.mainmainsample.finalstate == "4l": return 100000000
         if self.mainmainsample.finalstate == "2l2nu": return 50000000
+
+    from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
+    if isinstance(self.mainmainsample, JHUGenJHUGenAnomCoupMCSample) and self.mainmainsample.productionmode == "HJJ":
+      return 1500000 - 250000
+
     assert False, self
+
+  @property
+  def notes(self):
+    if isinstance(self.mainsample, RunIIFall17DRPremix_nonsubmitted): return self.mainmainsample.notes
+    return super(ExtensionSample, self).notes
 
   @classmethod
   def samplestoextend(cls):
     from qqZZmcsample import QQZZMCSample
     yield RedoSample(QQZZMCSample(2018, "4l"))
     yield RedoSample(QQZZMCSample(2018, "2l2nu"))
+
+    from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
+    yield RunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenAnomCoupMCSample(2017, "HJJ", "4l", 125, "SM"))
+    yield RunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenAnomCoupMCSample(2017, "HJJ", "4l", 125, "a3"))
+    yield RunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenAnomCoupMCSample(2017, "HJJ", "4l", 125, "a3mix"))
+    yield JHUGenJHUGenAnomCoupMCSample(2018, "HJJ", "4l", 125, "SM")
+    yield JHUGenJHUGenAnomCoupMCSample(2018, "HJJ", "4l", 125, "a3")
+    yield JHUGenJHUGenAnomCoupMCSample(2018, "HJJ", "4l", 125, "a3mix")
 
   @classmethod
   def allsamples(cls):
@@ -241,7 +259,6 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
     from jhugenjhugenmassscanmcsample import JHUGenJHUGenMassScanMCSample
     from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
     from mcfmanomalouscouplings import MCFMAnomCoupMCSample
-    from pythiavariationsample import PythiaVariationSample
     for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 in (JHUGenJHUGenAnomCoupMCSample, POWHEGJHUGenAnomCoupMCSample, JHUGenJHUGenMassScanMCSample, POWHEGJHUGenMassScanMCSample, MCFMAnomCoupMCSample, PythiaVariationSample), __docheck=False, includefinished=True, filter=lambda x: x.year == 2017):
       if any(_.prepid == s.prepid for _ in requests):
         yield cls(mainsample=s, reason="\n\nRunIIFall17DRPremix_nonsubmitted")

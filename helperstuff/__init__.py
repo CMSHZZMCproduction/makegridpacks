@@ -6,7 +6,7 @@ def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda 
   #import all modules that have classes that should be considered here
   import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, \
          powhegjhugenanomalouscouplings, powhegjhugenmassscanmcsample, powhegjhugenlifetime, \
-         minlomcsample, mcfmanomalouscouplings, pythiavariationsample, phantommcsample, \
+         minlomcsample, mcfmanomalouscouplings, variationsample, phantommcsample, \
          qqZZmcsample, clonedrequest, gridpackbysomeoneelse
 
   if __docheck: __checkforduplicates()
