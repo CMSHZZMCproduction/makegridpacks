@@ -151,6 +151,10 @@ class ExtensionSample(ExtensionSampleBase):
     if isinstance(self.mainmainsample, JHUGenJHUGenAnomCoupMCSample) and self.mainmainsample.productionmode == "HJJ":
       return 1500000 - 250000
 
+    from gridpackbysomeoneelse import MadGraphHJJFromThomasPlusJHUGen
+    if isinstance(self.mainsample, MadGraphHJJFromThomasPlusJHUGen):
+      return 3000000 - 500000
+
     assert False, self
 
   @property
@@ -171,6 +175,11 @@ class ExtensionSample(ExtensionSampleBase):
     yield JHUGenJHUGenAnomCoupMCSample(2018, "HJJ", "4l", 125, "SM")
     yield JHUGenJHUGenAnomCoupMCSample(2018, "HJJ", "4l", 125, "a3")
     yield JHUGenJHUGenAnomCoupMCSample(2018, "HJJ", "4l", 125, "a3mix")
+
+    from gridpackbysomeoneelse import MadGraphHJJFromThomasPlusJHUGen
+    for year in 2016, 2017, 2018:
+      for coupling in "SM", "a3", "a3mix":
+        yield MadGraphHJJFromThomasPlusJHUGen(year, coupling, "H012J")
 
   @classmethod
   def allsamples(cls):
