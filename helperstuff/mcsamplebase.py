@@ -493,7 +493,7 @@ class MCSampleBase(JsonDict):
           badrequestqueue.add(self)
         return "needs update on McM, sending it there"
       if not self.dovalidation: return "not starting the validation"
-      if self.nthreads > 1 and self.fullinfo["history"][-1]["action"] == "failed":
+      if self.nthreads > 1 and self.fullinfo["history"][-1]["action"] == "failed" and self.fullinfo["validation"]["validations_count"] == 1:
         self.nthreads /= 2
         self.updaterequest()
         return "validation failed, decreasing the number of threads"
