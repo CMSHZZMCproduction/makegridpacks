@@ -946,7 +946,7 @@ class MCSampleBase(JsonDict):
     return result[0]
 
   def gettimepereventfromMcM(self):
-    if (self.timeperevent is None or self.resettimeperevent) and not (self.prepid and self.status in ("approved", "submitted", "done")): return
+    if (self.timeperevent is None or self.resettimeperevent) and not (self.prepid and self.status in ("approved", "submitted", "done")) and not (self.status in ("validation", "defined") and not self.needsupdate): return
     needsupdate = self.needsupdate
     needsupdateiffailed = self.needsupdateiffailed
     timeperevent = self.fullinfo["time_event"][0]

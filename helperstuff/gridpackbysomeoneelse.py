@@ -358,7 +358,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
   @property
   def datasetname(self):
     if self.__njets == "HJJ": firstpart = "JJ"
-    elif self.__njets == "H012J": firstpart == "GluGlu"
+    elif self.__njets == "H012J": firstpart = "GluGlu"
 
     if self.__coupling == "SM":
       return firstpart+"Higgs0PMToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"

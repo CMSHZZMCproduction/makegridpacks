@@ -132,6 +132,8 @@ class ExtensionSampleBase(VariationSample):
   @property
   def genproductionscommit(self): return self.mainsample.genproductionscommit
   @property
+  def genproductionscommitforfragment(self): return self.mainsample.genproductionscommitforfragment
+  @property
   def extensionnumber(self): return self.mainsample.extensionnumber+1
 
 class ExtensionSample(ExtensionSampleBase):
@@ -196,7 +198,7 @@ class ExtensionSample(ExtensionSampleBase):
       if line.strip() == "* [WARNING] Is 100000000 events what you really wanted - please check!":
         #yes it is
         return "ok"
-    return super(ExtensionSample, self).process_request_fragment_check_warning(line)
+    return super(ExtensionSample, self).handle_request_fragment_check_warning(line)
 
 class RedoSampleBase(ExtensionSampleBase):
   def __init__(self, mainsample, reason=None):
