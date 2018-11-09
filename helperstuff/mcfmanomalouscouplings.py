@@ -167,3 +167,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
   @property
   def responsible(self):
      return "hroskes"
+
+  @property
+  def maxallowedtimeperevent(self):
+    return 175
