@@ -6,8 +6,9 @@
                     "SM": {
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
-                        "needsupdate": true,
-                        "prepid": "HIG-RunIISummer15wmLHEGS-02229"
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02229",
+                        "sizeperevent": 734.0746666666668,
+                        "timeperevent": 34.7485
                     },
                     "a3": {
                         "filterefficiency": 1,
@@ -178,13 +179,25 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
-                        "prepid": "HIG-RunIISummer15wmLHEGS-02230"
+                        "filterefficiency": 0.21447916666666667,
+                        "filterefficiencyerror": 0.004189245329469643,
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02230",
+                        "sizeperevent": 834.8165420883925,
+                        "timeperevent": 10.77418553181156
                     },
                     "a3": {
-                        "prepid": "HIG-RunIISummer15wmLHEGS-02231"
+                        "filterefficiency": 0.21458333333333332,
+                        "filterefficiencyerror": 0.004189984665704947,
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02231",
+                        "sizeperevent": 771,
+                        "timeperevent": 9.49352
                     },
                     "a3mix": {
-                        "prepid": "HIG-RunIISummer15wmLHEGS-02232"
+                        "filterefficiency": 0.21177083333333332,
+                        "filterefficiencyerror": 0.004169881436696758,
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02232",
+                        "sizeperevent": 839.3993444171176,
+                        "timeperevent": 10.422057427447122
                     }
                 }
             }
@@ -2614,6 +2627,7 @@
                         "4e": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
+                            "finished": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-01857",
                             "sizeperevent": 649,
                             "timeperevent": 105.85852854528152
@@ -2683,13 +2697,25 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
-                        "prepid": "HIG-RunIIFall17wmLHEGS-03380"
+                        "filterefficiency": 0.21875,
+                        "filterefficiencyerror": 0.004219232225525951,
+                        "prepid": "HIG-RunIIFall17wmLHEGS-03380",
+                        "sizeperevent": 746.5291580952381,
+                        "timeperevent": 4.1350237725889
                     },
                     "a3": {
-                        "prepid": "HIG-RunIIFall17wmLHEGS-03381"
+                        "filterefficiency": 0.2090625,
+                        "filterefficiencyerror": 0.004150243103995912,
+                        "prepid": "HIG-RunIIFall17wmLHEGS-03381",
+                        "sizeperevent": 746.4372029098154,
+                        "timeperevent": 4.017003508267928
                     },
                     "a3mix": {
-                        "prepid": "HIG-RunIIFall17wmLHEGS-03382"
+                        "filterefficiency": 0.22104166666666666,
+                        "filterefficiencyerror": 0.004235050278429024,
+                        "nthreads": 4,
+                        "prepid": "HIG-RunIIFall17wmLHEGS-03382",
+                        "sizeperevent": 748.2225547219601
                     }
                 }
             }
@@ -6328,7 +6354,8 @@
                         "filterefficiencyerror": 0.0,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00474",
-                        "sizeperevent": 652.5836243478261,
+                        "sizeperevent": 663.1602086956522,
+                        "timeperevent": 74.73506419742014,
                         "xsec": 1.37763,
                         "xsecerror": 0.0348474
                     },
@@ -6364,7 +6391,8 @@
                         "filterefficiencyerror": 0.0,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00471",
-                        "sizeperevent": 601.4130086956521,
+                        "sizeperevent": 577.5582608695652,
+                        "timeperevent": 46.73989249824725,
                         "xsec": 1.37763,
                         "xsecerror": 0.0348474
                     },
@@ -6673,10 +6701,19 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
-                        "prepid": "HIG-RunIIFall18wmLHEGS-00504"
+                        "filterefficiency": 0.2109375,
+                        "filterefficiencyerror": 0.004163868282290594,
+                        "nthreads": 4,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00504",
+                        "resettimeperevent": true,
+                        "sizeperevent": 763.2311384493827
                     },
                     "a3": {
-                        "prepid": "HIG-RunIIFall18wmLHEGS-00505"
+                        "filterefficiency": 0.21666666666666667,
+                        "filterefficiencyerror": 0.004204687639783501,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00505",
+                        "sizeperevent": 764.3536787692309,
+                        "timeperevent": 4.812141072901959
                     },
                     "a3mix": {
                         "prepid": "HIG-RunIIFall18wmLHEGS-00506"
