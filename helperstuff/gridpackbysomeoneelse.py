@@ -193,18 +193,6 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
       return [script]+cards
   @property
   def madgraphcards(self):
-    if self.year == 2016:
-      couplingname = {
-        "SM": "",
-        "a3": "Pseudoscalar",
-        "a3mix": "Maxmix",
-      }[self.__coupling]
-      if self.__njets == "H012J":
-        folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/GluGluTo{coupling}HToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8")
-        return [
-          os.path.join(folder, "GluGluTo{coupling}HToTauTau_M125_13TeV_amcatnloFXFX_pythia8_{}.dat").format(_, coupling=couplingname)
-            for _ in ("param_card", "proc_card", "run_card", "extramodels")
-        ]
     if self.year in (2017, 2018):
       if self.__njets == "H012J":
         if self.__coupling == "SM":
@@ -219,18 +207,20 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
               "ggh012j_5f_NLO_FXFX_125_run_card.dat",
             )
           ]
-        elif self.__coupling == "a3":
-          folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/GluGluToPseudoscalarHToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8/")
-          return [
-            os.path.join(folder, "GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_"+_+".dat")
-              for _ in ("extramodels", "param_card", "proc_card", "run_card")
-          ]
-        elif self.__coupling == "a3mix":
-          folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/GluGluToMaxmixHToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8/")
-          return [
-            os.path.join(folder, "GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_"+_+".dat")
-              for _ in ("extramodels", "param_card", "proc_card", "run_card")
-          ]
+
+    couplingname = {
+      "SM": "",
+      "a3": "Pseudoscalar",
+      "a3mix": "Maxmix",
+    }[self.__coupling]
+    yearfolder = {2016: "pre2017", 2017: "2017", 2018: "2017"}[self.year]
+    njets = {"H012J": "012", "HJJ": "Two"}[self.__njets]
+    njetsinfilename = {"H012J": "", "HJJ": "PlusTwoJets"}[self.__njets]
+    folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/{yearfolder}/13TeV/Higgs/GluGluTo{coupling}HToTauTauPlus{njets}Jets_M125_13TeV_amcatnloFXFX_pythia8")
+    return [
+      os.path.join(folder, "GluGluTo{coupling}HToTauTau{njetsinfilename}_M125_13TeV_amcatnloFXFX_pythia8_{}.dat").format(_, coupling=couplingname, njets=njets, yearfolder=yearfolder, njetsinfilename=njetsinfilename)
+        for _ in ("param_card", "proc_card", "run_card", "extramodels")
+    ]
     assert False, self
 
   @property
@@ -370,6 +360,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
   def nmaxjets(self): return 2
   @property
   def genproductionscommit(self):
+    if self.__njets == "HJJ": return "d1f773cf0f2fb57c3bad824745eaac9a8958fc2d"
     if self.year == 2016:
       return "8245e42d267992a6d5f74898070eb82f2f2ca931"
     elif self.year in (2017, 2018):

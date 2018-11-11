@@ -171,3 +171,8 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
   @property
   def maxallowedtimeperevent(self):
     return 175
+
+  @property
+  def tweaktimepereventseed(self):
+    if self.year == 2018 and self.signalbkgbsi == "BKG" and self.finalstate in "ELEL MUMU": return 1
+    return super(MCFMAnomCoupMCSample, self).tweaktimepereventseed

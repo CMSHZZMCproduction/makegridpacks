@@ -350,6 +350,13 @@ class MCSampleBase(JsonDict):
               testjob = eval(testjob)  #sometimes it's a string
             except SyntaxError:
               pass                     #sometimes it's not
+          if self.tweaktimepereventseed:
+            lines = testjob.split("\n")
+            cmsdriverindex = {i for i, line in enumerate(lines) if "cmsDriver.py" in line}
+            assert len(cmsdriverindex) == 1, cmsdriverindex
+            cmsdriverindex = cmsdriverindex.pop()
+            lines.insert(cmsdriverindex+1, 'sed -i "/Services/aprocess.RandomNumberGeneratorService.externalLHEProducer.initialSeed = process.RandomNumberGeneratorService.externalLHEProducer.initialSeed.value() + {:d}" *_cfg.py'.format(self.tweaktimepereventseed))
+            testjob = "\n".join(lines)
           with open(self.prepid, "w") as newf:
             newf.write(testjob)
           os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
@@ -1034,6 +1041,8 @@ class MCSampleBase(JsonDict):
                 differentgenparameters.add(gpkey)
               else:
                 raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(gpkey, old[key][0].get(gpkey), new[key][0].get(gpkey), self.prepid))
+        elif key == "validation" and old[key] == {} and new[key] == {'double_time': False}:
+          pass  #not sure what this is about
         else:
           raise ValueError("Don't know what to do with {} ({} --> {}) for {}".format(key, old.get(key), new.get(key), self.prepid))
     if setneedsupdate or setneedsupdateiffailed:
@@ -1097,6 +1106,10 @@ class MCSampleBase(JsonDict):
 
   def handle_request_fragment_check_caution(self, line):
     return "request_fragment_check gave an unhandled caution!"
+
+  @property
+  def tweaktimepereventseed(self):
+    return None
 
 class MCSampleBase_DefaultCampaign(MCSampleBase):
   @property

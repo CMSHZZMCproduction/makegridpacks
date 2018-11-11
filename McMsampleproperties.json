@@ -4,8 +4,13 @@
             "4l": {
                 "125": {
                     "SM": {
-                        "needsupdate": true,
                         "prepid": "HIG-RunIISummer15wmLHEGS-02229"
+                    },
+                    "a3": {
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02233"
+                    },
+                    "a3mix": {
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02234"
                     }
                 }
             }
@@ -166,14 +171,13 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
-                        "needsupdate": true,
                         "prepid": "HIG-RunIISummer15wmLHEGS-02230"
                     },
                     "a3": {
-                        "needsupdate": true
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02231"
                     },
                     "a3mix": {
-                        "needsupdate": true
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02232"
                     }
                 }
             }
@@ -2672,10 +2676,11 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
-                        "needsupdate": true
+                        "prepid": "HIG-RunIIFall17wmLHEGS-03380"
                     },
                     "a3": {
-                        "needsupdate": true
+                        "needsupdate": true,
+                        "prepid": "HIG-RunIIFall17wmLHEGS-03381"
                     },
                     "a3mix": {
                         "needsupdate": true
