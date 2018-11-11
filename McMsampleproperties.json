@@ -4,12 +4,19 @@
             "4l": {
                 "125": {
                     "SM": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
+                        "needsupdate": true,
                         "prepid": "HIG-RunIISummer15wmLHEGS-02229"
                     },
                     "a3": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
                         "prepid": "HIG-RunIISummer15wmLHEGS-02233"
                     },
                     "a3mix": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
                         "prepid": "HIG-RunIISummer15wmLHEGS-02234"
                     }
                 }
@@ -2679,11 +2686,10 @@
                         "prepid": "HIG-RunIIFall17wmLHEGS-03380"
                     },
                     "a3": {
-                        "needsupdate": true,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03381"
                     },
                     "a3mix": {
-                        "needsupdate": true
+                        "prepid": "HIG-RunIIFall17wmLHEGS-03382"
                     }
                 }
             }
@@ -6667,13 +6673,13 @@
             "HJJ": {
                 "madgraphJHUGen": {
                     "SM": {
-                        "needsupdate": true
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00504"
                     },
                     "a3": {
-                        "needsupdate": true
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00505"
                     },
                     "a3mix": {
-                        "needsupdate": true
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00506"
                     }
                 }
             }
@@ -8876,8 +8882,8 @@
                         "filterefficiencyerror": 0.0,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00456",
-                        "sizeperevent": 603.2047938223938,
-                        "timeperevent": 23.46079583711639
+                        "sizeperevent": 622,
+                        "timeperevent": 33.883143813615604
                     },
                     "TuneUp": {
                         "filterefficiency": 1.0,
