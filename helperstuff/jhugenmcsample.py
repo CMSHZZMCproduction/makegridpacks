@@ -31,6 +31,10 @@ class UsesJHUGenLibraries(MCSampleBase):
         raise RuntimeError("Couldn't find JHU Generator v[0-9]+[.][0-9]+[.][0-9]+, see JHUGenoutput.txt")
       if match.group(1) != self.JHUGenversion:
         raise ValueError("Wrong JHUGen version: {} != {}".format(match.group(1), self.JHUGenversion))
+
+      indatasetname = "JHUGen"+self.JHUGenversion.replace(".", "").upper()
+      if indatasetname not in self.datasetname:
+        raise ValueError("Expected to find "+indatasetname+" in dataset name "+self.datasetname+" for "+str(self))
     return result
 
   @property

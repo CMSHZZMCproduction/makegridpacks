@@ -1,4 +1,4 @@
-import abc, contextlib, csv, os, urllib
+import abc, contextlib, csv, os, re, urllib
 
 from utilities import genproductions
 
@@ -82,11 +82,11 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
     result += "_M125_13TeV"
     if isinstance(self, POWHEGJHUGenMCSample):
       result += "_powheg2"
-    result += "_JHUGenV7011_pythia8"
+    result += "_JHUGen"+self.JHUGenversion.upper().replace(".", "")+"_pythia8"
 
     pm = self.productionmode.replace("HJJ", "JJH").replace("H", "Higgs").replace("ggHiggs", "Higgs")
     dm = self.decaymode.upper().replace("NU", "Nu")
-    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV7011_"]
+    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGen"+self.JHUGenversion.upper().replace(".", "")+"_"]
     shouldntbethere = []
     if isinstance(self, POWHEGJHUGenMCSample):
       searchfor.append("powheg")
@@ -95,7 +95,7 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
     if any(_ not in result for _ in searchfor) or any(_.lower() in result.lower() for _ in shouldntbethere):
       raise ValueError("Dataset name doesn't make sense:\n{}\n{}\nNOT {}\n{}".format(result, searchfor, shouldntbethere, self))
 
-    searchfor = result.replace("Zg", "").replace("JHUGenV7011", "JHUgenV6")
+    searchfor = re.sub("JHUGenV[0-9]+", "JHUgenV6", result.replace("Zg", ""))
     with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC_anomalous.csv")) as f:
       reader = csv.DictReader(f)
       for row in reader:
@@ -110,6 +110,7 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
   def nevents(self):
     if self.decaymode == "4l":
       if self.productionmode in ("HJJ", "ttH"):
+        if self.year == 2016 and self.productionmode == "HJJ": return 1500000 - 250000
         return 250000
       elif self.productionmode in ("ggH", "VBF", "WH"):
         return 500000
