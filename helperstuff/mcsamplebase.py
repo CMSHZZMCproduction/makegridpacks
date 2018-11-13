@@ -167,7 +167,7 @@ class MCSampleBase(JsonDict):
     return result
   @property
   def workdir(self):
-    return self.workdirforgridpack
+    return self.workdirforgridpack.rstrip("/") + "_" + str(self.year) + "/"
 
   @property
   def cvmfstarballexists(self): return os.path.exists(self.cvmfstarball)

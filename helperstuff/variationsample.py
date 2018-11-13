@@ -387,3 +387,36 @@ class PythiaVariationSample(VariationSample):
         if isinstance(nominal, MINLOMCSample) and systematic == "ScaleExtension": continue
         if nominal.year != 2017 and systematic == "ScaleExtension": continue
         yield cls(nominal, systematic)
+
+class HJJWithPythiaLikePowheg(VariationSample):
+  @property
+  def datasetname(self):
+    result = self.mainsample.datasetname
+    if self.variation != "ScaleExtension":
+      result = result.replace("13TeV", "13TeV_"+self.variation.lower())
+      assert self.variation.lower() in result
+    return result
+  @classmethod
+  def allsamples(cls):
+    from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
+    for year in 2016, 2017, 2018:
+      for coupling in "SM", "a3", "a3mix":
+        yield cls(JHUGenJHUGenAnomCoupMCSample(year, "HJJ", "4l", 125, coupling), "powhegEmissionVeto")
+  @property
+  def genproductionscommit(self):
+    return self.mainsample.genproductionscommit
+  @property
+  def genproductionscommitforfragment(self):
+    return self.mainsample.genproductionscommitforfragment
+  @property
+  def fragmentname(self):
+    if self.year in (2017, 2018):
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_2p_LHE_pythia8_cff.py"
+    if self.year == 2016:
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCUETP8M1_13TeV_powhegEmissionVeto_2p_LHE_pythia8_cff.py"
+  @property
+  def nevents(self):
+    return 1500000
+  @property
+  def responsible(self):
+    return "hroskes"
