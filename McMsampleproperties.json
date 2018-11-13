@@ -13,14 +13,16 @@
                     "a3": {
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
-                        "prepid": "HIG-RunIISummer15wmLHEGS-02233"
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02233",
+                        "sizeperevent": 728,
+                        "timeperevent": 29.8059
                     },
                     "a3mix": {
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "prepid": "HIG-RunIISummer15wmLHEGS-02234",
-                        "sizeperevent": 714.4693333333333,
-                        "timeperevent": 29.4788
+                        "sizeperevent": 694,
+                        "timeperevent": 31.8635
                     }
                 }
             }
@@ -2712,8 +2714,8 @@
                         "filterefficiencyerror": 0.004150243103995912,
                         "nthreads": 4,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03381",
-                        "sizeperevent": 734.9248,
-                        "timeperevent": 5.588965147213342
+                        "sizeperevent": 729,
+                        "timeperevent": 2.359882005899705
                     },
                     "a3mix": {
                         "filterefficiency": 0.22104166666666666,
@@ -6725,10 +6727,11 @@
                     "a3mix": {
                         "filterefficiency": 0.2175,
                         "filterefficiencyerror": 0.004210524388363046,
-                        "nthreads": 2,
+                        "needsupdateiffailed": true,
+                        "nthreads": 1,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00506",
-                        "sizeperevent": 831.184896,
-                        "timeperevent": 21.389962546175582
+                        "sizeperevent": 737.9413333333333,
+                        "timeperevent": 18.821297427316853
                     }
                 }
             }
