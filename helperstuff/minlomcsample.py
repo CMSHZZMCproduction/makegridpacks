@@ -181,3 +181,22 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   @property
   def maxallowedtimeperevent(self):
     return 500
+
+class MINLOatLO(MINLOMCSample):
+  @property
+  def identifiers(self):
+    return super(MINLOatLO, self).identifiers + ("LO_LOPDF",)
+  @property
+  def powhegcard(self):
+    return super(MINLOatLO, self).powhegcard.replace(".input", "_LO_LOPDF.input")
+  def cvmfstarball_anyversion(self, version):
+    result = super(MINLOatLO, self).cvmfstarball_anyversion(version)
+    result = result.replace("13TeV", "13TeV_LO_LOPDF")
+    assert LO_LOPDF in result, result
+    return result
+  @property
+  def datasetname(self):
+    return "GluGluHToZZTo4L_M%d_%dTeV_powheg2_HJJ_JHUGenV7011_pythia8"%(self.mass, self.energy)
+  @classmethod
+  def allsamples(cls):
+    yield cls(2018, "4l", 125)
