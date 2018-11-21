@@ -453,7 +453,8 @@ class MCSampleBase(JsonDict):
         from . import allsamples
         for _ in allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball):
           _.needsupdate = True
-        os.remove(self.foreostarball)
+        if self.cvmfstarball.startswith("/cvmfs/"):
+          os.remove(self.foreostarball)
       else:
         return "gridpack exists on cvmfs, but it's wrong!"
 

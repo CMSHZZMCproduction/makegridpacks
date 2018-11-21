@@ -1,6 +1,6 @@
 import contextlib, csv, os, re, subprocess, urllib
 
-from utilities import cache, cd, genproductions, makecards
+from utilities import cache, cd, genproductions, here, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
 from mcsamplebase import MCSampleBase_DefaultCampaign
@@ -48,11 +48,6 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   @property
   def powhegsubmissionstrategy(self):
     return "multicore"
-
-  def createtarball(self):
-    if self.energy == 13:
-      return "making a minlo tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)
-    return super(MINLOMCSample, self).createtarball()
 
   @property
   def powhegcard(self):
@@ -192,7 +187,7 @@ class MINLOatLO(MINLOMCSample):
   def cvmfstarball_anyversion(self, version):
     result = super(MINLOatLO, self).cvmfstarball_anyversion(version)
     result = result.replace("13TeV", "13TeV_LO_LOPDF")
-    assert LO_LOPDF in result, result
+    assert "LO_LOPDF" in result, result
     return result
   @property
   def datasetname(self):
@@ -200,3 +195,22 @@ class MINLOatLO(MINLOMCSample):
   @classmethod
   def allsamples(cls):
     yield cls(2018, "4l", 125)
+  @property
+  def makegridpackcommand(self):
+    result = super(MINLOatLO, self).makegridpackcommand
+    result += ["-d", "1"]
+    return result
+
+  @property
+  def cvmfstarball(self):
+    return super(MINLOatLO, self).cvmfstarball.replace("/cvmfs/cms.cern.ch/phys_generator/", here+"/")
+
+  @property
+  def dovalidation(self):
+    return False
+
+  @property
+  def creategridpackqueue(self):
+    if super(MINLOatLO, self).creategridpackqueue is None: return None
+    return "1nh"
+
