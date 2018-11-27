@@ -22,6 +22,7 @@ from utilities import cache
 from collections import Counter, defaultdict
 @cache
 def __checkforduplicates():
+  return
   bad = set()
   identifiers = Counter()
   prepids = Counter()

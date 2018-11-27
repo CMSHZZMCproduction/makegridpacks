@@ -212,6 +212,7 @@
                         },
                         "filterefficiency": 0.32864583333333336,
                         "filterefficiencyerror": 0.004794069139376497,
+                        "finished": true,
                         "prepid": "HIG-RunIISummer15wmLHEGS-02223",
                         "sizeperevent": 677,
                         "timeperevent": 14.1752
@@ -2057,6 +2058,13 @@
                         "prepid": "HIG-PhaseIISummer17wmLHEGENOnly-00012",
                         "sizeperevent": 102,
                         "timeperevent": 14.643603966659443
+                    },
+                    "LO_LOPDF": {
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall17wmLHEGS-03402",
+                        "sizeperevent": 367.32,
+                        "timeperevent": 4.0992846748242435
                     },
                     "TuneDown": {
                         "filterefficiency": 1,
@@ -6832,8 +6840,11 @@
             "4l": {
                 "125": {
                     "LO_LOPDF": {
-                        "needsupdate": true,
-                        "prepid": "HIG-RunIIFall18wmLHEGS-00575"
+                        "filterefficiency": 1,
+                        "filterefficiencyerror": 0.0,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-00575",
+                        "sizeperevent": 374.13866666666667,
+                        "timeperevent": 4.272682603772779
                     },
                     "TuneDown": {
                         "filterefficiency": 1.0,
@@ -8467,6 +8478,7 @@
                     "a3mix": {
                         "filterefficiency": 0.15119,
                         "filterefficiencyerror": 0.0011328353097427712,
+                        "finished": true,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00333",
                         "sizeperevent": 617,
                         "timeperevent": 0.9399291293436476
@@ -9115,6 +9127,7 @@
                 "124": {
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0.0,
+                    "finished": true,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00039",
                     "sizeperevent": 606,
                     "timeperevent": 4.456864239458402
@@ -9198,6 +9211,7 @@
                     "a3mix": {
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
+                        "finished": true,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00312",
                         "sizeperevent": 621,
                         "timeperevent": 4.942469653236329

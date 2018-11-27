@@ -188,6 +188,7 @@ class MINLOatLO(MINLOMCSample):
     result = super(MINLOatLO, self).cvmfstarball_anyversion(version)
     result = result.replace("13TeV", "13TeV_LO_LOPDF")
     assert "LO_LOPDF" in result, result
+    print result
     return result
   @property
   def datasetname(self):
@@ -195,15 +196,29 @@ class MINLOatLO(MINLOMCSample):
   @classmethod
   def allsamples(cls):
     yield cls(2018, "4l", 125)
+    yield cls(2017, "4l", 125)
   @property
   def makegridpackcommand(self):
     result = super(MINLOatLO, self).makegridpackcommand
     result += ["-d", "1"]
     return result
+  @property
+  def tarballversion(self):
+    return 3
 
   @property
   def cvmfstarball(self):
     return super(MINLOatLO, self).cvmfstarball.replace("/cvmfs/cms.cern.ch/phys_generator/", here+"/")
+  @property
+  def genproductionscommit(self):
+    return "d389c962cc69bcec19c6473cde49497354466e84"
+  @property
+  def fragmentname(self):
+    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py"
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2017: return "0a45459a3c47f0b445f38fce310c1d354f182a00"
+    return super(MINLOatLO, self).genproductionscommitforfragment
 
   @property
   def dovalidation(self):
@@ -212,5 +227,11 @@ class MINLOatLO(MINLOMCSample):
   @property
   def creategridpackqueue(self):
     if super(MINLOatLO, self).creategridpackqueue is None: return None
+    if self.multicore_upto[0] == 3: return "1nd"
     return "1nh"
 
+  @property
+  def cardsurl(self):
+    result = super(MINLOatLO, self).cardsurl
+    result += "\n#/cvmfs/cms.cern.ch/phys_generator/gridpacks"
+    return result

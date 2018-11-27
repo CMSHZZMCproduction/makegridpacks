@@ -102,9 +102,9 @@ class POWHEGMCSample(MCSampleBase):
           contents = f.read()
           if "Backtrace" in contents or "cannot load grid files" in contents:
             os.remove(logfile)
-          if not contents.strip() and logfile.startswith("run_1_"):
+          elif not contents.strip() and logfile.startswith("run_1_"):
             os.remove(logfile)
-          if not self.gridpackjobsrunning and "powheginput WARNING: unused variable fakevirt" not in contents:
+          elif not self.gridpackjobsrunning and "powheginput WARNING: unused variable fakevirt" not in contents:
             os.remove(logfile)
       for coredump in glob.iglob("core.*"):
         os.remove(coredump)
