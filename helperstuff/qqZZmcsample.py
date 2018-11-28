@@ -1,6 +1,6 @@
 import os
 
-from utilities import genproductions
+from utilities import cacheaslist, genproductions
 
 from mcsamplebase import MCSampleBase_DefaultCampaign
 from powhegmcsample import POWHEGMCSample
@@ -112,6 +112,7 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
     assert False, "need to fill this\n"+self.cvmfstarball
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     yield cls(2018, "4l")
     yield cls(2018, "2l2nu")

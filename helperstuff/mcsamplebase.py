@@ -7,7 +7,7 @@ from McMScripts.manageRequests import createLHEProducer
 import patches
 
 from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitLSF
-from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, wget
+from utilities import cache, cacheaslist, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, wget
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
@@ -126,6 +126,7 @@ class MCSampleBase(JsonDict):
   def processmakegridpackstdout(self, stdout): "do nothing by default, powheg uses this"
 
   @abc.abstractmethod
+  @cacheaslist
   def allsamples(self): "should be a classmethod"
 
   def __eq__(self, other):

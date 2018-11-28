@@ -179,6 +179,13 @@ def cache(function):
       return newfunction(*args, **kwargs)
   return newfunction
 
+def cacheaslist(function):
+  @cache
+  @functools.wraps(function)
+  def newfunction(*args, **kwargs):
+    return list(function(*args, **kwargs))
+  return newfunction
+
 def wget(url, output=None):
   if output is None: output = os.path.basename(url)
   with contextlib.closing(urllib.urlopen(url)) as f, open(output, "w") as newf:

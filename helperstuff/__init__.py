@@ -22,13 +22,14 @@ from utilities import cache
 from collections import Counter, defaultdict
 @cache
 def __checkforduplicates():
-  return
   bad = set()
   identifiers = Counter()
   prepids = Counter()
+  datasets = Counter()
   for s in allsamples(onlymysamples=False, __docheck=False):
     identifiers[s.keys] += 1
     prepids[s.prepid] += 1
+    datasets[s.campaign, s.datasetname, s.extensionnumber] += 1
 
   for k, v in identifiers.iteritems():
     if v > 1:
@@ -41,3 +42,9 @@ def __checkforduplicates():
       bad.add("{} ({})".format(k, v))
   if bad:
     raise ValueError("Multiple samples with these prepids:\n" + "\n".join(bad))
+
+  for k, v in datasets.iteritems():
+    if k is not None and v > 1:
+      bad.add("{}, {}, {} ({})".format(*k+(v,)))
+  if bad:
+    raise ValueError("Multiple samples with the same campaign, dataset name, and extension number:\n" + "\n".join(bad))

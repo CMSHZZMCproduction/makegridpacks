@@ -2,7 +2,7 @@ import abc, contextlib, glob, os, re, subprocess, urllib
 
 import uncertainties
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
+from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
 
 from mcsamplebase import MCSampleBase_DefaultCampaign
 from mcsamplewithxsec import MCSampleWithXsec
@@ -86,6 +86,7 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     return "59eab4505ac61b2fcd677d82c15aa8d6d0ced28f"
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for signalbkgbsi in ["SIG", "BSI", "BKG"]:
       for finalstate in ["2e2mu","4e","4mu","2e2nue","2e2num","2e2nut","2mu2nue","2mu2num","2mu2nut"]:

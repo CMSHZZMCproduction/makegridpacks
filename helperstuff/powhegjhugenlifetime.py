@@ -1,6 +1,6 @@
 import contextlib, csv, os, re, subprocess, urllib
 
-from utilities import cache, cd, genproductions, makecards
+from utilities import cache, cacheaslist, cd, genproductions, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
 from mcsamplebase import MCSampleBase_DefaultCampaign
@@ -34,8 +34,10 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCam
 
   @property
   def decaycard(self):
-    decaymode = os.path.basename(POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, self.decaymode, self.mass).decaycard).replace(".input", "")
-    return os.path.join(genproductions, "bin/JHUGen/cards/decay/lifetime", "{}_CTau{}um.input".format(decaymode, self.lifetime))
+    decaymode = os.path.basename(POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, self.decaymode, 
+self.mass).decaycard).replace(".input", "")
+    return os.path.join(genproductions, "bin/JHUGen/cards/decay/lifetime", "{}_CTau{}um.input".format(decaymode, 
+self.lifetime))
 
   @property
   def powhegcardusesscript(self): return True
@@ -56,7 +58,8 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCam
       return os.path.join(folder, tarballname)
     tarballname = self.datasetname+".tgz"
     if version <= 3: tarballname = tarballname.replace("JHUGen", "JHUgen")
-    return os.path.join(folder, tarballname.replace(".tgz", "").replace("JHUGen", "JHUgen"), "v{}".format(version), tarballname)
+    return os.path.join(folder, tarballname.replace(".tgz", "").replace("JHUGen", "JHUgen"), "v{}".format(version), 
+tarballname)
 
   @property
   def datasetname(self):
@@ -82,6 +85,7 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCam
     raise ValueError("No fragment for {}".format(self))
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for lifetime in 50, 200, 800:
       yield cls(2017, "ggH", "4l", 125, lifetime)

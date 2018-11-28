@@ -1,6 +1,6 @@
 import contextlib, csv, os, re, subprocess, urllib
 
-from utilities import cache, cd, genproductions, makecards
+from utilities import cache, cacheaslist, cd, genproductions, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
 from jhugenjhugenmcsample import JHUGenJHUGenMCSample
@@ -90,6 +90,7 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     raise ValueError("No fragment for {}".format(self))
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for productionmode in "HJJ", "VBF", "ZH","WH","ttH" :
     #for productionmode in "HJJ", "VBF"  :

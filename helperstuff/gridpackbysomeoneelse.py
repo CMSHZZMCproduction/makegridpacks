@@ -1,6 +1,6 @@
 import abc, datetime, os, re, shutil
 
-from utilities import cdtemp, genproductions, KeepWhileOpenFile, mkdir_p
+from utilities import cacheaslist, cdtemp, genproductions, KeepWhileOpenFile, mkdir_p
 
 import patches
 
@@ -83,6 +83,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     assert False, self
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 30, 35:
       for eps in 1e-2,:

@@ -1,6 +1,6 @@
 import contextlib, csv, os, re, subprocess, urllib
 
-from utilities import cache, cd, genproductions, makecards
+from utilities import cache, cacheaslist, cd, genproductions, makecards
 
 from massscanmcsample import MassScanMCSample
 from jhugenjhugenmcsample import JHUGenJHUGenMCSample
@@ -181,6 +181,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
         return ()
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for year in 2017, 2018:
       for productionmode in "bbH", "tqH", "ggZH":

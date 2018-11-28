@@ -1,10 +1,10 @@
 from collections import namedtuple
-import abc, contextlib, csv, os, re, subprocess, urllib
+import abc, contextlib, csv, json, os, re, subprocess, urllib
 
 from mcsamplebase import MCSampleBase
 from minlomcsample import MINLOMCSample
 from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
-from utilities import here
+from utilities import cacheaslist, here
 
 class VariationSample(MCSampleBase):
   def __init__(self, mainsample, variation):
@@ -141,6 +141,8 @@ class ExtensionSample(ExtensionSampleBase):
   for extensions that are identical to the main sample
   except in the number of events
   """
+  def __init__(self, mainsample):
+    return super(ExtensionSample, self).__init__(mainsample=mainsample, variation="ext")
   @property
   def nevents(self):
     from qqZZmcsample import QQZZMCSample
@@ -184,9 +186,10 @@ class ExtensionSample(ExtensionSampleBase):
         yield MadGraphHJJFromThomasPlusJHUGen(year, coupling, "H012J")
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for _ in cls.samplestoextend():
-      yield cls(_, "ext")
+      yield cls(_)
 
   @property
   def responsible(self):
@@ -222,10 +225,6 @@ class RedoSampleBase(ExtensionSampleBase):
 class RedoSample(RedoSampleBase):
   @classmethod
   def allsamples(cls):
-    from qqZZmcsample import QQZZMCSample
-    yield cls(QQZZMCSample(2018, "4l"), reason="because it was prematurely force completed")
-    yield cls(QQZZMCSample(2018, "2l2nu"), reason="because it was prematurely force completed")
-
     for systematic in "TuneUp", "TuneDown":
       for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
         if productionmode == "ZH" and systematic == "TuneUp": continue
@@ -233,7 +232,7 @@ class RedoSample(RedoSampleBase):
       for mass in 125, 300:
         if mass == 125 or systematic == "TuneUp": continue
         yield cls(PythiaVariationSample(MINLOMCSample(2017, "4l", mass), systematic), reason="wrong tune variation settings\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5361/1/1/1/2/1/1/1/2/1.html")
-    
+
   variationname = "Redo"
 
   @property
@@ -247,6 +246,37 @@ class RedoSample(RedoSampleBase):
     if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00510": result += 2  #parallelize the gridpack
     return result
 
+class RedoForceCompletedSample(RedoSampleBase):
+  variationname = "Redo"
+
+  def __init__(self, mainsample):
+    super(RedoForceCompletedSample, self).__init__(mainsample=mainsample, reason="because it was prematurely force completed")
+
+  @classmethod
+  def allsamples(cls):
+    from qqZZmcsample import QQZZMCSample
+    yield cls(QQZZMCSample(2018, "4l"))
+    yield cls(QQZZMCSample(2018, "2l2nu"))
+
+  @property
+  def responsible(self):
+    return self.mainsample.responsible
+
+  @property
+  def nevents(self):
+    result = super(RedoForceCompletedSample, self).nevents
+    try:
+      finishedevents = {
+        reqmgr["content"]["pdmv_evts_in_das"]
+        for reqmgr in self.mainsample.fullinfo["reqmgr_name"]
+      }
+    except:
+      print json.dumps(self.mainsample.fullinfo, sort_keys=True, indent=4, separators=(',', ': '))
+      raise
+    if len(finishedevents) > 1:
+      raise ValueError("More than one value for pdmv_evts_in_DAS - take a look below:\n"+json.dumps(self.mainsample.fullinfo, sort_keys=True, indent=4, separators=(',', ': ')))
+    result -= finishedevents.pop()
+    return result
 
 class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
   variationname = "RunIIFall17DRPremix_nonsubmitted"

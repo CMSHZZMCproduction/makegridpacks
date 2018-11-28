@@ -2,7 +2,7 @@ from collections import namedtuple
 import os
 
 from jobsubmission import jobtype
-from utilities import cache, here, restful
+from utilities import cache, cacheaslist, here, restful
 
 from mcsamplebase import MCSampleBase
 
@@ -129,6 +129,7 @@ class ClonedRequest(MCSampleBase):
         return "hroskes"
     assert False, self
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     yield cls(2017, "HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
     for _ in 1, 2, 3, 4, 50, 51, 35:

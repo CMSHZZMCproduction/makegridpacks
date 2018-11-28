@@ -1,6 +1,6 @@
 import contextlib, csv, os, re, subprocess, urllib
 
-from utilities import cache, cd, genproductions, here, makecards
+from utilities import cache, cacheaslist, cd, genproductions, here, makecards
 
 from mcfmmcsample import MCFMMCSample
 from mcsamplebase import MCSampleBase_DefaultCampaign
@@ -155,6 +155,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
       return 1, 10
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for signalbkgbsi in [ "BSI","SIG", "BKG"]:
       for finalstate in ["ELTL",'MUTL','ELMU',"ELNU","MUMU","MUNU","TLTL","ELEL"]:

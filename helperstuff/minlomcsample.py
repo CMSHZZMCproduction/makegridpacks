@@ -1,6 +1,6 @@
 import contextlib, csv, os, re, subprocess, urllib
 
-from utilities import cache, cd, genproductions, here, makecards
+from utilities import cache, cacheaslist, cd, genproductions, here, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
 from mcsamplebase import MCSampleBase_DefaultCampaign
@@ -116,7 +116,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
     if self.energy == 13:
       return super(MINLOMCSample, self).campaign
     if self.energy == 14:
-      if year == 2017: return "PhaseIISummer17wmLHEGENOnly"
+      if self.year == 2017: return "PhaseIISummer17wmLHEGENOnly"
     assert False
 
   @property
@@ -153,6 +153,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   def doublevalidationtime(self): return True
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for mass in 125, 300:
       for decaymode in "4l",:

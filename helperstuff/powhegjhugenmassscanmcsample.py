@@ -1,6 +1,6 @@
 import contextlib, csv, os, re, subprocess, urllib
 
-from utilities import cache, cd, genproductions, makecards
+from utilities import cache, cacheaslist, cd, genproductions, makecards
 
 from massscanmcsample import MassScanMCSample
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
@@ -232,6 +232,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
         return 125,
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
       for decaymode in "4l", "2l2q", "2l2nu":

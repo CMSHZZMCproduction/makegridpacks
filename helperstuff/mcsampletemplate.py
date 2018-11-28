@@ -5,7 +5,7 @@ search for "fill this" to see all the things that need to be filled in
 
 import abc, contextlib, glob, os, re, subprocess, urllib
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
+from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
 
 from mcsamplebase import MCSampleBase
 
@@ -84,6 +84,7 @@ class MyMCSample(MCSampleBase):
     """
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     """
     fill this
