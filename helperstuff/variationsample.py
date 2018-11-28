@@ -4,7 +4,7 @@ import abc, contextlib, csv, json, os, re, subprocess, urllib
 from mcsamplebase import MCSampleBase
 from minlomcsample import MINLOMCSample
 from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
-from utilities import cacheaslist, here
+from utilities import cacheaslist, fullinfo, here
 
 class VariationSample(MCSampleBase):
   def __init__(self, mainsample, variation):
@@ -264,8 +264,8 @@ class RedoForceCompletedSample(RedoSampleBase):
     from qqZZmcsample import QQZZMCSample
     yield cls(QQZZMCSample(2018, "4l"))
     yield cls(QQZZMCSample(2018, "2l2nu"))
-    yield cls(ExtensionSample(QQZZMCSample(2017, "qqZZ", "4l")), prepidtouse="HIG-RunIIFall17wmLHEGS-02149")
-    yield cls(POWHEGJHUGenMassScanMCSample(2017, 'ggH', '4l', '450', prepidtouse="HIG-RunIIFall17wmLHEGS-02123")
+    yield cls(ExtensionSample(QQZZMCSample(2017, "4l")), prepidtouse="HIG-RunIIFall17wmLHEGS-02149")
+    yield cls(POWHEGJHUGenMassScanMCSample(2017, 'ggH', '4l', '450'), prepidtouse="HIG-RunIIFall17wmLHEGS-02123")
 
   @property
   def responsible(self):
@@ -274,9 +274,10 @@ class RedoForceCompletedSample(RedoSampleBase):
   @property
   def nevents(self):
     result = super(RedoForceCompletedSample, self).nevents
+    if result < 1000000: return result
     try:
       finishedevents = {
-        reqmgr["content"]["pdmv_evts_in_das"]
+        reqmgr["content"]["pdmv_evts_in_DAS"]
         for reqmgr in fullinfo(self.__prepidtouse)["reqmgr_name"]
       }
     except:

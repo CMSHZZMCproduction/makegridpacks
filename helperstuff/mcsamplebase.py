@@ -604,7 +604,7 @@ class MCSampleBase(JsonDict):
       clone["step"] in [self.prepid] + self.otherprepids and
       clone["updater"]["author_username"] == "pdmvserv"
     ):
-      raise ValueError(otherprepid + " was not cloned from " + self.prepid + " by pdmvserv\n" + json.dumps(clone))
+      raise ValueError(otherprepid + " was not cloned from " + str(self) + "("+str(self.prepid)+") by pdmvserv\n" + json.dumps(clone))
     for action in history:
       if (
         action["action"] == "update" and
