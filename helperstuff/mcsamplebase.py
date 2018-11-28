@@ -7,7 +7,7 @@ from McMScripts.manageRequests import createLHEProducer
 import patches
 
 from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitLSF
-from utilities import cache, cacheaslist, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, wget
+from utilities import cache, cacheaslist, cd, cdtemp, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, wget
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
@@ -587,6 +587,43 @@ class MCSampleBase(JsonDict):
       except KeyError:
         pass
   @property
+  def otherprepids(self):
+    """
+    This is meant to store prepids that were automatically cloned from this prepid to use in a new chain.
+    You don't have to set otherprepids unless you want to use them e.g. for RedoForceCompletedSample.
+    """
+    with cd(here):
+      return self.value.get("otherprepids", [])
+  def addotherprepid(self, otherprepid):
+    if otherprepid == self.prepid: return
+    if otherprepid in self.otherprepids: return
+    history = fullinfo(otherprepid)["history"]
+    clone = history[1]
+    if not (
+      clone["action"] == "clone" and
+      clone["step"] in [self.prepid] + self.otherprepids and
+      clone["updater"]["author_username"] == "pdmvserv"
+    ):
+      raise ValueError(otherprepid + " was not cloned from " + self.prepid + " by pdmvserv\n" + json.dumps(clone))
+    for action in history:
+      if (
+        action["action"] == "update" and
+        action["updater"]["author_username"] not in ("pdmvserv", "automatic")
+      ):
+        raise ValueError(otherprepid + " was updated by someone besides pdmvserv and automatic\n" + json.dumps(action))
+
+    with cd(here), self.writingdict():
+      if not self.otherprepids:
+        self.value["otherprepids"] = []
+      self.otherprepids.append(otherprepid)
+  @otherprepids.deleter
+  def otherprepids(self):
+    with cd(here), self.writingdict():
+      try:
+        del self.value["otherprepids"]
+      except KeyError:
+        pass
+  @property
   def timeperevent(self):
     with cd(here):
       return self.value.get("timeperevent")
@@ -942,17 +979,13 @@ class MCSampleBase(JsonDict):
     self.prepid = prepids.pop()
 
   @property
-  @cache
   def fullinfo(self):
     if not self.prepid: raise AttributeError("Can only call fullinfo once the prepid has been set")
-    result = restful().get("requests", query="prepid="+self.prepid)
-    if not result:
-      raise ValueError("mcm query for prepid="+self.prepid+" returned None!")
-    if len(result) == 0:
-      raise ValueError("mcm query for prepid="+self.prepid+" returned nothing!")
-    if len(result) > 1:
-      raise ValueError("mcm query for prepid="+self.prepid+" returned multiple results!")
-    return result[0]
+    return fullinfo(self.prepid)
+
+  def otherfullinfo(self, i):
+    if i==0: return self.fullinfo
+    return self.otherprepids[i-1].fullinfo
 
   def gettimepereventfromMcM(self):
     if (self.timeperevent is None or self.resettimeperevent) and not (self.prepid and self.status in ("approved", "submitted", "done")) and not (self.status in ("validation", "defined") and not self.needsupdate): return

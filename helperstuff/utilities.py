@@ -408,3 +408,14 @@ from jobsubmission import jobtype
 if not jobtype():
   sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
   import rest
+
+@cache
+def fullinfo(prepid):
+  result = restful().get("requests", query="prepid="+prepid)
+  if not result:
+    raise ValueError("mcm query for prepid="+prepid+" returned None!")
+  if len(result) == 0:
+    raise ValueError("mcm query for prepid="+prepid+" returned nothing!")
+  if len(result) > 1:
+    raise ValueError("mcm query for prepid="+prepid+" returned multiple results!")
+  return result[0]
