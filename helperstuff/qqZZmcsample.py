@@ -116,6 +116,7 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
   def allsamples(cls):
     yield cls(2018, "4l")
     yield cls(2018, "2l2nu")
+    yield cls(2017, "4l")
   @property
   def responsible(self):
     return "hroskes"

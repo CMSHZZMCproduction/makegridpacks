@@ -147,7 +147,7 @@ class ExtensionSample(ExtensionSampleBase):
   def nevents(self):
     from qqZZmcsample import QQZZMCSample
     if isinstance(self.mainmainsample, QQZZMCSample) and self.mainmainsample.cut is None:
-      if self.year == 2018:
+      if self.year == 2018 or self.year == 2017:
         if self.mainmainsample.finalstate == "4l": return 100000000
         if self.mainmainsample.finalstate == "2l2nu": return 50000000
 
@@ -171,6 +171,7 @@ class ExtensionSample(ExtensionSampleBase):
     from qqZZmcsample import QQZZMCSample
     yield RedoSample(QQZZMCSample(2018, "4l"))
     yield RedoSample(QQZZMCSample(2018, "2l2nu"))
+    yield QQZZMCSample(2017, "4l")
 
     from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
     yield RunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenAnomCoupMCSample(2017, "HJJ", "4l", 125, "SM"))
@@ -249,14 +250,22 @@ class RedoSample(RedoSampleBase):
 class RedoForceCompletedSample(RedoSampleBase):
   variationname = "Redo"
 
-  def __init__(self, mainsample):
+  def __init__(self, mainsample, prepidtouse=None):
     super(RedoForceCompletedSample, self).__init__(mainsample=mainsample, reason="because it was prematurely force completed")
+    if prepidtouse is None:
+        prepidtouse = self.mainsample.prepid
+    else:
+        if prepidtouse not in [self.mainsample.prepid] + self.mainsample.otherprepids:
+            self.mainsample.addotherprepid(prepidtouse)
+    self.__prepidtouse = prepidtouse
 
   @classmethod
   def allsamples(cls):
     from qqZZmcsample import QQZZMCSample
     yield cls(QQZZMCSample(2018, "4l"))
     yield cls(QQZZMCSample(2018, "2l2nu"))
+    yield cls(ExtensionSample(QQZZMCSample(2017, "qqZZ", "4l")), prepidtouse="HIG-RunIIFall17wmLHEGS-02149")
+    yield cls(POWHEGJHUGenMassScanMCSample(2017, 'ggH', '4l', '450', prepidtouse="HIG-RunIIFall17wmLHEGS-02123")
 
   @property
   def responsible(self):
@@ -268,13 +277,13 @@ class RedoForceCompletedSample(RedoSampleBase):
     try:
       finishedevents = {
         reqmgr["content"]["pdmv_evts_in_das"]
-        for reqmgr in self.mainsample.fullinfo["reqmgr_name"]
+        for reqmgr in fullinfo(self.__prepidtouse)["reqmgr_name"]
       }
     except:
-      print json.dumps(self.mainsample.fullinfo, sort_keys=True, indent=4, separators=(',', ': '))
+      print json.dumps(fullinfo(self.__prepidtouse), sort_keys=True, indent=4, separators=(',', ': '))
       raise
     if len(finishedevents) > 1:
-      raise ValueError("More than one value for pdmv_evts_in_DAS - take a look below:\n"+json.dumps(self.mainsample.fullinfo, sort_keys=True, indent=4, separators=(',', ': ')))
+      raise ValueError("More than one value for pdmv_evts_in_DAS - take a look below:\n"+json.dumps(fullinfo(self.__prepidtouse), sort_keys=True, indent=4, separators=(',', ': ')))
     result -= finishedevents.pop()
     return result
 
