@@ -204,14 +204,14 @@ class MINLOatLO(MINLOMCSample):
     return result
   @property
   def tarballversion(self):
-    return 3
+    return 4
 
   @property
   def cvmfstarball(self):
     return super(MINLOatLO, self).cvmfstarball.replace("/cvmfs/cms.cern.ch/phys_generator/", here+"/")
   @property
   def genproductionscommit(self):
-    return "d389c962cc69bcec19c6473cde49497354466e84"
+    return "08c8181cd9f1847f5e0a3807c5281024ed0d4e6f"
   @property
   def fragmentname(self):
     return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py"
