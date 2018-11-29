@@ -6200,7 +6200,9 @@
                     "Redo": {
                         "filterefficiency": 1.0,
                         "filterefficiencyerror": 0.0,
-                        "prepid": "HIG-RunIIFall17wmLHEGS-03434"
+                        "prepid": "HIG-RunIIFall17wmLHEGS-03434",
+                        "sizeperevent": 662.13376,
+                        "timeperevent": 14.445961270377836
                     },
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0,

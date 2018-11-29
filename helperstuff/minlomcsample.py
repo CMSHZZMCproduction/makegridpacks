@@ -205,7 +205,7 @@ class MINLOatLO(MINLOMCSample):
     return result
   @property
   def tarballversion(self):
-    return 4
+    return 5
 
   @property
   def cvmfstarball(self):
