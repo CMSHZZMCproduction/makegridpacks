@@ -38,10 +38,18 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
       if not os.path.exists(card):
         raise IOError(card+" does not exist")
       return card
+
+    if self.year == 2016:
+      if self.productionmode == "VBF":
+        return os.path.join(genproductions, "bin/Powheg/production/V2/13TeV/Higgs/VBF_H_JHUGen_HZZ4L_NNPDF30_13TeV/VBF_H_M{:d}_NNPDF30_13TeV.input".format(self.mass))
+      if self.productionmode == "ttH":
+        return os.path.join(genproductions, "bin/Powheg/production/V2/13TeV/Higgs/ttH_inclusive_JHUGen_HZZ2LX_NNPDF30_13TeV/ttH_inclusive_NNPDF30_13TeV_M{:d}.input".format(self.mass))
     assert False, self
 
   @property
-  def powhegcardusesscript(self): return True
+  def powhegcardusesscript(self):
+    if self.year == 2016: return False
+    return True
 
   @property
   def patchkwargs(self):
@@ -241,7 +249,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def genproductionscommit(self):
     if self.year == 2016:
-      return "4927fb8fec2afc72cc98ff2e5fb5bf0db930f971"
+      return "pre2017"
     if self.year in (2017, 2018):
       return "fd7d34a91c3160348fd0446ded445fa28f555e09"
     assert False, self
@@ -249,7 +257,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def genproductionscommitfordecay(self):
     if self.year == 2016:
-      return "ba0eea1db8f581111f5b5fb23688adf956281d8f"
+      return "bf5fa91d693d13696dfc0901f9acc0981e3dcfc0"
     return super(POWHEGJHUGenMassScanMCSample, self).genproductionscommitfordecay
 
   @property

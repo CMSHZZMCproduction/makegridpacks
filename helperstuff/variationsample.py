@@ -234,6 +234,9 @@ class RedoSample(RedoSampleBase):
         if mass == 125 or systematic == "TuneUp": continue
         yield cls(PythiaVariationSample(MINLOMCSample(2017, "4l", mass), systematic), reason="wrong tune variation settings\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5361/1/1/1/2/1/1/1/2/1.html")
 
+    for productionmode in "VBF", "ttH":
+      yield cls(POWHEGJHUGenMassScanMCSample(2016, productionmode, "4l", 125), reason="to check compatibility between MiniAODv2 and v3\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5977/1.html")
+
   variationname = "Redo"
 
   @property

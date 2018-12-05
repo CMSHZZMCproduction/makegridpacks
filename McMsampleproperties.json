@@ -264,6 +264,12 @@
         "VBF": {
             "4l": {
                 "125": {
+                    "Redo": {
+                        "filterefficiency": 1.0,
+                        "filterefficiencyerror": 0.0,
+                        "needsupdate": true,
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02251"
+                    },
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0.0,
                     "prepid": "HIG-RunIISummer15wmLHEGS-01823",
@@ -282,6 +288,11 @@
         "ttH": {
             "4l": {
                 "125": {
+                    "Redo": {
+                        "filterefficiency": 0.154,
+                        "filterefficiencyerror": 0.004,
+                        "needsupdate": true
+                    },
                     "filterefficiency": 0.154,
                     "filterefficiencyerror": 0.004,
                     "finished": true,

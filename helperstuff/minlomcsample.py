@@ -189,7 +189,6 @@ class MINLOatLO(MINLOMCSample):
     result = super(MINLOatLO, self).cvmfstarball_anyversion(version)
     result = result.replace("13TeV", "13TeV_LO_LOPDF")
     assert "LO_LOPDF" in result, result
-    print result
     return result
   @property
   def datasetname(self):

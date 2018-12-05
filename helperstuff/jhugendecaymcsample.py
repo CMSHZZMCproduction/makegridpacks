@@ -31,8 +31,11 @@ class JHUGenDecayMCSample(JHUGenFilter):
     pass
 
   @property
+  def genproductionscommitforfragment(self): return self.genproductionscommit
+
+  @property
   def cardsurl(self):
-    commit = self.genproductionscommit
+    commit = self.genproductionscommitfordecay
     JHUGencard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.decaycard.split("genproductions/")[-1])
     result = JHUGencard
     moreresult = super(JHUGenDecayMCSample, self).cardsurl
