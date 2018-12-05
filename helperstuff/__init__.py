@@ -1,4 +1,4 @@
-def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda cls: True, __docheck=True, includefinished=True):
+def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda cls: True, includefinished=True):
   import getpass
   from utilities import recursivesubclasses
   from mcsamplebase import MCSampleBase
@@ -9,7 +9,7 @@ def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda 
          minlomcsample, mcfmanomalouscouplings, variationsample, phantommcsample, \
          qqZZmcsample, clonedrequest, gridpackbysomeoneelse
 
-  if __docheck: __checkforduplicates()
+  __checkforduplicates()
 
   for subcls in recursivesubclasses(MCSampleBase):
     if "allsamples" in subcls.__abstractmethods__: continue
@@ -18,15 +18,17 @@ def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda 
       if (not sample.finished or includefinished) and filter(sample) and (not onlymysamples or sample.responsible == getpass.getuser()):
         yield sample
 
-from utilities import cache
 from collections import Counter, defaultdict
-@cache
+
 def __checkforduplicates():
+  global __didcheck
+  if __didcheck: return
+  disableduplicatecheck()
   bad = set()
   identifiers = Counter()
   prepids = Counter()
   datasets = Counter()
-  for s in allsamples(onlymysamples=False, __docheck=False):
+  for s in allsamples(onlymysamples=False):
     identifiers[s.keys] += 1
     prepids[s.prepid] += 1
     datasets[s.campaign, s.datasetname, s.extensionnumber] += 1
@@ -48,3 +50,9 @@ def __checkforduplicates():
       bad.add("{}, {}, {} ({})".format(*k+(v,)))
   if bad:
     raise ValueError("Multiple samples with the same campaign, dataset name, and extension number:\n" + "\n".join(bad))
+
+def disableduplicatecheck():
+  global __didcheck
+  __didcheck = True
+
+__didcheck = False

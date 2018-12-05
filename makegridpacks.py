@@ -10,18 +10,21 @@ if __name__ == "__main__":
   g.add_argument("--dontsuppressfinished", action="store_const", dest="suppressfinished", const=lambda x: False)
   parser.add_argument("--cprofile", action="store_true")
   parser.add_argument("--setneedsupdate", action="store_true")
-  parser.add_argument("--condorjobid")
-  parser.add_argument("--condorjobflavor")
-  parser.add_argument("--condorjobtime")
+  parser.add_argument("--condorjobid", help=argparse.SUPPRESS)
+  parser.add_argument("--condorjobflavor", help=argparse.SUPPRESS)
+  parser.add_argument("--condorjobtime", help=argparse.SUPPRESS)
+  parser.add_argument("--disable-duplicate-check", action="store_true", help="disable the check that ensures multiple samples don't have the same prepid or identifiers")
   args = parser.parse_args()
 
-from helperstuff import allsamples
+from helperstuff import allsamples, disableduplicatecheck
 from helperstuff.cleanupgridpacks import cleanupgridpacks
 from helperstuff.queues import ApprovalQueue, BadRequestQueue, CloneQueue
 
 def makegridpacks(args):
   from helperstuff.jobsubmission import condorsetup
   condorsetup(args.condorjobid, args.condorjobflavor, args.condorjobtime)
+
+  if args.disable_duplicate_check: disableduplicatecheck()
 
   with ApprovalQueue() as approvalqueue, BadRequestQueue() as badrequestqueue, CloneQueue() as clonequeue:
     for sample in allsamples(filter=args.filter):

@@ -210,7 +210,11 @@ class POWHEGMCSample(MCSampleBase):
 
   @property
   def fragmentname(self):
-    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_{:d}p_LHE_pythia8_cff.py".format(self.nfinalparticles)
+    if self.year == 2016:
+      tune = "CUETP8M1"
+    elif self.year in (2017, 2018):
+      tune = "CP5"
+    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_Tune{}_13TeV_powhegEmissionVeto_{:d}p_LHE_pythia8_cff.py".format(tune, self.nfinalparticles)
   @abc.abstractproperty
   def nfinalparticles(self):
     pass

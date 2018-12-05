@@ -22,21 +22,23 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def powhegcard(self):
-    folder = os.path.join(genproductions, "bin", "Powheg", "production", "2017", "13TeV", "Higgs", self.powhegprocess+"_ZZ_NNPDF31_13TeV")
-    folder = folder.replace("quark-mass-effects_ZZ", "ZZ_quark-mass-effects")
-    makecards(folder)
+    if self.year in (2017, 2018):
+      folder = os.path.join(genproductions, "bin", "Powheg", "production", "2017", "13TeV", "Higgs", self.powhegprocess+"_ZZ_NNPDF31_13TeV")
+      folder = folder.replace("quark-mass-effects_ZZ", "ZZ_quark-mass-effects")
+      makecards(folder)
 
-    cardbase = self.powhegprocess+"_ZZ"
-    cardbase = cardbase.replace("quark-mass-effects_ZZ", "ZZ_quark-mass-effects")
-    if self.productionmode == "ZH": cardbase = "HZJ_HanythingJ_ZZ"
-    if self.productionmode == "WplusH": cardbase = "HWplusJ_HanythingJ_ZZ"
-    if self.productionmode == "WminusH": cardbase = "HWminusJ_HanythingJ_ZZ"
-    if self.productionmode == "ttH": cardbase = "ttH_inclusive_ZZ"
-    card = os.path.join(folder, cardbase+"_NNPDF31_13TeV_M{:d}.input".format(self.mass))
+      cardbase = self.powhegprocess+"_ZZ"
+      cardbase = cardbase.replace("quark-mass-effects_ZZ", "ZZ_quark-mass-effects")
+      if self.productionmode == "ZH": cardbase = "HZJ_HanythingJ_ZZ"
+      if self.productionmode == "WplusH": cardbase = "HWplusJ_HanythingJ_ZZ"
+      if self.productionmode == "WminusH": cardbase = "HWminusJ_HanythingJ_ZZ"
+      if self.productionmode == "ttH": cardbase = "ttH_inclusive_ZZ"
+      card = os.path.join(folder, cardbase+"_NNPDF31_13TeV_M{:d}.input".format(self.mass))
 
-    if not os.path.exists(card):
-      raise IOError(card+" does not exist")
-    return card
+      if not os.path.exists(card):
+        raise IOError(card+" does not exist")
+      return card
+    assert False, self
 
   @property
   def powhegcardusesscript(self): return True
@@ -49,13 +51,14 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     return result
   @property
   def pwgrwlfilter(self):
-    if self.productionmode == "ZH":
-      def filter(weight):
-        if weight.pdfname.startswith("NNPDF31_"): return True
-        if weight.pdfname.startswith("NNPDF30_"): return True
-        if weight.pdfname.startswith("PDF4LHC15"): return True
-        return False
-      return filter
+    if self.year in (2017, 2018):
+      if self.productionmode == "ZH":
+        def filter(weight):
+          if weight.pdfname.startswith("NNPDF31_"): return True
+          if weight.pdfname.startswith("NNPDF30_"): return True
+          if weight.pdfname.startswith("PDF4LHC15"): return True
+          return False
+        return filter
     return super(POWHEGJHUGenMassScanMCSample, self).pwgrwlfilter
 
   @property
@@ -86,6 +89,11 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def tarballversion(self):
     v = 1
+
+    if self.year == 2016:
+      #just doing the two specific cases needed now
+      if self.productionmode in ("VBF", "ttH") and self.decaymode == "4l" and self.mass == 125: return 4
+      assert False, self
 
     if self.year in (2017, 2018):
       v+=1 #JHUGen version
@@ -121,21 +129,39 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
         elif "ZZany_filter2lOSSF.input" in self.decaycard: decaymode = "_filter2l"
         tarballname = tarballname.replace("NNPDF31", "ZZ"+self.decaymode+"_NNPDF31")
       return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
+    if self.year == 2016:
+      #just doing the two specific cases needed now
+      if self.productionmode == "VBF" and self.decaymode == "4l" and self.mass == 125:
+        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc481/13TeV/powheg/V2/VBF_H_NNPDF30_13TeV_M125_JHUGen_ZZ4L/v{}/VBF_H_NNPDF30_13TeV_M125_JHUGen_ZZ4L_tarball.tar.gz".format(version)
+      if self.productionmode == "ttH" and self.decaymode == "4l" and self.mass == 125:
+        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc481/13TeV/powheg/V2/ttH_inclusive_NNPDF30_13TeV_M125_JHUGen_HZZ2LX/v{}/ttH_inclusive_NNPDF30_13TeV_M125_JHUGen_HZZ2LX_tarball.tar.gz".format(version)
+    assert False, self
+
+  @classmethod
+  @cache
+  def olddatasetnamespreadsheet(cls):
+    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
+      return list(f)
+
+  @classmethod
+  @cache
+  def updated2016datasetnamespreadsheet(cls):
+    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/4432347314253d2955a9aed708765e17ab719502/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
+      return f.read()
 
   @property
   @cache
   def olddatasetname(self):
     p = self.productionmode
     if p == "VBF": p = "VBFH"
-    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
-      reader = csv.DictReader(f)
-      for row in reader:
-        if row["identifier"] == "{}{}".format(p, self.mass):
-          dataset = row["dataset"]
-          result = re.sub(r"^/([^/]*)/[^/]*/[^/]*$", r"\1", dataset)
-          assert result != dataset and "/" not in result, result
-          if self.decaymode == "4l":
-            return result
+    reader = csv.DictReader(self.olddatasetnamespreadsheet())
+    for row in reader:
+      if row["identifier"] == "{}{}".format(p, self.mass):
+        dataset = row["dataset"]
+        result = re.sub(r"^/([^/]*)/[^/]*/[^/]*$", r"\1", dataset)
+        assert result != dataset and "/" not in result, result
+        if self.decaymode == "4l":
+          return result
     raise ValueError("Nothing for {}".format(self))
 
   @property
@@ -150,6 +176,10 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
         if self.productionmode == "ttH": result = "ttH_HToZZ_2LOSSFFilter_M125_13TeV_powheg2_JHUGenV7011_pythia8"
     elif self.productionmode in ("WplusH", "WminusH", "ZH") and self.mass > 230:
       result = type(self)(self.year, self.productionmode, self.decaymode, 230).datasetname.replace("M230", "M{:d}".format(self.mass))
+    elif self.year == 2016:
+      if 115 <= self.mass <= 270:
+        result = self.olddatasetname.replace("JHUgenV6", "JHUGenV709")
+        assert result in self.updated2016datasetnamespreadsheet()
     else:
       result = self.olddatasetname.replace("JHUgenV698", "JHUGenV7011").replace("JHUgenV6", "JHUGenV7011")
 
@@ -168,6 +198,11 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   def JHUGenversion(self):
     if self.year in (2017, 2018):
       return "v7.0.11"
+    if self.year == 2016:
+      if self.mass <= 270:
+        return "v7.0.9"
+      else:
+        return "v6.9.8"
     assert False, self
 
   @property
@@ -205,7 +240,17 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def genproductionscommit(self):
-    return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    if self.year == 2016:
+      return "4927fb8fec2afc72cc98ff2e5fb5bf0db930f971"
+    if self.year in (2017, 2018):
+      return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    assert False, self
+
+  @property
+  def genproductionscommitfordecay(self):
+    if self.year == 2016:
+      return "ba0eea1db8f581111f5b5fb23688adf956281d8f"
+    return super(POWHEGJHUGenMassScanMCSample, self).genproductionscommitfordecay
 
   @property
   def genproductionscommitforfragment(self):
@@ -240,13 +285,17 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
           for year in 2017, 2018:
             yield cls(year, productionmode, decaymode, mass)
 
+    #need these to make extensions
+    yield cls(2016, "VBF", "4l", 125)
+    yield cls(2016, "ttH", "4l", 125)
+
   @property
   def responsible(self):
     return "hroskes"
 
   @property
   def nevents(self):
-    if self.year == 2017:
+    if self.year in (2016, 2017):
       if self.decaymode == "4l":
         if self.productionmode == "ggH":
           if 124 <= self.mass <= 126: return 1000000
