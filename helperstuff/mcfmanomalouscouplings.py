@@ -1,4 +1,4 @@
-import contextlib, csv, os, re, subprocess, urllib
+import contextlib, csv, os, re, subprocess
 
 from utilities import cache, cacheaslist, cd, genproductions, here, makecards
 

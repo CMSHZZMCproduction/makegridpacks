@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import argparse, os, sys, urllib
+import argparse, os, sys
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()

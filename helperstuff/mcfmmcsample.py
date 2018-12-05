@@ -1,9 +1,9 @@
-import abc, os, contextlib, urllib, re, filecmp, glob, pycurl, shutil, stat, subprocess, itertools, os
+import abc, os, contextlib, re, filecmp, glob, pycurl, shutil, stat, subprocess, itertools, os
 
 import uncertainties
 
 from jobsubmission import jobid, jobtype
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget, KeepWhileOpenFile, jobended
+from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget, KeepWhileOpenFile, jobended, urlopen
 
 from jhugenmcsample import UsesJHUGenLibraries
 from mcsamplebase import MCSampleBase
@@ -121,7 +121,7 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
     productioncardurl = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.productioncard.split("genproductions/")[-1])
     mdatascript = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, "bin/MCFM/ACmdataConfig.py")
     with cdtemp():
-      with contextlib.closing(urllib.urlopen(productioncardurl)) as f:
+      with contextlib.closing(urlopen(productioncardurl)) as f:
         productiongitcard = f.read()
 
 #    for root, dirs, files in os.walk("."):
@@ -152,7 +152,7 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
           f.write(productiongitcard)
       raise ValueError("productioncard != productiongitcard\n{}\nSee ./productioncard and ./productiongitcard".format(self))
 
-    with contextlib.closing(urllib.urlopen(os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/"+commit+"/bin/MCFM/run_mcfm_AC.py"))) as f:
+    with contextlib.closing(urlopen(os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/"+commit+"/bin/MCFM/run_mcfm_AC.py"))) as f:
       infunction = False
       for line in f:
         if re.match(r"^\s*def .*", line): infunction = False

@@ -1,4 +1,4 @@
-import abc, collections, contextlib, errno, functools, getpass, itertools, json, logging, os, re, shutil, subprocess, sys, tempfile, time, urllib
+import abc, collections, contextlib, errno, functools, getpass, itertools, json, logging, os, re, shutil, subprocess, sys, tempfile, time, urllib2
 
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""
@@ -188,7 +188,7 @@ def cacheaslist(function):
 
 def wget(url, output=None):
   if output is None: output = os.path.basename(url)
-  with contextlib.closing(urllib.urlopen(url)) as f, open(output, "w") as newf:
+  with contextlib.closing(urlopen(url)) as f, open(output, "w") as newf:
     newf.write(f.read())
 
 class JsonDict(object):
@@ -419,3 +419,47 @@ def fullinfo(prepid):
   if len(result) > 1:
     raise ValueError("mcm query for prepid="+prepid+" returned multiple results!")
   return result[0]
+
+def urlopen(url, *args, **kwargs):
+    try:
+        return urllib2.urlopen(url, *args, **kwargs)
+    except:
+        print "Error while downloading", url
+        raise
+
+def createLHEProducer(gridpack, cards, fragment, tag):
+    """
+    originally from
+      https://github.com/davidsheffield/McMScripts
+    """
+
+    code = """import FWCore.ParameterSet.Config as cms
+
+externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
+    args = cms.vstring('{0}'),
+    nEvents = cms.untracked.uint32(5000),
+    numberOfParameters = cms.uint32(1),
+    outputFile = cms.string('cmsgrid_final.lhe'),
+    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh')
+)""".format(gridpack)
+
+    if cards != "":
+        code += """
+
+# Link to cards:
+# {0}
+""".format(cards)
+
+    if fragment != "" and tag != "":
+        gen_fragment_url = "https://raw.githubusercontent.com/cms-sw/genproductions/{0}/{1}".format(
+            tag, fragment.split("Configuration/GenProduction/")[1])
+        gen_fragment = urlopen(gen_fragment_url).read()
+        code += """
+{0}
+
+# Link to generator fragment:
+# {1}
+""".format(gen_fragment, gen_fragment_url)
+
+    return code
+

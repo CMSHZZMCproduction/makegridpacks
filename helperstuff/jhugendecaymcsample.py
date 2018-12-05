@@ -1,6 +1,6 @@
-import abc, contextlib, os, re, urllib
+import abc, contextlib, os, re
 
-from utilities import wget
+from utilities import urlopen, wget
 from filtermcsample import JHUGenFilter
 
 class JHUGenDecayMCSample(JHUGenFilter):
@@ -41,7 +41,7 @@ class JHUGenDecayMCSample(JHUGenFilter):
     moreresult = super(JHUGenDecayMCSample, self).cardsurl
     if moreresult: result += "\n# " + moreresult
 
-    with contextlib.closing(urllib.urlopen(JHUGencard)) as f:
+    with contextlib.closing(urlopen(JHUGencard)) as f:
       JHUGengitcard = f.read()
 
     try:

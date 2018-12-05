@@ -1,6 +1,6 @@
-import abc, contextlib, csv, os, re, urllib
+import abc, contextlib, csv, os, re
 
-from utilities import genproductions
+from utilities import genproductions, urlopen
 
 from mcsamplebase import MCSampleBase_DefaultCampaign
 
@@ -96,7 +96,7 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
       raise ValueError("Dataset name doesn't make sense:\n{}\n{}\nNOT {}\n{}".format(result, searchfor, shouldntbethere, self))
 
     searchfor = re.sub("JHUGenV[0-9]+", "JHUgenV6", result.replace("Zg", ""))
-    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC_anomalous.csv")) as f:
+    with contextlib.closing(urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC_anomalous.csv")) as f:
       reader = csv.DictReader(f)
       for row in reader:
         if row["dataset"] and row["dataset"].split("/")[1] == searchfor:

@@ -1,6 +1,6 @@
-import contextlib, csv, os, re, subprocess, urllib
+import contextlib, csv, os, re, subprocess
 
-from utilities import cache, cacheaslist, cd, genproductions, makecards
+from utilities import cache, cacheaslist, cd, genproductions, makecards, urlopen
 
 from massscanmcsample import MassScanMCSample
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
@@ -148,13 +148,13 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @classmethod
   @cache
   def olddatasetnamespreadsheet(cls):
-    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
+    with contextlib.closing(urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
       return list(f)
 
   @classmethod
   @cache
   def updated2016datasetnamespreadsheet(cls):
-    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/4432347314253d2955a9aed708765e17ab719502/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
+    with contextlib.closing(urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/4432347314253d2955a9aed708765e17ab719502/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
       return f.read()
 
   @property

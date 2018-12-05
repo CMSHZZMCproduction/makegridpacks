@@ -1,4 +1,4 @@
-import abc, collections, contextlib, glob, os, re, shutil, subprocess, urllib
+import abc, collections, contextlib, glob, os, re, shutil, subprocess
 
 from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, jobended, makecards, OrderedCounter, scramarch, wget
 

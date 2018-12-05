@@ -1,5 +1,5 @@
 from collections import namedtuple
-import abc, contextlib, csv, json, os, re, subprocess, urllib
+import abc, contextlib, csv, json, os, re, subprocess
 
 from mcsamplebase import MCSampleBase
 from minlomcsample import MINLOMCSample

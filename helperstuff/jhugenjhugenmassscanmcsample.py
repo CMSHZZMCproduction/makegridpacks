@@ -1,6 +1,6 @@
-import contextlib, csv, os, re, subprocess, urllib
+import contextlib, csv, os, re, subprocess
 
-from utilities import cache, cacheaslist, cd, genproductions, makecards
+from utilities import cache, cacheaslist, cd, genproductions, makecards, urlopen
 
 from massscanmcsample import MassScanMCSample
 from jhugenjhugenmcsample import JHUGenJHUGenMCSample
@@ -87,7 +87,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
   def olddatasetname(self):
     p = self.productionmode
     if p == "VBF": p = "VBFH"
-    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/miniAOD_80X/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
+    with contextlib.closing(urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/miniAOD_80X/AnalysisStep/test/prod/samples_2016_MC.csv")) as f:
       reader = csv.DictReader(f)
       for row in reader:
         if row["identifier"] == "{}{}".format(p, self.mass):

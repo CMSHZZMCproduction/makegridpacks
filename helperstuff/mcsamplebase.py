@@ -2,12 +2,10 @@ import abc, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subpro
 
 import uncertainties
 
-from McMScripts.manageRequests import createLHEProducer
-
 import patches
 
 from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitLSF
-from utilities import cache, cacheaslist, cd, cdtemp, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, wget
+from utilities import cache, cacheaslist, cd, cdtemp, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, wget
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod

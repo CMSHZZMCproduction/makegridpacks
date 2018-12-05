@@ -1,4 +1,4 @@
-import abc, contextlib, glob, os, re, subprocess, urllib
+import abc, contextlib, glob, os, re, subprocess
 
 import uncertainties
 
