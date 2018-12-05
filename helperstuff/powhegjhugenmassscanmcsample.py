@@ -257,13 +257,15 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def genproductionscommitfordecay(self):
     if self.year == 2016:
-      return "bf5fa91d693d13696dfc0901f9acc0981e3dcfc0"
+      return "0610f5bfcbecdee13b0f7829bd3053c27910b3a2"
     return super(POWHEGJHUGenMassScanMCSample, self).genproductionscommitfordecay
 
   @property
   def genproductionscommitforfragment(self):
     if self.year == 2018:
       return "7d0525c9f6633a9ee00d4e79162d82e369250ccc"
+    if self.year == 2016:
+      return "643bd85b74957c947cbc0cf88138be23c35194f9"
     return super(POWHEGJHUGenMassScanMCSample, self).genproductionscommitforfragment
 
   @classmethod

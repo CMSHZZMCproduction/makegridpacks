@@ -267,7 +267,6 @@
                     "Redo": {
                         "filterefficiency": 1.0,
                         "filterefficiencyerror": 0.0,
-                        "needsupdate": true,
                         "prepid": "HIG-RunIISummer15wmLHEGS-02251"
                     },
                     "filterefficiency": 1,
@@ -291,7 +290,7 @@
                     "Redo": {
                         "filterefficiency": 0.154,
                         "filterefficiencyerror": 0.004,
-                        "needsupdate": true
+                        "prepid": "HIG-RunIISummer15wmLHEGS-02252"
                     },
                     "filterefficiency": 0.154,
                     "filterefficiencyerror": 0.004,

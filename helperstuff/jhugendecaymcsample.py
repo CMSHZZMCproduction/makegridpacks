@@ -31,7 +31,7 @@ class JHUGenDecayMCSample(JHUGenFilter):
     pass
 
   @property
-  def genproductionscommitforfragment(self): return self.genproductionscommit
+  def genproductionscommitfordecay(self): return self.genproductionscommit
 
   @property
   def cardsurl(self):
