@@ -138,7 +138,7 @@ def submitLSF(queue):
     __pendingjobsdct[queue] -= 1
     return False
   with cd(here):
-    job = "cd "+here+" && eval $(scram ru -sh) && ./makegridpacks.py"
+    job = "cd "+here+" && eval $(scram ru -sh) && ./makegridpacks.py --disable-duplicate-check"
     pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
     subprocess.check_call(["bsub", "-q", queue, "-J", "makegridpacks"], stdin=pipe.stdout)
     return True

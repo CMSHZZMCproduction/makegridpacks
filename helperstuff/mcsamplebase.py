@@ -499,7 +499,11 @@ class MCSampleBase(JsonDict):
         if self.badprepid:
           badrequestqueue.add(self)
         return "needs update on McM, sending it there"
-      if not self.dovalidation: return "not starting the validation"
+      if not self.dovalidation:
+        if setneedsupdate and not self.needsupdate:
+          result = self.setneedsupdate()
+          if result: return result
+        return "not starting the validation"
       if self.nthreads > 1 and self.fullinfo["history"][-1]["action"] == "failed" and self.fullinfo["validation"]["validations_count"] == 1:
         self.nthreads /= 2
         self.updaterequest()
@@ -1095,15 +1099,18 @@ class MCSampleBase(JsonDict):
       with open("request_fragment_check.py", "w") as f:
         f.write(contents)
 
-      pipe = subprocess.Popen(["python", "request_fragment_check.py", "--prepid", self.prepid], stdout=subprocess.PIPE, bufsize=1)
+      pipe = subprocess.Popen(["python", "request_fragment_check.py", "--prepid", self.prepid, "--bypass_status"], stdout=subprocess.PIPE, bufsize=1)
       output = ""
       with pipe.stdout:
         for line in iter(pipe.stdout.readline, b''):
           print line,
           output += line
+      if pipe.returncode:
+        return "request_fragment_check failed!"
 
       for line in output.split("\n"):
-        if line.strip() == self.prepid: continue
+        if line == self.prepid: continue
+        if re.match(r"{}\s*Status\s*=\s*\w*".format(self.prepid), line.strip()): continue
         elif "cookie" in line: continue
         elif not line.strip().strip("*"): continue
         elif "will be checked:" in line: continue
