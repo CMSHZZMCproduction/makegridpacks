@@ -6,7 +6,7 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument("--filter", type=eval, help='example: lambda x: hasattr(x, "productionmode") and x.productionmode == "ggH"', default=lambda x: True)
   g = parser.add_mutually_exclusive_group()
-  g.add_argument("--suppressfinished", type=eval, help='example (and default): lambda x: x.year==2017', default='lambda x: x.year==2017')
+  g.add_argument("--suppressfinished", type=eval, help='example (and default): lambda x: True', default='lambda x: True')
   g.add_argument("--dontsuppressfinished", action="store_const", dest="suppressfinished", const=lambda x: False)
   parser.add_argument("--cprofile", action="store_true")
   parser.add_argument("--setneedsupdate", action="store_true")

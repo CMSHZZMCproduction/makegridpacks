@@ -162,6 +162,13 @@ class ExtensionSample(ExtensionSampleBase):
     assert False, self
 
   @property
+  def dovalidation(self):
+    from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
+    if isinstance(self.mainmainsample, JHUGenJHUGenAnomCoupMCSample) and self.mainmainsample.productionmode == "HJJ":
+      return False
+    return super(ExtensionSample, self).dovalidation
+
+  @property
   def notes(self):
     if isinstance(self.mainsample, RunIIFall17DRPremix_nonsubmitted): return self.mainmainsample.notes
     return super(ExtensionSample, self).notes
@@ -295,6 +302,7 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
   variationname = "RunIIFall17DRPremix_nonsubmitted"
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     cls.__inallsamples = True
     requests = []

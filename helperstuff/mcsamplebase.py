@@ -20,7 +20,15 @@ class MCSampleBase(JsonDict):
   @abc.abstractproperty
   def tarballversion(self): pass
   @property
-  def cvmfstarball(self): return self.cvmfstarball_anyversion(self.tarballversion)
+  def cvmfstarball(self):
+    result = self.cvmfstarball_anyversion(self.tarballversion)
+    if self.uselocaltarballfortest:
+      if self.dovalidation: raise ValueError("{} uses a local tarball for testing purposes, so you have to set dovalidation to false".format(self))
+      result = result.replace("/cvmfs/cms.cern.ch/phys_generator/", here+"/test_")
+    return result
+  @property
+  def uselocaltarballfortest(self):
+    return False
   @abc.abstractmethod
   def cvmfstarball_anyversion(self, version): pass
   @abc.abstractproperty
@@ -75,7 +83,10 @@ class MCSampleBase(JsonDict):
       for filename in filenames:
         if re.match("core[.].*", filename):
           raise ValueError("There is a core dump in the tarball\n{}".format(self))
-    return ""
+    result = ""
+    if self.uselocaltarballfortest:
+      result += "\n# this is here to fool the test script: /cvmfs/cms.cern.ch/phys_generator/gridpacks"
+    return result.lstrip("\n")
   @abc.abstractproperty
   def defaulttimeperevent(self): pass
   @abc.abstractproperty
@@ -1099,13 +1110,11 @@ class MCSampleBase(JsonDict):
       with open("request_fragment_check.py", "w") as f:
         f.write(contents)
 
-      pipe = subprocess.Popen(["python", "request_fragment_check.py", "--prepid", self.prepid, "--bypass_status"], stdout=subprocess.PIPE, bufsize=1)
-      output = ""
-      with pipe.stdout:
-        for line in iter(pipe.stdout.readline, b''):
-          print line,
-          output += line
-      if pipe.returncode:
+      try:
+        output = subprocess.check_output(["python", "request_fragment_check.py", "--prepid", self.prepid, "--bypass_status"], stderr=subprocess.STDOUT)
+        print output,
+      except subprocess.CalledProcessError as e:
+        print e.output,
         return "request_fragment_check failed!"
 
       for line in output.split("\n"):

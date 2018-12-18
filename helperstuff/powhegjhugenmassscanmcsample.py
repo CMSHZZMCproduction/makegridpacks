@@ -265,7 +265,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if self.year == 2018:
       return "7d0525c9f6633a9ee00d4e79162d82e369250ccc"
     if self.year == 2016:
-      return "643bd85b74957c947cbc0cf88138be23c35194f9"
+      return "08cf906382fd5316e23b694f21803be775c0b38f"
     return super(POWHEGJHUGenMassScanMCSample, self).genproductionscommitforfragment
 
   @classmethod

@@ -202,6 +202,9 @@ class MINLOatLO(MINLOMCSample):
       result = result.replace("LO_LOPDF", "LO_LOPDF_bornsuppressionfactor", 1)
     return result
   @property
+  def uselocaltarballfortest(self):
+    return True
+  @property
   def datasetname(self):
     result = "GluGluHToZZTo4L_M%d_%dTeV_powheg2_HJJ_JHUGenV7011_pythia8"%(self.mass, self.energy)
     if self.bornsuppressionfactor:
@@ -227,9 +230,6 @@ class MINLOatLO(MINLOMCSample):
     return 6
 
   @property
-  def cvmfstarball(self):
-    return super(MINLOatLO, self).cvmfstarball.replace("/cvmfs/cms.cern.ch/phys_generator/", here+"/")
-  @property
   def genproductionscommit(self):
     return "62b6317b3ac208df37a03136c3c8f27d91cfd59d"
   @property
@@ -254,9 +254,3 @@ class MINLOatLO(MINLOMCSample):
     if super(MINLOatLO, self).creategridpackqueue is None: return None
     if self.multicore_upto[0] == 3: return "1nd"
     return "1nh"
-
-  @property
-  def cardsurl(self):
-    result = super(MINLOatLO, self).cardsurl
-    result += "\n#/cvmfs/cms.cern.ch/phys_generator/gridpacks"
-    return result

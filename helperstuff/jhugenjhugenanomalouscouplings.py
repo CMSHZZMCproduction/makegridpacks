@@ -118,3 +118,8 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   def maxallowedtimeperevent(self):
     if self.productionmode in ("VBF", "HJJ"): return 205
     return super(JHUGenJHUGenAnomCoupMCSample, self).maxallowedtimeperevent
+
+  @property
+  def dovalidation(self):
+    if self.year == 2016 and self.productionmode == "HJJ": return False
+    return super(JHUGenJHUGenAnomCoupMCSample, self).dovalidation
