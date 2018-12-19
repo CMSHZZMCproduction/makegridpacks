@@ -270,11 +270,12 @@ class MCSampleBase(JsonDict):
 
         #https://stackoverflow.com/a/17698359/5228524
         makegridpackstdout = ""
-        pipe = subprocess.Popen(self.makegridpackcommand, stdout=subprocess.PIPE, bufsize=1)
+        pipe = subprocess.Popen(self.makegridpackcommand, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1)
         for line in pipe.stdout:
             print line,
             makegridpackstdout += line
         self.processmakegridpackstdout(makegridpackstdout)
+        pipe.communicate()
         if pipe.returncode:
             raise RuntimeError("makegridpackcommand gave an error ^^^")
 
