@@ -75,6 +75,10 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
       if 'BSI 10 0Mf05ph0 MUMU' == identifierstr: v=4 
       with cd(here), open('data/listofpatchedmcfmgridpacks.txt', 'r') as f:
         if identifierstr in f.read():  v+=1
+
+    if self.year == 2018 and self.signalbkgbsi in ("SIG", "BSI"):
+      v+=1  #increase ncalls1 and 2
+
     return v
 
   def cvmfstarball_anyversion(self, version):
@@ -130,6 +134,8 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def genproductionscommit(self):
+    if self.year == 2018 and self.signalbkgbsi != "BKG":
+      return "00354e6fe6c6b2a185c46c7efbad2958bd7a2633"
     return "138efefa8acdcc246a0df4512bef3f660574cb77"
 
   @property
@@ -162,7 +168,6 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
         for coupling in cls.getcouplings(signalbkgbsi):
           for width in cls.getwidths(signalbkgbsi, coupling):
             for year in 2017, 2018:
-              if year == 2018 and signalbkgbsi != "BKG": continue
               yield cls(year, signalbkgbsi, width, coupling, finalstate)
 
   @property

@@ -7,7 +7,7 @@ from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, mak
 
 from jhugenmcsample import UsesJHUGenLibraries
 from mcsamplebase import MCSampleBase
-from mcsamplewithxsec import MCSampleWithXsec
+from mcsamplewithxsec import MCSampleWithXsec, NoXsecError
 
 def differentproductioncards(productioncard, gitproductioncard):
 	allowedtobediff = ['[readin]','[writeout]','[ingridfile]','[outgridfile]']
@@ -102,6 +102,7 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
 
   def getxsec(self):
     with cdtemp():
+      if not os.path.exists(self.cvmfstarball): raise NoXsecError
       subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
       dats = set(glob.iglob("*.dat")) - {"fferr.dat", "ffperm5.dat", "ffwarn.dat", "hto_output.dat"}
       if len(dats) != 1:

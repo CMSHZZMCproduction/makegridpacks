@@ -1,6 +1,6 @@
 import abc, contextlib, csv, os, re
 
-from utilities import genproductions, urlopen
+from utilities import cache, genproductions, urlopen
 
 from mcsamplebase import MCSampleBase_DefaultCampaign
 
@@ -44,6 +44,12 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
     if not os.path.exists(card):
       raise IOError(card+" does not exist")
     return card
+
+  @classmethod
+  @cache
+  def csvfile2016(cls):
+    with contextlib.closing(urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC_anomalous.csv")) as f:
+      return list(f)
 
   @property
   def datasetname(self):
@@ -96,13 +102,12 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
       raise ValueError("Dataset name doesn't make sense:\n{}\n{}\nNOT {}\n{}".format(result, searchfor, shouldntbethere, self))
 
     searchfor = re.sub("JHUGenV[0-9]+", "JHUgenV6", result.replace("Zg", ""))
-    with contextlib.closing(urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC_anomalous.csv")) as f:
-      reader = csv.DictReader(f)
-      for row in reader:
-        if row["dataset"] and row["dataset"].split("/")[1] == searchfor:
-          break
-      else:
-        raise ValueError("Couldn't find dataset name {}".format(searchfor))
+    reader = csv.DictReader(self.csvfile2016())
+    for row in reader:
+      if row["dataset"] and row["dataset"].split("/")[1] == searchfor:
+        break
+    else:
+      raise ValueError("Couldn't find dataset name {}".format(searchfor))
 
     return result
 

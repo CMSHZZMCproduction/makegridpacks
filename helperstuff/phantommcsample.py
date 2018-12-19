@@ -5,7 +5,7 @@ import uncertainties
 from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
 
 from mcsamplebase import MCSampleBase_DefaultCampaign
-from mcsamplewithxsec import MCSampleWithXsec
+from mcsamplewithxsec import MCSampleWithXsec, NoXsecError
 
 class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
   def __init__(self, year, signalbkgbsi, finalstate, mass, width):
@@ -71,15 +71,18 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     return ["HZZ", "Fall17P2A"]
 
   def getxsec(self):
-    dats = set(glob.iglob("result"))
-    if len(dats) != 1:
-      raise ValueError("Expected to find result in the tarball {}\n".foramt(self.cvmfstarball))
-    with open(dats.pop()) as f:
-      matches = re.findall(r"total cross section=\s*([0-9.Ee+-]*)\s*[+]/-\s*([0-9.Ee+-]*)\s*", f.read())
-    if not matches: raise ValueError("Didn't find the cross section in the result\n\n"+self.cvmfstarball)
-    if len(matches) > 1: raise ValueError("Found multiple cross section lines in the result\n\n")
-    xsec, xsecerror = matches[0]
-    return uncertainties.ufloat(xsec, xsecerror)
+    if not os.path.exists(self.cvmfstarball): raise NoXsecError
+    with cdtemp():
+      subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
+      dats = set(glob.iglob("result"))
+      if len(dats) != 1:
+        raise ValueError("Expected to find result in the tarball {}\n".foramt(self.cvmfstarball))
+      with open(dats.pop()) as f:
+        matches = re.findall(r"total cross section=\s*([0-9.Ee+-]*)\s*[+]/-\s*([0-9.Ee+-]*)\s*", f.read())
+      if not matches: raise ValueError("Didn't find the cross section in the result\n\n"+self.cvmfstarball)
+      if len(matches) > 1: raise ValueError("Found multiple cross section lines in the result\n\n")
+      xsec, xsecerror = matches[0]
+      return uncertainties.ufloat(xsec, xsecerror)
 
   @property
   def genproductionscommit(self):

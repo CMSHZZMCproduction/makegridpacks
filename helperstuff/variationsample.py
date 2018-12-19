@@ -4,7 +4,7 @@ import abc, contextlib, csv, json, os, re, subprocess
 from mcsamplebase import MCSampleBase
 from minlomcsample import MINLOMCSample
 from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
-from utilities import cacheaslist, fullinfo, here
+from utilities import cacheaslist, cdtemp, fullinfo, here
 
 class VariationSample(MCSampleBase):
   def __init__(self, mainsample, variation):
@@ -297,6 +297,57 @@ class RedoForceCompletedSample(RedoSampleBase):
       raise ValueError("More than one value for pdmv_evts_in_DAS - take a look below:\n"+json.dumps(fullinfo(self.__prepidtouse), sort_keys=True, indent=4, separators=(',', ': ')))
     result -= finishedevents.pop()
     return result
+
+class RedoMCFMMoreNcalls(RedoSampleBase):
+  variationname = "morencalls"
+  def __init__(self, mainsample):
+    super(RedoMCFMMoreNcalls, self).__init__(mainsample=mainsample, reason="increase ncalls in the phase space generation")
+
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    from mcfmanomalouscouplings import MCFMAnomCoupMCSample
+    for sample in MCFMAnomCoupMCSample.allsamples():
+      if sample.year == 2017:
+        yield cls(sample)
+      if sample.year == 2018 and sample.signalbkgbsi == "BKG":
+        yield cls(sample)
+
+  @property
+  def tarballversion(self):
+    return self.mainsample.tarballversion+1
+
+  @property
+  def genproductionscommit(self):
+    return "00354e6fe6c6b2a185c46c7efbad2958bd7a2633"
+
+  def createtarball(self, *args, **kwargs):
+    with cdtemp():
+      subprocess.check_output(["tar", "xvzf", self.mainsample.cvmfstarball])
+      with open("readInput.DAT") as f:
+        for line in f:
+          if "ncalls" in line:
+            assert int(line.split()[0]) < 1000000, (self, self.mainsample.cvmfstarball, line)
+    return super(RedoMCFMMoreNcalls, self).createtarball(*args, **kwargs)
+
+  @property
+  def cardsurl(self):
+    with open("readInput.DAT") as f:
+      for line in f:
+        if "ncalls" in line and int(line.split()[0]) != 5000000:
+          raise ValueError(line+"\nshould be 5000000")
+    return super(RedoMCFMMoreNcalls, self).cardsurl
+
+  @property
+  def extensionnumber(self):
+    result = super(RedoMCFMMoreNcalls, self).extensionnumber
+    if any(_.datasetname == self.datasetname and _.year == self.year and _.extensionnumber == result for _ in RunIIFall17DRPremix_nonsubmitted.allsamples()):
+      result += 1
+    return result
+
+  @property
+  def responsible(self):
+    return "hroskes"
 
 class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
   variationname = "RunIIFall17DRPremix_nonsubmitted"
