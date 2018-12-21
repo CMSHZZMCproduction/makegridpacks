@@ -7600,12 +7600,152 @@
                         "xsecerror": 0.0348474
                     }
                 }
+            },
+            "PHANTOM": {
+                "125": {
+                    "1": {
+                        "2e2mu": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01019",
+                            "xsec": 0.00063357811897,
+                            "xsecerror": 9.600629667459318e-07
+                        },
+                        "2e2nue": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01022",
+                            "xsec": 0.015899524904,
+                            "xsecerror": 5.502668932890656e-06
+                        },
+                        "2e2num": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01023",
+                            "xsec": 0.0007697500469290001,
+                            "xsecerror": 2.5333171469914695e-07
+                        },
+                        "2e2nut": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01024",
+                            "xsec": 0.0007697500469290001,
+                            "xsecerror": 2.5333171469914695e-07
+                        },
+                        "2mu2nue": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01025",
+                            "xsec": 0.0007699370724809999,
+                            "xsecerror": 2.519047571706616e-07
+                        },
+                        "2mu2num": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01026",
+                            "xsec": 0.015899524904,
+                            "xsecerror": 5.502668932890656e-06
+                        },
+                        "2mu2nut": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01027",
+                            "xsec": 0.0007697500469290001,
+                            "xsecerror": 2.5333171469914695e-07
+                        },
+                        "4e": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01020",
+                            "xsec": 0.00030628964214299997,
+                            "xsecerror": 7.274211577291383e-07
+                        },
+                        "4mu": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01021",
+                            "xsec": 0.00030628964214299997,
+                            "xsecerror": 7.274211577291383e-07
+                        }
+                    }
+                }
             }
         },
         "BSI": {
             "1": {
                 "0PM": {
                     "ELTL": {}
+                }
+            },
+            "PHANTOM": {
+                "125": {
+                    "1": {
+                        "2e2mu": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01005",
+                            "sizeperevent": 693.0527999999999,
+                            "timeperevent": 7.295861787194304,
+                            "xsec": 0.0008406622487099999,
+                            "xsecerror": 1.0967806240999154e-06
+                        },
+                        "2e2nue": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01008"
+                        },
+                        "2e2num": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01009",
+                            "xsec": 0.0012543452367,
+                            "xsecerror": 4.835803613237411e-07
+                        },
+                        "2e2nut": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01010",
+                            "xsec": 0.0012543452367,
+                            "xsecerror": 4.835803613237411e-07
+                        },
+                        "2mu2nue": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01011",
+                            "xsec": 0.0012532354198999996,
+                            "xsecerror": 5.597970195771322e-07
+                        },
+                        "2mu2num": {
+                            "needsupdate": true,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01012"
+                        },
+                        "2mu2nut": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01018",
+                            "xsec": 0.0012543452367,
+                            "xsecerror": 4.835803613237411e-07
+                        },
+                        "4e": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01006",
+                            "sizeperevent": 653.4890666666666,
+                            "timeperevent": 8.566484486096595,
+                            "xsec": 0.00042413655713000004,
+                            "xsecerror": 7.590962833969088e-07
+                        },
+                        "4mu": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01007",
+                            "sizeperevent": 685.8112,
+                            "timeperevent": 8.873586881289155,
+                            "xsec": 0.00042413655713000004,
+                            "xsecerror": 7.590962833969088e-07
+                        }
+                    }
                 }
             }
         },
@@ -7936,6 +8076,95 @@
                     "prepid": "HIG-RunIIFall18wmLHEGS-00450",
                     "sizeperevent": 677,
                     "timeperevent": 42.58055175878969
+                }
+            }
+        },
+        "SIG": {
+            "PHANTOM": {
+                "125": {
+                    "1": {
+                        "2e2mu": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-00996",
+                            "sizeperevent": 685.9072,
+                            "timeperevent": 5.506244080787614,
+                            "xsec": 0.00026377148176999997,
+                            "xsecerror": 7.852899035349938e-08
+                        },
+                        "2e2nue": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-00999",
+                            "sizeperevent": 641.7568,
+                            "timeperevent": 5.506638252413284,
+                            "xsec": 0.02761790372000001,
+                            "xsecerror": 9.348454141407552e-06
+                        },
+                        "2e2num": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01000",
+                            "sizeperevent": 626.4458666666667,
+                            "timeperevent": 4.816723664563364,
+                            "xsec": 0.0005988437969,
+                            "xsecerror": 1.6020353553679768e-07
+                        },
+                        "2e2nut": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01001",
+                            "sizeperevent": 639.1936,
+                            "timeperevent": 5.101806549699249,
+                            "xsec": 0.0005988437969,
+                            "xsecerror": 1.6020353553679768e-07
+                        },
+                        "2mu2nue": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01002",
+                            "sizeperevent": 634.8095999999999,
+                            "timeperevent": 4.717782264912909,
+                            "xsec": 0.0005917056472,
+                            "xsecerror": 1.9696537143355933e-07
+                        },
+                        "2mu2num": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01003",
+                            "sizeperevent": 631.6885333333333,
+                            "timeperevent": 5.039662141050064,
+                            "xsec": 0.02761790372000001,
+                            "xsecerror": 9.348454141407552e-06
+                        },
+                        "2mu2nut": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-01004",
+                            "sizeperevent": 596.7552,
+                            "timeperevent": 4.233144676185598,
+                            "xsec": 0.0005988437969,
+                            "xsecerror": 1.6020353553679768e-07
+                        },
+                        "4e": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-00997",
+                            "sizeperevent": 674.0682666666667,
+                            "timeperevent": 5.63596194598494,
+                            "xsec": 0.00014209690833999998,
+                            "xsecerror": 4.024744610841787e-08
+                        },
+                        "4mu": {
+                            "filterefficiency": 1,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIIFall18wmLHEGS-00998",
+                            "sizeperevent": 602.5706666666666,
+                            "timeperevent": 4.343048733349836,
+                            "xsec": 0.00014209690833999998,
+                            "xsecerror": 4.024744610841787e-08
+                        }
+                    }
                 }
             }
         },

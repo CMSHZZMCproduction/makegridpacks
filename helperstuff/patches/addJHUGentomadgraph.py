@@ -37,7 +37,7 @@ def addJHUGentomadgraph(oldfilename, newfilename, JHUGenversion, decaycard):
 
     with cdtemp():
       subprocess.check_call(["wget", "http://spin.pha.jhu.edu/Generator/JHUGenerator."+JHUGenversion+".tar.gz"])
-      subprocess.check_call(["tar", "xvzf", "JHUGenerator."+JHUGenversion+".tar.gz"])
+      subprocess.check_call(["tar", "xvaf", "JHUGenerator."+JHUGenversion+".tar.gz"])
       with cd("JHUGenerator"):
         with open("makefile") as f:
           oldmakefile = f.read()

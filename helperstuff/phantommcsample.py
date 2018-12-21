@@ -33,8 +33,8 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
   def tarballversion(self):
     v = 1
 
-#    if self.finalstate == "2mu2num" and self.signalbkgbsi == "BSI" : v+=1
-#    if self.finalstate == "2e2nue" and self.signalbkgbsi == "BSI" : v+=1
+    if self.finalstate == "2mu2num" and self.signalbkgbsi == "BSI" : v+=1
+    if self.finalstate == "2e2nue" and self.signalbkgbsi == "BSI" : v+=1
     """
     if the first tarball is copied to eos and then is found to be bad, add something like
     if self.(whatever) == (whatever): v += 1
@@ -42,9 +42,11 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     return v
 
   def cvmfstarball_anyversion(self, version):
-    folder = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/phantom"
-    tarballname = self.datasetname + ".tar.xz"
-    return os.path.join(folder, tarballname.replace(".tar.xz", ""), "v{}".format(version), tarballname)
+    if self.year in (2017, 2018):
+      folder = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/phantom"
+      tarballname = self.datasetname + ".tar.xz"
+      return os.path.join(folder, tarballname.replace(".tar.xz", ""), "v{}".format(version), tarballname)
+    assert False, self
 
   @property
   def datasetname(self):
@@ -68,12 +70,15 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     return 60
   @property
   def tags(self):
-    return ["HZZ", "Fall17P2A"]
+    result = ["HZZ"]
+    if self.year == 2017:
+      result.append("Fall17P2A")
+    return result
 
   def getxsec(self):
     if not os.path.exists(self.cvmfstarball): raise NoXsecError
     with cdtemp():
-      subprocess.check_output(["tar", "xvzf", self.cvmfstarball])
+      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
       dats = set(glob.iglob("result"))
       if len(dats) != 1:
         raise ValueError("Expected to find result in the tarball {}\n".foramt(self.cvmfstarball))
@@ -95,7 +100,8 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
       for finalstate in ["2e2mu","4e","4mu","2e2nue","2e2num","2e2nut","2mu2nue","2mu2num","2mu2nut"]:
         for mass in 125,:
           for width in 1,:
-            yield cls(2017, signalbkgbsi, finalstate, mass, width)
+            for year in 2017, 2018:
+              yield cls(year, signalbkgbsi, finalstate, mass, width)
 
   @property
   def responsible(self):
@@ -141,7 +147,10 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     }[self.finalstate]
     icard += ".py"
 
-    card = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", self.genproductionscommit, "bin/Phantom/cards/production/13TeV/HZZ_VBFoffshell_Phantom",icard)
+    if self.year in (2017, 2018):
+      card = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", self.genproductionscommit, "bin/Phantom/cards/production/13TeV/HZZ_VBFoffshell_Phantom",icard)
+    else:
+      assert False, self
 
     with cdtemp():
       wget(card)
@@ -177,4 +186,11 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
 
   @property
   def fragmentname(self):
-    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_oneoversqrt2_LHE_pythia8_cff.py"
+    if self.year in (2017, 2018):
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_oneoversqrt2_LHE_pythia8_cff.py"
+
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2018:
+      return "101b9cce48742765790db48e6d24d76e6bf2edf1"
+    return super(PhantomMCSample, self).genproductionscommitforfragment

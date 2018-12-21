@@ -330,7 +330,7 @@ class RedoMCFMMoreNcalls(RedoSampleBase):
 
   def createtarball(self, *args, **kwargs):
     with cdtemp():
-      subprocess.check_output(["tar", "xvzf", self.mainsample.cvmfstarball])
+      subprocess.check_output(["tar", "xvaf", self.mainsample.cvmfstarball])
       with open("readInput.DAT") as f:
         for line in f:
           if "ncalls" in line:
