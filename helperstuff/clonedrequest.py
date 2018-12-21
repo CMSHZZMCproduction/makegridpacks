@@ -102,8 +102,8 @@ class ClonedRequest(MCSampleBase):
   def notes(self):
     return self.originalfullinfo["notes"]
   @property
-  def doublevalidationtime(self):
-    return self.originalfullinfo["validation"].get("double_time", False)
+  def validationtimemultiplier(self):
+    return self.originalfullinfo["validation"].get("time_multiplier", 1)
   @property
   def extension(self):
     if self.newcampaign not in self.originalprepid: return 0

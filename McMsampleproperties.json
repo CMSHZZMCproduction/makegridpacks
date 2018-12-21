@@ -296,8 +296,8 @@
                         "filterefficiency": 0.154,
                         "filterefficiencyerror": 0.004,
                         "prepid": "HIG-RunIISummer15wmLHEGS-02252",
-                        "sizeperevent": 980,
-                        "timeperevent": 19.2453
+                        "sizeperevent": 1002,
+                        "timeperevent": 54.3463
                     },
                     "filterefficiency": 0.154,
                     "filterefficiencyerror": 0.004,
@@ -8316,6 +8316,7 @@
                 "124": {
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0.0,
+                    "finished": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00109",
                     "sizeperevent": 643,
@@ -8359,6 +8360,7 @@
                     "SM": {
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
+                        "finished": true,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00320",
                         "sizeperevent": 663,
@@ -9074,6 +9076,7 @@
                 "750": {
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0.0,
+                    "finished": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00246",
                     "sizeperevent": 788,
@@ -10286,6 +10289,7 @@
                     "a2": {
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
+                        "finished": true,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00309",
                         "sizeperevent": 620,
                         "timeperevent": 4.566773072479255
@@ -10689,6 +10693,7 @@
                 "124": {
                     "filterefficiency": 0.154360966586,
                     "filterefficiencyerror": 0.000200543095323,
+                    "finished": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00296",
                     "sizeperevent": 1110,

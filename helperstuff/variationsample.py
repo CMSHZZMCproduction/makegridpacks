@@ -94,8 +94,8 @@ class VariationSample(MCSampleBase):
   def makegridpackscriptstolink(self):
     return self.mainsample.makegridpackscriptstolink
   @property
-  def doublevalidationtime(self):
-    return self.mainsample.doublevalidationtime
+  def validationtimemultiplier(self):
+    return self.mainsample.validationtimemultiplier
   @property
   def neventsfortest(self): return self.mainsample.neventsfortest
   @property
@@ -257,6 +257,13 @@ class RedoSample(RedoSampleBase):
     if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00510": result += 2  #parallelize the gridpack
     return result
 
+  @property
+  def validationtimemultiplier(self):
+    result = super(RedoSample, self).validationtimemultiplier
+    if self.mainsample.prepid == "HIG-RunIISummer15wmLHEGS-01906":
+      result = max(result, 4)
+    return result
+
 class RedoForceCompletedSample(RedoSampleBase):
   variationname = "Redo"
 
@@ -319,7 +326,7 @@ class RedoMCFMMoreNcalls(RedoSampleBase):
 
   @property
   def genproductionscommit(self):
-    return "00354e6fe6c6b2a185c46c7efbad2958bd7a2633"
+    return "a8ea4bc76df07ee2fa16bd9a67b72e7b648dec64"
 
   def createtarball(self, *args, **kwargs):
     with cdtemp():
@@ -377,9 +384,11 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
         yield cls(mainsample=s, reason="\n\nRunIIFall17DRPremix_nonsubmitted")
 
   @property
-  def doublevalidationtime(self):
-    if self.prepid in ("HIG-RunIIFall17wmLHEGS-03116", "HIG-RunIIFall17wmLHEGS-03155"): return True
-    return super(RunIIFall17DRPremix_nonsubmitted, self).doublevalidationtime
+  def validationtimemultiplier(self):
+    result = super(RunIIFall17DRPremix_nonsubmitted, self).validationtimemultiplier
+    if self.prepid in ("HIG-RunIIFall17wmLHEGS-03116", "HIG-RunIIFall17wmLHEGS-03155"):
+      result = max(result, 2)
+    return result
 
   @property
   def responsible(self):

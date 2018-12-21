@@ -1,4 +1,4 @@
-import abc, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess, tempfile
+import abc, collections, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess, tempfile
 
 import uncertainties
 
@@ -106,7 +106,7 @@ class MCSampleBase(JsonDict):
   @property
   def patchkwargs(self): return []
   @property
-  def doublevalidationtime(self): return False
+  def validationtimemultiplier(self): return 1
   @property
   def neventsfortest(self): return None
   @property
@@ -932,7 +932,7 @@ class MCSampleBase(JsonDict):
     req["tags"] = list(self.tags)
     req["memory"] = self.memory
     req["validation"].update({
-      "double_time": self.doublevalidationtime,
+      "time_multiplier": self.validationtimemultiplier,
     })
     req["extension"] = self.extensionnumber
     req["notes"] = self.notes
@@ -1059,6 +1059,8 @@ class MCSampleBase(JsonDict):
     differentgenparameters = set()
     setneedsupdate = False
     setneedsupdateiffailed = False
+    differentsub = collections.defaultdict(set)
+    differentsublist = collections.defaultdict(set)
     for key in set(old.keys()) | set(new.keys()):
       if old.get(key) != new.get(key):
         if key == "memory" and validated:
@@ -1073,26 +1075,32 @@ class MCSampleBase(JsonDict):
           setneedsupdateiffailed = True
         elif key == "sequences":
           assert len(old[key]) == len(new[key]) == 1
-          for skey in set(old[key][0].keys()) | set(new[key][0].keys()):
-            if old[key][0].get(skey) != new[key][0].get(skey):
-              if skey == "nThreads":
+          for subkey in set(old[key][0].keys()) | set(new[key][0].keys()):
+            if old[key][0].get(subkey) != new[key][0].get(subkey):
+              if subkey == "nThreads":
                 setneedsupdateiffailed = True
-                differentsequences.add(skey)
-              elif skey == "procModifiers" and old[key][0].get(skey) is None and new[key][0].get(skey) == "":
+                differentsublist["sequences"].add(subkey)
+              elif subkey == "procModifiers" and old[key][0].get(subkey) is None and new[key][0].get(subkey) == "":
                 pass  #not sure what this is about
               else:
-                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(skey, old[key][0].get(skey), new[key][0].get(skey), self.prepid))
+                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(subkey, old[key][0].get(subkey), new[key][0].get(subkey), self.prepid))
         elif key == "generator_parameters":
           assert len(old[key]) == len(new[key]) == 1
-          for gpkey in set(old[key][0].keys()) | set(new[key][0].keys()):
-            if old[key][0].get(gpkey) != new[key][0].get(gpkey):
-              if gpkey in ("filter_efficiency", "filter_efficiency_error", "match_efficiency", "match_efficiency_error"):
+          for subkey in set(old[key][0].keys()) | set(new[key][0].keys()):
+            if old[key][0].get(subkey) != new[key][0].get(subkey):
+              if subkey in ("filter_efficiency", "filter_efficiency_error", "match_efficiency", "match_efficiency_error"):
                 setneedsupdate = True
-                differentgenparameters.add(gpkey)
+                differentsublist["generator_parameters"].add(subkey)
               else:
-                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(gpkey, old[key][0].get(gpkey), new[key][0].get(gpkey), self.prepid))
-        elif key == "validation" and old[key] == {} and new[key] == {'double_time': False}:
-          pass  #not sure what this is about
+                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(subkey, old[key][0].get(subkey), new[key][0].get(subkey), self.prepid))
+        elif key == "validation":
+          for subkey in set(old[key].keys()) | set(new[key].keys()):
+            if old[key].get(subkey) != new[key].get(subkey):
+              if subkey in ("double_time", "time_multiplier"):
+                setneedsupdateiffailed = True
+                differentsub["validation"].add(subkey)
+              else:
+                raise ValueError("Don't know what to do with {} ({} --> {}) in validation for {}".format(subkey, old[key][0].get(subkey), new[key][0].get(subkey), self.prepid))
         else:
           raise ValueError("Don't know what to do with {} ({} --> {}) for {}".format(key, old.get(key), new.get(key), self.prepid))
     if setneedsupdate or setneedsupdateiffailed:
@@ -1100,7 +1108,7 @@ class MCSampleBase(JsonDict):
         self.needsupdate = True
       else:
         self.needsupdateiffailed = True
-      return "there is a change in some parameters, setting needsupdate" + "iffailed"*(not setneedsupdate) + " = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((skey, old["sequences"][0].get(skey), new["sequences"][0].get(skey)) for skey in differentsequences), ((skey, old["generator_parameters"][0].get(skey), new["generator_parameters"][0].get(skey)) for skey in differentgenparameters)))
+      return "there is a change in some parameters, setting needsupdate" + "iffailed"*(not setneedsupdate) + " = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((subkey, old[key].get(subkey), new[key].get(subkey)) for key in differentsub for subkey in differentsub[key]), ((subkey, old[key][0].get(subkey), new[key][0].get(subkey)) for key in differentsub for subkey in differentsublist[key])))
 
   def request_fragment_check(self):
     with cdtemp():

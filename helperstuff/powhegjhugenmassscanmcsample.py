@@ -91,8 +91,11 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     raise ValueError("Unknown productionmode "+self.productionmode)
 
   @property
-  def doublevalidationtime(self):
-    return self.productionmode in ("ZH", "ttH")
+  def validationtimemultiplier(self):
+    result = super(POWHEGJHUGenMassScanMCSample, self).validationtimemultiplier
+    if self.productionmode in ("ZH", "ttH"):
+      result = max(result, 2)
+    return result
 
   @property
   def tarballversion(self):

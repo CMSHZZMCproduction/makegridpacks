@@ -150,7 +150,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
     raise ValueError("No fragment for {}".format(self))
 
   @property
-  def doublevalidationtime(self): return True
+  def validationtimemultiplier(self): return max(super(MINLOMCSample, self).validationtimemultiplier, 2)
 
   @classmethod
   @cacheaslist
