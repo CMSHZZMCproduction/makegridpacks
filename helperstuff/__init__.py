@@ -7,7 +7,7 @@ def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda 
   import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, \
          powhegjhugenanomalouscouplings, powhegjhugenmassscanmcsample, powhegjhugenlifetime, \
          minlomcsample, mcfmanomalouscouplings, variationsample, phantommcsample, \
-         qqZZmcsample, clonedrequest, gridpackbysomeoneelse
+         qqZZmcsample, clonedrequest, gridpackbysomeoneelse, mtdtdr
 
   __checkforduplicates()
 
@@ -23,6 +23,9 @@ from collections import Counter, defaultdict
 def __checkforduplicates():
   global __didcheck
   if __didcheck: return
+
+  from gridpackonly import GridpackOnly
+
   disableduplicatecheck()
   bad = set()
   identifiers = Counter()
@@ -30,6 +33,7 @@ def __checkforduplicates():
   datasets = Counter()
   for s in allsamples(onlymysamples=False):
     identifiers[s.keys] += 1
+    if isinstance(s, GridpackOnly): continue
     prepids[s.prepid] += 1
     datasets[s.campaign, s.datasetname, s.extensionnumber] += 1
 

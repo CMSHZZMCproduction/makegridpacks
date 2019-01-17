@@ -14,6 +14,7 @@ if __name__ == "__main__":
   parser.add_argument("--condorjobflavor", help=argparse.SUPPRESS)
   parser.add_argument("--condorjobtime", help=argparse.SUPPRESS)
   parser.add_argument("--disable-duplicate-check", action="store_true", help="disable the check that ensures multiple samples don't have the same prepid or identifiers")
+  parser.add_argument("--show-wrong-cmssw", action="store_true", help="show requests that don't match your CMSSW release (but don't act on them)")
   args = parser.parse_args()
 
 from helperstuff import allsamples, disableduplicatecheck
@@ -22,6 +23,7 @@ from helperstuff.queues import ApprovalQueue, BadRequestQueue, CloneQueue
 
 def makegridpacks(args):
   from helperstuff.jobsubmission import condorsetup
+  from helperstuff.utilities import cmsswversion, scramarch
   condorsetup(args.condorjobid, args.condorjobflavor, args.condorjobtime)
 
   if args.disable_duplicate_check: disableduplicatecheck()
@@ -29,6 +31,7 @@ def makegridpacks(args):
   with ApprovalQueue() as approvalqueue, BadRequestQueue() as badrequestqueue, CloneQueue() as clonequeue:
     for sample in allsamples(filter=args.filter):
       if args.suppressfinished(sample) and sample.finished: continue
+      if not args.show_wrong_cmssw and (sample.cmsswversion, sample.scramarch) != (cmsswversion, scramarch): continue
       print sample, sample.makegridpack(approvalqueue, badrequestqueue, clonequeue, setneedsupdate=args.setneedsupdate)
       sys.stdout.flush()
 
