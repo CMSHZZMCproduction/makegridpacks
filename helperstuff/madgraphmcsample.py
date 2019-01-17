@@ -1,6 +1,6 @@
 import abc, contextlib, glob, itertools, os, re, subprocess
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
+from utilities import cache, cd, cdtemp, genproductions, here, makecards, mkdir_p, wget
 
 from mcsamplebase import MCSampleBase, MCSampleBase_DefaultCampaign
 

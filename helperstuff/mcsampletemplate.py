@@ -5,7 +5,7 @@ search for "fill this" to see all the things that need to be filled in
 
 import abc, contextlib, glob, os, re, subprocess
 
-from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, urlopen, wget
+from utilities import cache, cacheaslist, cd, cdtemp, genproductions, here, makecards, urlopen, wget
 
 from mcsamplebase import MCSampleBase
 

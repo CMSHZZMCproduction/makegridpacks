@@ -1,6 +1,6 @@
 import abc, collections, contextlib, glob, os, re, shutil, subprocess
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, jobended, makecards, OrderedCounter, scramarch, wget
+from utilities import cache, cd, cdtemp, genproductions, here, jobended, makecards, OrderedCounter, wget
 
 from mcsamplebase import MCSampleBase
 
@@ -29,7 +29,7 @@ class POWHEGMCSample(MCSampleBase):
   @property
   def tmptarball(self):
     return os.path.join(here, "workdir", self.foldernameforrunpwg,
-             self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+self.foldernameforrunpwg+".tgz")
+             self.powhegprocess+"_"+self.scramarch+"_"+self.cmsswversion+"_"+self.foldernameforrunpwg+".tgz")
   @property
   def pwgrwlfilter(self):
     """

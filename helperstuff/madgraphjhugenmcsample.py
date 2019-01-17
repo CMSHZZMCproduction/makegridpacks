@@ -1,6 +1,6 @@
 import abc, contextlib, glob, os, re, subprocess
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
+from utilities import cache, cd, cdtemp, genproductions, here, makecards, wget
 
 from jhugendecaymcsample import JHUGenDecayMCSample
 from madgraphmcsample import MadGraphMCSample

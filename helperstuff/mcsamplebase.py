@@ -5,7 +5,7 @@ import uncertainties
 import patches
 
 from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitLSF
-from utilities import cache, cacheaslist, cd, cdtemp, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, wget
+from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, scramarch, wget
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
@@ -452,6 +452,8 @@ class MCSampleBase(JsonDict):
 
   def makegridpack(self, approvalqueue, badrequestqueue, clonequeue, setneedsupdate=False):
     if self.finished: return "finished!"
+    if self.cmsswversion != cmsswversion or self.scramarch != scramarch:
+      return "try again in "+self.cmsswversion+" with scram arch "+self.scramarch
     if not self.cvmfstarballexists:
       if not os.path.exists(self.eostarball):
         if not os.path.exists(self.foreostarball):
@@ -1169,6 +1171,13 @@ class MCSampleBase(JsonDict):
   @property
   def tweaktimepereventseed(self):
     return None
+
+  @property
+  def cmsswversion(self):
+    return "CMSSW_9_3_0"
+  @property
+  def scramarch(self):
+    return "slc6_amd64_gcc630"
 
 class MCSampleBase_DefaultCampaign(MCSampleBase):
   @property

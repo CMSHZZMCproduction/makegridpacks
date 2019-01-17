@@ -2,7 +2,7 @@ import abc, contextlib, glob, os, re, subprocess
 
 import uncertainties
 
-from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
+from utilities import cache, cacheaslist, cd, cdtemp, genproductions, here, makecards, mkdir_p, wget
 
 from mcsamplebase import MCSampleBase_DefaultCampaign
 from mcsamplewithxsec import MCSampleWithXsec, NoXsecError

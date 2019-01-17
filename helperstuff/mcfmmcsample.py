@@ -3,7 +3,7 @@ import abc, os, contextlib, re, filecmp, glob, pycurl, shutil, stat, subprocess,
 import uncertainties
 
 from jobsubmission import jobid, jobtype
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget, KeepWhileOpenFile, jobended, urlopen
+from utilities import cache, cd, cdtemp, genproductions, here, makecards, mkdir_p, wget, KeepWhileOpenFile, jobended, urlopen
 
 from jhugenmcsample import UsesJHUGenLibraries
 from mcsamplebase import MCSampleBase
@@ -83,7 +83,7 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
     return os.path.basename(self.productioncard).split(".DAT")[0]
   @property
   def tmptarball(self):
-    return os.path.join(here, "workdir", self.datasetname, "MCFM_%s_%s_%s_%s.tgz" % (self.method, scramarch, cmsswversion, self.datasetname))
+    return os.path.join(here, "workdir", self.datasetname, "MCFM_%s_%s_%s_%s.tgz" % (self.method, self.scramarch, self.cmsswversion, self.datasetname))
   @property
   def makegridpackcommand(self):
     args = {
