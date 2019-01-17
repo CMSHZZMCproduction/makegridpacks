@@ -35,6 +35,7 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
 
     if self.finalstate == "2mu2num" and self.signalbkgbsi == "BSI" : v+=1
     if self.finalstate == "2e2nue" and self.signalbkgbsi == "BSI" : v+=1
+    if self.finalstate == "2mu2num" and self.signalbkgbsi == "BSI" : v+=1
     """
     if the first tarball is copied to eos and then is found to be bad, add something like
     if self.(whatever) == (whatever): v += 1
