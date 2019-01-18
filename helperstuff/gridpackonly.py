@@ -19,6 +19,10 @@ class GridpackOnly(MCSampleBase):
   @property
   def xsec(self): assert False
 
+  @property
+  def makerequest(self):
+    return False
+
 class POWHEGGridpackOnly(POWHEGMCSample, GridpackOnly):
   @property
   def nfinalparticles(self): assert False

@@ -472,6 +472,10 @@ class MCSampleBase(JsonDict):
       else:
         return "gridpack exists on cvmfs, but it's wrong!"
 
+    if not self.makerequest:
+      self.finished = True
+      return "finished!"
+
     if self.badprepid:
       badrequestqueue.add(self)
 
@@ -1178,6 +1182,10 @@ class MCSampleBase(JsonDict):
   @property
   def scramarch(self):
     return "slc6_amd64_gcc630"
+
+  @property
+  def makerequest(self):
+    return True
 
 class MCSampleBase_DefaultCampaign(MCSampleBase):
   @property
