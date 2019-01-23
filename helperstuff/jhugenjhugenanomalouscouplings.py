@@ -17,7 +17,7 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 #    print folder
     cardbase = self.productionmode
     #card = os.path.join(folder, cardbase+"_NNPDF31_13TeV_M{:d}.input".format(self.mass))
-    card = os.path.join(folder, self.kind + ".input")
+    card = os.path.join(folder, self.coupling + ".input")
 
     if not os.path.exists(card):
       raise IOError(card+" does not exist")
@@ -45,7 +45,7 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
     tarballname = self.datasetname+".tgz"
 
-    if self.year == 2016 and self.productionmode == "HJJ" and self.decaymode == "4l" and self.mass == 125 and self.tarballversion == 1:
+    if self.year == 2016 and self.productionmode == "HJJ" and self.decaymode == "4l" and self.mass == 125 and version == 1:
       tarballname = tarballname.replace("V723", "V7011")
 
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
@@ -99,10 +99,10 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     #for productionmode in "HJJ", "VBF"  :
       decaymode = "4l" 
       for mass in cls.getmasses(productionmode, decaymode):
-        for kind in cls.getkind(productionmode, decaymode):
+        for coupling in cls.getcouplings(productionmode, decaymode):
           for year in 2016, 2017, 2018:
             if year == 2016 and productionmode != "HJJ": continue
-            yield cls(year, productionmode, decaymode, mass, kind)
+            yield cls(year, productionmode, decaymode, mass, coupling)
 
   @property
   def responsible(self):
@@ -126,3 +126,55 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   def dovalidation(self):
     if self.year == 2016 and self.productionmode == "HJJ": return False
     return super(JHUGenJHUGenAnomCoupMCSample, self).dovalidation
+
+class JHUGenJHUGenHJJScalingByPtJet(JHUGenJHUGenAnomCoupMCSample):
+  @property
+  def identifiers(self):
+    return super(JHUGenJHUGenHJJScalingByPtJet, self).identifiers + ("scalebysoftestjetpT",)
+  
+  @property
+  def tarballversion(self):
+    v = 1
+    return v
+
+  def cvmfstarball_anyversion(self, version):
+    if self.year in (2017, 2018):
+      folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V726", self.productionmode+"_ZZ_NNPDF31_13TeV")
+    elif self.year == 2016:
+      folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc481/13TeV/jhugen/V726", self.productionmode+"_ZZ_NNPDF30_13TeV")
+
+    tarballname = self.datasetname+".tgz"
+
+    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
+
+  @property
+  def JHUGenversion(self):
+    return "v7.2.6"
+
+  @classmethod
+  def allsamples(cls):
+    for productionmode in "HJJ",:
+      decaymode = "4l"
+      for mass in cls.getmasses(productionmode, decaymode):
+        for coupling in cls.getcouplings(productionmode, decaymode):
+          for year in 2016, 2017, 2018:
+            yield cls(year, productionmode, decaymode, mass, coupling)
+
+  @property
+  def fragmentname(self):
+    if self.year in (2017, 2018):
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_LHE_pythia8_cff.py"
+    if self.year == 2016:
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCUETP8M1_13TeV_pTmaxMatch_1_LHE_pythia8_cff.py"
+    assert False, self
+
+  @property
+  def uselocaltarballfortest(self):
+    return True
+  @property
+  def dovalidation(self):
+    return False
+
+  @property
+  def genproductionscommit(self):
+    return "fab3ff79790176a61018aeb2c51305d4ae8586c4"

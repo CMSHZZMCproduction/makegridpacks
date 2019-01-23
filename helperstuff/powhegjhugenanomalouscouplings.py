@@ -36,7 +36,7 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
 
   @property
   def foldernameforrunpwg(self):
-    return super(POWHEGJHUGenAnomCoupMCSample, self).foldernameforrunpwg+"_"+self.kind
+    return super(POWHEGJHUGenAnomCoupMCSample, self).foldernameforrunpwg+"_"+self.coupling
 
   @property
   def defaulttimeperevent(self):
@@ -68,9 +68,9 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
     for productionmode in "ggH", :
       decaymode = "4l"
       for mass in cls.getmasses(productionmode, decaymode):
-        for kind in cls.getkind(productionmode, decaymode):
+        for coupling in cls.getcouplings(productionmode, decaymode):
           for year in 2017, 2018:
-            yield cls(year, productionmode, decaymode, mass, kind)
+            yield cls(year, productionmode, decaymode, mass, coupling)
 
   @property
   def responsible(self):

@@ -990,6 +990,8 @@ class MCSampleBase(JsonDict):
     if jobtype(): return
     query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.datasetname, self.extensionnumber, self.pwg, self.campaign)
     output = restful().get('requests', query=query)
+    if not output:
+      return None
     prepids = {_["prepid"] for _ in output}
     prepids -= frozenset(self.badprepid)
     if not prepids:

@@ -2,8 +2,6 @@ from collections import namedtuple
 import abc, contextlib, csv, json, os, re, subprocess
 
 from mcsamplebase import MCSampleBase
-from minlomcsample import MINLOMCSample
-from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 from utilities import cacheaslist, cdtemp, fullinfo, here
 
 class VariationSample(MCSampleBase):
@@ -233,6 +231,9 @@ class RedoSampleBase(ExtensionSampleBase):
 class RedoSample(RedoSampleBase):
   @classmethod
   def allsamples(cls):
+    from minlomcsample import MINLOMCSample
+    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+
     for systematic in "TuneUp", "TuneDown":
       for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
         if productionmode == "ZH" and systematic == "TuneUp": continue
@@ -278,6 +279,7 @@ class RedoForceCompletedSample(RedoSampleBase):
 
   @classmethod
   def allsamples(cls):
+    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
     from qqZZmcsample import QQZZMCSample
     yield cls(QQZZMCSample(2018, "4l"))
     yield cls(QQZZMCSample(2018, "2l2nu"))
@@ -438,6 +440,9 @@ class PythiaVariationSample(VariationSample):
     return result
   @property
   def nevents(self):
+    from minlomcsample import MINLOMCSample
+    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample):
       if self.mainsample.productionmode in ("ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH") and self.mainsample.mass == 125 and self.mainsample.decaymode == "4l":
         if self.variation == "ScaleExtension":
@@ -484,6 +489,9 @@ class PythiaVariationSample(VariationSample):
 
   @classmethod
   def nominalsamples(cls):
+    from minlomcsample import MINLOMCSample
+    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+
     for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
       yield POWHEGJHUGenMassScanMCSample(2017, productionmode, "4l", 125)
       yield POWHEGJHUGenMassScanMCSample(2018, productionmode, "4l", 125)
@@ -493,6 +501,8 @@ class PythiaVariationSample(VariationSample):
 
   @classmethod
   def allsamples(cls):
+    from minlomcsample import MINLOMCSample
+
     for nominal in cls.nominalsamples():
       for systematic in "TuneUp", "TuneDown", "ScaleExtension":
         if isinstance(nominal, MINLOMCSample) and systematic == "ScaleExtension": continue
