@@ -106,7 +106,10 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def responsible(self):
-     return "hroskes"
+     if self.productionmode == "ggZH":
+       return "qguo"
+     else:
+       return "hroskes"
 
   @property
   def JHUGenversion(self):
