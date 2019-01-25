@@ -7273,11 +7273,13 @@
                     },
                     "filterefficiency": 1.0,
                     "filterefficiencyerror": 0.0,
-                    "needsupdate": true,
+                    "finished": true,
                     "otherprepids": [
                         "HIG-RunIIFall17wmLHEGS-02149"
                     ],
-                    "prepid": "HIG-RunIIFall17wmLHEGS-00328"
+                    "prepid": "HIG-RunIIFall17wmLHEGS-00328",
+                    "sizeperevent": 532,
+                    "timeperevent": 19.994321612662002
                 },
                 "filterefficiency": 1,
                 "filterefficiencyerror": 0.0,
