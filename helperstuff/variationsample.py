@@ -162,8 +162,6 @@ class ExtensionSample(ExtensionSampleBase):
   @property
   def dovalidation(self):
     from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
-    if isinstance(self.mainmainsample, JHUGenJHUGenAnomCoupMCSample) and self.mainmainsample.productionmode == "HJJ":
-      return False
     return super(ExtensionSample, self).dovalidation
 
   @property

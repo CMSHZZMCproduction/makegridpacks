@@ -127,7 +127,6 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def dovalidation(self):
-    if self.year == 2016 and self.productionmode == "HJJ": return False
     return super(JHUGenJHUGenAnomCoupMCSample, self).dovalidation
 
 class JHUGenJHUGenHJJScalingByPtJet(JHUGenJHUGenAnomCoupMCSample):

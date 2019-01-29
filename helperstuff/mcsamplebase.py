@@ -1165,7 +1165,7 @@ class MCSampleBase(JsonDict):
   def maxallowedtimeperevent(self): return None  #default to whatever request_fragment_check does
 
   def handle_request_fragment_check_warning(self, line):
-    if line.strip() == "* [WARNING] Large time/event - please check":
+    if re.match(r"\* \[WARNING\] Large time/event[=0-9.]* - please check", line.strip()):
       print "time/event is", self.timeperevent
       if self.maxallowedtimeperevent is not None and self.timeperevent < self.maxallowedtimeperevent: return "ok"
       return "please check it"
