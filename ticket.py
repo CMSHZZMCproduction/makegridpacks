@@ -5,11 +5,12 @@ import argparse, itertools, math, pprint
 from helperstuff import allsamples
 from helperstuff.utilities import restful
 
-def maketicket(block, chain, tags, filter=lambda sample: True, modifyticket=None, notes=None, dryrun=False, status=("defined",), onlymysamples=False):
+def maketicket(block, chain, tags, year, filter=lambda sample: True, modifyticket=None, notes=None, dryrun=False, status=("defined",), onlymysamples=False):
   prepids = [sample.prepid for sample in allsamples(
     filter=lambda sample:
       not sample.finished
       and sample.prepid is not None
+      and sample.year == year
       and filter(sample)
       and sample.status in status,
     onlymysamples=onlymysamples,
@@ -99,6 +100,7 @@ if __name__ == "__main__":
   parser.add_argument("--block", "-b", required=True, type=int)
   parser.add_argument("--chain", "-c", required=True)
   parser.add_argument("--filter", "-f", type=eval, default=lambda sample: True)
+  parser.add_argument("--year", "-y", type=int, required=True)
   parser.add_argument("--modify", "-m")
   parser.add_argument("--notes")
   parser.add_argument("--tags", "-t", action="append", required=True)
@@ -115,4 +117,4 @@ if __name__ == "__main__":
   elif args.status: status = args.status
   else: status = ("defined",)
 
-  maketicket(block=args.block, chain=args.chain, filter=args.filter, modifyticket=args.modify, notes=args.notes, tags=args.tags, dryrun=args.dry_run, status=status, onlymysamples=not args.everyones_samples)
+  maketicket(block=args.block, chain=args.chain, filter=args.filter, modifyticket=args.modify, notes=args.notes, tags=args.tags, dryrun=args.dry_run, status=status, onlymysamples=not args.everyones_samples, year=args.year)
