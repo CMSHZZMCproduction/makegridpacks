@@ -180,3 +180,13 @@ class JHUGenJHUGenHJJScalingByPtJet(JHUGenJHUGenAnomCoupMCSample):
   @property
   def genproductionscommit(self):
     return "fab3ff79790176a61018aeb2c51305d4ae8586c4"
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2016:
+      return "ed512ae283cc2d8710e72ecf37c2ae6cd663aee6"
+    if self.year == 2017:
+      return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    if self.year == 2018:
+      return "f256d395f40acf771f12fd6dbecd622341e9731a"
+    assert False, self
+
