@@ -6,7 +6,6 @@ def jobtype():
   result = set()
 
   if "_CONDOR_SCRATCH_DIR" in os.environ: result.add("condor")
-  if "LSB_JOBID" in os.environ: result.add("LSF")
 
   if not result: return None
   if len(result) == 1: return result.pop()
@@ -28,7 +27,6 @@ def condorsetup(jobid, flavor, time):
 def jobid():
   if jobtype() is None: return None
   if jobtype() == "condor": return __condor_jobid
-  if jobtype() == "LSF": return os.environ["LSB_JOBID"]
   assert False, jobtype()
 
 class JobTimeBase(object):
@@ -74,23 +72,6 @@ class JobTimeBase(object):
   @property
   def condorflavor(self):
     return min(((k, v) for k, v in self.condorflavors().iteritems() if v >= self.jobtime), key=lambda x: list(reversed(x)))[0]
-  @classmethod
-  def LSFqueues(self):
-    return {
-      "8nm": datetime.timedelta(minutes=8),
-      "1nh": datetime.timedelta(hours=1),
-      "8nh": datetime.timedelta(hours=8),
-      "1nd": datetime.timedelta(days=1),
-      "2nd": datetime.timedelta(days=2),
-      "1nw": datetime.timedelta(weeks=1),
-      "2nw": datetime.timedelta(weeks=2),
-      "cmscaf1nh": datetime.timedelta(hours=1),
-      "cmscaf1nd": datetime.timedelta(days=1),
-      "cmscaf1nw": datetime.timedelta(weeks=1),
-    }
-  @property
-  def LSFqueue(self):
-    return min(((k, v) for k, v in self.LSFqueues().iteritems() if v >= self.jobtime), key=lambda x: list(reversed(x)))[0]
 
 class JobQueue(JobTimeBase):
   def __init__(self, queue):
@@ -99,12 +80,10 @@ class JobQueue(JobTimeBase):
     return self.queue
   @property
   def jobtype(self):
-    if self.queue in self.LSFqueues(): return "LSF"
     if self.queue in self.condorflavors(): return "condor"
     assert False, self.queue
   @property
   def jobtime(self):
-    if self.jobtype == "LSF": return self.LSFqueues()[self.queue]
     if self.jobtype == "condor": return self.condorflavors()[self.queue]
 
 class JobTime(JobTimeBase):
@@ -121,8 +100,6 @@ def jobtime():
     return None
   if jobtype() == "condor":
     return __condor_jobtime
-  if jobtype() == "LSF":
-    return JobQueue(os.environ["LSB_QUEUE"])
   assert False, jobtype()
 
 def queuematches(queue):
@@ -133,15 +110,7 @@ def queuematches(queue):
 
 
 def submitLSF(queue):
-  queue = JobQueue(queue).LSFqueue
-  if __pendingjobsdct[queue] > 0:
-    __pendingjobsdct[queue] -= 1
-    return False
-  with cd(here):
-    job = "cd "+here+" && eval $(scram ru -sh) && ./makegridpacks.py --disable-duplicate-check"
-    pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
-    subprocess.check_call(["bsub", "-q", queue, "-J", "makegridpacks"], stdin=pipe.stdout)
-    return True
+  raise RuntimeError("No more LSF!")
 
 condortemplate = """
 executable              = {here}/.makegridpacks_{jobflavor}.sh
@@ -189,9 +158,6 @@ def submitcondor(flavor):
 
 def __npendingjobs(queue):
   jobtype = JobQueue(queue).jobtype
-  if jobtype == "LSF":
-    output = subprocess.check_output(["bjobs", "-q", queue, "-J", "makegridpacks"], stderr=subprocess.STDOUT)
-    return len(list(line for line in output.split("\n") if "PEND" in line.split()))
   if jobtype == "condor":
     output = subprocess.check_output(["condor_q", "-wide:10000"])
     result = 0
