@@ -33,12 +33,10 @@ class MyMCSample(MCSampleBase):
   def hasfilter(self):
      "fill this (typically false, if there's a JHUGen or Pythia filter then true)"
   @property
-  def tmptarball(self):
+  def tmptarballbasename(self):
     """
     fill this
-    it has to be os.path.join(here, "workdir", ...)
-    the directory doesn't matter too much as long as it's different for every sample
-    the final tarball name (....tgz) has to be whatever is created by the script that makes the tarball
+    this has to be whatever is created by the script that makes the tarball
     """
   @property
   def tarballversion(self):

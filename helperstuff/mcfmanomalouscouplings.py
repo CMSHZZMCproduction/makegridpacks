@@ -87,7 +87,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
         mainfoldername = "MCFM_mdata_MCFM_JHUGen_13TeV_ggZZto{}_BKG_NNPDF31".format(self.finalstate)
         tarballname = "MCFM_mdata_slc6_amd64_gcc630_CMSSW_9_3_0_MCFM_JHUGen_13TeV_ggZZto{}_BKG_NNPDF31.tgz".format(self.finalstate)
     else:
-        tarballname = self.tmptarball.split('/')[-1]
+        tarballname = self.tmptarballbasename
         mainfoldername = tarballname.replace(".tgz", "")
     return os.path.join(folder, mainfoldername, "v{}".format(version), tarballname)
 

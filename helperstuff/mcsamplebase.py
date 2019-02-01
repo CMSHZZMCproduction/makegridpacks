@@ -32,7 +32,7 @@ class MCSampleBase(JsonDict):
   @abc.abstractmethod
   def cvmfstarball_anyversion(self, version): pass
   @abc.abstractproperty
-  def tmptarball(self): pass
+  def tmptarballbasename(self): pass
   @abc.abstractproperty
   def makegridpackcommand(self): pass
   @abc.abstractproperty
@@ -169,15 +169,18 @@ class MCSampleBase(JsonDict):
 
   @property
   def workdirforgridpack(self):
-    result = os.path.dirname(self.tmptarball)
-    if os.path.commonprefix((result, os.path.join(here, "workdir"))) != os.path.join(here, "workdir"):
-      raise ValueError("{!r}.workdir is supposed to be in the workdir folder".format(self))
-    if result == os.path.join(here, "workdir"):
-      raise ValueError("{!r}.workdir is supposed to be a subfolder of the workdir folder, not workdir itself".format(self))
+    result = os.path.dirname(self.foreostarball)
+    result = result.replace(os.path.join(here, "gridpacks"), os.path.join(here, "workdir"))
+    assert result.startswith(os.path.join(here, "workdir"), result), result
     return result
+
   @property
   def workdir(self):
-    return self.workdirforgridpack.rstrip("/") + "_" + str(self.year) + "/"
+    return self.workdirforgridpack.rstrip("/") + "_" + str(self).replace(" ", "")
+
+  @property
+  def tmptarball(self):
+    return os.path.join(self.workdirforgridpack, self.tmptarballbasename)
 
   @property
   def cvmfstarballexists(self): return os.path.exists(self.cvmfstarball)

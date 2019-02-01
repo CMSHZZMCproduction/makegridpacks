@@ -8,9 +8,8 @@ from jhugendecaymcsample import JHUGenDecayMCSample
 
 class JHUGenJHUGenMCSample(JHUGenMCSample, JHUGenDecayMCSample):
   @property
-  def tmptarball(self):
-    return os.path.join(here, "workdir",self.productionmode+"_"+self.decaymode, os.path.basename(self.productioncard).replace(".input", "") + re.search("NNPDF[0-9]*", self.productioncard).group(0),
-             "JHUGen_"+self.shortname+"_"+self.scramarch+"_"+self.cmsswversion+".tgz")
+  def tmptarballbasename(self):
+    return "JHUGen_"+self.shortname+"_"+self.scramarch+"_"+self.cmsswversion+".tgz"
   @property
   def shortname(self):
     return re.sub(r"\W", "", str(self)).replace(str(self.year), "", 1)

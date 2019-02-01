@@ -27,9 +27,9 @@ class POWHEGMCSample(MCSampleBase):
       assert False, self.multicore_upto
     return super(POWHEGMCSample, self).creategridpackqueue
   @property
-  def tmptarball(self):
-    return os.path.join(here, "workdir", self.foldernameforrunpwg,
-             self.powhegprocess+"_"+self.scramarch+"_"+self.cmsswversion+"_"+self.foldernameforrunpwg+".tgz")
+  def tmptarballbasename(self):
+    return os.path.join(self.foldernameforrunpwg,
+             self.powhegprocess+"_"+self.scramarch+"_"+self.cmsswversion+"_"+self.foldernameforrunpwg+".tgz"))
   @property
   def pwgrwlfilter(self):
     """

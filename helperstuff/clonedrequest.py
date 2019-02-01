@@ -49,7 +49,7 @@ class ClonedRequest(MCSampleBase):
   @property
   def cvmfstarballexists(self): return True
   @property
-  def tmptarball(self): assert False
+  def tmptarballbasename(self): assert False
   @property
   def makegridpackcommand(self): assert False
   @property

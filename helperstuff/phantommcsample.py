@@ -27,8 +27,8 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
   def hasfilter(self):
     return False
   @property
-  def tmptarball(self):
-    return os.path.join(here, "workdir", str(self).replace(" ", ""), os.path.basename(self.cvmfstarball))
+  def tmptarballbasename(self):
+    return os.path.basename(self.cvmfstarball)
   @property
   def tarballversion(self):
     v = 1
@@ -111,9 +111,8 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
   @property
   def makegridpackcommand(self):
     """
-    if you implement this, you also HAVE to change tmptarball to be the correct name
-    the directory doesn't matter, but the final filename should be whatever is created
-    by the script
+    if you implement this, you also HAVE to change tmptarballbasename to be the correct name
+    it should be whatever is created by the script
     """
     assert False
   @property

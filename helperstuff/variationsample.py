@@ -33,8 +33,8 @@ class VariationSample(MCSampleBase):
   def cvmfstarball_anyversion(self, version):
     return self.mainsample.cvmfstarball_anyversion(version)
   @property
-  def tmptarball(self):
-    return self.mainsample.tmptarball
+  def tmptarballbasename(self):
+    return self.mainsample.tmptarballbasename
   @property
   def patchkwargs(self):
     return self.mainsample.patchkwargs

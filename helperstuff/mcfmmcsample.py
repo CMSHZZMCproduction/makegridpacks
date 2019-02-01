@@ -82,8 +82,8 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
   def cardbase(self):
     return os.path.basename(self.productioncard).split(".DAT")[0]
   @property
-  def tmptarball(self):
-    return os.path.join(here, "workdir", self.datasetname, "MCFM_%s_%s_%s_%s.tgz" % (self.method, self.scramarch, self.cmsswversion, self.datasetname))
+  def tmptarballbasename(self):
+    return "MCFM_%s_%s_%s_%s.tgz" % (self.method, self.scramarch, self.cmsswversion, self.datasetname)
   @property
   def makegridpackcommand(self):
     args = {
