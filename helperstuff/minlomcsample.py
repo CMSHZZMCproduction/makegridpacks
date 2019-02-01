@@ -64,7 +64,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
     return POWHEGJHUGenMassScanMCSample(self.year, "ggH", self.decaymode, self.mass).decaycard
 
   @property
-  def timepereventqueue(self): return "1nw"
+  def timepereventqueue(self): return "nextweek"
 
   @property
   def tarballversion(self):
@@ -252,5 +252,5 @@ class MINLOatLO(MINLOMCSample):
   @property
   def creategridpackqueue(self):
     if super(MINLOatLO, self).creategridpackqueue is None: return None
-    if self.multicore_upto[0] == 3: return "1nd"
-    return "1nh"
+    if self.multicore_upto[0] == 3: return "tomorrow"
+    return "longlunch"

@@ -34,7 +34,7 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def timepereventqueue(self):
-    return "1nw"
+    return "nextweek"
 
 
   def cvmfstarball_anyversion(self, version):

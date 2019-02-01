@@ -75,12 +75,12 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def creategridpackqueue(self):
-    if self.productionmode == "ttH": return "1nw"
+    if self.productionmode == "ttH": return "nextweek"
     return super(POWHEGJHUGenMassScanMCSample, self).creategridpackqueue
 
   @property
   def timepereventqueue(self):
-    if self.productionmode in ("ZH", "ttH"): return "1nw"
+    if self.productionmode in ("ZH", "ttH"): return "nextweek"
     return super(POWHEGJHUGenMassScanMCSample, self).timepereventqueue
 
   @property

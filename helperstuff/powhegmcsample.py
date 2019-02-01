@@ -19,10 +19,10 @@ class POWHEGMCSample(MCSampleBase):
   @property
   def creategridpackqueue(self):
     if self.powhegsubmissionstrategy == "multicore":
-      if self.multicore_upto[0] == 0: return "1nh"
-      if self.multicore_upto[0] == 1: return "1nd"
-      if self.multicore_upto[0] == 2: return "1nw"
-      if self.multicore_upto[0] == 3: return "1nd"
+      if self.multicore_upto[0] == 0: return "longlunch"
+      if self.multicore_upto[0] == 1: return "tomorrow"
+      if self.multicore_upto[0] == 2: return "nextweek"
+      if self.multicore_upto[0] == 3: return "tomorrow"
       if self.multicore_upto[0] == 9: return None
       assert False, self.multicore_upto
     return super(POWHEGMCSample, self).creategridpackqueue

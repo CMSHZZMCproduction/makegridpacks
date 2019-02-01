@@ -4,7 +4,7 @@ import uncertainties
 
 import patches
 
-from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitLSF
+from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitcondor
 from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, scramarch, wget
 
 class MCSampleBase(JsonDict):
@@ -112,13 +112,13 @@ class MCSampleBase(JsonDict):
   @property
   def notes(self): return ""
   @property
-  def creategridpackqueue(self): return "1nd"
+  def creategridpackqueue(self): return "tomorrow"
   @property
-  def timepereventqueue(self): return "1nd"
+  def timepereventqueue(self): return "tomorrow"
   @property
   def timepereventflavor(self): return JobQueue(self.timepereventqueue).condorflavor
   @property
-  def filterefficiencyqueue(self): return "1nd"
+  def filterefficiencyqueue(self): return "tomorrow"
   @property
   def dovalidation(self):
     """Set this to false if a request fails so badly that the validation will never succeed"""
@@ -264,7 +264,7 @@ class MCSampleBase(JsonDict):
               except OSError:
                 shutil.rmtree(_)
         if not self.makinggridpacksubmitsjob and self.creategridpackqueue is not None:
-          if not jobtype(): return "need to create the gridpack, submitting to LSF" if submitLSF(self.creategridpackqueue) else "need to create the gridpack, job is pending on LSF"
+          if not jobtype(): return "need to create the gridpack, submitting to condor" if submitcondor(self.creategridpackqueue) else "need to create the gridpack, job is pending on condor"
           if not queuematches(self.creategridpackqueue): return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))

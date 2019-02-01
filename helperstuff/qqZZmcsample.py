@@ -37,7 +37,7 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
   def powhegsubmissionstrategy(self): return "multicore"
   @property
   def creategridpackqueue(self):
-    if self.multicore_upto[0] == 1 and not self.cut: return "1nh"
+    if self.multicore_upto[0] == 1 and not self.cut: return "longlunch"
     return super(QQZZMCSample, self).creategridpackqueue
   @property
   def tarballversion(self):

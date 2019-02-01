@@ -14,9 +14,6 @@ for i in {1..192}; do (
   source /afs/cern.ch/cms/PPD/PdmV/tools/McM/getCookie.sh
   eval $(scram ru -sh)
   ./makegridpacks.py "$@"
-  bswitch -q 1nh cmscaf1nh 0
-  bswitch -q 1nd cmscaf1nd 0
-  bswitch -q 1nw cmscaf1nw 0
   echo -n "it's currently "; date
   echo "will run again in 15 minutes, which will be time $((${i}+1))/192"
 ) || true

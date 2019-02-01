@@ -89,7 +89,7 @@ class JHUGenOffshellVBF(JHUGenMCSample, MCSampleBase_DefaultCampaign, MCSampleWi
     assert False, self
   @property
   def genproductionscommit(self):
-    return "18bd285551f4166be7217f1f48302074561ef3e7"
+    return "b8362b487338c4433a30466f2e8c3268cffcf0e0"
   @property
   def genproductionscommitforfragment(self):
     if self.year == 2017: return "fd7d34a91c3160348fd0446ded445fa28f555e09"
@@ -135,4 +135,5 @@ class JHUGenOffshellVBF(JHUGenMCSample, MCSampleBase_DefaultCampaign, MCSampleWi
 
   @property
   def creategridpackqueue(self):
-    return None
+    if self.inthemiddleofmultistepgridpackcreation: return None
+    return "longlunch"

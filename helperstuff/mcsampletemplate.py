@@ -162,13 +162,13 @@ class MyMCSample(MCSampleBase):
 
   @property
   def creategridpackqueue(self):
-    """fill this or delete it (default 1nd)"""
+    """fill this or delete it (default tomorrow)"""
   @property
   def timepereventqueue(self):
-    """fill this or delete it (default 1nd)"""
+    """fill this or delete it (default tomorrow)"""
   @property
   def filterefficiencyqueue(self):
-    """fill this or delete it (default 1nd)"""
+    """fill this or delete it (default tomorrow)"""
 
 """
 finally, import this module in __init__.py in the helperstuff folder, inside the allsamples function
