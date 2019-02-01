@@ -87,6 +87,10 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
   def genproductionscommit(self):
     return "ce68f8a7ab05f530e0a99124088c08d1cc2bf355"
   @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2017: return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    return super(QQZZMCSample, self).genproductionscommitforfragment
+  @property
   def hasfilter(self): return False #the mass cut filter is done within powheg
   @property
   def nevents(self):
