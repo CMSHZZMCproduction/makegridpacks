@@ -1,8 +1,8 @@
-import abc
+import abc, os
 
 import uncertainties
 
-from utilities import cd, here
+from utilities import cd, cdtemp, here
 
 from mcsamplebase import MCSampleBase
 
@@ -82,6 +82,7 @@ class MCSampleWithXsec(MCSampleBase):
 
 class MCSampleWithXsec_RunZeroEvents(MCSampleWithXsec):
   def getxsec(self):
+    if not os.path.exists(self.cvmfstarball): raise NoXsecError
     with cdtemp():
       subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
       try:

@@ -171,7 +171,7 @@ class MCSampleBase(JsonDict):
   def workdirforgridpack(self):
     result = os.path.dirname(self.foreostarball)
     result = result.replace(os.path.join(here, "gridpacks"), os.path.join(here, "workdir"))
-    assert result.startswith(os.path.join(here, "workdir"), result), result
+    assert result.startswith(os.path.join(here, "workdir")), result
     return result
 
   @property

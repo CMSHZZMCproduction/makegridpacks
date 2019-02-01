@@ -2,6 +2,8 @@
 
 import os
 
+from utilities import genproductions
+
 from jhugenmcsample import JHUGenMCSample
 from mcsamplebase import MCSampleBase_DefaultCampaign
 from mcsamplewithxsec import MCSampleWithXsec_RunZeroEvents
@@ -28,12 +30,19 @@ class JHUGenOffshellVBF(JHUGenMCSample, MCSampleBase_DefaultCampaign, MCSampleWi
     result.append("--vbf-offshell")
     if self.inthemiddleofmultistepgridpackcreation: result.append("--check-jobs")
     return result
+  @property
+  def linkmela(self):
+    return True
 
   @property
   def inthemiddleofmultistepgridpackcreation(self):
     if os.path.exists(self.tmptarball): return False
     if os.path.exists(os.path.join(self.workdirforgridpack, self.shortname+"_JHUGen")): return True
     return False
+
+  @property
+  def gridpackjobsrunning(self):
+    return False  #--check-jobs will pick it up anyway
 
   @classmethod
   def allsamples(cls):
@@ -123,3 +132,7 @@ class JHUGenOffshellVBF(JHUGenMCSample, MCSampleBase_DefaultCampaign, MCSampleWi
       "L1": "0L1",
       "L1mix": "0L1f05ph0",
     }[self.coupling]
+
+  @property
+  def creategridpackqueue(self):
+    return None
