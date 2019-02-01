@@ -8,12 +8,6 @@ from jhugendecaymcsample import JHUGenDecayMCSample
 
 class JHUGenJHUGenMCSample(JHUGenMCSample, JHUGenDecayMCSample):
   @property
-  def tmptarballbasename(self):
-    return "JHUGen_"+self.shortname+"_"+self.scramarch+"_"+self.cmsswversion+".tgz"
-  @property
-  def shortname(self):
-    return re.sub(r"\W", "", str(self)).replace(str(self.year), "", 1)
-  @property
   def makegridpackcommand(self):
     return super(JHUGenJHUGenMCSample, self).makegridpackcommand + ["--decay-card", self.decaycard]
 

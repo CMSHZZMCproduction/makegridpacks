@@ -79,3 +79,20 @@ class MCSampleWithXsec(MCSampleBase):
   @xsec.deleter
   def xsec(self):
     del self.xsecnominal, self.xsecerror
+
+class MCSampleWithXsec_RunZeroEvents(MCSampleWithXsec):
+  def getxsec(self):
+    with cdtemp():
+      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
+      try:
+        subprocess.check_output(["./runcmsgrid.sh", "0", "123456", "1"], stderr=subprocess.STDOUT)
+      except CalledProcessError as e:
+        print e.output
+        raise
+      with open("cmsgrid_final.lhe") as f:
+        for line in f:
+          if "<init>" in line: break
+        next(f)
+        line = next(f)
+        xsec, xsecerror, _, _ = line.split()
+        return uncertainties.ufloat(float(xsec), float(xsecerror))

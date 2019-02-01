@@ -4,7 +4,7 @@ def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda 
   from mcsamplebase import MCSampleBase
 
   #import all modules that have classes that should be considered here
-  import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, \
+  import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, jhugenoffshellVBF, \
          powhegjhugenanomalouscouplings, powhegjhugenmassscanmcsample, powhegjhugenlifetime, \
          minlomcsample, mcfmanomalouscouplings, variationsample, phantommcsample, \
          qqZZmcsample, clonedrequest, gridpackbysomeoneelse, mtdtdr

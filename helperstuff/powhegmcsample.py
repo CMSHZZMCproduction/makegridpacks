@@ -29,7 +29,7 @@ class POWHEGMCSample(MCSampleBase):
   @property
   def tmptarballbasename(self):
     return os.path.join(self.foldernameforrunpwg,
-             self.powhegprocess+"_"+self.scramarch+"_"+self.cmsswversion+"_"+self.foldernameforrunpwg+".tgz"))
+             self.powhegprocess+"_"+self.scramarch+"_"+self.cmsswversion+"_"+self.foldernameforrunpwg+".tgz")
   @property
   def pwgrwlfilter(self):
     """
