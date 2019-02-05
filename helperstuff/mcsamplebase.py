@@ -131,7 +131,9 @@ class MCSampleBase(JsonDict):
   def gridpackjobsrunning(self):
     """powheg samples that need to run the grid in multiple steps need to modify this"""
     if not self.makinggridpacksubmitsjob: return False
-    return not jobended("-J", self.makinggridpacksubmitsjob)
+    raise RuntimeError("fix this")
+    #this doesn't work
+    return not jobended("-constraint", 'JobBatchName == "{}"'.format(self.makinggridpacksubmitsjob))
   def processmakegridpackstdout(self, stdout): "do nothing by default, powheg uses this"
 
   @abc.abstractmethod
@@ -234,7 +236,7 @@ class MCSampleBase(JsonDict):
       if not kwof:
         try:
           with open(self.tmptarball+".tmp") as f:
-            jobid = int(f.read().strip())
+            jobid = float(f.read().strip())
         except (ValueError, IOError):
           return "try running again, probably you just got really bad timing"
         if jobended(str(jobid)):

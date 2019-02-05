@@ -4,9 +4,9 @@ import os
 
 from utilities import here
 
-def cleanupgridpacks():
+def cleanupgridpacks(folder):
   removed = []
-  for dirpath, dirnames, filenames in os.walk(os.path.join(here, "gridpacks"), topdown=False):
+  for dirpath, dirnames, filenames in os.walk(folder, topdown=False):
     for _ in dirnames[:]:
       if os.path.join(dirpath, _) in removed:
         dirnames.remove(_)
@@ -18,4 +18,6 @@ if __name__ == "__main__":
   import argparse
   parser = argparse.ArgumentParser()
   args = parser.parse_args()
-  cleanupgridpacks()
+  cleanupgridpacks(os.path.join(here, "gridpacks"))
+  cleanupgridpacks(os.path.join(here, "test_gridpacks"))
+  cleanupgridpacks(os.path.join(here, "workdir"))

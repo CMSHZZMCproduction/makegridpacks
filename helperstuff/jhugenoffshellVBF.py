@@ -2,7 +2,7 @@
 
 import os
 
-from utilities import genproductions
+from utilities import cacheaslist, genproductions
 
 from jhugenmcsample import JHUGenMCSample
 from mcsamplebase import MCSampleBase_DefaultCampaign
@@ -28,7 +28,10 @@ class JHUGenOffshellVBF(JHUGenMCSample, MCSampleBase_DefaultCampaign, MCSampleWi
   def makegridpackcommand(self):
     result = super(JHUGenOffshellVBF, self).makegridpackcommand
     result.append("--vbf-offshell")
-    if self.inthemiddleofmultistepgridpackcreation: result.append("--check-jobs")
+    if self.inthemiddleofmultistepgridpackcreation:
+      result.append("--check-jobs")
+    else:
+      result.append("--only-compile")
     return result
   @property
   def linkmela(self):
@@ -45,6 +48,7 @@ class JHUGenOffshellVBF(JHUGenMCSample, MCSampleBase_DefaultCampaign, MCSampleWi
     return False  #--check-jobs will pick it up anyway
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for year in 2016, 2017, 2018:
       if year == 2016: continue

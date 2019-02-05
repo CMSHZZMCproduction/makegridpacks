@@ -330,18 +330,13 @@ class JsonDict(object):
 @contextlib.contextmanager
 def nullcontext(): yield
 
-def jobended(*bjobsargs):
-  try:
-    bjobsout = subprocess.check_output(["bjobs"]+list(bjobsargs), stderr=subprocess.STDOUT)
-  except subprocess.CalledProcessError:
-    return True
-  if re.match("Job <.*> is not found", bjobsout.strip()):
-    return True
-  lines = bjobsout.strip().split("\n")
-  if len(lines) == 2 and lines[1].split()[2] in ("EXIT", "DONE"):
-    return True
-
-  return False
+def jobended(*condorqargs):
+  from jobsubmission import jobtype
+  if jobtype(): return False  #can't use condor_q on condor machines
+  condorqout = subprocess.check_output(["condor_q"]+list(condorqargs), stderr=subprocess.STDOUT)
+  match = re.search("([0-9]*) jobs; ([0-9]*) completed, ([0-9]*) removed, ([0-9]*) idle, ([0-9]*) running, ([0-9]*) held, ([0-9]*) suspended", condorqout)
+  if not match: raise ValueError("Couldn't parse output of condor_q " + " ".join(condorqargs))
+  return all(int(match.group(i)) == 0 for i in xrange(4, 7))
 
 @contextlib.contextmanager
 def redirect_stdout(target):

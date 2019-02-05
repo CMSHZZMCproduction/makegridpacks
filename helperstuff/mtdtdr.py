@@ -1,7 +1,7 @@
 import os
 
 from gridpackonly import POWHEGGridpackOnly
-from utilities import genproductions
+from utilities import cacheaslist, genproductions
 
 class MTDTDRSample(POWHEGGridpackOnly):
   def __init__(self, year, productionmode):
@@ -11,6 +11,7 @@ class MTDTDRSample(POWHEGGridpackOnly):
   def identifiers(self):
     return "MTDTDR", self.productionmode
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     yield cls(2018, "VBF")
     yield cls(2018, "ZH")
