@@ -338,6 +338,33 @@ def jobended(*condorqargs):
   if not match: raise ValueError("Couldn't parse output of condor_q " + " ".join(condorqargs))
   return all(int(match.group(i)) == 0 for i in xrange(4, 7))
 
+def jobexitstatusfromlog(logfilename, okiffailed=False):
+  with open(logfilename) as f:
+    log = f.read()
+
+  jobid = re.search("^000 [(]([0-9]*[.][0-9]*)[.][0-9]*[)]", log)
+  if not jobid:
+    raise RuntimeError("Don't know how to interpret "+logfilename+", can't find the jobid in the file.")
+  jobid = jobid.group(1)
+
+  if "Job terminated" in log:
+    match = re.search("return value ([0-9]+)")
+    if match:
+      exitstatus = int(match.group(1))
+      if exitstatus:
+        if okiffailed:
+          return exitstatus
+        else:
+          raise RuntimeError(logfilename+" failed with exit status {}".format(exitstatus))
+    else:
+      raise RuntimeError("Don't know what to do with "+logfilename)
+  if "Job was aborted" in log:
+    if okiffailed: return -1
+    raise RuntimeError(logfilename+" was aborted")
+  return None
+
+
+
 @contextlib.contextmanager
 def redirect_stdout(target):
   original = sys.stdout

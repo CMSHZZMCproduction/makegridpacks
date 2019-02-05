@@ -51,7 +51,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def creategridpackqueue(self):
-    return "2nd"
+    return "testmatch"
 
 
   @property

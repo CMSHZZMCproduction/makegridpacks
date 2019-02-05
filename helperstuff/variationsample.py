@@ -46,12 +46,10 @@ class VariationSample(MCSampleBase):
     return self.mainsample.inthemiddleofmultistepgridpackcreation
   @property
   def gridpackjobsrunning(self):
-    return self.mainsample.gridpackjobsrunning
+    return type(self.mainsample).gridpackjobsrunning.__get__(self, type(self))
+
   def findfilterefficiency(self):
     return "this is a variation sample, the filter efficiency is the same as for the main sample"
-  @property
-  def workdir(self):
-    return self.mainsample.workdir.rstrip("/")+"_"+self.variation
   @property
   def makegridpackcommand(self):
     return self.mainsample.makegridpackcommand
@@ -322,7 +320,17 @@ class RedoMCFMMoreNcalls(RedoSampleBase):
 
   @property
   def tarballversion(self):
-    return self.mainsample.tarballversion+1
+    from mcfmanomalouscouplings import MCFMAnomCoupMCSample
+
+    v = self.mainsample.tarballversion+1
+
+    if self.year == 2017:
+      othersample = MCFMAnomCoupMCSample(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
+      if self.mainsample.signalbkgbsi == "BKG":
+        othersample = RedoMCFMMoreNcalls(othersample)
+      assert v == othersample.tarballversion, (v, othersample.tarballversion)
+
+    return v
 
   @property
   def genproductionscommit(self):
