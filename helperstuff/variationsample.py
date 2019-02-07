@@ -113,6 +113,12 @@ class VariationSample(MCSampleBase):
   @property
   def maxallowedtimeperevent(self):
     return self.mainsample.maxallowedtimeperevent
+  @property
+  def tweakmakegridpackseed(self):
+    return self.mainsample.tweakmakegridpackseed
+  @property
+  def tweaktimepereventseed(self):
+    return self.mainsample.tweaktimepereventseed
 
 class ExtensionSampleBase(VariationSample):
   def __init__(self, *args, **kwargs):

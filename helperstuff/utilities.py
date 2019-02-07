@@ -348,7 +348,7 @@ def jobexitstatusfromlog(logfilename, okiffailed=False):
   jobid = jobid.group(1)
 
   if "Job terminated" in log:
-    match = re.search("return value ([0-9]+)")
+    match = re.search("return value ([0-9]+)", log)
     if match:
       exitstatus = int(match.group(1))
       if exitstatus:

@@ -182,3 +182,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
   def tweaktimepereventseed(self):
     if self.year == 2018 and self.signalbkgbsi == "BKG" and self.finalstate in "ELEL MUMU": return 1
     return super(MCFMAnomCoupMCSample, self).tweaktimepereventseed
+  @property
+  def tweakmakegridpackseed(self):
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PH": return 1
+    return super(MCFMAnomCoupMCSample, self).tweakmakegridpackseed

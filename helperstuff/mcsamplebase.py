@@ -1182,6 +1182,9 @@ class MCSampleBase(JsonDict):
   @property
   def tweaktimepereventseed(self):
     return None
+  @property
+  def tweakmakegridpackseed(self):
+    return 0
 
   @property
   def cmsswversion(self):
