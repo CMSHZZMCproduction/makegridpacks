@@ -351,11 +351,9 @@ def jobexitstatusfromlog(logfilename, okiffailed=False):
     match = re.search("return value ([0-9]+)", log)
     if match:
       exitstatus = int(match.group(1))
-      if exitstatus:
-        if okiffailed:
-          return exitstatus
-        else:
-          raise RuntimeError(logfilename+" failed with exit status {}".format(exitstatus))
+      if exitstatus and not okiffailed:
+        raise RuntimeError(logfilename+" failed with exit status {}".format(exitstatus))
+      return exitstatus
     else:
       raise RuntimeError("Don't know what to do with "+logfilename)
   if "Job was aborted" in log:
