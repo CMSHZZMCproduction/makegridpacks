@@ -1,11 +1,11 @@
-import abc, collections, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess, tempfile
+import abc, collections, contextlib, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess, tempfile
 
 import uncertainties
 
 import patches
 
 from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitcondor
-from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, scramarch, wget
+from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, scramarch, urlopen, wget
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
@@ -1125,7 +1125,7 @@ class MCSampleBase(JsonDict):
 
   def request_fragment_check(self):
     with cdtemp():
-      with open(os.path.join(genproductions, "bin", "utils", "request_fragment_check.py")) as f:
+      with contextlib.closing(urlopen("https://github.com/cms-sw/genproductions/raw/master/bin/utils/request_fragment_check.py")) as f:
         contents = f.read()
       cookies = [line for line in contents.split("\n") if "os.system" in line and "cookie" in line.lower()]
       assert len(cookies) == 2
@@ -1164,6 +1164,11 @@ class MCSampleBase(JsonDict):
           if line.strip() == "*                              in born matrix element for highest multiplicity.": continue
           if line.strip() == "*                as number of partons in born matrix element for highest multiplicity.": continue
           if line.strip() == "*           correctly as number of partons in born matrix element for highest multiplicity.": continue
+          if line.strip() == self.datasetname: continue
+          if line.strip().startswith("'POWHEG:nFinal"): continue
+          if line.strip() == self.cvmfstarball or line.strip() == self.eostarball: continue
+          if line.strip() == "grep from powheg pwhg_checklimits files": continue
+          if line.strip().startswith("coll-minus"): continue
           return "Unknown line in request_fragment_check output!\n"+line
 
   @property
