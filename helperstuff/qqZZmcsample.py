@@ -1,6 +1,6 @@
 import os
 
-from utilities import genproductions
+from utilities import cacheaslist, genproductions
 
 from mcsamplebase import MCSampleBase_DefaultCampaign
 from powhegmcsample import POWHEGMCSample
@@ -37,7 +37,7 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
   def powhegsubmissionstrategy(self): return "multicore"
   @property
   def creategridpackqueue(self):
-    if self.multicore_upto[0] == 1 and not self.cut: return "1nh"
+    if self.multicore_upto[0] == 1 and not self.cut: return "longlunch"
     return super(QQZZMCSample, self).creategridpackqueue
   @property
   def tarballversion(self):
@@ -87,6 +87,10 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
   def genproductionscommit(self):
     return "ce68f8a7ab05f530e0a99124088c08d1cc2bf355"
   @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2017: return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    return super(QQZZMCSample, self).genproductionscommitforfragment
+  @property
   def hasfilter(self): return False #the mass cut filter is done within powheg
   @property
   def nevents(self):
@@ -112,9 +116,11 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
     assert False, "need to fill this\n"+self.cvmfstarball
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     yield cls(2018, "4l")
     yield cls(2018, "2l2nu")
+    yield cls(2017, "4l")
   @property
   def responsible(self):
     return "hroskes"

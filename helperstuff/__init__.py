@@ -1,15 +1,15 @@
-def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda cls: True, __docheck=True, includefinished=True):
+def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda cls: True, includefinished=True):
   import getpass
   from utilities import recursivesubclasses
   from mcsamplebase import MCSampleBase
 
   #import all modules that have classes that should be considered here
-  import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, \
+  import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, jhugenoffshellVBF, \
          powhegjhugenanomalouscouplings, powhegjhugenmassscanmcsample, powhegjhugenlifetime, \
-         minlomcsample, mcfmanomalouscouplings, pythiavariationsample, phantommcsample, \
-         qqZZmcsample, clonedrequest, gridpackbysomeoneelse
+         minlomcsample, mcfmanomalouscouplings, variationsample, phantommcsample, \
+         qqZZmcsample, clonedrequest, gridpackbysomeoneelse, mtdtdr
 
-  if __docheck: __checkforduplicates()
+  __checkforduplicates()
 
   for subcls in recursivesubclasses(MCSampleBase):
     if "allsamples" in subcls.__abstractmethods__: continue
@@ -18,16 +18,24 @@ def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda 
       if (not sample.finished or includefinished) and filter(sample) and (not onlymysamples or sample.responsible == getpass.getuser()):
         yield sample
 
-from utilities import cache
 from collections import Counter, defaultdict
-@cache
+
 def __checkforduplicates():
+  global __didcheck
+  if __didcheck: return
+
+  from gridpackonly import GridpackOnly
+
+  disableduplicatecheck()
   bad = set()
   identifiers = Counter()
   prepids = Counter()
-  for s in allsamples(onlymysamples=False, __docheck=False):
+  datasets = Counter()
+  for s in allsamples(onlymysamples=False):
     identifiers[s.keys] += 1
+    if isinstance(s, GridpackOnly): continue
     prepids[s.prepid] += 1
+    datasets[s.campaign, s.datasetname, s.extensionnumber] += 1
 
   for k, v in identifiers.iteritems():
     if v > 1:
@@ -40,3 +48,15 @@ def __checkforduplicates():
       bad.add("{} ({})".format(k, v))
   if bad:
     raise ValueError("Multiple samples with these prepids:\n" + "\n".join(bad))
+
+  for k, v in datasets.iteritems():
+    if k is not None and v > 1:
+      bad.add("{}, {}, {} ({})".format(*k+(v,)))
+  if bad:
+    raise ValueError("Multiple samples with the same campaign, dataset name, and extension number:\n" + "\n".join(bad))
+
+def disableduplicatecheck():
+  global __didcheck
+  __didcheck = True
+
+__didcheck = False

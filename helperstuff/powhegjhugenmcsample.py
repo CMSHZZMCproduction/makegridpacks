@@ -1,6 +1,6 @@
-import abc, contextlib, glob, os, re, subprocess, urllib
+import abc, contextlib, glob, os, re, subprocess
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
+from utilities import cache, cd, cdtemp, genproductions, here, makecards, wget
 
 from powhegmcsample import POWHEGMCSample
 from jhugendecaymcsample import JHUGenDecayMCSample

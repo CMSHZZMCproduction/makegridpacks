@@ -43,10 +43,10 @@ class GenericFilter(FilterImplementation):
         newf.write("\n".join(lines))
       os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
       subprocess.check_call(["./"+self.prepid], stderr=subprocess.STDOUT)
-      shutil.move(self.prepid+"_rt.xml", olddir)
+      shutil.move(self.filterresultsfile, olddir)
 
   def getfilterresults(self, jobindex):
-    with open(self.prepid+"_rt.xml") as f:
+    with open(self.filterresultsfile) as f:
       for line in f:
         line = line.strip()
         match = re.match("<TotalEvents>([0-9]*)</TotalEvents>", line)
@@ -61,8 +61,16 @@ class GenericFilter(FilterImplementation):
         else:
           match = re.match('<Metric Name="AvgEventTime" Value="([0-9.eE+-]*)"/>', line)
           if match: self.__timesperevent[jobindex] = float(match.group(1))
-    self.__sizesperevent[jobindex] = totalsize * 1024 / nevents
-    self.__nevents[jobindex] = nevents
+    try:
+      self.__sizesperevent[jobindex] = totalsize * 1024 / nevents
+      self.__nevents[jobindex] = nevents
+    except NameError:
+      try:
+        line
+      except NameError: #file is empty
+        os.remove(self.filterresultsfile)
+      else:
+        raise IOError("File is corrupted: "+os.path.abspath(self.filterresultsfile))
 
   def findfilterefficiency(self):
     result = super(GenericFilter, self).findfilterefficiency()

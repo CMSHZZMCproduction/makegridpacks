@@ -1,6 +1,6 @@
-import abc, contextlib, glob, itertools, os, re, subprocess, urllib
+import abc, contextlib, glob, itertools, os, re, subprocess
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
+from utilities import cache, cd, cdtemp, genproductions, here, makecards, mkdir_p, wget
 
 from mcsamplebase import MCSampleBase, MCSampleBase_DefaultCampaign
 
@@ -13,8 +13,8 @@ class MadGraphMCSample(MCSampleBase):
   def createtarball(self):
     return "making a madgraph tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)
   @property
-  def tmptarball(self):
-    return os.path.join(here, "workdir", str(self).replace(" ", "_"), "dummy.tgz")
+  def tmptarballbasename(self):
+    return "dummy.tgz"
 
   @property
   def cardsurl(self):
@@ -85,7 +85,7 @@ class MadGraphMCSample(MCSampleBase):
       except IOError:
         raise ValueError("no "+cardnameintarball+" in the tarball\n{}".format(self))
     for _ in glob.iglob("InputCards/*"):
-      if _ not in cardnamesintarball and not _.endswith(".tar.gz") and _ not in self.otherthingsininputcards:
+      if _ not in cardnamesintarball and not _.endswith(".tar.gz") and not _.endswith(".~1~") and _ not in self.otherthingsininputcards:
         raise ValueError("unknown thing "+_+" in InputCards\n{}".format(self))
 
     for name, cc, gcc in itertools.izip(cardnamesintarball, cardcontents, gitcardcontents):
@@ -125,9 +125,8 @@ class MadGraphMCSample(MCSampleBase):
   @property
   def makegridpackcommand(self):
     """
-    if you implement this, you also HAVE to change tmptarball to be the correct name
-    the directory doesn't matter, but the final filename should be whatever is created
-    by the script
+    if you implement this, you also HAVE to change tmptarballbasename to be the correct name
+    it should be whatever is created by the script
     """
     assert False
   @property

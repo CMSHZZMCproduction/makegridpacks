@@ -1,11 +1,11 @@
-import abc, contextlib, glob, os, re, subprocess, urllib
+import abc, contextlib, glob, os, re, subprocess
 
 import uncertainties
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget
+from utilities import cache, cacheaslist, cd, cdtemp, genproductions, here, makecards, mkdir_p, wget
 
 from mcsamplebase import MCSampleBase_DefaultCampaign
-from mcsamplewithxsec import MCSampleWithXsec
+from mcsamplewithxsec import MCSampleWithXsec, NoXsecError
 
 class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
   def __init__(self, year, signalbkgbsi, finalstate, mass, width):
@@ -27,14 +27,15 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
   def hasfilter(self):
     return False
   @property
-  def tmptarball(self):
-    return os.path.join(here, "workdir", str(self).replace(" ", ""), os.path.basename(self.cvmfstarball))
+  def tmptarballbasename(self):
+    return os.path.basename(self.cvmfstarball)
   @property
   def tarballversion(self):
     v = 1
 
-#    if self.finalstate == "2mu2num" and self.signalbkgbsi == "BSI" : v+=1
-#    if self.finalstate == "2e2nue" and self.signalbkgbsi == "BSI" : v+=1
+    if self.finalstate == "2mu2num" and self.signalbkgbsi == "BSI" : v+=1
+    if self.finalstate == "2e2nue" and self.signalbkgbsi == "BSI" : v+=1
+    if self.finalstate == "2mu2num" and self.signalbkgbsi == "BSI" : v+=1
     """
     if the first tarball is copied to eos and then is found to be bad, add something like
     if self.(whatever) == (whatever): v += 1
@@ -42,9 +43,11 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     return v
 
   def cvmfstarball_anyversion(self, version):
-    folder = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/phantom"
-    tarballname = self.datasetname + ".tar.xz"
-    return os.path.join(folder, tarballname.replace(".tar.xz", ""), "v{}".format(version), tarballname)
+    if self.year in (2017, 2018):
+      folder = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/phantom"
+      tarballname = self.datasetname + ".tar.xz"
+      return os.path.join(folder, tarballname.replace(".tar.xz", ""), "v{}".format(version), tarballname)
+    assert False, self
 
   @property
   def datasetname(self):
@@ -68,30 +71,38 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     return 60
   @property
   def tags(self):
-    return ["HZZ", "Fall17P2A"]
+    result = ["HZZ"]
+    if self.year == 2017:
+      result.append("Fall17P2A")
+    return result
 
   def getxsec(self):
-    dats = set(glob.iglob("result"))
-    if len(dats) != 1:
-      raise ValueError("Expected to find result in the tarball {}\n".foramt(self.cvmfstarball))
-    with open(dats.pop()) as f:
-      matches = re.findall(r"total cross section=\s*([0-9.Ee+-]*)\s*[+]/-\s*([0-9.Ee+-]*)\s*", f.read())
-    if not matches: raise ValueError("Didn't find the cross section in the result\n\n"+self.cvmfstarball)
-    if len(matches) > 1: raise ValueError("Found multiple cross section lines in the result\n\n")
-    xsec, xsecerror = matches[0]
-    return uncertainties.ufloat(xsec, xsecerror)
+    if not os.path.exists(self.cvmfstarball): raise NoXsecError
+    with cdtemp():
+      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
+      dats = set(glob.iglob("result"))
+      if len(dats) != 1:
+        raise ValueError("Expected to find result in the tarball {}\n".foramt(self.cvmfstarball))
+      with open(dats.pop()) as f:
+        matches = re.findall(r"total cross section=\s*([0-9.Ee+-]*)\s*[+]/-\s*([0-9.Ee+-]*)\s*", f.read())
+      if not matches: raise ValueError("Didn't find the cross section in the result\n\n"+self.cvmfstarball)
+      if len(matches) > 1: raise ValueError("Found multiple cross section lines in the result\n\n")
+      xsec, xsecerror = matches[0]
+      return uncertainties.ufloat(xsec, xsecerror)
 
   @property
   def genproductionscommit(self):
     return "59eab4505ac61b2fcd677d82c15aa8d6d0ced28f"
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for signalbkgbsi in ["SIG", "BSI", "BKG"]:
       for finalstate in ["2e2mu","4e","4mu","2e2nue","2e2num","2e2nut","2mu2nue","2mu2num","2mu2nut"]:
         for mass in 125,:
           for width in 1,:
-            yield cls(2017, signalbkgbsi, finalstate, mass, width)
+            for year in 2017, 2018:
+              yield cls(year, signalbkgbsi, finalstate, mass, width)
 
   @property
   def responsible(self):
@@ -100,9 +111,8 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
   @property
   def makegridpackcommand(self):
     """
-    if you implement this, you also HAVE to change tmptarball to be the correct name
-    the directory doesn't matter, but the final filename should be whatever is created
-    by the script
+    if you implement this, you also HAVE to change tmptarballbasename to be the correct name
+    it should be whatever is created by the script
     """
     assert False
   @property
@@ -137,7 +147,10 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     }[self.finalstate]
     icard += ".py"
 
-    card = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", self.genproductionscommit, "bin/Phantom/cards/production/13TeV/HZZ_VBFoffshell_Phantom",icard)
+    if self.year in (2017, 2018):
+      card = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", self.genproductionscommit, "bin/Phantom/cards/production/13TeV/HZZ_VBFoffshell_Phantom",icard)
+    else:
+      assert False, self
 
     with cdtemp():
       wget(card)
@@ -173,4 +186,11 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
 
   @property
   def fragmentname(self):
-    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_oneoversqrt2_LHE_pythia8_cff.py"
+    if self.year in (2017, 2018):
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_oneoversqrt2_LHE_pythia8_cff.py"
+
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2018:
+      return "101b9cce48742765790db48e6d24d76e6bf2edf1"
+    return super(PhantomMCSample, self).genproductionscommitforfragment

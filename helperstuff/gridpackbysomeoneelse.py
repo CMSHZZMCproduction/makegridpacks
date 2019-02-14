@@ -1,6 +1,6 @@
 import abc, datetime, os, re, shutil
 
-from utilities import cdtemp, genproductions, KeepWhileOpenFile, mkdir_p
+from utilities import cacheaslist, cdtemp, genproductions, KeepWhileOpenFile, mkdir_p
 
 import patches
 
@@ -25,6 +25,8 @@ class GridpackBySomeoneElse(MCSampleBase):
       mkdir_p(os.path.dirname(self.foreostarball))
       if self.patchkwargs:
         kwargs = self.patchkwargs
+        if isinstance(kwargs, list):
+          kwargs = {"functionname": "multiplepatches", "listofkwargs": kwargs}
         for _ in "oldfilename", "newfilename", "sample": assert _ not in kwargs, _
         with cdtemp():
           kwargs["oldfilename"] = self.originaltarball
@@ -81,6 +83,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     assert False, self
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 30, 35:
       for eps in 1e-2,:
@@ -153,13 +156,14 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
 
 
 class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MadGraphFXFXMCSample, MCSampleBase_DefaultCampaign):
-  def __init__(self, year, coupling):
+  def __init__(self, year, coupling, njets):
     self.__coupling = coupling
+    self.__njets = njets
     super(MadGraphHJJFromThomasPlusJHUGen, self).__init__(year=year)
 
   @property
   def identifiers(self):
-    return "Thomas", "HJJ", "madgraphJHUGen", self.__coupling
+    return "Thomas", self.__njets, "madgraphJHUGen", self.__coupling
 
   @property
   def tarballversion(self):
@@ -168,7 +172,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     if the first tarball is copied to eos and then is found to be bad, add something like
     if self.(whatever) == (whatever): v += 1
     """
-    if self.year in (2017, 2018): v += 1  #tarball eventually used for HTT was different than the original one for a3 and a3mix, and chmod u+x runcmsgrid.sh
+    if self.year in (2017, 2018) and self.__njets == "H012J": v += 1  #tarball eventually used for HTT was different than the original one for a3 and a3mix, and chmod u+x runcmsgrid.sh
     return v
 
   @property
@@ -183,49 +187,41 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
 
   @property
   def madgraphcardscript(self):
-    if self.__coupling == "SM" and self.year in (2017, 2018):
+    if self.__coupling == "SM" and self.year in (2017, 2018) and self.__njets == "H012J":
       maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/")
       script = os.path.join(maindir, "ggh012j_5f_NLO_FXFX.sh")
       cards = [os.path.join(maindir, "ggh012j_5f_NLO_FXFX_", os.path.basename(card).replace("125", "")) for card in self.madgraphcards + ["ggh012j_5f_NLO_FXFX_125_MadLoopParams.dat"]]
       return [script]+cards
   @property
   def madgraphcards(self):
-    if self.year == 2016:
-      couplingname = {
-        "SM": "",
-        "a3": "Pseudoscalar",
-        "a3mix": "Maxmix",
-      }[self.__coupling]
-      folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/GluGluTo{coupling}HToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8")
-      return [
-        os.path.join(folder, "GluGluTo{coupling}HToTauTau_M125_13TeV_amcatnloFXFX_pythia8_{}.dat").format(_, coupling=couplingname)
-          for _ in ("param_card", "proc_card", "run_card", "extramodels")
-      ]
     if self.year in (2017, 2018):
-      if self.__coupling == "SM":
-        return [
-          os.path.join(
-            "ggh012j_5f_NLO_FXFX_125",
-            _,
-          ) for _ in (
-            "ggh012j_5f_NLO_FXFX_125_extramodels.dat",
-            "ggh012j_5f_NLO_FXFX_125_customizecards.dat",
-            "ggh012j_5f_NLO_FXFX_125_proc_card.dat",
-            "ggh012j_5f_NLO_FXFX_125_run_card.dat",
-          )
-        ]
-      elif self.__coupling == "a3":
-        folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/GluGluToPseudoscalarHToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8/")
-        return [
-          os.path.join(folder, "GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_"+_+".dat")
-            for _ in ("extramodels", "param_card", "proc_card", "run_card")
-        ]
-      elif self.__coupling == "a3mix":
-        folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/GluGluToMaxmixHToTauTauPlus012Jets_M125_13TeV_amcatnloFXFX_pythia8/")
-        return [
-          os.path.join(folder, "GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_"+_+".dat")
-            for _ in ("extramodels", "param_card", "proc_card", "run_card")
-        ]
+      if self.__njets == "H012J":
+        if self.__coupling == "SM":
+          return [
+            os.path.join(
+              "ggh012j_5f_NLO_FXFX_125",
+              _,
+            ) for _ in (
+              "ggh012j_5f_NLO_FXFX_125_extramodels.dat",
+              "ggh012j_5f_NLO_FXFX_125_customizecards.dat",
+              "ggh012j_5f_NLO_FXFX_125_proc_card.dat",
+              "ggh012j_5f_NLO_FXFX_125_run_card.dat",
+            )
+          ]
+
+    couplingname = {
+      "SM": "",
+      "a3": "Pseudoscalar",
+      "a3mix": "Maxmix",
+    }[self.__coupling]
+    yearfolder = {2016: "pre2017", 2017: "2017", 2018: "2017"}[self.year]
+    njets = {"H012J": "012", "HJJ": "Two"}[self.__njets]
+    njetsinfilename = {"H012J": "", "HJJ": "PlusTwoJets"}[self.__njets]
+    folder = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/{yearfolder}/13TeV/Higgs/GluGluTo{coupling}HToTauTauPlus{njets}Jets_M125_13TeV_amcatnloFXFX_pythia8")
+    return [
+      os.path.join(folder, "GluGluTo{coupling}HToTauTau{njetsinfilename}_M125_13TeV_amcatnloFXFX_pythia8_{}.dat").format(_, coupling=couplingname, njets=njets, yearfolder=yearfolder, njetsinfilename=njetsinfilename)
+        for _ in ("param_card", "proc_card", "run_card", "extramodels")
+    ]
     assert False, self
 
   @property
@@ -234,38 +230,67 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
 
   @property
   def originaltarball(self):
-    if self.year == 2016:
-      if self.__coupling == "SM":
-        #from HIG-RunIISummer15wmLHEGS-02181
-        #why is it in 2017? no idea but it uses 292200
-        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToHToTauTau_amcatnloFXFX/GluGluToHToTauTau_M125/v2/GluGluToHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
-      if self.__coupling == "a3":
-        #from HIG-RunIISummer15wmLHEGS-02187
-        #why is it in 2017? no idea but it uses 292200
-        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToHToTauTau_amcatnloFXFX/GluGluToPseudoscalarHToTauTau_M125/v2/GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
-      if self.__coupling == "a3mix":
-        #from HIG-RunIISummer15wmLHEGS-02184
-        #why is it in 2017? no idea but it uses 292200
-        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToHToTauTau_amcatnloFXFX/GluGluToMaxmixHToTauTau_M125/v2/GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
-    if self.year in (2017, 2018):
-      if self.__coupling == "SM":
-        #from HIG-RunIIFall17wmLHEGS-01577
-        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/ggh012j_5f_NLO_FXFX_125/v2/ggh012j_5f_NLO_FXFX_125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
-      if self.__coupling == "a3":
-        #from HIG-RunIIFall17wmLHEGS-01583
-        #why is it in pre2017? no idea but it uses 306000
-        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/pre2017/13TeV/madgraph/v2.4.2/GluGluToPseudoscalarHToTauTau/v1/GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz"
-      if self.__coupling == "a3mix":
-        #from HIG-RunIIFall17wmLHEGS-01580
-        #why is it in pre2017? no idea but it uses 306000
-        return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/pre2017/13TeV/madgraph/v2.4.2/GluGluToMaxmixHToTauTau/v1/GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz"
+    if self.__njets == "H012J":
+      if self.year == 2016:
+        if self.__coupling == "SM":
+          #from HIG-RunIISummer15wmLHEGS-02181
+          #why is it in 2017? no idea but it uses 292200
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToHToTauTau_amcatnloFXFX/GluGluToHToTauTau_M125/v2/GluGluToHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+        if self.__coupling == "a3":
+          #from HIG-RunIISummer15wmLHEGS-02187
+          #why is it in 2017? no idea but it uses 292200
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToHToTauTau_amcatnloFXFX/GluGluToPseudoscalarHToTauTau_M125/v2/GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+        if self.__coupling == "a3mix":
+          #from HIG-RunIISummer15wmLHEGS-02184
+          #why is it in 2017? no idea but it uses 292200
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToHToTauTau_amcatnloFXFX/GluGluToMaxmixHToTauTau_M125/v2/GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+      if self.year in (2017, 2018):
+        if self.__coupling == "SM":
+          #from HIG-RunIIFall17wmLHEGS-01577
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/ggh012j_5f_NLO_FXFX_125/v2/ggh012j_5f_NLO_FXFX_125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+        if self.__coupling == "a3":
+          #from HIG-RunIIFall17wmLHEGS-01583
+          #why is it in pre2017? no idea but it uses 306000
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/pre2017/13TeV/madgraph/v2.4.2/GluGluToPseudoscalarHToTauTau/v1/GluGluToPseudoscalarHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz"
+        if self.__coupling == "a3mix":
+          #from HIG-RunIIFall17wmLHEGS-01580
+          #why is it in pre2017? no idea but it uses 306000
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/pre2017/13TeV/madgraph/v2.4.2/GluGluToMaxmixHToTauTau/v1/GluGluToMaxmixHToTauTau_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz"
+    if self.__njets == "HJJ":
+      if self.year == 2016:
+        if self.__coupling == "SM":
+          #from HIG-RunIISummer15wmLHEGS-02190
+          #why is it in 2017? no idea but it uses 292200
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToHToTauTau_amcatnloFXFX/GluGluToHToTauTauPlusTwoJets_M125/v2/GluGluToHToTauTauPlusTwoJets_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+        if self.__coupling == "a3":
+          #from HIG-RunIISummer15wmLHEGS-02191
+          #why is it in 2017? no idea but it uses 292200
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToHToTauTau_amcatnloFXFX/GluGluToPseudoscalarHToTauTauPlusTwoJets_M125/v2/GluGluToPseudoscalarHToTauTauPlusTwoJets_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+        if self.__coupling == "a3mix":
+          #from HIG-RunIISummer15wmLHEGS-02192
+          #why is it in 2017? no idea but it uses 292200
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToHToTauTau_amcatnloFXFX/GluGluToMaxmixHToTauTauPlusTwoJets_M125/v2/GluGluToMaxmixHToTauTauPlusTwoJets_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+      if self.year in (2017, 2018):
+        if self.__coupling == "SM":
+          #from HIG-RunIIFall17wmLHEGS-02398
+          #yes, same as 2016 except v1 instead of v2 is correct :(.....
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToHToTauTauPlusTwoJets_M125_13TeV_amcatnloFXFX_pythia8/v1/GluGluToHToTauTauPlusTwoJets_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+        if self.__coupling == "a3":
+          #from HIG-RunIIFall17wmLHEGS-02421
+          #yes, same as 2016 except v1 instead of v2 is correct :(.....
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToPseudoscalarHToTauTauPlusTwoJets_M125_13TeV_amcatnloFXFX_pythia8/v1/GluGluToPseudoscalarHToTauTauPlusTwoJets_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+        if self.__coupling == "a3mix":
+          #from HIG-RunIIFall17wmLHEGS-02420
+          #yes, same as 2016 except v1 instead of v2 is correct :(.....
+          return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToMaxmixHToTauTauPlusTwoJets_M125_13TeV_amcatnloFXFX_pythia8/v1/GluGluToMaxmixHToTauTauPlusTwoJets_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
     assert False, self
 
   @classmethod
   def allsamples(cls):
     for year in 2016, 2017, 2018:
       for coupling in "SM", "a3", "a3mix":
-        yield cls(year, coupling)
+        yield cls(year, coupling, "H012J")
+        yield cls(year, coupling, "HJJ")
 
   @property
   def JHUGenversion(self): return "v7.1.4"
@@ -274,48 +299,69 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     return "hroskes"
 
   def cvmfstarball_anyversion(self, version):
-    if self.year in (2017, 2018):
-      maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/"
-    elif self.year == 2016:
+    if self.year == 2016:
       maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc481/13TeV/madgraph/V5_2.6.1/"
-    folder = {
-      "SM": "ggh012j_5f_NLO_FXFX_125_HZZ4l",
-      "a3": "ggh012j_5f_NLO_FXFX_125_pseudoscalar_HZZ4l",
-      "a3mix": "ggh012j_5f_NLO_FXFX_125_maxmix_HZZ4l",
-    }[self.__coupling]
+    elif self.year in (2017, 2018):
+      if self.__njets == "H012J":
+        maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/"
+      if self.__njets == "HJJ":
+        maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/"
 
-    if self.year in (2017, 2018):
-      if self.tarballversion >= 2:
-        basename = {
-          "SM": "ggh012j_5f_NLO_FXFX_JHUGenV714_HZZ4l_125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
-          "a3": "GluGluToMaxmixHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-          "a3mix": "GluGluToPseudoscalarHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-        }[self.__coupling]
-      else:
-        basename = folder.replace("HZZ4l", "slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz")
-    elif self.year == 2016:
-      basename = {
-        "SM": "GluGluToHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
-        "a3": "GluGluToPseudoscalarHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
-        "a3mix": "GluGluToMaxmixHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
+    if self.__njets == "H012J":
+      folder = {
+        "SM": "ggh012j_5f_NLO_FXFX_125_HZZ4l",
+        "a3": "ggh012j_5f_NLO_FXFX_125_pseudoscalar_HZZ4l",
+        "a3mix": "ggh012j_5f_NLO_FXFX_125_maxmix_HZZ4l",
       }[self.__coupling]
-    
+    elif self.__njets == "HJJ":
+      folder = {
+        "SM": "gghjj_5f_NLO_FXFX_125_HZZ4l",
+        "a3": "gghjj_5f_NLO_FXFX_125_pseudoscalar_HZZ4l",
+        "a3mix": "gghjj_5f_NLO_FXFX_125_maxmix_HZZ4l",
+      }[self.__coupling]
+
+    if self.__njets == "H012J":
+      if self.year in (2017, 2018):
+        if self.tarballversion >= 2:
+          basename = {
+            "SM": "ggh012j_5f_NLO_FXFX_JHUGenV714_HZZ4l_125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
+            "a3": "GluGluToMaxmixHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
+            "a3mix": "GluGluToPseudoscalarHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
+          }[self.__coupling]
+        else:
+          basename = folder.replace("HZZ4l", "slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz")
+      elif self.year == 2016:
+        basename = {
+          "SM": "GluGluToHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
+          "a3": "GluGluToPseudoscalarHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
+          "a3mix": "GluGluToMaxmixHToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
+        }[self.__coupling]
+    elif self.__njets == "HJJ":
+      basename = {
+        "SM": "GluGluToHToZZTo4LPlusTwoJets_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
+        "a3": "GluGluToPseudoscalarHToZZTo4LPlusTwoJets_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
+        "a3mix": "GluGluToMaxmixHToZZTo4LPlusTwoJets_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",
+      }[self.__coupling]
 
     result = os.path.join(maindir, folder, "v{}".format(version), basename)
     return result
 
   @property
   def datasetname(self):
+    if self.__njets == "HJJ": firstpart = "JJ"
+    elif self.__njets == "H012J": firstpart = "GluGlu"
+
     if self.__coupling == "SM":
-      return "GluGluHiggs0PMToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"
+      return firstpart+"Higgs0PMToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"
     if self.__coupling == "a3":
-      return "GluGluHiggs0MToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"
+      return firstpart+"Higgs0MToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"
     if self.__coupling == "a3mix":
-      return "GluGluHiggs0Mf05ph0ToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"
+      return firstpart+"Higgs0Mf05ph0ToZZTo4L_M125_13TeV_amcatnloFXFX_JHUGenV714_pythia8"
   @property
   def nmaxjets(self): return 2
   @property
   def genproductionscommit(self):
+    if self.__njets == "HJJ": return "d1f773cf0f2fb57c3bad824745eaac9a8958fc2d"
     if self.year == 2016:
       return "8245e42d267992a6d5f74898070eb82f2f2ca931"
     elif self.year in (2017, 2018):
@@ -340,4 +386,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     return ["HZZ"]
   @property
   def nevents(self):
-    return 500000
+    if self.__njets == "H012J":
+      return 500000
+    elif self.__njets == "HJJ":
+      return 3000000

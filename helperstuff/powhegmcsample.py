@@ -1,6 +1,6 @@
-import abc, collections, contextlib, glob, os, re, shutil, subprocess, urllib
+import abc, collections, contextlib, glob, os, re, shutil, subprocess
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, jobended, makecards, OrderedCounter, scramarch, wget
+from utilities import cache, cd, cdtemp, genproductions, here, jobended, makecards, OrderedCounter, wget
 
 from mcsamplebase import MCSampleBase
 
@@ -19,17 +19,17 @@ class POWHEGMCSample(MCSampleBase):
   @property
   def creategridpackqueue(self):
     if self.powhegsubmissionstrategy == "multicore":
-      if self.multicore_upto[0] == 0: return "1nh"
-      if self.multicore_upto[0] == 1: return "1nd"
-      if self.multicore_upto[0] == 2: return "1nw"
-      if self.multicore_upto[0] == 3: return "1nd"
+      if self.multicore_upto[0] == 0: return "longlunch"
+      if self.multicore_upto[0] == 1: return "tomorrow"
+      if self.multicore_upto[0] == 2: return "nextweek"
+      if self.multicore_upto[0] == 3: return "tomorrow"
       if self.multicore_upto[0] == 9: return None
       assert False, self.multicore_upto
     return super(POWHEGMCSample, self).creategridpackqueue
   @property
-  def tmptarball(self):
-    return os.path.join(here, "workdir", self.foldernameforrunpwg,
-             self.powhegprocess+"_"+scramarch+"_"+cmsswversion+"_"+self.foldernameforrunpwg+".tgz")
+  def tmptarballbasename(self):
+    return os.path.join(self.foldernameforrunpwg,
+             self.powhegprocess+"_"+self.scramarch+"_"+self.cmsswversion+"_"+self.foldernameforrunpwg+".tgz")
   @property
   def pwgrwlfilter(self):
     """
@@ -102,9 +102,9 @@ class POWHEGMCSample(MCSampleBase):
           contents = f.read()
           if "Backtrace" in contents or "cannot load grid files" in contents:
             os.remove(logfile)
-          if not contents.strip() and logfile.startswith("run_1_"):
+          elif not contents.strip() and logfile.startswith("run_1_"):
             os.remove(logfile)
-          if not self.gridpackjobsrunning and "powheginput WARNING: unused variable fakevirt" not in contents:
+          elif not self.gridpackjobsrunning and "powheginput WARNING: unused variable fakevirt" not in contents:
             os.remove(logfile)
       for coredump in glob.iglob("core.*"):
         os.remove(coredump)
@@ -136,7 +136,6 @@ class POWHEGMCSample(MCSampleBase):
       assert False, self.powhegsubmissionstrategy
   @property
   def gridpackjobsrunning(self):
-    #if self.powhegsubmissionstrategy == "multicore" and self.multicore_upto[0] in (1, 2, 3, 9):
     if self.powhegsubmissionstrategy == "multicore" and os.path.exists(os.path.join(self.workdirforgridpack, self.foldernameforrunpwg, "pwhg_main")):
       for filename in glob.iglob(os.path.join(self.workdirforgridpack, "jobisrunning_*")):
         jobid = int(os.path.basename(filename.replace("jobisrunning_", "")))
@@ -210,7 +209,11 @@ class POWHEGMCSample(MCSampleBase):
 
   @property
   def fragmentname(self):
-    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_{:d}p_LHE_pythia8_cff.py".format(self.nfinalparticles)
+    if self.year == 2016:
+      tune = "CUETP8M1"
+    elif self.year in (2017, 2018):
+      tune = "CP5"
+    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_Tune{}_13TeV_powhegEmissionVeto_{:d}p_LHE_pythia8_cff.py".format(tune, self.nfinalparticles)
   @abc.abstractproperty
   def nfinalparticles(self):
     pass

@@ -1,20 +1,23 @@
-import abc
+import abc, os
 
 import uncertainties
 
-from utilities import cd, here
+from utilities import cd, cdtemp, here
 
 from mcsamplebase import MCSampleBase
+
+class NoXsecError(Exception):
+  "to be raised in the getxsec function if it can't be read yet"
 
 class MCSampleWithXsec(MCSampleBase):
   @abc.abstractmethod
   def getxsec(self):
     "should return an uncertainties.ufloat"
 
-  def makegridpack(self, *args, **kwargs):
-    if not self.finished and not self.cvmfstarballexists:
+  def createtarball(self, *args, **kwargs):
+    if not self.finished and not self.cvmfstarballexists and self.xsec is not None:
       del self.xsec
-    return super(MCSampleWithXsec, self).makegridpack(*args, **kwargs)
+    return super(MCSampleWithXsec, self).createtarball(*args, **kwargs)
 
   @property
   def notes(self):
@@ -28,7 +31,10 @@ class MCSampleWithXsec(MCSampleBase):
       try:
         return self.value["xsec"]
       except KeyError:
-        self.xsec = self.getxsec()
+        try:
+          self.xsec = self.getxsec()
+        except NoXsecError:
+          return None
         return self.xsecnominal
   @xsecnominal.setter
   def xsecnominal(self, value):
@@ -46,7 +52,10 @@ class MCSampleWithXsec(MCSampleBase):
       try:
         return self.value["xsecerror"]
       except KeyError:
-        self.self.getxsec()
+        try:
+          self.self.getxsec()
+        except NoXsecError:
+          return None
         return self.xsecerror
   @xsecerror.setter
   def xsecerror(self, value):
@@ -70,3 +79,21 @@ class MCSampleWithXsec(MCSampleBase):
   @xsec.deleter
   def xsec(self):
     del self.xsecnominal, self.xsecerror
+
+class MCSampleWithXsec_RunZeroEvents(MCSampleWithXsec):
+  def getxsec(self):
+    if not os.path.exists(self.cvmfstarball): raise NoXsecError
+    with cdtemp():
+      subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
+      try:
+        subprocess.check_output(["./runcmsgrid.sh", "0", "123456", "1"], stderr=subprocess.STDOUT)
+      except CalledProcessError as e:
+        print e.output
+        raise
+      with open("cmsgrid_final.lhe") as f:
+        for line in f:
+          if "<init>" in line: break
+        next(f)
+        line = next(f)
+        xsec, xsecerror, _, _ = line.split()
+        return uncertainties.ufloat(float(xsec), float(xsecerror))

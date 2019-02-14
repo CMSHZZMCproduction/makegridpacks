@@ -1,6 +1,6 @@
-import contextlib, csv, os, re, subprocess, urllib
+import contextlib, csv, os, re, subprocess
 
-from utilities import cache, cd, genproductions, makecards
+from utilities import cache, cacheaslist, cd, genproductions, here, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
 from mcsamplebase import MCSampleBase_DefaultCampaign
@@ -49,11 +49,6 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   def powhegsubmissionstrategy(self):
     return "multicore"
 
-  def createtarball(self):
-    if self.energy == 13:
-      return "making a minlo tarball is not automated, you have to make it yourself and put it in {}".format(self.foreostarball)
-    return super(MINLOMCSample, self).createtarball()
-
   @property
   def powhegcard(self):
     if self.energy == 13:
@@ -69,19 +64,22 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
     return POWHEGJHUGenMassScanMCSample(self.year, "ggH", self.decaymode, self.mass).decaycard
 
   @property
-  def timepereventqueue(self): return "1nw"
+  def timepereventqueue(self): return "nextweek"
 
   @property
   def tarballversion(self):
     v = 1
-    if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1
-    if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some pdfs
-    if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some more pdfs
-    if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove ALL pdfs
-    if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
-    if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
-    if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize
-    if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize with xargs
+    if self.year in (2017, 2018):
+      if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1
+      if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some pdfs
+      if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some more pdfs
+      if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove ALL pdfs
+      if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
+      if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
+      if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize
+      if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize with xargs
+    if self.year == 2018:
+      if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=2  #parallelize with xargs
     return v
 
   @property
@@ -118,7 +116,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
     if self.energy == 13:
       return super(MINLOMCSample, self).campaign
     if self.energy == 14:
-      if year == 2017: return "PhaseIISummer17wmLHEGENOnly"
+      if self.year == 2017: return "PhaseIISummer17wmLHEGENOnly"
     assert False
 
   @property
@@ -133,11 +131,18 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def tags(self):
-    return ["HZZ", "Fall17P2A"]
+    result = ["HZZ"]
+    if self.year == 2017 and self.energy == 13: result.append("Fall17P2A")
+    return result
 
   @property
   def genproductionscommit(self):
     return "1383619647949814646806a6fc8b0ecd3228f293"
+
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2018: return "20f59357146e08e48132cfd73d0fd72ca08b6b30"
+    return super(MINLOMCSample, self).genproductionscommitforfragment
 
   @property
   def nfinalparticles(self):
@@ -145,13 +150,15 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
     raise ValueError("No fragment for {}".format(self))
 
   @property
-  def doublevalidationtime(self): return True
+  def validationtimemultiplier(self): return max(super(MINLOMCSample, self).validationtimemultiplier, 2)
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for mass in 125, 300:
-        for decaymode in "4l",:
-            yield cls(2017, decaymode, mass)
+      for decaymode in "4l",:
+        for year in 2017, 2018:
+          yield cls(year, decaymode, mass)
     yield cls(2017, "4l", 125, energy=14)
 
   @property
@@ -170,3 +177,80 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   @property
   def maxallowedtimeperevent(self):
     return 500
+
+class MINLOatLO(MINLOMCSample):
+  def __init__(self, *args, **kwargs):
+    self.powhegpythiaconfig = kwargs.pop("powhegpythiaconfig")
+    self.bornsuppressionfactor = kwargs.pop("bornsuppressionfactor")
+    return super(MINLOatLO, self).__init__(*args, **kwargs)
+  @property
+  def identifiers(self):
+    result = super(MINLOatLO, self).identifiers + ("LO_LOPDF",)
+    if self.powhegpythiaconfig: result = result + ("powhegpythiaconfig",)
+    if self.bornsuppressionfactor: result = result + ("bornsuppressionfactor",)
+    return result
+  @property
+  def powhegcard(self):
+    result = super(MINLOatLO, self).powhegcard.replace(".input", "_LO_LOPDF.input")
+    if self.bornsuppressionfactor: result = result.replace(".input", "_bornsuppressionfactor.input")
+    return result
+  def cvmfstarball_anyversion(self, version):
+    result = super(MINLOatLO, self).cvmfstarball_anyversion(version)
+    result = result.replace("13TeV", "13TeV_LO_LOPDF").replace("13TeV_LO_LOPDF", "13TeV", 1)
+    assert "LO_LOPDF" in result, result
+    if self.bornsuppressionfactor:
+      result = result.replace("LO_LOPDF", "LO_LOPDF_bornsuppressionfactor", 1)
+    return result
+  @property
+  def uselocaltarballfortest(self):
+    return True
+  @property
+  def datasetname(self):
+    result = "GluGluHToZZTo4L_M%d_%dTeV_powheg2_HJJ_JHUGenV7011_pythia8"%(self.mass, self.energy)
+    if self.bornsuppressionfactor:
+      result += "_bornsuppressionfactor"
+    if not self.powhegpythiaconfig:
+      result += "_JHUGenpythiaconfig"
+    return result
+  @classmethod
+  def allsamples(cls):
+    for bsf in True, False:
+      yield cls(2018, "4l", 125, powhegpythiaconfig=True, bornsuppressionfactor=bsf)
+      yield cls(2017, "4l", 125, powhegpythiaconfig=True, bornsuppressionfactor=bsf)
+    yield cls(2018, "4l", 125, powhegpythiaconfig=False, bornsuppressionfactor=True)
+    yield cls(2017, "4l", 125, powhegpythiaconfig=False, bornsuppressionfactor=True)
+  @property
+  def makegridpackcommand(self):
+    result = super(MINLOatLO, self).makegridpackcommand
+    result += ["-d", "1"]
+    return result
+  @property
+  def tarballversion(self):
+    if self.powhegpythiaconfig: return 7
+    return 6
+
+  @property
+  def genproductionscommit(self):
+    return "62b6317b3ac208df37a03136c3c8f27d91cfd59d"
+  @property
+  def fragmentname(self):
+    if self.powhegpythiaconfig: return super(MINLOatLO, self).fragmentname
+    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py"
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2017: return "0a45459a3c47f0b445f38fce310c1d354f182a00"
+    return super(MINLOatLO, self).genproductionscommitforfragment
+
+  @property
+  def pwgrwlfilter(self):
+    return lambda weight: False
+
+  @property
+  def dovalidation(self):
+    return False
+
+  @property
+  def creategridpackqueue(self):
+    if super(MINLOatLO, self).creategridpackqueue is None: return None
+    if self.multicore_upto[0] == 3: return "tomorrow"
+    return "longlunch"

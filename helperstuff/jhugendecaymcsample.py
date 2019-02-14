@@ -1,6 +1,6 @@
-import abc, contextlib, os, re, urllib
+import abc, contextlib, os, re
 
-from utilities import wget
+from utilities import urlopen, wget
 from filtermcsample import JHUGenFilter
 
 class JHUGenDecayMCSample(JHUGenFilter):
@@ -31,14 +31,17 @@ class JHUGenDecayMCSample(JHUGenFilter):
     pass
 
   @property
+  def genproductionscommitfordecay(self): return self.genproductionscommit
+
+  @property
   def cardsurl(self):
-    commit = self.genproductionscommit
+    commit = self.genproductionscommitfordecay
     JHUGencard = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.decaycard.split("genproductions/")[-1])
     result = JHUGencard
     moreresult = super(JHUGenDecayMCSample, self).cardsurl
     if moreresult: result += "\n# " + moreresult
 
-    with contextlib.closing(urllib.urlopen(JHUGencard)) as f:
+    with contextlib.closing(urlopen(JHUGencard)) as f:
       JHUGengitcard = f.read()
 
     try:

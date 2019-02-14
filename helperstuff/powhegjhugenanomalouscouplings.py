@@ -1,6 +1,6 @@
-import contextlib, csv, os, re, subprocess, urllib
+import contextlib, csv, os, re, subprocess
 
-from utilities import cache, cd, genproductions, makecards
+from utilities import cache, cacheaslist, cd, genproductions, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
@@ -36,7 +36,7 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
 
   @property
   def foldernameforrunpwg(self):
-    return super(POWHEGJHUGenAnomCoupMCSample, self).foldernameforrunpwg+"_"+self.kind
+    return super(POWHEGJHUGenAnomCoupMCSample, self).foldernameforrunpwg+"_"+self.coupling
 
   @property
   def defaulttimeperevent(self):
@@ -63,13 +63,14 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
     raise ValueError("No fragment for {}".format(self))
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for productionmode in "ggH", :
       decaymode = "4l"
       for mass in cls.getmasses(productionmode, decaymode):
-        for kind in cls.getkind(productionmode, decaymode):
+        for coupling in cls.getcouplings(productionmode, decaymode):
           for year in 2017, 2018:
-            yield cls(year, productionmode, decaymode, mass, kind)
+            yield cls(year, productionmode, decaymode, mass, coupling)
 
   @property
   def responsible(self):

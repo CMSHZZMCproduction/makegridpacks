@@ -1,6 +1,6 @@
-import contextlib, csv, os, re, subprocess, urllib
+import contextlib, csv, os, re, subprocess
 
-from utilities import cache, cd, genproductions, here, makecards
+from utilities import cache, cacheaslist, cd, genproductions, here, makecards
 
 from mcfmmcsample import MCFMMCSample
 from mcsamplebase import MCSampleBase_DefaultCampaign
@@ -23,7 +23,8 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
   @property
   def extensionnumber(self):
     result = super(MCFMAnomCoupMCSample, self).extensionnumber
-    if self.signalbkgbsi == "BKG": result += 1
+    if self.year == 2017:
+      if self.signalbkgbsi == "BKG": result += 1
     return result
 
   @property
@@ -50,28 +51,34 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def creategridpackqueue(self):
-    return "2nd"
+    return "testmatch"
 
 
   @property
   def tarballversion(self):
-    v = 2
-#    if self.signalbkgbsi == "BKG": v
-    identifierstr = ' '.join(map(str,self.identifiers))
-    if 'BSI' in identifierstr and '0PL1f05ph0 TLTL' in identifierstr:  v+=1 
-    if 'BSI' in identifierstr and '0PL1f05ph0 ELEL' in identifierstr: v+=1 
-    if 'BSI 1 0PL1f05ph0 MUMU' == identifierstr: v+=2 
-    with cd(here), open('data/listofv2tarballs.txt','r') as f:
-	if identifierstr in f.read():  v+=1   
-#    if self.signalbkgbsi == 'BSI' and self.finalstate == 'ELMU' and self.coupling == '0M':  v+=1
-    if 'BSI 1 0PL1f05ph0 ELEL' == identifierstr: v=7
-    if 'BSI 1 0PL1f05ph0 MUMU' == identifierstr: v=6
-    if 'BSI 1 0PL1f05ph0 TLTL' == identifierstr: v=8
-    if 'BSI 10 0Mf05ph0 TLTL' == identifierstr: v=4
-    if 'BSI 10 0Mf05ph0 ELEL' == identifierstr: v=4
-    if 'BSI 10 0Mf05ph0 MUMU' == identifierstr: v=4 
-    with cd(here), open('data/listofpatchedmcfmgridpacks.txt', 'r') as f:
-	if identifierstr in f.read():  v+=1
+    v = 1
+    if self.year in (2017, 2018):
+      v += 1
+#      if self.signalbkgbsi == "BKG": v
+      identifierstr = ' '.join(map(str,self.identifiers))
+      if 'BSI' in identifierstr and '0PL1f05ph0 TLTL' in identifierstr:  v+=1 
+      if 'BSI' in identifierstr and '0PL1f05ph0 ELEL' in identifierstr: v+=1 
+      if 'BSI 1 0PL1f05ph0 MUMU' == identifierstr: v+=2 
+      with cd(here), open('data/listofv2tarballs.txt','r') as f:
+        if identifierstr in f.read():  v+=1   
+#      if self.signalbkgbsi == 'BSI' and self.finalstate == 'ELMU' and self.coupling == '0M':  v+=1
+      if 'BSI 1 0PL1f05ph0 ELEL' == identifierstr: v=7
+      if 'BSI 1 0PL1f05ph0 MUMU' == identifierstr: v=6
+      if 'BSI 1 0PL1f05ph0 TLTL' == identifierstr: v=8
+      if 'BSI 10 0Mf05ph0 TLTL' == identifierstr: v=4
+      if 'BSI 10 0Mf05ph0 ELEL' == identifierstr: v=4
+      if 'BSI 10 0Mf05ph0 MUMU' == identifierstr: v=4 
+      with cd(here), open('data/listofpatchedmcfmgridpacks.txt', 'r') as f:
+        if identifierstr in f.read():  v+=1
+
+    if self.year == 2018 and self.signalbkgbsi in ("SIG", "BSI"):
+      v+=1  #increase ncalls1 and 2
+
     return v
 
   def cvmfstarball_anyversion(self, version):
@@ -80,7 +87,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
         mainfoldername = "MCFM_mdata_MCFM_JHUGen_13TeV_ggZZto{}_BKG_NNPDF31".format(self.finalstate)
         tarballname = "MCFM_mdata_slc6_amd64_gcc630_CMSSW_9_3_0_MCFM_JHUGen_13TeV_ggZZto{}_BKG_NNPDF31.tgz".format(self.finalstate)
     else:
-        tarballname = self.tmptarball.split('/')[-1]
+        tarballname = self.tmptarballbasename
         mainfoldername = tarballname.replace(".tgz", "")
     return os.path.join(folder, mainfoldername, "v{}".format(version), tarballname)
 
@@ -120,11 +127,21 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def tags(self):
-    return ["HZZ", "Fall17P3"]
+    result = ["HZZ"]
+    if self.year == 2017:
+      result.append("Fall17P3")
+    return result
 
   @property
   def genproductionscommit(self):
+    if self.year == 2018 and self.signalbkgbsi != "BKG":
+      return "00354e6fe6c6b2a185c46c7efbad2958bd7a2633"
     return "138efefa8acdcc246a0df4512bef3f660574cb77"
+
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2018: return "20f59357146e08e48132cfd73d0fd72ca08b6b30"
+    return super(MCFMAnomCoupMCSample, self).genproductionscommitforfragment
 
   @property
   def fragmentname(self):
@@ -144,13 +161,28 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
       return 1, 10
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for signalbkgbsi in [ "BSI","SIG", "BKG"]:
       for finalstate in ["ELTL",'MUTL','ELMU',"ELNU","MUMU","MUNU","TLTL","ELEL"]:
         for coupling in cls.getcouplings(signalbkgbsi):
           for width in cls.getwidths(signalbkgbsi, coupling):
-            yield cls(2017, signalbkgbsi, width, coupling, finalstate)
+            for year in 2017, 2018:
+              yield cls(year, signalbkgbsi, width, coupling, finalstate)
 
   @property
   def responsible(self):
      return "hroskes"
+
+  @property
+  def maxallowedtimeperevent(self):
+    return 175
+
+  @property
+  def tweaktimepereventseed(self):
+    if self.year == 2018 and self.signalbkgbsi == "BKG" and self.finalstate in "ELEL MUMU": return 1
+    return super(MCFMAnomCoupMCSample, self).tweaktimepereventseed
+  @property
+  def tweakmakegridpackseed(self):
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PH": return 1
+    return super(MCFMAnomCoupMCSample, self).tweakmakegridpackseed

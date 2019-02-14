@@ -1,4 +1,4 @@
-import abc, collections, contextlib, errno, functools, getpass, itertools, json, logging, os, re, shutil, subprocess, sys, tempfile, time, urllib
+import abc, collections, contextlib, errno, functools, getpass, itertools, json, logging, os, re, shutil, subprocess, sys, tempfile, time, urllib2
 
 def mkdir_p(path):
   """http://stackoverflow.com/a/600612/5228524"""
@@ -179,9 +179,16 @@ def cache(function):
       return newfunction(*args, **kwargs)
   return newfunction
 
+def cacheaslist(function):
+  @cache
+  @functools.wraps(function)
+  def newfunction(*args, **kwargs):
+    return list(function(*args, **kwargs))
+  return newfunction
+
 def wget(url, output=None):
   if output is None: output = os.path.basename(url)
-  with contextlib.closing(urllib.urlopen(url)) as f, open(output, "w") as newf:
+  with contextlib.closing(urlopen(url)) as f, open(output, "w") as newf:
     newf.write(f.read())
 
 class JsonDict(object):
@@ -323,18 +330,38 @@ class JsonDict(object):
 @contextlib.contextmanager
 def nullcontext(): yield
 
-def jobended(*bjobsargs):
-  try:
-    bjobsout = subprocess.check_output(["bjobs"]+list(bjobsargs), stderr=subprocess.STDOUT)
-  except subprocess.CalledProcessError:
-    return True
-  if re.match("Job <.*> is not found", bjobsout.strip()):
-    return True
-  lines = bjobsout.strip().split("\n")
-  if len(lines) == 2 and lines[1].split()[2] in ("EXIT", "DONE"):
-    return True
+def jobended(*condorqargs):
+  from jobsubmission import jobtype
+  if jobtype(): return False  #can't use condor_q on condor machines
+  condorqout = subprocess.check_output(["condor_q"]+list(condorqargs), stderr=subprocess.STDOUT)
+  match = re.search("([0-9]*) jobs; ([0-9]*) completed, ([0-9]*) removed, ([0-9]*) idle, ([0-9]*) running, ([0-9]*) held, ([0-9]*) suspended", condorqout)
+  if not match: raise ValueError("Couldn't parse output of condor_q " + " ".join(condorqargs))
+  return all(int(match.group(i)) == 0 for i in xrange(4, 7))
 
-  return False
+def jobexitstatusfromlog(logfilename, okiffailed=False):
+  with open(logfilename) as f:
+    log = f.read()
+
+  jobid = re.search("^000 [(]([0-9]*[.][0-9]*)[.][0-9]*[)]", log)
+  if not jobid:
+    raise RuntimeError("Don't know how to interpret "+logfilename+", can't find the jobid in the file.")
+  jobid = jobid.group(1)
+
+  if "Job terminated" in log:
+    match = re.search("return value ([0-9]+)", log)
+    if match:
+      exitstatus = int(match.group(1))
+      if exitstatus and not okiffailed:
+        raise RuntimeError(logfilename+" failed with exit status {}".format(exitstatus))
+      return exitstatus
+    else:
+      raise RuntimeError("Don't know what to do with "+logfilename)
+  if "Job was aborted" in log:
+    if okiffailed: return -1
+    raise RuntimeError(logfilename+" was aborted")
+  return None
+
+
 
 @contextlib.contextmanager
 def redirect_stdout(target):
@@ -354,15 +381,12 @@ def restful(*args, **kwargs):
     raise
 
 here = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-#do not change these once you've started making tarballs!
-#they are included in the tarball name and the script
-#will think the tarballs don't exist even if they do
-cmsswversion = "CMSSW_9_3_0"
-scramarch = "slc6_amd64_gcc630"
 
 genproductions = os.path.join(os.environ["CMSSW_BASE"], "src", "genproductions")
-if not os.path.exists(genproductions) or os.environ["CMSSW_VERSION"] != cmsswversion or os.environ["SCRAM_ARCH"] != scramarch:
-  raise RuntimeError("Need to cmsenv in a " + cmsswversion + " " + scramarch + " release that contains genproductions")
+if not os.path.exists(genproductions):
+  raise RuntimeError("Need to cmsenv in a CMSSW release that contains genproductions")
+cmsswversion = os.environ["CMSSW_VERSION"]
+scramarch = os.environ["SCRAM_ARCH"]
 
 def recursivesubclasses(cls):
   result = [cls]
@@ -401,3 +425,58 @@ from jobsubmission import jobtype
 if not jobtype():
   sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
   import rest
+
+@cache
+def fullinfo(prepid):
+  result = restful().get("requests", query="prepid="+prepid)
+  if not result:
+    raise ValueError("mcm query for prepid="+prepid+" returned None!")
+  if len(result) == 0:
+    raise ValueError("mcm query for prepid="+prepid+" returned nothing!")
+  if len(result) > 1:
+    raise ValueError("mcm query for prepid="+prepid+" returned multiple results!")
+  return result[0]
+
+def urlopen(url, *args, **kwargs):
+    try:
+        return urllib2.urlopen(url, *args, **kwargs)
+    except:
+        print "Error while downloading", url
+        raise
+
+def createLHEProducer(gridpack, cards, fragment, tag):
+    """
+    originally from
+      https://github.com/davidsheffield/McMScripts
+    """
+
+    code = """import FWCore.ParameterSet.Config as cms
+
+externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
+    args = cms.vstring('{0}'),
+    nEvents = cms.untracked.uint32(5000),
+    numberOfParameters = cms.uint32(1),
+    outputFile = cms.string('cmsgrid_final.lhe'),
+    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh')
+)""".format(gridpack)
+
+    if cards != "":
+        code += """
+
+# Link to cards:
+# {0}
+""".format(cards)
+
+    if fragment != "" and tag != "":
+        gen_fragment_url = "https://raw.githubusercontent.com/cms-sw/genproductions/{0}/{1}".format(
+            tag, fragment.split("Configuration/GenProduction/")[1])
+        gen_fragment = urlopen(gen_fragment_url).read()
+        code += """
+{0}
+
+# Link to generator fragment:
+# {1}
+""".format(gen_fragment, gen_fragment_url)
+
+    return code
+

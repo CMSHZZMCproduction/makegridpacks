@@ -1,19 +1,19 @@
-import abc, contextlib, csv, os, urllib
+import abc, contextlib, csv, os, re
 
-from utilities import genproductions
+from utilities import cache, genproductions, urlopen
 
 from mcsamplebase import MCSampleBase_DefaultCampaign
 
 class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
-  def __init__(self, year, productionmode, decaymode, mass,kind):
+  def __init__(self, year, productionmode, decaymode, mass,coupling):
     self.productionmode = productionmode
     self.decaymode = decaymode
     self.mass = int(str(mass))
-    self.kind = kind
+    self.coupling = coupling
     super(AnomalousCouplingMCSample, self).__init__(year=year)
   @property
   def identifiers(self):
-    return self.productionmode, self.decaymode, self.mass, self.kind
+    return self.productionmode, self.decaymode, self.mass, self.coupling
   @property
   def xsec(self): return 1 #unknown for unknown signal
   @property
@@ -30,20 +30,26 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
         else :
             decaymode = "ZZ4l_withtaus"
 
-        if self.kind == "SM" or self.productionmode in ("HJJ", "ttH") :
+        if self.coupling == "SM" or self.productionmode in ("HJJ", "ttH") :
             filename = decaymode+".input"
 
         else :
-            if "mix" not in self.kind or self.productionmode == "ggH":
-                filename = "anomalouscouplings/"+decaymode+"_"+self.kind+".input"
+            if "mix" not in self.coupling or self.productionmode == "ggH":
+                filename = "anomalouscouplings/"+decaymode+"_"+self.coupling+".input"
             else :
-                filename = "anomalouscouplings/"+decaymode+"_"+self.kind+"for"+self.productionmode+".input"
+                filename = "anomalouscouplings/"+decaymode+"_"+self.coupling+"for"+self.productionmode+".input"
 
     card = os.path.join(folder, filename)
 
     if not os.path.exists(card):
       raise IOError(card+" does not exist")
     return card
+
+  @classmethod
+  @cache
+  def csvfile2016(cls):
+    with contextlib.closing(urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC_anomalous.csv")) as f:
+      return list(f)
 
   @property
   def datasetname(self):
@@ -67,7 +73,7 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
       "0Mmix": "0Mf05ph0",  #for ttH
       "L1mix": "0L1f05ph0",
       "L1Zgmix": "0L1Zgf05ph0",
-    }[self.kind]
+    }[self.coupling]
 
     result += "ToZZ"
     if "ZZ4l_withtaus" in self.decaycard:
@@ -82,11 +88,11 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
     result += "_M125_13TeV"
     if isinstance(self, POWHEGJHUGenMCSample):
       result += "_powheg2"
-    result += "_JHUGenV7011_pythia8"
+    result += "_JHUGen"+self.JHUGenversion.upper().replace(".", "")+"_pythia8"
 
     pm = self.productionmode.replace("HJJ", "JJH").replace("H", "Higgs").replace("ggHiggs", "Higgs")
     dm = self.decaymode.upper().replace("NU", "Nu")
-    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGenV7011_"]
+    searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGen"+self.JHUGenversion.upper().replace(".", "")+"_"]
     shouldntbethere = []
     if isinstance(self, POWHEGJHUGenMCSample):
       searchfor.append("powheg")
@@ -95,14 +101,13 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
     if any(_ not in result for _ in searchfor) or any(_.lower() in result.lower() for _ in shouldntbethere):
       raise ValueError("Dataset name doesn't make sense:\n{}\n{}\nNOT {}\n{}".format(result, searchfor, shouldntbethere, self))
 
-    searchfor = result.replace("Zg", "").replace("JHUGenV7011", "JHUgenV6")
-    with contextlib.closing(urllib.urlopen("https://raw.githubusercontent.com/CJLST/ZZAnalysis/f7d5b5fecf322a8cffa435cfbe3f05fb1ae6aba2/AnalysisStep/test/prod/samples_2016_MC_anomalous.csv")) as f:
-      reader = csv.DictReader(f)
-      for row in reader:
-        if row["dataset"] and row["dataset"].split("/")[1] == searchfor:
-          break
-      else:
-        raise ValueError("Couldn't find dataset name {}".format(searchfor))
+    searchfor = re.sub("JHUGenV[0-9]+", "JHUgenV6", result.replace("Zg", ""))
+    reader = csv.DictReader(self.csvfile2016())
+    for row in reader:
+      if row["dataset"] and row["dataset"].split("/")[1] == searchfor:
+        break
+    else:
+      raise ValueError("Couldn't find dataset name {}".format(searchfor))
 
     return result
 
@@ -110,6 +115,7 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
   def nevents(self):
     if self.decaymode == "4l":
       if self.productionmode in ("HJJ", "ttH"):
+        if self.year == 2016 and self.productionmode == "HJJ": return 1500000 - 250000
         return 250000
       elif self.productionmode in ("ggH", "VBF", "WH"):
         return 500000
@@ -126,7 +132,7 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
     raise ValueError("No masses for {} {}".format(productionmode, decaymode))
 
   @classmethod
-  def getkind(cls,productionmode,decaymode):
+  def getcouplings(cls,productionmode,decaymode):
     if productionmode == "ggH" :
       return "L1","L1Zg","L1Zgmix","L1mix","SM","a2","a2mix","a3","a3mix" 
     if productionmode == "HJJ" :

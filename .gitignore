@@ -3,7 +3,10 @@ LSFJOB
 STDOUT
 McMsampleproperties.json.tmp
 AAAA
+productioncard
+productiongitcard
 *.tgz
 *.tar.gz
 *.txz
 *.tar.xz
+*.cc

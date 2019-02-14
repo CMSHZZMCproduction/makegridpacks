@@ -1,13 +1,11 @@
-import abc, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess, tempfile
+import abc, collections, contextlib, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess, tempfile
 
 import uncertainties
 
-from McMScripts.manageRequests import createLHEProducer
-
 import patches
 
-from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitLSF
-from utilities import cache, cd, cdtemp, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, wget
+from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitcondor
+from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, scramarch, urlopen, wget
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
@@ -22,11 +20,19 @@ class MCSampleBase(JsonDict):
   @abc.abstractproperty
   def tarballversion(self): pass
   @property
-  def cvmfstarball(self): return self.cvmfstarball_anyversion(self.tarballversion)
+  def cvmfstarball(self):
+    result = self.cvmfstarball_anyversion(self.tarballversion)
+    if self.uselocaltarballfortest:
+      if self.dovalidation: raise ValueError("{} uses a local tarball for testing purposes, so you have to set dovalidation to false".format(self))
+      result = result.replace("/cvmfs/cms.cern.ch/phys_generator/", here+"/test_")
+    return result
+  @property
+  def uselocaltarballfortest(self):
+    return False
   @abc.abstractmethod
   def cvmfstarball_anyversion(self, version): pass
   @abc.abstractproperty
-  def tmptarball(self): pass
+  def tmptarballbasename(self): pass
   @abc.abstractproperty
   def makegridpackcommand(self): pass
   @abc.abstractproperty
@@ -77,7 +83,10 @@ class MCSampleBase(JsonDict):
       for filename in filenames:
         if re.match("core[.].*", filename):
           raise ValueError("There is a core dump in the tarball\n{}".format(self))
-    return ""
+    result = ""
+    if self.uselocaltarballfortest:
+      result += "\n# this is here to fool the test script: /cvmfs/cms.cern.ch/phys_generator/gridpacks"
+    return result.lstrip("\n")
   @abc.abstractproperty
   def defaulttimeperevent(self): pass
   @abc.abstractproperty
@@ -97,19 +106,19 @@ class MCSampleBase(JsonDict):
   @property
   def patchkwargs(self): return []
   @property
-  def doublevalidationtime(self): return False
+  def validationtimemultiplier(self): return 1
   @property
   def neventsfortest(self): return None
   @property
   def notes(self): return ""
   @property
-  def creategridpackqueue(self): return "1nd"
+  def creategridpackqueue(self): return "tomorrow"
   @property
-  def timepereventqueue(self): return "1nd"
+  def timepereventqueue(self): return "tomorrow"
   @property
   def timepereventflavor(self): return JobQueue(self.timepereventqueue).condorflavor
   @property
-  def filterefficiencyqueue(self): return "1nd"
+  def filterefficiencyqueue(self): return "tomorrow"
   @property
   def dovalidation(self):
     """Set this to false if a request fails so badly that the validation will never succeed"""
@@ -122,10 +131,13 @@ class MCSampleBase(JsonDict):
   def gridpackjobsrunning(self):
     """powheg samples that need to run the grid in multiple steps need to modify this"""
     if not self.makinggridpacksubmitsjob: return False
-    return not jobended("-J", self.makinggridpacksubmitsjob)
+    raise RuntimeError("fix this")
+    #this doesn't work
+    return not jobended("-constraint", 'JobBatchName == "{}"'.format(self.makinggridpacksubmitsjob))
   def processmakegridpackstdout(self, stdout): "do nothing by default, powheg uses this"
 
   @abc.abstractmethod
+  @cacheaslist
   def allsamples(self): "should be a classmethod"
 
   def __eq__(self, other):
@@ -159,15 +171,18 @@ class MCSampleBase(JsonDict):
 
   @property
   def workdirforgridpack(self):
-    result = os.path.dirname(self.tmptarball)
-    if os.path.commonprefix((result, os.path.join(here, "workdir"))) != os.path.join(here, "workdir"):
-      raise ValueError("{!r}.workdir is supposed to be in the workdir folder".format(self))
-    if result == os.path.join(here, "workdir"):
-      raise ValueError("{!r}.workdir is supposed to be a subfolder of the workdir folder, not workdir itself".format(self))
+    result = os.path.dirname(self.foreostarball)
+    result = result.replace(os.path.join(here, "gridpacks"), os.path.join(here, "workdir"))
+    assert result.startswith(os.path.join(here, "workdir")), result
     return result
+
   @property
   def workdir(self):
-    return self.workdirforgridpack
+    return self.workdirforgridpack.rstrip("/") + "_" + str(self).replace(" ", "")
+
+  @property
+  def tmptarball(self):
+    return os.path.join(self.workdirforgridpack, self.tmptarballbasename)
 
   @property
   def cvmfstarballexists(self): return os.path.exists(self.cvmfstarball)
@@ -221,7 +236,7 @@ class MCSampleBase(JsonDict):
       if not kwof:
         try:
           with open(self.tmptarball+".tmp") as f:
-            jobid = int(f.read().strip())
+            jobid = float(f.read().strip())
         except (ValueError, IOError):
           return "try running again, probably you just got really bad timing"
         if jobended(str(jobid)):
@@ -251,7 +266,7 @@ class MCSampleBase(JsonDict):
               except OSError:
                 shutil.rmtree(_)
         if not self.makinggridpacksubmitsjob and self.creategridpackqueue is not None:
-          if not jobtype(): return "need to create the gridpack, submitting to LSF" if submitLSF(self.creategridpackqueue) else "need to create the gridpack, job is pending on LSF"
+          if not jobtype(): return "need to create the gridpack, submitting to condor" if submitcondor(self.creategridpackqueue) else "need to create the gridpack, job is pending on condor"
           if not queuematches(self.creategridpackqueue): return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))
@@ -260,12 +275,14 @@ class MCSampleBase(JsonDict):
 
         #https://stackoverflow.com/a/17698359/5228524
         makegridpackstdout = ""
-        pipe = subprocess.Popen(self.makegridpackcommand, stdout=subprocess.PIPE, bufsize=1)
-        with pipe.stdout:
-            for line in iter(pipe.stdout.readline, b''):
-                print line,
-                makegridpackstdout += line
+        pipe = subprocess.Popen(self.makegridpackcommand, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1)
+        for line in pipe.stdout:
+            print line,
+            makegridpackstdout += line
         self.processmakegridpackstdout(makegridpackstdout)
+        pipe.communicate()
+        if pipe.returncode:
+            raise RuntimeError("makegridpackcommand gave an error ^^^")
 
         if makinggridpacksubmitsjob:
           return "submitted the gridpack creation job"
@@ -350,6 +367,13 @@ class MCSampleBase(JsonDict):
               testjob = eval(testjob)  #sometimes it's a string
             except SyntaxError:
               pass                     #sometimes it's not
+          if self.tweaktimepereventseed:
+            lines = testjob.split("\n")
+            cmsdriverindex = {i for i, line in enumerate(lines) if "cmsDriver.py" in line}
+            assert len(cmsdriverindex) == 1, cmsdriverindex
+            cmsdriverindex = cmsdriverindex.pop()
+            lines.insert(cmsdriverindex+1, 'sed -i "/Services/aprocess.RandomNumberGeneratorService.externalLHEProducer.initialSeed = process.RandomNumberGeneratorService.externalLHEProducer.initialSeed.value() + {:d}" *_cfg.py'.format(self.tweaktimepereventseed))
+            testjob = "\n".join(lines)
           with open(self.prepid, "w") as newf:
             newf.write(testjob)
           os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
@@ -433,6 +457,8 @@ class MCSampleBase(JsonDict):
 
   def makegridpack(self, approvalqueue, badrequestqueue, clonequeue, setneedsupdate=False):
     if self.finished: return "finished!"
+    if self.cmsswversion != cmsswversion or self.scramarch != scramarch:
+      return "try again in "+self.cmsswversion+" with scram arch "+self.scramarch
     if not self.cvmfstarballexists:
       if not os.path.exists(self.eostarball):
         if not os.path.exists(self.foreostarball):
@@ -443,12 +469,17 @@ class MCSampleBase(JsonDict):
 
     if os.path.exists(self.foreostarball):
       if filecmp.cmp(self.cvmfstarball, self.foreostarball, shallow=False):
-        from . import allsamples
-        for _ in allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball):
-          _.needsupdate = True
-        os.remove(self.foreostarball)
+        if self.cvmfstarball.startswith("/cvmfs/"):
+          from . import allsamples
+          for _ in allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball):
+            _.needsupdate = True
+          os.remove(self.foreostarball)
       else:
         return "gridpack exists on cvmfs, but it's wrong!"
+
+    if not self.makerequest:
+      self.finished = True
+      return "finished!"
 
     if self.badprepid:
       badrequestqueue.add(self)
@@ -462,12 +493,14 @@ class MCSampleBase(JsonDict):
         return "found prepid: {}".format(self.prepid)
 
     if self.filterefficiency is None and not self.needsupdateiffailed:
+      if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): self.needsupdate=True; return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
       if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
       return self.findfilterefficiency()
 
     if not (self.sizeperevent and self.timeperevent) and not self.needsupdateiffailed:
+      if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): self.needsupdate=True; return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
       if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
@@ -480,6 +513,7 @@ class MCSampleBase(JsonDict):
       badrequestqueue.add(self)
 
     if (self.approval, self.status) == ("none", "new"):
+      if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): self.needsupdate=True; return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
       if self.needsoptionreset:
         if not self.optionreset():
           return "need to do option reset but failed"
@@ -489,8 +523,12 @@ class MCSampleBase(JsonDict):
         if self.badprepid:
           badrequestqueue.add(self)
         return "needs update on McM, sending it there"
-      if not self.dovalidation: return "not starting the validation"
-      if self.nthreads > 1 and self.fullinfo["history"][-1]["action"] == "failed":
+      if not self.dovalidation:
+        if setneedsupdate and not self.needsupdate:
+          result = self.setneedsupdate()
+          if result: return result
+        return "not starting the validation"
+      if self.nthreads > 1 and self.fullinfo["history"][-1]["action"] == "failed" and self.fullinfo["validation"]["validations_count"] == 1:
         self.nthreads /= 2
         self.updaterequest()
         return "validation failed, decreasing the number of threads"
@@ -507,6 +545,7 @@ class MCSampleBase(JsonDict):
         if result: return result
       return "validation is running"
     if (self.approval, self.status) == ("validation", "validation"):
+      if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
       self.gettimepereventfromMcM()
       if setneedsupdate and not self.needsupdate:
         result = self.setneedsupdate()
@@ -571,6 +610,43 @@ class MCSampleBase(JsonDict):
     with cd(here), self.writingdict():
       try:
         del self.value["prepid"]
+      except KeyError:
+        pass
+  @property
+  def otherprepids(self):
+    """
+    This is meant to store prepids that were automatically cloned from this prepid to use in a new chain.
+    You don't have to set otherprepids unless you want to use them e.g. for RedoForceCompletedSample.
+    """
+    with cd(here):
+      return self.value.get("otherprepids", [])
+  def addotherprepid(self, otherprepid):
+    if otherprepid == self.prepid: return
+    if otherprepid in self.otherprepids: return
+    history = fullinfo(otherprepid)["history"]
+    clone = history[1]
+    if not (
+      clone["action"] == "clone" and
+      clone["step"] in [self.prepid] + self.otherprepids and
+      clone["updater"]["author_username"] == "pdmvserv"
+    ):
+      raise ValueError(otherprepid + " was not cloned from " + str(self) + "("+str(self.prepid)+") by pdmvserv\n" + json.dumps(clone))
+    for action in history:
+      if (
+        action["action"] == "update" and
+        action["updater"]["author_username"] not in ("pdmvserv", "automatic")
+      ):
+        raise ValueError(otherprepid + " was updated by someone besides pdmvserv and automatic\n" + json.dumps(action))
+
+    with cd(here), self.writingdict():
+      if not self.otherprepids:
+        self.value["otherprepids"] = []
+      self.otherprepids.append(otherprepid)
+  @otherprepids.deleter
+  def otherprepids(self):
+    with cd(here), self.writingdict():
+      try:
+        del self.value["otherprepids"]
       except KeyError:
         pass
   @property
@@ -867,7 +943,7 @@ class MCSampleBase(JsonDict):
     req["tags"] = list(self.tags)
     req["memory"] = self.memory
     req["validation"].update({
-      "double_time": self.doublevalidationtime,
+      "time_multiplier": self.validationtimemultiplier,
     })
     req["extension"] = self.extensionnumber
     req["notes"] = self.notes
@@ -919,6 +995,8 @@ class MCSampleBase(JsonDict):
     if jobtype(): return
     query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.datasetname, self.extensionnumber, self.pwg, self.campaign)
     output = restful().get('requests', query=query)
+    if not output:
+      return None
     prepids = {_["prepid"] for _ in output}
     prepids -= frozenset(self.badprepid)
     if not prepids:
@@ -929,20 +1007,16 @@ class MCSampleBase(JsonDict):
     self.prepid = prepids.pop()
 
   @property
-  @cache
   def fullinfo(self):
     if not self.prepid: raise AttributeError("Can only call fullinfo once the prepid has been set")
-    result = restful().get("requests", query="prepid="+self.prepid)
-    if not result:
-      raise ValueError("mcm query for prepid="+self.prepid+" returned None!")
-    if len(result) == 0:
-      raise ValueError("mcm query for prepid="+self.prepid+" returned nothing!")
-    if len(result) > 1:
-      raise ValueError("mcm query for prepid="+self.prepid+" returned multiple results!")
-    return result[0]
+    return fullinfo(self.prepid)
+
+  def otherfullinfo(self, i):
+    if i==0: return self.fullinfo
+    return self.otherprepids[i-1].fullinfo
 
   def gettimepereventfromMcM(self):
-    if (self.timeperevent is None or self.resettimeperevent) and not (self.prepid and self.status in ("approved", "submitted", "done")): return
+    if (self.timeperevent is None or self.resettimeperevent) and not (self.prepid and self.status in ("approved", "submitted", "done")) and not (self.status in ("validation", "defined") and not self.needsupdate): return
     needsupdate = self.needsupdate
     needsupdateiffailed = self.needsupdateiffailed
     timeperevent = self.fullinfo["time_event"][0]
@@ -998,6 +1072,8 @@ class MCSampleBase(JsonDict):
     differentgenparameters = set()
     setneedsupdate = False
     setneedsupdateiffailed = False
+    differentsub = collections.defaultdict(set)
+    differentsublist = collections.defaultdict(set)
     for key in set(old.keys()) | set(new.keys()):
       if old.get(key) != new.get(key):
         if key == "memory" and validated:
@@ -1012,24 +1088,32 @@ class MCSampleBase(JsonDict):
           setneedsupdateiffailed = True
         elif key == "sequences":
           assert len(old[key]) == len(new[key]) == 1
-          for skey in set(old[key][0].keys()) | set(new[key][0].keys()):
-            if old[key][0].get(skey) != new[key][0].get(skey):
-              if skey == "nThreads":
+          for subkey in set(old[key][0].keys()) | set(new[key][0].keys()):
+            if old[key][0].get(subkey) != new[key][0].get(subkey):
+              if subkey == "nThreads":
                 setneedsupdateiffailed = True
-                differentsequences.add(skey)
-              elif skey == "procModifiers" and old[key][0].get(skey) is None and new[key][0].get(skey) == "":
+                differentsublist["sequences"].add(subkey)
+              elif subkey == "procModifiers" and old[key][0].get(subkey) is None and new[key][0].get(subkey) == "":
                 pass  #not sure what this is about
               else:
-                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(skey, old[key][0].get(skey), new[key][0].get(skey), self.prepid))
+                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(subkey, old[key][0].get(subkey), new[key][0].get(subkey), self.prepid))
         elif key == "generator_parameters":
           assert len(old[key]) == len(new[key]) == 1
-          for gpkey in set(old[key][0].keys()) | set(new[key][0].keys()):
-            if old[key][0].get(gpkey) != new[key][0].get(gpkey):
-              if gpkey in ("filter_efficiency", "filter_efficiency_error", "match_efficiency", "match_efficiency_error"):
+          for subkey in set(old[key][0].keys()) | set(new[key][0].keys()):
+            if old[key][0].get(subkey) != new[key][0].get(subkey):
+              if subkey in ("filter_efficiency", "filter_efficiency_error", "match_efficiency", "match_efficiency_error"):
                 setneedsupdate = True
-                differentgenparameters.add(gpkey)
+                differentsublist["generator_parameters"].add(subkey)
               else:
-                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(gpkey, old[key][0].get(gpkey), new[key][0].get(gpkey), self.prepid))
+                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(subkey, old[key][0].get(subkey), new[key][0].get(subkey), self.prepid))
+        elif key == "validation":
+          for subkey in set(old[key].keys()) | set(new[key].keys()):
+            if old[key].get(subkey) != new[key].get(subkey):
+              if subkey in ("double_time", "time_multiplier"):
+                setneedsupdateiffailed = True
+                differentsub["validation"].add(subkey)
+              else:
+                raise ValueError("Don't know what to do with {} ({} --> {}) in validation for {}".format(subkey, old[key][0].get(subkey), new[key][0].get(subkey), self.prepid))
         else:
           raise ValueError("Don't know what to do with {} ({} --> {}) for {}".format(key, old.get(key), new.get(key), self.prepid))
     if setneedsupdate or setneedsupdateiffailed:
@@ -1037,11 +1121,11 @@ class MCSampleBase(JsonDict):
         self.needsupdate = True
       else:
         self.needsupdateiffailed = True
-      return "there is a change in some parameters, setting needsupdate" + "iffailed"*(not setneedsupdate) + " = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((skey, old["sequences"][0].get(skey), new["sequences"][0].get(skey)) for skey in differentsequences), ((skey, old["generator_parameters"][0].get(skey), new["generator_parameters"][0].get(skey)) for skey in differentgenparameters)))
+      return "there is a change in some parameters, setting needsupdate" + "iffailed"*(not setneedsupdate) + " = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((subkey, old[key].get(subkey), new[key].get(subkey)) for key in differentsub for subkey in differentsub[key]), ((subkey, old[key][0].get(subkey), new[key][0].get(subkey)) for key in differentsub for subkey in differentsublist[key])))
 
   def request_fragment_check(self):
     with cdtemp():
-      with open(os.path.join(genproductions, "bin", "utils", "request_fragment_check.py")) as f:
+      with contextlib.closing(urlopen("https://github.com/cms-sw/genproductions/raw/master/bin/utils/request_fragment_check.py")) as f:
         contents = f.read()
       cookies = [line for line in contents.split("\n") if "os.system" in line and "cookie" in line.lower()]
       assert len(cookies) == 2
@@ -1049,15 +1133,16 @@ class MCSampleBase(JsonDict):
       with open("request_fragment_check.py", "w") as f:
         f.write(contents)
 
-      pipe = subprocess.Popen(["python", "request_fragment_check.py", "--prepid", self.prepid], stdout=subprocess.PIPE, bufsize=1)
-      output = ""
-      with pipe.stdout:
-        for line in iter(pipe.stdout.readline, b''):
-          print line,
-          output += line
+      try:
+        output = subprocess.check_output(["python", "request_fragment_check.py", "--prepid", self.prepid, "--bypass_status"], stderr=subprocess.STDOUT)
+        print output,
+      except subprocess.CalledProcessError as e:
+        print e.output,
+        return "request_fragment_check failed!"
 
       for line in output.split("\n"):
-        if line.strip() == self.prepid: continue
+        if line == self.prepid: continue
+        if re.match(r"{}\s*Status\s*=\s*\w*".format(self.prepid), line.strip()): continue
         elif "cookie" in line: continue
         elif not line.strip().strip("*"): continue
         elif "will be checked:" in line: continue
@@ -1079,13 +1164,18 @@ class MCSampleBase(JsonDict):
           if line.strip() == "*                              in born matrix element for highest multiplicity.": continue
           if line.strip() == "*                as number of partons in born matrix element for highest multiplicity.": continue
           if line.strip() == "*           correctly as number of partons in born matrix element for highest multiplicity.": continue
+          if line.strip() == self.datasetname: continue
+          if line.strip().startswith("'POWHEG:nFinal"): continue
+          if line.strip() == self.cvmfstarball or line.strip() == self.eostarball: continue
+          if line.strip() == "grep from powheg pwhg_checklimits files": continue
+          if line.strip().startswith("coll-minus"): continue
           return "Unknown line in request_fragment_check output!\n"+line
 
   @property
   def maxallowedtimeperevent(self): return None  #default to whatever request_fragment_check does
 
   def handle_request_fragment_check_warning(self, line):
-    if line.strip() == "* [WARNING] Large time/event - please check":
+    if re.match(r"\* \[WARNING\] Large time/event[=0-9.]* - please check", line.strip()):
       print "time/event is", self.timeperevent
       if self.maxallowedtimeperevent is not None and self.timeperevent < self.maxallowedtimeperevent: return "ok"
       return "please check it"
@@ -1093,6 +1183,24 @@ class MCSampleBase(JsonDict):
 
   def handle_request_fragment_check_caution(self, line):
     return "request_fragment_check gave an unhandled caution!"
+
+  @property
+  def tweaktimepereventseed(self):
+    return None
+  @property
+  def tweakmakegridpackseed(self):
+    return 0
+
+  @property
+  def cmsswversion(self):
+    return "CMSSW_9_3_0"
+  @property
+  def scramarch(self):
+    return "slc6_amd64_gcc630"
+
+  @property
+  def makerequest(self):
+    return True
 
 class MCSampleBase_DefaultCampaign(MCSampleBase):
   @property

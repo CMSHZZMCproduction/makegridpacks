@@ -1,11 +1,13 @@
-import abc, os, contextlib, urllib, re, filecmp, glob, pycurl, shutil, stat, subprocess, itertools, os
+import abc, os, contextlib, re, filecmp, glob, pycurl, shutil, stat, subprocess, itertools, os
+
+import uncertainties
 
 from jobsubmission import jobid, jobtype
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, mkdir_p, scramarch, wget, KeepWhileOpenFile, jobended
+from utilities import cache, cd, cdtemp, genproductions, here, jobexitstatusfromlog, makecards, mkdir_p, wget, KeepWhileOpenFile, jobended, urlopen
 
 from jhugenmcsample import UsesJHUGenLibraries
 from mcsamplebase import MCSampleBase
-from mcsamplewithxsec import MCSampleWithXsec
+from mcsamplewithxsec import MCSampleWithXsec, NoXsecError
 
 def differentproductioncards(productioncard, gitproductioncard):
 	allowedtobediff = ['[readin]','[writeout]','[ingridfile]','[outgridfile]']
@@ -80,8 +82,8 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
   def cardbase(self):
     return os.path.basename(self.productioncard).split(".DAT")[0]
   @property
-  def tmptarball(self):
-    return os.path.join(here, "workdir", self.datasetname, "MCFM_%s_%s_%s_%s.tgz" % (self.method, scramarch, cmsswversion, self.datasetname))
+  def tmptarballbasename(self):
+    return "MCFM_%s_%s_%s_%s.tgz" % (self.method, self.scramarch, self.cmsswversion, self.datasetname)
   @property
   def makegridpackcommand(self):
     args = {
@@ -90,16 +92,28 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
 	'--bsisigbkg': self.signalbkgbsi,
 	'-d': self.datasetname,
 	'-q': self.creategridpackqueue,
-	'-s': str(hash(self) % 2147483647),
+	'-s': str(hash(self) % 2147483647 + self.tweakmakegridpackseed),
 	}
     return ['./run_mcfm_AC.py'] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
- 
+
   @property
   def makinggridpacksubmitsjob(self):
-    return 'MCFM_submit_%s.sh'%(self.datasetname)
-
+    return True
+  @property
+  def gridpackjobsrunning(self):
+    if not os.path.exists(self.workdirforgridpack):
+      return False
+    with cd(self.workdirforgridpack):
+      logs = glob.glob("condor.*.log")
+      if len(logs) > 1: raise RuntimeError("Multiple logs in "+self.workdir)
+      if not logs: return False
+      exitstatus = jobexitstatusfromlog(logs[0], okiffailed=True)
+      if exitstatus is None: return True
+      return False
+ 
   def getxsec(self):
     with cdtemp():
+      if not os.path.exists(self.cvmfstarball): raise NoXsecError
       subprocess.check_output(["tar", "xvaf", self.cvmfstarball])
       dats = set(glob.iglob("*.dat")) - {"fferr.dat", "ffperm5.dat", "ffwarn.dat", "hto_output.dat"}
       if len(dats) != 1:
@@ -119,7 +133,7 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
     productioncardurl = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, self.productioncard.split("genproductions/")[-1])
     mdatascript = os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/", commit, "bin/MCFM/ACmdataConfig.py")
     with cdtemp():
-      with contextlib.closing(urllib.urlopen(productioncardurl)) as f:
+      with contextlib.closing(urlopen(productioncardurl)) as f:
         productiongitcard = f.read()
 
 #    for root, dirs, files in os.walk("."):
@@ -150,7 +164,7 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
           f.write(productiongitcard)
       raise ValueError("productioncard != productiongitcard\n{}\nSee ./productioncard and ./productiongitcard".format(self))
 
-    with contextlib.closing(urllib.urlopen(os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/"+commit+"/bin/MCFM/run_mcfm_AC.py"))) as f:
+    with contextlib.closing(urlopen(os.path.join("https://raw.githubusercontent.com/cms-sw/genproductions/"+commit+"/bin/MCFM/run_mcfm_AC.py"))) as f:
       infunction = False
       for line in f:
         if re.match(r"^\s*def .*", line): infunction = False

@@ -1,10 +1,8 @@
 from collections import namedtuple
-import abc, contextlib, csv, os, re, subprocess, urllib
+import abc, contextlib, csv, json, os, re, subprocess
 
 from mcsamplebase import MCSampleBase
-from minlomcsample import MINLOMCSample
-from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
-from utilities import here
+from utilities import cacheaslist, cdtemp, fullinfo, here
 
 class VariationSample(MCSampleBase):
   def __init__(self, mainsample, variation):
@@ -15,10 +13,10 @@ class VariationSample(MCSampleBase):
     self.mainsample = mainsample
     self.variation = variation
     super(VariationSample, self).__init__(year=mainsample.year)
-    if self.filterefficiency is None:
+    if self.filterefficiency is None and self.mainsample.filterefficiency is not None:
       self.filterefficiency = self.mainsample.filterefficiency
     if (self.filterefficiencynominal, self.filterefficiencyerror) != (self.mainsample.filterefficiencynominal, self.mainsample.filterefficiencyerror) and self.mainsample.filterefficiencynominal is not None is not self.mainsample.filterefficiencyerror:
-      raise ValueError("Match efficiency doesn't match!\n{}, {}\n{}, {}".format(
+      raise ValueError("Filter efficiency doesn't match!\n{}, {}\n{}, {}".format(
         self, self.mainsample, self.filterefficiency, self.mainsample.filterefficiency
       ))
   @property
@@ -35,8 +33,8 @@ class VariationSample(MCSampleBase):
   def cvmfstarball_anyversion(self, version):
     return self.mainsample.cvmfstarball_anyversion(version)
   @property
-  def tmptarball(self):
-    return self.mainsample.tmptarball
+  def tmptarballbasename(self):
+    return self.mainsample.tmptarballbasename
   @property
   def patchkwargs(self):
     return self.mainsample.patchkwargs
@@ -48,12 +46,10 @@ class VariationSample(MCSampleBase):
     return self.mainsample.inthemiddleofmultistepgridpackcreation
   @property
   def gridpackjobsrunning(self):
-    return self.mainsample.gridpackjobsrunning
+    return type(self.mainsample).gridpackjobsrunning.__get__(self, type(self))
+
   def findfilterefficiency(self):
     return "this is a variation sample, the filter efficiency is the same as for the main sample"
-  @property
-  def workdir(self):
-    return self.mainsample.workdir.rstrip("/")+"_"+self.variation
   @property
   def makegridpackcommand(self):
     return self.mainsample.makegridpackcommand
@@ -94,8 +90,8 @@ class VariationSample(MCSampleBase):
   def makegridpackscriptstolink(self):
     return self.mainsample.makegridpackscriptstolink
   @property
-  def doublevalidationtime(self):
-    return self.mainsample.doublevalidationtime
+  def validationtimemultiplier(self):
+    return self.mainsample.validationtimemultiplier
   @property
   def neventsfortest(self): return self.mainsample.neventsfortest
   @property
@@ -117,6 +113,12 @@ class VariationSample(MCSampleBase):
   @property
   def maxallowedtimeperevent(self):
     return self.mainsample.maxallowedtimeperevent
+  @property
+  def tweakmakegridpackseed(self):
+    return self.mainsample.tweakmakegridpackseed
+  @property
+  def tweaktimepereventseed(self):
+    return self.mainsample.tweaktimepereventseed
 
 class ExtensionSampleBase(VariationSample):
   def __init__(self, *args, **kwargs):
@@ -132,6 +134,8 @@ class ExtensionSampleBase(VariationSample):
   @property
   def genproductionscommit(self): return self.mainsample.genproductionscommit
   @property
+  def genproductionscommitforfragment(self): return self.mainsample.genproductionscommitforfragment
+  @property
   def extensionnumber(self): return self.mainsample.extensionnumber+1
 
 class ExtensionSample(ExtensionSampleBase):
@@ -139,25 +143,61 @@ class ExtensionSample(ExtensionSampleBase):
   for extensions that are identical to the main sample
   except in the number of events
   """
+  def __init__(self, mainsample):
+    return super(ExtensionSample, self).__init__(mainsample=mainsample, variation="ext")
   @property
   def nevents(self):
     from qqZZmcsample import QQZZMCSample
     if isinstance(self.mainmainsample, QQZZMCSample) and self.mainmainsample.cut is None:
-      if self.year == 2018:
+      if self.year == 2018 or self.year == 2017:
         if self.mainmainsample.finalstate == "4l": return 100000000
         if self.mainmainsample.finalstate == "2l2nu": return 50000000
+
+    from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
+    if isinstance(self.mainmainsample, JHUGenJHUGenAnomCoupMCSample) and self.mainmainsample.productionmode == "HJJ":
+      return 1500000 - 250000
+
+    from gridpackbysomeoneelse import MadGraphHJJFromThomasPlusJHUGen
+    if isinstance(self.mainsample, MadGraphHJJFromThomasPlusJHUGen):
+      return 3000000 - 500000
+
     assert False, self
+
+  @property
+  def dovalidation(self):
+    from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
+    return super(ExtensionSample, self).dovalidation
+
+  @property
+  def notes(self):
+    if isinstance(self.mainsample, RunIIFall17DRPremix_nonsubmitted): return self.mainmainsample.notes
+    return super(ExtensionSample, self).notes
 
   @classmethod
   def samplestoextend(cls):
     from qqZZmcsample import QQZZMCSample
     yield RedoSample(QQZZMCSample(2018, "4l"))
     yield RedoSample(QQZZMCSample(2018, "2l2nu"))
+    yield QQZZMCSample(2017, "4l")
+
+    from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
+    yield RunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenAnomCoupMCSample(2017, "HJJ", "4l", 125, "SM"))
+    yield RunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenAnomCoupMCSample(2017, "HJJ", "4l", 125, "a3"))
+    yield RunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenAnomCoupMCSample(2017, "HJJ", "4l", 125, "a3mix"))
+    yield JHUGenJHUGenAnomCoupMCSample(2018, "HJJ", "4l", 125, "SM")
+    yield JHUGenJHUGenAnomCoupMCSample(2018, "HJJ", "4l", 125, "a3")
+    yield JHUGenJHUGenAnomCoupMCSample(2018, "HJJ", "4l", 125, "a3mix")
+
+    from gridpackbysomeoneelse import MadGraphHJJFromThomasPlusJHUGen
+    for year in 2016, 2017, 2018:
+      for coupling in "SM", "a3", "a3mix":
+        yield MadGraphHJJFromThomasPlusJHUGen(year, coupling, "H012J")
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     for _ in cls.samplestoextend():
-      yield cls(_, "ext")
+      yield cls(_)
 
   @property
   def responsible(self):
@@ -169,7 +209,7 @@ class ExtensionSample(ExtensionSampleBase):
       if line.strip() == "* [WARNING] Is 100000000 events what you really wanted - please check!":
         #yes it is
         return "ok"
-    return super(ExtensionSample, self).process_request_fragment_check_warning(line)
+    return super(ExtensionSample, self).handle_request_fragment_check_warning(line)
 
 class RedoSampleBase(ExtensionSampleBase):
   def __init__(self, mainsample, reason=None):
@@ -193,9 +233,8 @@ class RedoSampleBase(ExtensionSampleBase):
 class RedoSample(RedoSampleBase):
   @classmethod
   def allsamples(cls):
-    from qqZZmcsample import QQZZMCSample
-    yield cls(QQZZMCSample(2018, "4l"), reason="because it was prematurely force completed")
-    yield cls(QQZZMCSample(2018, "2l2nu"), reason="because it was prematurely force completed")
+    from minlomcsample import MINLOMCSample
+    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 
     for systematic in "TuneUp", "TuneDown":
       for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
@@ -204,7 +243,10 @@ class RedoSample(RedoSampleBase):
       for mass in 125, 300:
         if mass == 125 or systematic == "TuneUp": continue
         yield cls(PythiaVariationSample(MINLOMCSample(2017, "4l", mass), systematic), reason="wrong tune variation settings\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5361/1/1/1/2/1/1/1/2/1.html")
-    
+
+    for productionmode in "VBF", "ttH":
+      yield cls(POWHEGJHUGenMassScanMCSample(2016, productionmode, "4l", 125), reason="to check compatibility between MiniAODv2 and v3\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5977/1.html")
+
   variationname = "Redo"
 
   @property
@@ -218,11 +260,121 @@ class RedoSample(RedoSampleBase):
     if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00510": result += 2  #parallelize the gridpack
     return result
 
+  @property
+  def validationtimemultiplier(self):
+    result = super(RedoSample, self).validationtimemultiplier
+    if self.mainsample.prepid == "HIG-RunIISummer15wmLHEGS-01906":
+      result = max(result, 4)
+    return result
+
+class RedoForceCompletedSample(RedoSampleBase):
+  variationname = "Redo"
+
+  def __init__(self, mainsample, prepidtouse=None):
+    super(RedoForceCompletedSample, self).__init__(mainsample=mainsample, reason="because it was prematurely force completed")
+    if prepidtouse is None:
+        prepidtouse = self.mainsample.prepid
+    else:
+        if prepidtouse not in [self.mainsample.prepid] + self.mainsample.otherprepids:
+            self.mainsample.addotherprepid(prepidtouse)
+    self.__prepidtouse = prepidtouse
+
+  @classmethod
+  def allsamples(cls):
+    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+    from qqZZmcsample import QQZZMCSample
+    yield cls(QQZZMCSample(2018, "4l"))
+    yield cls(QQZZMCSample(2018, "2l2nu"))
+    yield cls(ExtensionSample(QQZZMCSample(2017, "4l")), prepidtouse="HIG-RunIIFall17wmLHEGS-02149")
+    yield cls(POWHEGJHUGenMassScanMCSample(2017, 'ggH', '4l', '450'), prepidtouse="HIG-RunIIFall17wmLHEGS-02123")
+
+  @property
+  def responsible(self):
+    return self.mainsample.responsible
+
+  @property
+  def nevents(self):
+    result = super(RedoForceCompletedSample, self).nevents
+    if result < 1000000: return result
+    try:
+      finishedevents = {
+        reqmgr["content"]["pdmv_evts_in_DAS"]
+        for reqmgr in fullinfo(self.__prepidtouse)["reqmgr_name"]
+      }
+    except:
+      print json.dumps(fullinfo(self.__prepidtouse), sort_keys=True, indent=4, separators=(',', ': '))
+      raise
+    if len(finishedevents) > 1:
+      raise ValueError("More than one value for pdmv_evts_in_DAS - take a look below:\n"+json.dumps(fullinfo(self.__prepidtouse), sort_keys=True, indent=4, separators=(',', ': ')))
+    result -= finishedevents.pop()
+    return result
+
+class RedoMCFMMoreNcalls(RedoSampleBase):
+  variationname = "morencalls"
+  def __init__(self, mainsample):
+    super(RedoMCFMMoreNcalls, self).__init__(mainsample=mainsample, reason="increase ncalls in the phase space generation")
+
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    from mcfmanomalouscouplings import MCFMAnomCoupMCSample
+    for sample in MCFMAnomCoupMCSample.allsamples():
+      if sample.year == 2017:
+        yield cls(sample)
+      if sample.year == 2018 and sample.signalbkgbsi == "BKG":
+        yield cls(sample)
+
+  @property
+  def tarballversion(self):
+    from mcfmanomalouscouplings import MCFMAnomCoupMCSample
+
+    v = self.mainsample.tarballversion+1
+
+    if self.year == 2017:
+      othersample = MCFMAnomCoupMCSample(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
+      if self.mainsample.signalbkgbsi == "BKG":
+        othersample = RedoMCFMMoreNcalls(othersample)
+      assert v == othersample.tarballversion, (v, othersample.tarballversion)
+
+    return v
+
+  @property
+  def genproductionscommit(self):
+    return "a8ea4bc76df07ee2fa16bd9a67b72e7b648dec64"
+
+  def createtarball(self, *args, **kwargs):
+    with cdtemp():
+      subprocess.check_output(["tar", "xvaf", self.mainsample.cvmfstarball])
+      with open("readInput.DAT") as f:
+        for line in f:
+          if "ncalls" in line:
+            assert int(line.split()[0]) < 1000000, (self, self.mainsample.cvmfstarball, line)
+    return super(RedoMCFMMoreNcalls, self).createtarball(*args, **kwargs)
+
+  @property
+  def cardsurl(self):
+    with open("readInput.DAT") as f:
+      for line in f:
+        if "ncalls" in line and int(line.split()[0]) != 5000000:
+          raise ValueError(line+"\nshould be 5000000")
+    return super(RedoMCFMMoreNcalls, self).cardsurl
+
+  @property
+  def extensionnumber(self):
+    result = super(RedoMCFMMoreNcalls, self).extensionnumber
+    if any(_.datasetname == self.datasetname and _.year == self.year and _.extensionnumber == result for _ in RunIIFall17DRPremix_nonsubmitted.allsamples()):
+      result += 1
+    return result
+
+  @property
+  def responsible(self):
+    return "hroskes"
 
 class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
   variationname = "RunIIFall17DRPremix_nonsubmitted"
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     cls.__inallsamples = True
     requests = []
@@ -241,15 +393,16 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
     from jhugenjhugenmassscanmcsample import JHUGenJHUGenMassScanMCSample
     from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
     from mcfmanomalouscouplings import MCFMAnomCoupMCSample
-    from pythiavariationsample import PythiaVariationSample
-    for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 in (JHUGenJHUGenAnomCoupMCSample, POWHEGJHUGenAnomCoupMCSample, JHUGenJHUGenMassScanMCSample, POWHEGJHUGenMassScanMCSample, MCFMAnomCoupMCSample, PythiaVariationSample), __docheck=False, includefinished=True, filter=lambda x: x.year == 2017):
+    for s in allsamples(onlymysamples=False, clsfilter=lambda cls2: cls2 in (JHUGenJHUGenAnomCoupMCSample, POWHEGJHUGenAnomCoupMCSample, JHUGenJHUGenMassScanMCSample, POWHEGJHUGenMassScanMCSample, MCFMAnomCoupMCSample, PythiaVariationSample), includefinished=True, filter=lambda x: x.year == 2017):
       if any(_.prepid == s.prepid for _ in requests):
         yield cls(mainsample=s, reason="\n\nRunIIFall17DRPremix_nonsubmitted")
 
   @property
-  def doublevalidationtime(self):
-    if self.prepid in ("HIG-RunIIFall17wmLHEGS-03116", "HIG-RunIIFall17wmLHEGS-03155"): return True
-    return super(RunIIFall17DRPremix_nonsubmitted, self).doublevalidationtime
+  def validationtimemultiplier(self):
+    result = super(RunIIFall17DRPremix_nonsubmitted, self).validationtimemultiplier
+    if self.prepid in ("HIG-RunIIFall17wmLHEGS-03116", "HIG-RunIIFall17wmLHEGS-03155"):
+      result = max(result, 2)
+    return result
 
   @property
   def responsible(self):
@@ -299,6 +452,9 @@ class PythiaVariationSample(VariationSample):
     return result
   @property
   def nevents(self):
+    from minlomcsample import MINLOMCSample
+    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample):
       if self.mainsample.productionmode in ("ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH") and self.mainsample.mass == 125 and self.mainsample.decaymode == "4l":
         if self.variation == "ScaleExtension":
@@ -311,7 +467,9 @@ class PythiaVariationSample(VariationSample):
     raise ValueError("No nevents for {}".format(self))
   @property
   def tags(self):
-    return "HZZ", "Fall17P2A"
+    result = ["HZZ"]
+    if self.year == 2017: result.append("Fall17P2A")
+    return result
   @property
   def fragmentname(self):
     result = self.mainsample.fragmentname
@@ -343,15 +501,78 @@ class PythiaVariationSample(VariationSample):
 
   @classmethod
   def nominalsamples(cls):
+    from minlomcsample import MINLOMCSample
+    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+
     for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
       yield POWHEGJHUGenMassScanMCSample(2017, productionmode, "4l", 125)
+      yield POWHEGJHUGenMassScanMCSample(2018, productionmode, "4l", 125)
     for sample in MINLOMCSample.allsamples():
       if sample.energy == 13:
         yield sample
 
   @classmethod
   def allsamples(cls):
+    from minlomcsample import MINLOMCSample
+
     for nominal in cls.nominalsamples():
       for systematic in "TuneUp", "TuneDown", "ScaleExtension":
         if isinstance(nominal, MINLOMCSample) and systematic == "ScaleExtension": continue
+        if nominal.year != 2017 and systematic == "ScaleExtension": continue
         yield cls(nominal, systematic)
+
+class HJJWithPythiaVariations(VariationSample):
+  @property
+  def datasetname(self):
+    result = self.mainsample.datasetname
+    result = result.replace("13TeV", "13TeV_"+self.variation.lower())
+    assert self.variation.lower() in result
+    return result
+  @classmethod
+  def allsamples(cls):
+    from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
+    for year in 2016, 2017, 2018:
+      for coupling in "SM", "a3", "a3mix":
+        yield cls(JHUGenJHUGenAnomCoupMCSample(year, "HJJ", "4l", 125, coupling), "powhegEmissionVeto")
+        yield cls(JHUGenJHUGenAnomCoupMCSample(year, "HJJ", "4l", 125, coupling), "scalequarter")
+        if year in (2017, 2018):
+          yield cls(JHUGenJHUGenAnomCoupMCSample(year, "HJJ", "4l", 125, coupling), "CP2scalehalf")
+          yield cls(JHUGenJHUGenAnomCoupMCSample(year, "HJJ", "4l", 125, coupling), "CP2scalequarter")
+  @property
+  def genproductionscommit(self):
+    return self.mainsample.genproductionscommit
+  @property
+  def genproductionscommitforfragment(self):
+    return self.mainsample.genproductionscommitforfragment
+  @property
+  def fragmentname(self):
+    if self.variation == "powhegEmissionVeto":
+      if self.year in (2017, 2018):
+        return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_2p_LHE_pythia8_cff.py"
+      if self.year == 2016:
+        return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCUETP8M1_13TeV_powhegEmissionVeto_2p_LHE_pythia8_cff.py"
+    if self.variation == "scalequarter":
+      if self.year in (2017, 2018):
+        return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_quarter_LHE_pythia8_cff.py"
+      if self.year == 2016:
+        return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCUETP8M1_13TeV_pTmaxMatch_1_pTmaxFudge_quarter_LHE_pythia8_cff.py"
+    if self.variation == "CP2scalequarter":
+      if self.year in (2017, 2018):
+        return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP2_13TeV_pTmaxMatch_1_pTmaxFudge_quarter_LHE_pythia8_cff.py"
+    if self.variation == "CP2scalehalf":
+      if self.year in (2017, 2018):
+        return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP2_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py"
+    assert False, self
+  @property
+  def nevents(self):
+    return 1500000
+  @property
+  def responsible(self):
+    return "hroskes"
+  @property
+  def dovalidation(self):
+    return False
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2017: return "82ef9fcbcab38197d88175804081bf17d961ae05"
+    return "adbc3b82f4f70ecd1380f9ce4a0e296010e31801"

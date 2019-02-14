@@ -3,9 +3,9 @@ copy this to a new file, and rename the class
 search for "fill this" to see all the things that need to be filled in
 """
 
-import abc, contextlib, glob, os, re, subprocess, urllib
+import abc, contextlib, glob, os, re, subprocess
 
-from utilities import cache, cd, cdtemp, cmsswversion, genproductions, here, makecards, scramarch, wget
+from utilities import cache, cacheaslist, cd, cdtemp, genproductions, here, makecards, urlopen, wget
 
 from mcsamplebase import MCSampleBase
 
@@ -33,12 +33,10 @@ class MyMCSample(MCSampleBase):
   def hasfilter(self):
      "fill this (typically false, if there's a JHUGen or Pythia filter then true)"
   @property
-  def tmptarball(self):
+  def tmptarballbasename(self):
     """
     fill this
-    it has to be os.path.join(here, "workdir", ...)
-    the directory doesn't matter too much as long as it's different for every sample
-    the final tarball name (....tgz) has to be whatever is created by the script that makes the tarball
+    this has to be whatever is created by the script that makes the tarball
     """
   @property
   def tarballversion(self):
@@ -84,6 +82,7 @@ class MyMCSample(MCSampleBase):
     """
 
   @classmethod
+  @cacheaslist
   def allsamples(cls):
     """
     fill this
@@ -163,13 +162,13 @@ class MyMCSample(MCSampleBase):
 
   @property
   def creategridpackqueue(self):
-    """fill this or delete it (default 1nd)"""
+    """fill this or delete it (default tomorrow)"""
   @property
   def timepereventqueue(self):
-    """fill this or delete it (default 1nd)"""
+    """fill this or delete it (default tomorrow)"""
   @property
   def filterefficiencyqueue(self):
-    """fill this or delete it (default 1nd)"""
+    """fill this or delete it (default tomorrow)"""
 
 """
 finally, import this module in __init__.py in the helperstuff folder, inside the allsamples function

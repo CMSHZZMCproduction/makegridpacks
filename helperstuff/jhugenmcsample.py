@@ -31,6 +31,10 @@ class UsesJHUGenLibraries(MCSampleBase):
         raise RuntimeError("Couldn't find JHU Generator v[0-9]+[.][0-9]+[.][0-9]+, see JHUGenoutput.txt")
       if match.group(1) != self.JHUGenversion:
         raise ValueError("Wrong JHUGen version: {} != {}".format(match.group(1), self.JHUGenversion))
+
+      indatasetname = "JHUGen"+self.JHUGenversion.replace(".", "").upper()
+      if indatasetname not in self.datasetname:
+        raise ValueError("Expected to find "+indatasetname+" in dataset name "+self.datasetname+" for "+str(self))
     return result
 
   @property
@@ -136,3 +140,10 @@ class JHUGenMCSample(UsesJHUGenLibraries):
   @property
   def JHUGentestargs(self):
     return super(JHUGenMCSample, self).JHUGentestargs + ["LHAPDF=NNPDF30_lo_as_0130/NNPDF30_lo_as_0130.info"]
+
+  @property
+  def tmptarballbasename(self):
+    return "JHUGen_"+self.shortname+"_"+self.scramarch+"_"+self.cmsswversion+".tgz"
+  @property
+  def shortname(self):
+    return re.sub(r"\W", "", str(self)).replace(str(self.year), "", 1)
