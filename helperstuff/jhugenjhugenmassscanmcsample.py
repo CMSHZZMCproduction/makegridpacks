@@ -57,7 +57,8 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
 
     if self.productionmode == "bbH" and self.decaymode in ("4l", "2l2q"): v += 1 #https://github.com/cms-sw/genproductions/commit/c3b983b4edd969369a26d62d4bcd0d9c6dd1d528
     if self.productionmode == "tqH" and self.decaymode in ("4l", "2l2q") and self.mass == 125: v += 1 #https://github.com/cms-sw/genproductions/commit/c3b983b4edd969369a26d62d4bcd0d9c6dd1d528
-    if self.productionmode == "ggZH" and self.decaymode in ("4l", "2l2q") and self.mass == 125: v +=1
+    ##if self.productionmode == "ggZH" and self.decaymode in ("4l", "2l2q") and self.mass == 125: v +=1
+    if self.productionmode == "ggZH" and self.decaymode == "4l" and self.year == 2016 and self.mass == 125: v +=1
     return v
 
   def cvmfstarball_anyversion(self, version):
@@ -117,6 +118,7 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
     dm = self.decaymode.upper().replace("NU", "Nu")
     if self.decaymode == "2l2q" and self.mass == 125:
       if self.productionmode in ("bbH", "tqH", "ggZH"): dm = "2L2X"###############
+    if self.productionmode == "ggZH": pm = "GluGluToZH"
     searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGen{}_".format(self.JHUGenversion.replace("v", "V").replace(".", ""))]
     shouldntbethere = ["powheg"]
     if any(_ not in result for _ in searchfor) or any(_.lower() in result.lower() for _ in shouldntbethere):
