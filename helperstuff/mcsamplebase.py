@@ -1169,6 +1169,9 @@ class MCSampleBase(JsonDict):
           if line.strip() == self.cvmfstarball or line.strip() == self.eostarball: continue
           if line.strip() == "grep from powheg pwhg_checklimits files": continue
           if line.strip().startswith("coll-minus"): continue
+          if line.strip().startswith("coll-plus"): continue
+          if line.strip().startswith("emitter"): continue
+          if line.strip() == "grep: write error": continue #?
           return "Unknown line in request_fragment_check output!\n"+line
 
   @property
