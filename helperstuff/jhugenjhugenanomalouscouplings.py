@@ -122,7 +122,7 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def maxallowedtimeperevent(self):
-    if self.productionmode in ("VBF", "HJJ"): return 205
+    if self.productionmode in ("VBF", "HJJ"): return 250
     return super(JHUGenJHUGenAnomCoupMCSample, self).maxallowedtimeperevent
 
   @property
