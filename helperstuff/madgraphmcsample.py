@@ -132,3 +132,11 @@ class MadGraphMCSample(MCSampleBase):
   @property
   def makinggridpacksubmitsjob(self):
     assert False
+
+  def handle_request_fragment_check_patch(self, line):
+    if line.strip() == "* [PATCH] MG5_aMC@NLO LO nthreads patch not made in EOS":
+      with cdtemp():
+        wget("https://github.com/cms-sw/genproductions/raw/master/Utilities/scripts/update_gridpacks_mg242_thread.py")
+        subprocess.check_call(["python", "./update_gridpacks_mg242_thread.py", "--prepid", self.prepid])
+        return "ran the patch script, run ./makegridpacks.py again to continue"
+    return super(MadGraphMCSample, self).handle_request_fragment_check_patch(line)

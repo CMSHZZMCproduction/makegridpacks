@@ -1156,6 +1156,10 @@ class MCSampleBase(JsonDict):
           result = self.handle_request_fragment_check_caution(line)
           if result == "ok": continue
           return result+"\n"+line
+        elif line.startswith("* [PATCH]"):
+          result = self.handle_request_fragment_check_patch(line)
+          if result == "ok": continue
+          return result+"\n"+line
         else:
           if line.strip() == "*               set correctly as number of final state particles (BEFORE THE DECAYS)": continue
           if line.strip() == "*                                   in the LHE other than emitted extra parton.": continue
@@ -1171,6 +1175,11 @@ class MCSampleBase(JsonDict):
           if line.strip().startswith("coll-minus"): continue
           if line.strip().startswith("coll-plus"): continue
           if line.strip().startswith("emitter"): continue
+          if line.strip().startswith("coll  emitter"): continue
+          if line.strip().startswith("generate p p >"): continue
+          if line.strip().startswith("set group_subprocesses"): continue
+          if line.strip().startswith("set ignore_six_quark_processes"): continue
+          if line.strip().startswith("--------------") and "MG5_aMC LO/MLM Many Threads Patch Check" in line: continue
           if line.strip() == "grep: write error": continue #?
           return "Unknown line in request_fragment_check output!\n"+line
 
@@ -1186,6 +1195,9 @@ class MCSampleBase(JsonDict):
 
   def handle_request_fragment_check_caution(self, line):
     return "request_fragment_check gave an unhandled caution!"
+
+  def handle_request_fragment_check_patch(self, line):
+    return "request_fragment_check gave an unhandled patch!"
 
   @property
   def tweaktimepereventseed(self):
