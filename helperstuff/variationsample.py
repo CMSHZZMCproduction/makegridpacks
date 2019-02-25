@@ -436,6 +436,8 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
 
     if isinstance(self.mainsample, JHUGenJHUGenAnomCoupMCSample) and self.mainsample.productionmode == "VBF" and self.mainsample.decaymode == "4l" and self.mainsample.coupling == "L1Zg": v+=1
 
+    if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ggH" and self.mainsample.mass in (190, 200): v+=1
+
     return v
 
 class PythiaVariationSample(VariationSample):
