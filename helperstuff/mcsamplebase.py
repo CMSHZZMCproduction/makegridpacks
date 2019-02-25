@@ -5,7 +5,7 @@ import uncertainties
 import patches
 
 from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitcondor
-from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, scramarch, urlopen, wget
+from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, request_fragment_check, restful, scramarch, urlopen, wget
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
@@ -1124,64 +1124,55 @@ class MCSampleBase(JsonDict):
       return "there is a change in some parameters, setting needsupdate" + "iffailed"*(not setneedsupdate) + " = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((subkey, old[key].get(subkey), new[key].get(subkey)) for key in differentsub for subkey in differentsub[key]), ((subkey, old[key][0].get(subkey), new[key][0].get(subkey)) for key in differentsub for subkey in differentsublist[key])))
 
   def request_fragment_check(self):
-    with cdtemp():
-      with contextlib.closing(urlopen("https://github.com/cms-sw/genproductions/raw/master/bin/utils/request_fragment_check.py")) as f:
-        contents = f.read()
-      cookies = [line for line in contents.split("\n") if "os.system" in line and "cookie" in line.lower()]
-      assert len(cookies) == 2
-      for cookie in cookies: contents = contents.replace(cookie, "#I already ate the cookie")
-      with open("request_fragment_check.py", "w") as f:
-        f.write(contents)
+    try:
+      output = request_fragment_check("--prepid", self.prepid, "--bypass_status")
+      print output,
+    except subprocess.CalledProcessError as e:
+      print e.output,
+      return "request_fragment_check failed!"
 
-      try:
-        output = subprocess.check_output(["python", "request_fragment_check.py", "--prepid", self.prepid, "--bypass_status"], stderr=subprocess.STDOUT)
-        print output,
-      except subprocess.CalledProcessError as e:
-        print e.output,
-        return "request_fragment_check failed!"
-
-      for line in output.split("\n"):
-        if line == self.prepid: continue
-        if re.match(r"{}\s*Status\s*=\s*\w*".format(self.prepid), line.strip()): continue
-        elif "cookie" in line: continue
-        elif not line.strip().strip("*"): continue
-        elif "will be checked:" in line: continue
-        elif line.startswith("* [OK]"): continue
-        elif line.startswith("* [ERROR]"): return "request_fragment_check gave an error!\n"+line
-        elif line.startswith("* [WARNING]"):
-          result = self.handle_request_fragment_check_warning(line)
-          if result == "ok": continue
-          return result+"\n"+line
-        elif line.startswith("* [Caution: To check manually]"):
-          result = self.handle_request_fragment_check_caution(line)
-          if result == "ok": continue
-          return result+"\n"+line
-        elif line.startswith("* [PATCH]"):
-          result = self.handle_request_fragment_check_patch(line)
-          if result == "ok": continue
-          return result+"\n"+line
-        else:
-          if line.strip() == "*               set correctly as number of final state particles (BEFORE THE DECAYS)": continue
-          if line.strip() == "*                                   in the LHE other than emitted extra parton.": continue
-          if line.strip() == "*           which may not have all the necessary GEN code.": continue
-          if line.strip() == "*                   'JetMatching:nJetMax' is set correctly as number of partons": continue
-          if line.strip() == "*                              in born matrix element for highest multiplicity.": continue
-          if line.strip() == "*                as number of partons in born matrix element for highest multiplicity.": continue
-          if line.strip() == "*           correctly as number of partons in born matrix element for highest multiplicity.": continue
-          if line.strip() == self.datasetname: continue
-          if line.strip().startswith("'POWHEG:nFinal"): continue
-          if line.strip() == self.cvmfstarball or line.strip() == self.eostarball: continue
-          if line.strip() == "grep from powheg pwhg_checklimits files": continue
-          if line.strip().startswith("coll-minus"): continue
-          if line.strip().startswith("coll-plus"): continue
-          if line.strip().startswith("emitter"): continue
-          if line.strip().startswith("coll  emitter"): continue
-          if line.strip().startswith("generate p p >"): continue
-          if line.strip().startswith("set group_subprocesses"): continue
-          if line.strip().startswith("set ignore_six_quark_processes"): continue
-          if line.strip().startswith("--------------") and "MG5_aMC LO/MLM Many Threads Patch Check" in line: continue
-          if line.strip() == "grep: write error": continue #?
-          return "Unknown line in request_fragment_check output!\n"+line
+    for line in output.split("\n"):
+      if line == self.prepid: continue
+      if re.match(r"{}\s*Status\s*=\s*\w*".format(self.prepid), line.strip()): continue
+      elif "cookie" in line: continue
+      elif not line.strip().strip("*"): continue
+      elif "will be checked:" in line: continue
+      elif line.startswith("* [OK]"): continue
+      elif line.startswith("* [ERROR]"): return "request_fragment_check gave an error!\n"+line
+      elif line.startswith("* [WARNING]"):
+        result = self.handle_request_fragment_check_warning(line)
+        if result == "ok": continue
+        return result+"\n"+line
+      elif line.startswith("* [Caution: To check manually]"):
+        result = self.handle_request_fragment_check_caution(line)
+        if result == "ok": continue
+        return result+"\n"+line
+      elif line.startswith("* [PATCH]"):
+        result = self.handle_request_fragment_check_patch(line)
+        if result == "ok": continue
+        return result+"\n"+line
+      else:
+        if line.strip() == "*               set correctly as number of final state particles (BEFORE THE DECAYS)": continue
+        if line.strip() == "*                                   in the LHE other than emitted extra parton.": continue
+        if line.strip() == "*           which may not have all the necessary GEN code.": continue
+        if line.strip() == "*                   'JetMatching:nJetMax' is set correctly as number of partons": continue
+        if line.strip() == "*                              in born matrix element for highest multiplicity.": continue
+        if line.strip() == "*                as number of partons in born matrix element for highest multiplicity.": continue
+        if line.strip() == "*           correctly as number of partons in born matrix element for highest multiplicity.": continue
+        if line.strip() == self.datasetname: continue
+        if line.strip().startswith("'POWHEG:nFinal"): continue
+        if line.strip() == self.cvmfstarball or line.strip() == self.eostarball: continue
+        if line.strip() == "grep from powheg pwhg_checklimits files": continue
+        if line.strip().startswith("coll-minus"): continue
+        if line.strip().startswith("coll-plus"): continue
+        if line.strip().startswith("emitter"): continue
+        if line.strip().startswith("coll  emitter"): continue
+        if line.strip().startswith("generate p p >"): continue
+        if line.strip().startswith("set group_subprocesses"): continue
+        if line.strip().startswith("set ignore_six_quark_processes"): continue
+        if line.strip().startswith("--------------") and "MG5_aMC LO/MLM Many Threads Patch Check" in line: continue
+        if line.strip() == "grep: write error": continue #?
+        return "Unknown line in request_fragment_check output!\n"+line
 
   @property
   def maxallowedtimeperevent(self): return None  #default to whatever request_fragment_check does
