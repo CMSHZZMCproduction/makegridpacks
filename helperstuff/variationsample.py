@@ -426,12 +426,15 @@ class RunIIFall17DRPremix_nonsubmitted(RedoSampleBase):
   def tarballversion(self):
     v = super(RunIIFall17DRPremix_nonsubmitted, self).tarballversion
     from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+    from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
 
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.mainsample.decaymode == "4l" and self.mainsample.mass not in (125, 165, 170): v+=1  #removing some pdfs
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.mainsample.decaymode == "4l" and self.mainsample.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #try multicore
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ttH" and self.mainsample.decaymode == "4l" and self.mainsample.mass == 140: v+=1  #tweak seed to avoid fluctuation in filter efficiency
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.mainsample.decaymode == "4l" and self.mainsample.mass in (400, 3000): v+=1 #trying multicore in runcmsgrid.sh, copied the previous one too early
     if isinstance(self.mainsample, POWHEGJHUGenMassScanMCSample) and self.mainsample.productionmode == "ZH" and self.mainsample.decaymode == "4l" and self.mainsample.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #xargs instead of parallel
+
+    if isinstance(self.mainsample, JHUGenJHUGenAnomCoupMCSample) and self.mainsample.productionmode == "VBF" and self.mainsample.decaymode == "4l" and self.mainsample.coupling == "L1Zg": v+=1
 
     return v
 

@@ -189,4 +189,3 @@ class JHUGenJHUGenHJJScalingByPtJet(JHUGenJHUGenAnomCoupMCSample):
     if self.year == 2018:
       return "f256d395f40acf771f12fd6dbecd622341e9731a"
     assert False, self
-
