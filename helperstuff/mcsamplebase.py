@@ -7,10 +7,6 @@ import patches
 from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitcondor
 from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, request_fragment_check, restful, scramarch, urlopen, wget
 
-def rmtree(*args, **kwargs):
-  raise RuntimeError("Called rmtree: {} {}".format(args, kwargs))
-shutil.rmtree = rmtree
-
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
   def __init__(self, year):

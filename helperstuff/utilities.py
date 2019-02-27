@@ -142,11 +142,12 @@ class KeepWhileOpenFile(object):
   def jobdied(self):
     try:
       with open(self.filename) as f:
+        strjobid = f.read().strip()
         try:
-          jobid = int(f.read().strip())
+          jobid = float(f.read().strip())
         except ValueError:
           return False
-        return jobended(str(jobid))
+        return jobended(strjobid)
     except IOError:
       return False
 

@@ -83,7 +83,7 @@ class POWHEGMCSample(MCSampleBase):
         assert False, self.multicore_upto
     else:
       assert False, self.powhegsubmissionstrategy
-    return ["./run_pwg.py"] + sum(([k, v] for k, v in args.iteritems()), [])
+    return ["./run_pwg_condor.py"] + sum(([k, v] for k, v in args.iteritems()), [])
 
   @property
   def inthemiddleofmultistepgridpackcreation(self):
@@ -116,7 +116,7 @@ class POWHEGMCSample(MCSampleBase):
 
   def processmakegridpackstdout(self, stdout):
     if self.powhegsubmissionstrategy == "multicore":
-      matches = [int(_) for _ in re.findall("Job <(.*)> is submitted to queue <.*>[.]", stdout)]
+      matches = [int(_) for _ in re.findall("[0-9]* job(s) submitted to cluster ([0-9]*)[.]", stdout)]
       for match in matches:
         with open(os.path.join(self.workdirforgridpack, "jobisrunning_{}".format(match)), 'w') as f:
           pass

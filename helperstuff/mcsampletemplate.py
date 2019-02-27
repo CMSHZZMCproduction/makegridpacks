@@ -102,13 +102,13 @@ class MyMCSample(MCSampleBase):
     """
     fill this
     it's supposed to be a list of command line arguments
-    for example ["./run_pwg.py", "-p", ...]
+    for example ["./run_pwg_condor.py", "-p", ...]
     """
   @property
   def makinggridpacksubmitsjob(self):
     """
     fill this
-    if the script to create a gridpack (e.g. run_pwg.py) submits a job, return the job name
+    if the script to create a gridpack (e.g. run_pwg_condor.py) submits a job, return the job name
     otherwise return False or None
     """
   @property
@@ -156,7 +156,7 @@ class MyMCSample(MCSampleBase):
   def makegridpackscriptstolink(self):
     """
     fill this
-    it's basically the script to make the gridpack (e.g. run_pwg.py)
+    it's basically the script to make the gridpack (e.g. run_pwg_condor.py)
     and anything needed by it (e.g. other scripts, patches folder)
     """
 

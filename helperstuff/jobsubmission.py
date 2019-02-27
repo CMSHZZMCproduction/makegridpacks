@@ -120,7 +120,7 @@ error                   = CONDOR/$(ClusterId).$(ProcId).err
 log                     = CONDOR/$(ClusterId).log
 
 request_memory          = 4000M
-+JobFlavour             = {jobflavor}
++JobFlavour             = "{jobflavor}"
 
 #https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
 periodic_remove         = JobStatus == 5
