@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import argparse, os, sys
+import argparse, logging, os, sys
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
@@ -16,6 +16,7 @@ if __name__ == "__main__":
   parser.add_argument("--disable-duplicate-check", "--disableduplicatecheck", action="store_true", help="disable the check that ensures multiple samples don't have the same prepid or identifiers")
   parser.add_argument("--show-wrong-cmssw", action="store_true", help="show requests that don't match your CMSSW release (but don't act on them)")
   parser.add_argument("--start-from", type=eval, help="start from the first sample that meets this criterion", default=lambda x: True)
+  parser.add_argument("--debug", action="store_true", help="print some debug stuff (but fairly limited)")
   args = parser.parse_args()
 
 from helperstuff import allsamples, disableduplicatecheck
@@ -23,6 +24,8 @@ from helperstuff.cleanupgridpacks import cleanupgridpacks
 from helperstuff.queues import ApprovalQueue, BadRequestQueue, CloneQueue
 
 def makegridpacks(args):
+  if args.debug: logging.getLogger().setLevel(logging.DEBUG)
+
   from helperstuff.jobsubmission import condorsetup
   from helperstuff.utilities import cmsswversion, scramarch
   condorsetup(args.condorjobid, args.condorjobflavor, args.condorjobtime)

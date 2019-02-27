@@ -46,7 +46,7 @@ class VariationSample(MCSampleBase):
     return self.mainsample.inthemiddleofmultistepgridpackcreation
   @property
   def gridpackjobsrunning(self):
-    return type(self.mainsample).gridpackjobsrunning.__get__(self, type(self))
+    return self.mainsample.gridpackjobsrunning
 
   def findfilterefficiency(self):
     return "this is a variation sample, the filter efficiency is the same as for the main sample"

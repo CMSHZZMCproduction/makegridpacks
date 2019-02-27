@@ -17,8 +17,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def powhegsubmissionstrategy(self):
-    if self.productionmode == "ZH": return "multicore"
-    return "onestep"
+    return "multicore"
 
   @property
   def powhegcard(self):

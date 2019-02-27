@@ -82,20 +82,22 @@ class KeepWhileOpenFile(object):
       try:
         logging.debug("trying to open")
         self.fd = os.open(self.filename, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-      except OSError:
-        logging.debug("failed: it already exists")
-        if self.deleteifjobdied and self.jobdied():
-          logging.debug("but the job died")
-          try:
-            with cd(self.pwd):
-              logging.debug("trying to remove")
-              os.remove(self.filename)
-              logging.debug("removed")
-          except OSError:
-            logging.debug("failed")
-            pass #ignore it
-
-        return None
+      except OSError as e:
+        if e.errno == errno.EEXIST:
+          logging.debug("failed: it already exists")
+          if self.deleteifjobdied and self.jobdied():
+            logging.debug("but the job died")
+            try:
+              with cd(self.pwd):
+                logging.debug("trying to remove")
+                os.remove(self.filename)
+                logging.debug("removed")
+            except OSError:
+              logging.debug("failed")
+              pass #ignore it
+          return None
+        else:
+          raise
       else:
         logging.debug("succeeded: it didn't exist")
         logging.debug("does it now? {}".format(os.path.exists(self.filename)))

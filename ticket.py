@@ -31,7 +31,6 @@ def maketicket(block, chain, tags, year, filter=lambda sample: True, modifyticke
 
   ntickets = int(math.ceil(len(prepids) / 40.))
   ineachticket = int(math.ceil(1.*len(prepids) / ntickets))
-  i = 0
 
   if len(modifytickets) > ntickets:
     raise ValueError("Too many tickets to modify, there are only enough requests for "+str(ntickets))
@@ -50,6 +49,7 @@ def maketicket(block, chain, tags, year, filter=lambda sample: True, modifyticke
   requests = []
   currentrequestrange = []
 
+  i = 0
   for prepid in prepids:
     if i == 0:
       requests = []
@@ -98,7 +98,7 @@ def maketicket(block, chain, tags, year, filter=lambda sample: True, modifyticke
     if not answer['results']:
       raise RuntimeError(answer)
 
-    if "prepid" in ticket: answer["prepid"] = ticket["prepid"]
+    if "prepid" not in answer: answer["prepid"] = ticket["prepid"]
 
     print request_fragment_check("--ticket", answer["prepid"], "--bypass_status")
 
