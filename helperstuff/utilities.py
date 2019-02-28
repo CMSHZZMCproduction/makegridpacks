@@ -377,6 +377,7 @@ def redirect_stdout(target):
 
 def restful(*args, **kwargs):
   if "dev" not in kwargs: kwargs["dev"] = False
+  if "cookie_on_demand" not in kwargs: kwargs["cookie_on_demand"] = True
   try:
     with open("/dev/null", "w") as f, redirect_stdout(f):
       return rest.McM(*args, **kwargs)
@@ -423,11 +424,8 @@ class KeyDefaultDict(collections.defaultdict):
       ret = self[key] = self.default_factory(key)
       return ret
 
-from jobsubmission import jobtype
-
-if not jobtype():
-  sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
-  import rest
+sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
+import rest
 
 @cache
 def fullinfo(prepid):
