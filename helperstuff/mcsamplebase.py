@@ -14,6 +14,8 @@ class MCSampleBase(JsonDict):
   @abc.abstractproperty
   def initargs(self): assert False, self
   @property
+  def initkwargs(self): return {}
+  @property
   def year(self):
     return self.__year
   @abc.abstractproperty
@@ -153,7 +155,8 @@ class MCSampleBase(JsonDict):
   def __str__(self):
     return " ".join(str(_) for _ in self.keys)
   def __repr__(self):
-    return type(self).__name__+"(" +  ", ".join(repr(_) for _ in self.initargs) + ")"
+    return (type(self).__name__+"(" +  ", ".join(repr(_) for _ in self.initargs) + 
+                                       ", ".join("{}={!r}".format(k, v) for k, v in self.initkwargs.iteritems()) + ")")
 
   @property
   def eostarball(self):

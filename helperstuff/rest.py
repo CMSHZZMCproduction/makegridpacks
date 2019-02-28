@@ -88,6 +88,8 @@ class McM(object):
             if _tryagain and self.__cookie_on_demand:
                 self.__newcookie()
                 self.__get(url, _tryagain=False)
+            else:
+                raise
             print('Error while making a GET request to %s. Exception: %s' % (fullurl, ex))
             print(traceback.format_exc())
             return None
@@ -117,6 +119,8 @@ class McM(object):
             if _tryagain and self.__cookie_on_demand:
                 self.__newcookie()
                 self.__put(url, data, _tryagain=False)
+            else:
+                raise
             print('Error while making a PUT request to %s. Exception: %s' % (fullurl, ex))
             print(traceback.format_exc())
             return None

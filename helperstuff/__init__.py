@@ -33,7 +33,7 @@ def __checkforduplicates():
   datasets = Counter()
   for s in allsamples(onlymysamples=False):
     try:
-      if s != type(s)(*s.initargs):
+      if s != type(s)(*s.initargs, **s.initkwargs):
         raise ValueError("s = "+repr(s)+", type(s)(s.initargs) = "+repr(type(s)(*s.initargs)))
     except TypeError:
       print "initargs for", s, "are messed up"

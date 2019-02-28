@@ -24,6 +24,9 @@ class ClonedRequest(MCSampleBase):
       self.sizeperevent = self.originalfullinfo["size_event"][0]
 
   @property
+  def initargs(self): return self.year, self.originalprepid, self.newcampaign
+
+  @property
   def campaign(self): return self.newcampaign
 
   @property

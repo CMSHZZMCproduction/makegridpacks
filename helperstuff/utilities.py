@@ -492,3 +492,11 @@ def request_fragment_check(*args):
       f.write(contents)
 
     return subprocess.check_output(["python", "request_fragment_check.py"] + list(args), stderr=subprocess.STDOUT)
+
+class abstractclassmethod(classmethod):
+  "https://stackoverflow.com/a/11218474"
+  __isabstractmethod__ = True
+
+  def __init__(self, callable):
+    callable.__isabstractmethod__ = True
+    super(abstractclassmethod, self).__init__(callable)

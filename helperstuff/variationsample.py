@@ -1,33 +1,43 @@
 from collections import namedtuple
-import abc, contextlib, csv, json, os, re, subprocess
+import abc, contextlib, csv, itertools, json, os, re, subprocess
 
 from mcsamplebase import MCSampleBase
-from utilities import cache, cacheaslist, cdtemp, fullinfo, here
+from utilities import abstractclassmethod, cache, cacheaslist, cdtemp, fullinfo, here, recursivesubclasses
 
 from gridpackbysomeoneelse import MadGraphHJJFromThomasPlusJHUGen
 from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
 from jhugenjhugenmassscanmcsample import JHUGenJHUGenMassScanMCSample
 from mcfmanomalouscouplings import MCFMAnomCoupMCSample
+from minlomcsample import MINLOMCSample
 from powhegjhugenanomalouscouplings import POWHEGJHUGenAnomCoupMCSample
 from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 from qqZZmcsample import QQZZMCSample
 
-class VariationSampleBase(MCSampleBase):
-  @abc.abstractproperty
-  def mainsample(self): pass
-  @property
-  def mainmainsample(self):
-    if hasattr(self.mainsample, "mainsample"):
-      return self.mainsample.mainsample
-    return self.mainsample
-  @classmethod
-  def allsamples(cls): return ()
-  @abc.abstractmethod
-  def mainsampletype(cls): "gets overridden in MakeVariationSample"
+@cache
+def NthOrderVariationSampleBase(n):
+  if n == 0: return MCSampleBase
+  class VariationSampleBase(NthOrderVariationSampleBase(n-1)):
+    @abc.abstractproperty
+    def mainsample(self): pass
+    @property
+    def mainmainsample(self):
+      if hasattr(self.mainsample, "mainsample"):
+        return self.mainsample.mainsample
+      return self.mainsample
+    @classmethod
+    def allsamples(cls): return ()
+    mainsampletype = None
+  if n>1: VariationSampleBase.__name__ += str(n)
+  return VariationSampleBase
+
+VariationSampleBase = NthOrderVariationSampleBase(1)
 
 @cache
 def MakeVariationSample(basecls):
-  class VariationSample(VariationSampleBase, basecls):
+  for i in itertools.count(0):
+    if not issubclass(basecls, NthOrderVariationSampleBase(i)): break
+  assert i > 0
+  class VariationSample(NthOrderVariationSampleBase(i), basecls):
     def __init__(self, *args, **kwargs):
       super(VariationSample, self).__init__(*args, **kwargs)
       if self.filterefficiency is None and self.mainsample.filterefficiency is not None:
@@ -39,11 +49,14 @@ def MakeVariationSample(basecls):
     mainsampletype = basecls
     @property
     def mainsample(self):
-      return basecls(self.mainsampleinitargs)
+      return basecls(*self.mainsampleinitargs, **self.mainsampleinitkwargs)
     #initargs is inherited from basecls and can be overridden
     @property
     def mainsampleinitargs(self):
       return super(VariationSample, self).initargs
+    @property
+    def mainsampleinitkwargs(self):
+      return super(VariationSample, self).initkwargs
     @property
     def identifiers(self):
       return super(VariationSample, self).identifiers + (self.variation,)
@@ -57,15 +70,27 @@ def MakeVariationSample(basecls):
       return super(VariationSample, self).defaulttimeperevent
 
     @abc.abstractproperty
-    def variation(self): pass
+    def variation(self): "can be a class variable"
+
+  VariationSample.__name__ = "VariationOf"+basecls.__name__
 
   return VariationSample
 
-class ExtensionSampleGlobalBase(VariationSampleBase): pass
+@cache
+def NthOrderExtensionSampleGlobalBase(n):
+  if n == 0: return MCSampleBase
+  class ExtensionSampleGlobalBase(NthOrderVariationSampleBase(n), NthOrderExtensionSampleGlobalBase(n-1)): pass
+  if n>1: ExtensionSampleGlobalBase.__name__ += str(n)
+  return ExtensionSampleGlobalBase
+
+ExtensionSampleGlobalBase = NthOrderExtensionSampleGlobalBase(1)
 
 @cache
 def MakeExtensionSampleBase(basecls):
-  class ExtensionSampleBase(ExtensionSampleGlobalBase, MakeVariationSample(basecls)):
+  for i in itertools.count(0):
+    if not issubclass(basecls, NthOrderExtensionSampleGlobalBase(i)): break
+  assert i > 0
+  class ExtensionSampleBase(NthOrderExtensionSampleGlobalBase(i), MakeVariationSample(basecls)):
     @property
     def extensionnumber(self): return super(ExtensionSampleBase, self).extensionnumber+1
     @abc.abstractproperty
@@ -136,8 +161,6 @@ class ExtensionOfMadGraphHJJFromThomasPlusJHUGen(MakeExtensionSample(MadGraphHJJ
 class RedoSampleGlobalBase(ExtensionSampleGlobalBase):
   @property
   def reason(self): return None
-  @abc.abstractproperty
-  def variationname(self): "can be a class variable"
   @property
   def nevents(self):
     #in an earlier base class this is abstract.  not anymore.
@@ -155,7 +178,7 @@ def MakeRedoSampleBase(basecls):
   return RedoSampleBase
 
 class RedoSampleBase(RedoSampleGlobalBase):
-  variationname = "Redo"
+  variation = "Redo"
   def __init__(self, *args, **kwargs):
     self.__reason = kwargs.pop("reason", None)
     super(RedoSampleBase, self).__init__(*args, **kwargs)
@@ -183,7 +206,7 @@ class RedoPOWHEGJHUGenMassScan(MakeRedoSample(POWHEGJHUGenMassScanMCSample)):
     return result
 
 class RedoForceCompletedSampleBase(RedoSampleGlobalBase):
-  variationname = "Redo"
+  variation = "Redo"
   def __init__(self, *args, **kwargs):
     prepidtouse = kwargs.pop("prepidtouse", None)
     super(RedoForceCompletedSampleBase, self).__init__(*args, **kwargs)
@@ -242,7 +265,7 @@ class RedoForceCompletedPOWHEGJHUGenMassScanMCSample(MakeRedoForceCompletedSampl
     yield cls(2017, 'ggH', '4l', '450', prepidtouse="HIG-RunIIFall17wmLHEGS-02123")
 
 class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSample)):
-  variationname = "morencalls"
+  variation = "morencalls"
 
   @property
   def reason(self): return "increase ncalls in the phase space generation"
@@ -252,9 +275,9 @@ class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSample)):
   def allsamples(cls):
     for sample in MCFMAnomCoupMCSample.allsamples():
       if sample.year == 2017:
-        yield cls(sample.initargs)
+        yield cls(*sample.initargs, **sample.initkwargs)
       if sample.year == 2018 and sample.signalbkgbsi == "BKG":
-        yield cls(sample.initargs)
+        yield cls(*sample.initargs, **sample.initkwargs)
 
   @property
   def tarballversion(self):
@@ -263,7 +286,7 @@ class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSample)):
     if self.year == 2017:
       othersample = MCFMAnomCoupMCSample(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
       if self.mainsample.signalbkgbsi == "BKG":
-        othersample = RedoMCFMMoreNcalls(othersample.initargs)
+        othersample = RedoMCFMMoreNcalls(*othersample.initargs, **othersample.initkwargs)
       assert v == othersample.tarballversion, (v, othersample.tarballversion)
 
     return v
@@ -292,12 +315,12 @@ class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSample)):
   @property
   def extensionnumber(self):
     result = super(RedoMCFMMoreNcalls, self).extensionnumber
-    if any(_.datasetname == self.datasetname and _.year == self.year and _.extensionnumber == result for _ in RunIIFall17DRPremix_nonsubmitted.allsamples()):
+    if any(_.datasetname == self.datasetname and _.year == self.year and _.extensionnumber == result for subcls in recursivesubclasses(RunIIFall17DRPremix_nonsubmittedBase) for _ in subcls.allsamples()):
       result += 1
     return result
 
 class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
-  variationname = "RunIIFall17DRPremix_nonsubmitted"
+  variation = "RunIIFall17DRPremix_nonsubmitted"
   @property
   def reason(self): return "RunIIFall17DRPremix_nonsubmitted"
 
@@ -321,7 +344,7 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
     for s in cls.mainsampletype.allsamples():
       if s.year != 2017: continue
       if s.prepid in prepids:
-        yield cls(s.initargs)
+        yield cls(*s.initargs, **s.initkwargs)
 
   @property
   def validationtimemultiplier(self):
@@ -372,7 +395,6 @@ RunIIFall17DRPremix_nonsubmittedPOWHEGJHUGenAnomalous = MakeRunIIFall17DRPremix_
 RunIIFall17DRPremix_nonsubmittedJHUGenJHUGenMassScan = MakeRunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenMassScanMCSample)
 RunIIFall17DRPremix_nonsubmittedPOWHEGJHUGenMassScan = MakeRunIIFall17DRPremix_nonsubmitted(POWHEGJHUGenMassScanMCSample)
 RunIIFall17DRPremix_nonsubmittedMCFMAnomalous = MakeRunIIFall17DRPremix_nonsubmitted(MCFMAnomCoupMCSample)
-RunIIFall17DRPremix_nonsubmittedPythiaVariation = MakeRunIIFall17DRPremix_nonsubmitted(PythiaVariationPOWHEGJHUGen)
 
 class ExtensionOfFall17NonSubJHUGenJHUGenAnomalousCouplings(MakeExtensionSample(RunIIFall17DRPremix_nonsubmittedJHUGenJHUGenAnomalous), ExtensionOfJHUGenJHUGenAnomalousCouplings):
   @classmethod
@@ -384,6 +406,14 @@ class ExtensionOfFall17NonSubJHUGenJHUGenAnomalousCouplings(MakeExtensionSample(
 
 
 class PythiaVariationSampleBase(VariationSampleBase):
+  def __init__(self, *args, **kwargs):
+    self.__variation = kwargs.pop("variation")
+    super(PythiaVariationSampleBase, self).__init__(*args, **kwargs)
+  @property
+  def variation(self):
+    return self.__variation
+  @property
+  def initkwargs(self): return {"variation": self.variation}
   @property
   def datasetname(self):
     result = self.mainsample.datasetname
@@ -447,14 +477,14 @@ class PythiaVariationSampleBase(VariationSampleBase):
       for systematic in "TuneUp", "TuneDown", "ScaleExtension":
         if isinstance(nominal, MINLOMCSample) and systematic == "ScaleExtension": continue
         if nominal.year != 2017 and systematic == "ScaleExtension": continue
-        yield cls(nominal, systematic)
+        yield cls(*nominal.initargs, variation=systematic)
 
-  @abc.abstractmethod
+  @abstractclassmethod
   def nominalsamples(cls): return ()
 
 @cache
 def MakePythiaVariationSample(basecls):
-  class PythiaVariationSample(PythiaVariationSampleBase, MakeVariationSampleBase(basecls)): pass
+  class PythiaVariationSample(PythiaVariationSampleBase, MakeVariationSample(basecls)): pass
   return PythiaVariationSample
 
 class PythiaVariationPOWHEGJHUGen(MakePythiaVariationSample(POWHEGJHUGenMassScanMCSample)):
@@ -477,7 +507,7 @@ class RedoPythiaVariationPOWHEGJHUGen(MakeRedoSample(PythiaVariationPOWHEGJHUGen
     for systematic in "TuneUp", "TuneDown":
       for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
         if productionmode == "ZH" and systematic == "TuneUp": continue
-        yield cls(2017, productionmode, "4l", 125, systematic, reason="wrong tune variation settings\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5361/1/1/1/2/1/1/1/2/1.html")
+        yield cls(2017, productionmode, "4l", 125, variation=systematic, reason="wrong tune variation settings\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5361/1/1/1/2/1/1/1/2/1.html")
 
   @property
   def tarballversion(self):
@@ -491,10 +521,12 @@ class RedoPythiaVariationMINLO(MakeRedoSample(PythiaVariationMINLO)):
     for systematic in "TuneUp", "TuneDown":
       for mass in 125, 300:
         if mass == 125 or systematic == "TuneUp": continue
-        yield cls(2017, "4l", mass, systematic, reason="wrong tune variation settings\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5361/1/1/1/2/1/1/1/2/1.html")
+        yield cls(2017, "4l", mass, variation=systematic, reason="wrong tune variation settings\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5361/1/1/1/2/1/1/1/2/1.html")
 
   @property
   def tarballversion(self):
     result = super(RedoSample, self).tarballversion
     if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-01145": result += 2  #parallelize the gridpack
     return result
+
+RunIIFall17DRPremix_nonsubmittedPythiaVariation = MakeRunIIFall17DRPremix_nonsubmitted(PythiaVariationPOWHEGJHUGen)
