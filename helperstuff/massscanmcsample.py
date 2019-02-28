@@ -11,6 +11,9 @@ class MassScanMCSample(MCSampleBase_DefaultCampaign):
     self.mass = int(str(mass))
     super(MassScanMCSample, self).__init__(year=year)
   @property
+  def initargs(self):
+    return self.year, self.productionmode, self.decaymode, self.mass
+  @property
   def identifiers(self):
     return self.productionmode, self.decaymode, self.mass
   @property

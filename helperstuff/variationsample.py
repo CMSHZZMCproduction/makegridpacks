@@ -20,6 +20,8 @@ class VariationSample(MCSampleBase):
         self, self.mainsample, self.filterefficiency, self.mainsample.filterefficiency
       ))
   @property
+  def initargs(self): return self.mainsample, self.variation
+  @property
   def mainmainsample(self):
     if hasattr(self.mainsample, "mainsample"):
       return self.mainsample.mainsample
@@ -35,29 +37,9 @@ class VariationSample(MCSampleBase):
   @property
   def tmptarballbasename(self):
     return self.mainsample.tmptarballbasename
-  @property
-  def patchkwargs(self):
-    return self.mainsample.patchkwargs
-  @property
-  def makinggridpacksubmitsjob(self):
-    return self.mainsample.makinggridpacksubmitsjob
-  @property
-  def inthemiddleofmultistepgridpackcreation(self):
-    return self.mainsample.inthemiddleofmultistepgridpackcreation
-  @property
-  def gridpackjobsrunning(self):
-    return self.mainsample.gridpackjobsrunning
 
   def findfilterefficiency(self):
     return "this is a variation sample, the filter efficiency is the same as for the main sample"
-  @property
-  def makegridpackcommand(self):
-    return self.mainsample.makegridpackcommand
-  @property
-  def makinggridpacksubmitsjob(self):
-    return self.mainsample.makinggridpacksubmitsjob
-  def processmakegridpackstdout(self, stdout):
-    return self.mainsample.processmakegridpackstdout(stdout)
   @property
   def hasfilter(self):
     return self.mainsample.hasfilter
@@ -65,60 +47,10 @@ class VariationSample(MCSampleBase):
   def xsec(self):
     return self.mainsample.xsec
   @property
-  def campaign(self):
-    return self.mainsample.campaign
-  @property
-  def productiongenerators(self):
-    return self.mainsample.productiongenerators
-  @property
-  def decaygenerators(self):
-    return self.mainsample.decaygenerators
-  def getcardsurl(self):
-    return self.mainsample.getcardsurl()
-  @property
-  def cardsurl(self):
-    assert False, self
-  @property
   def defaulttimeperevent(self):
     if self.mainsample.timeperevent is not None:
       return self.mainsample.timeperevent
-    return self.mainsample.defaulttimeperevent
-  @property
-  def tags(self):
-    return self.mainsample.tags
-  @property
-  def makegridpackscriptstolink(self):
-    return self.mainsample.makegridpackscriptstolink
-  @property
-  def validationtimemultiplier(self):
-    return self.mainsample.validationtimemultiplier
-  @property
-  def neventsfortest(self): return self.mainsample.neventsfortest
-  @property
-  def creategridpackqueue(self): return self.mainsample.creategridpackqueue
-  @property
-  def timepereventqueue(self): return self.mainsample.timepereventqueue
-  @property
-  def filterefficiencyqueue(self): return self.mainsample.filterefficiencyqueue
-  @property
-  def dovalidation(self): return self.mainsample.dovalidation
-  @property
-  def fragmentname(self): return self.mainsample.fragmentname
-  def handle_request_fragment_check_warning(self, line):
-    if line.strip() == "* [WARNING] Large time/event - please check":
-      return super(VariationSample, self).handle_request_fragment_check_warning(line)
-    return self.mainsample.handle_request_fragment_check_warning(line)
-  def handle_request_fragment_check_caution(self, line):
-    return self.mainsample.handle_request_fragment_check_caution(line)
-  @property
-  def maxallowedtimeperevent(self):
-    return self.mainsample.maxallowedtimeperevent
-  @property
-  def tweakmakegridpackseed(self):
-    return self.mainsample.tweakmakegridpackseed
-  @property
-  def tweaktimepereventseed(self):
-    return self.mainsample.tweaktimepereventseed
+    return super(VariationSample, self).defaulttimeperevent
 
 class ExtensionSampleBase(VariationSample):
   def __init__(self, *args, **kwargs):
@@ -145,6 +77,8 @@ class ExtensionSample(ExtensionSampleBase):
   """
   def __init__(self, mainsample):
     return super(ExtensionSample, self).__init__(mainsample=mainsample, variation="ext")
+  @property
+  def initargs(self): return self.mainsample,
   @property
   def nevents(self):
     from qqZZmcsample import QQZZMCSample
@@ -215,6 +149,8 @@ class RedoSampleBase(ExtensionSampleBase):
   def __init__(self, mainsample, reason=None):
     self.__reason = reason
     return super(RedoSampleBase, self).__init__(mainsample=mainsample, variation=self.variationname)
+  @property
+  def initargs(self): return self.mainsample, self.__reason
 
   @abc.abstractproperty
   def variationname(self): "can be a class variable"
@@ -278,6 +214,8 @@ class RedoForceCompletedSample(RedoSampleBase):
         if prepidtouse not in [self.mainsample.prepid] + self.mainsample.otherprepids:
             self.mainsample.addotherprepid(prepidtouse)
     self.__prepidtouse = prepidtouse
+  @property
+  def initargs(self): return self.mainsample, self.__prepidtouse
 
   @classmethod
   def allsamples(cls):
@@ -314,6 +252,8 @@ class RedoMCFMMoreNcalls(RedoSampleBase):
   def __init__(self, mainsample):
     super(RedoMCFMMoreNcalls, self).__init__(mainsample=mainsample, reason="increase ncalls in the phase space generation")
 
+  @property
+  def initargs(self): return self.mainsample,
   @classmethod
   @cacheaslist
   def allsamples(cls):

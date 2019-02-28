@@ -4,21 +4,24 @@ import uncertainties
 
 import patches
 
-from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitcondor
 from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, request_fragment_check, restful, scramarch, urlopen, wget
+from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitcondor
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
   def __init__(self, year):
     self.__year = int(year)
+  @abc.abstractproperty
+  def initargs(self): assert False, self
   @property
   def year(self):
     return self.__year
   @abc.abstractproperty
   def identifiers(self):
     """example: productionmode, decaymode, mass"""
+    assert False, self
   @abc.abstractproperty
-  def tarballversion(self): pass
+  def tarballversion(self): assert False, self
   @property
   def cvmfstarball(self):
     result = self.cvmfstarball_anyversion(self.tarballversion)
@@ -30,24 +33,25 @@ class MCSampleBase(JsonDict):
   def uselocaltarballfortest(self):
     return False
   @abc.abstractmethod
-  def cvmfstarball_anyversion(self, version): pass
+  def cvmfstarball_anyversion(self, version): assert False, self
   @abc.abstractproperty
-  def tmptarballbasename(self): pass
+  def tmptarballbasename(self): assert False, self
   @abc.abstractproperty
-  def makegridpackcommand(self): pass
+  def makegridpackcommand(self): assert False, self
   @abc.abstractproperty
   def makinggridpacksubmitsjob(self):
     """returns the job name"""
+    assert False, self
   @abc.abstractproperty
-  def hasfilter(self): pass
+  def hasfilter(self): assert False, self
   @abc.abstractproperty
-  def datasetname(self): pass
+  def datasetname(self): assert False, self
   @property
   def extensionnumber(self):
     """This should normally be 0, only change it for extension samples"""
     return 0
   @abc.abstractproperty
-  def nevents(self): pass
+  def nevents(self): assert False, self
   @property
   def generators(self):
     result = self.productiongenerators+self.decaygenerators
@@ -88,19 +92,19 @@ class MCSampleBase(JsonDict):
       result += "\n# this is here to fool the test script: /cvmfs/cms.cern.ch/phys_generator/gridpacks"
     return result.lstrip("\n")
   @abc.abstractproperty
-  def defaulttimeperevent(self): pass
+  def defaulttimeperevent(self): assert False, self
   @abc.abstractproperty
-  def tags(self): pass
+  def tags(self): assert False, self
   @abc.abstractproperty
-  def fragmentname(self): pass
+  def fragmentname(self): assert False, self
   @abc.abstractproperty
-  def genproductionscommit(self): pass
+  def genproductionscommit(self): assert False, self
   @property
   def genproductionscommitforfragment(self): return self.genproductionscommit
   @abc.abstractproperty
-  def makegridpackscriptstolink(self): pass
+  def makegridpackscriptstolink(self): assert False, self
   @abc.abstractproperty
-  def xsec(self): pass
+  def xsec(self): assert False, self
   @abc.abstractproperty
   def responsible(self): "put the lxplus username of whoever makes these gridpacks"
   @property
@@ -138,7 +142,7 @@ class MCSampleBase(JsonDict):
 
   @abc.abstractmethod
   @cacheaslist
-  def allsamples(self): "should be a classmethod"
+  def allsamples(self): "should be a classmethod"; assert False, self
 
   def __eq__(self, other):
     return self.keys == other.keys
@@ -149,7 +153,7 @@ class MCSampleBase(JsonDict):
   def __str__(self):
     return " ".join(str(_) for _ in self.keys)
   def __repr__(self):
-    return type(self).__name__+"(" +  ", ".join(repr(_) for _ in self.keys) + ")"
+    return type(self).__name__+"(" +  ", ".join(repr(_) for _ in self.initargs) + ")"
 
   @property
   def eostarball(self):
@@ -970,7 +974,7 @@ class MCSampleBase(JsonDict):
   @property
   def pwg(self): return "HIG"
   @abc.abstractproperty
-  def campaign(self): pass
+  def campaign(self): assert False, self
 
   def createrequest(self, clonequeue):
     if jobtype(): return "run locally to submit to McM"

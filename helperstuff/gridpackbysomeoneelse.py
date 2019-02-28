@@ -60,6 +60,8 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     self.__eps = float(eps)
     super(MadGraphHZZdFromJake, self).__init__(year=year)
   @property
+  def initargs(self): return self.year, self.__Zdmass, self.__eps
+  @property
   def identifiers(self):
     return "Jake", "HZZd", "madgraph", self.__Zdmass, self.__eps
 
@@ -160,6 +162,9 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     self.__coupling = coupling
     self.__njets = njets
     super(MadGraphHJJFromThomasPlusJHUGen, self).__init__(year=year)
+
+  @property
+  def initargs(self): return self.year, self.__coupling, self.__njets
 
   @property
   def identifiers(self):

@@ -17,6 +17,9 @@ class JHUGenOffshellVBF(JHUGenMCSample, MCSampleBase_DefaultCampaign, MCSampleWi
     super(JHUGenOffshellVBF, self).__init__(year=year)
 
   @property
+  def initargs(self): return self.year, self.signalbkgbsi, self.width, self.coupling, self.finalstate
+
+  @property
   def identifiers(self):
     return "offshellVBF", self.signalbkgbsi, self.width, self.coupling, self.finalstate
 

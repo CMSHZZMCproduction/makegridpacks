@@ -15,6 +15,9 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
     super(MINLOMCSample, self).__init__(year=year)
 
   @property
+  def initargs(self): return self.year, self.decaymode, self.mass, self.energy
+
+  @property
   def identifiers(self):
     result = ["MINLO", self.decaymode, self.mass]
     if self.energy != 13: result.append(str(self.energy)+"TeV")

@@ -13,6 +13,8 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
     self.finalstate = finalstate
     super(MCFMAnomCoupMCSample, self).__init__(year=year)
   @property
+  def initargs(self): return self.year, self.signalbkgbsi, self.width, self.coupling, self.finalstate
+  @property
   def identifiers(self):
     return self.signalbkgbsi, self.width, self.coupling, self.finalstate
   @property

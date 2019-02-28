@@ -32,6 +32,12 @@ def __checkforduplicates():
   prepids = Counter()
   datasets = Counter()
   for s in allsamples(onlymysamples=False):
+    try:
+      if s != type(s)(*s.initargs):
+        raise ValueError("s = "+repr(s)+", type(s)(s.initargs) = "+repr(type(s)(*s.initargs)))
+    except TypeError:
+      print "initargs for", s, "are messed up"
+      raise
     identifiers[s.keys] += 1
     if isinstance(s, GridpackOnly): continue
     prepids[s.prepid] += 1
