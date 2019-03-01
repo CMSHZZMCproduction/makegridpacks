@@ -375,15 +375,6 @@ def redirect_stdout(target):
   finally:
     sys.stdout = original
 
-def restful(*args, **kwargs):
-  if "dev" not in kwargs: kwargs["dev"] = False
-  if "cookie_on_demand" not in kwargs: kwargs["cookie_on_demand"] = True
-  try:
-    with open("/dev/null", "w") as f, redirect_stdout(f):
-      return rest.McM(*args, **kwargs)
-  except:
-    raise
-
 here = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
 genproductions = os.path.join(os.environ["CMSSW_BASE"], "src", "genproductions")
@@ -424,12 +415,10 @@ class KeyDefaultDict(collections.defaultdict):
       ret = self[key] = self.default_factory(key)
       return ret
 
-sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
-import rest
-
 @cache
 def fullinfo(prepid):
-  result = restful().get("requests", query="prepid="+prepid)
+  import rest
+  result = rest.McM().get("requests", query="prepid="+prepid)
   if not result:
     raise ValueError("mcm query for prepid="+prepid+" returned None!")
   if len(result) == 0:

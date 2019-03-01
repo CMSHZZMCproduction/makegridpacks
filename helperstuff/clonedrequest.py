@@ -2,7 +2,8 @@ from collections import namedtuple
 import os
 
 from jobsubmission import jobtype
-from utilities import cache, cacheaslist, here, restful
+from utilities import cache, cacheaslist, here
+from rest import McM
 
 from mcsamplebase import MCSampleBase
 
@@ -32,7 +33,7 @@ class ClonedRequest(MCSampleBase):
   @property
   @cache
   def originalfullinfo(self):
-    result = restful().get("requests", query="prepid="+self.originalprepid)
+    result = McM().get("requests", query="prepid="+self.originalprepid)
     if not result:
       raise ValueError("mcm query for prepid="+self.originalprepid+" returned None!")
     if len(result) == 0:
@@ -143,7 +144,7 @@ class ClonedRequest(MCSampleBase):
     return clonequeue.add(self, self.pwg, self.newcampaign)
 
     if jobtype(): return "run locally to submit to McM"
-    mcm = restful()
+    mcm = McM()
     clone_req = mcm.get('requests', self.originalprepid)
     clone_req['member_of_campaign'] = self.campaign
     answer = mcm.clone(self.originalprepid, clone_req)
@@ -160,7 +161,7 @@ class ClonedRequest(MCSampleBase):
     if self.prepid: return
     if jobtype(): return
     query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.originalfullinfo["dataset_name"], self.extensionnumber, self.pwg, self.campaign)
-    output = restful().get('requests', query=query)
+    output = McM().get('requests', query=query)
     prepids = {_["prepid"] for _ in output}
     if not prepids:
       return None

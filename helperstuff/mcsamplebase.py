@@ -4,8 +4,9 @@ import uncertainties
 
 import patches
 
-from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, request_fragment_check, restful, scramarch, urlopen, wget
+from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, request_fragment_check, scramarch, urlopen, wget
 from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitcondor
+from rest import McM
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
@@ -820,7 +821,7 @@ class MCSampleBase(JsonDict):
 
       originalresult = result[:]
       for _ in result[:]:
-        if not jobtype() and not restful().get("requests", _):
+        if not jobtype() and not McM().get("requests", _):
           result.remove(_)
 
       if result != originalresult:
@@ -928,7 +929,7 @@ class MCSampleBase(JsonDict):
     return createLHEProducer(self.cvmfstarball, self.getcardsurl(), self.fragmentname, self.genproductionscommitforfragment)
 
   def getdictforupdate(self):
-    mcm = restful()
+    mcm = McM()
     req = mcm.get("requests", self.prepid)
     req["dataset_name"] = self.datasetname
     req["mcdb_id"] = 0
@@ -957,7 +958,7 @@ class MCSampleBase(JsonDict):
     return req
 
   def updaterequest(self):
-    mcm = restful()
+    mcm = McM()
     req = self.getdictforupdate()
     try:
       answer = mcm.update('requests', req)
@@ -981,7 +982,7 @@ class MCSampleBase(JsonDict):
 
   def createrequest(self, clonequeue):
     if jobtype(): return "run locally to submit to McM"
-    mcm = restful()
+    mcm = McM()
     req = {
       "pwg": self.pwg,
       "member_of_campaign": self.campaign,
@@ -1001,7 +1002,7 @@ class MCSampleBase(JsonDict):
   def getprepid(self):
     if jobtype(): return
     query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.datasetname, self.extensionnumber, self.pwg, self.campaign)
-    output = restful().get('requests', query=query)
+    output = McM().get('requests', query=query)
     if not output:
       return None
     prepids = {_["prepid"] for _ in output}
@@ -1051,15 +1052,15 @@ class MCSampleBase(JsonDict):
       response = raw_input("are you sure you want to delete {}? [yes/no]".format(self))
     if response == "no": return
     if self.prepid:
-      restful().approve("requests", self.prepid, 0)
-      restful().delete("requests", self.prepid)
+      McM().approve("requests", self.prepid, 0)
+      McM().delete("requests", self.prepid)
     with cd(here), self.writingdict():
       del self.value
 
   def optionreset(self):
     if self.prepid is None: return
     self.needsupdate = True
-    results = restful().get("restapi/requests/option_reset/"+self.prepid)
+    results = McM().get("restapi/requests/option_reset/"+self.prepid)
     try:
       success = bool(results["results"][self.prepid])
     except KeyError:
