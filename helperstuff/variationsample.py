@@ -133,7 +133,7 @@ class ExtensionOfQQZZSampleBase(MCSampleBase):
       if line.strip() == "* [WARNING] Is 100000000 events what you really wanted - please check!":
         #yes it is
         return "ok"
-    return super(ExtensionOfRedoQQZZSample, self).handle_request_fragment_check_warning(line)
+    return super(ExtensionOfQQZZSampleBase, self).handle_request_fragment_check_warning(line)
 
   @property
   def nevents(self):
@@ -215,7 +215,7 @@ class RedoPOWHEGJHUGenMassScan(MakeRedoSample(POWHEGJHUGenMassScanMCSample)):
 
   @property
   def validationtimemultiplier(self):
-    result = super(RedoSample, self).validationtimemultiplier
+    result = super(RedoPOWHEGJHUGenMassScan, self).validationtimemultiplier
     if self.mainsample.prepid == "HIG-RunIISummer15wmLHEGS-01906":
       result = max(result, 4)
     return result
@@ -541,7 +541,7 @@ class RedoPythiaVariationPOWHEGJHUGen(MakeRedoSample(PythiaVariationPOWHEGJHUGen
 
   @property
   def tarballversion(self):
-    result = super(RedoSample, self).tarballversion
+    result = super(RedoPythiaVariationPOWHEGJHUGen, self).tarballversion
     if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00510": result += 2  #parallelize the gridpack
     return result
 
@@ -555,7 +555,7 @@ class RedoPythiaVariationMINLO(MakeRedoSample(PythiaVariationMINLO)):
 
   @property
   def tarballversion(self):
-    result = super(RedoSample, self).tarballversion
+    result = super(RedoPythiaVariationMINLO, self).tarballversion
     if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-01145": result += 2  #parallelize the gridpack
     return result
 
