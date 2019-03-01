@@ -126,14 +126,10 @@ def MakeExtensionSample(basecls):
   ExtensionSample.__name__ = "ExtensionOf"+basecls.__name__
   return ExtensionSample
 
-class ExtensionOfQQZZSample(MakeExtensionSample(QQZZMCSample)):
-  @classmethod
-  def allsamples(cls):
-    yield cls(2017, "4l")
-
+class ExtensionOfQQZZSampleBase(MCSampleBase):
   def handle_request_fragment_check_warning(self, line):
     from qqZZmcsample import QQZZMCSample
-    if self.year == 2018 and self.finalstate == "4l":
+    if self.finalstate == "4l":
       if line.strip() == "* [WARNING] Is 100000000 events what you really wanted - please check!":
         #yes it is
         return "ok"
@@ -147,6 +143,11 @@ class ExtensionOfQQZZSample(MakeExtensionSample(QQZZMCSample)):
         if self.finalstate == "2l2nu": return 50000000
 
     assert False, self
+
+class ExtensionOfQQZZSample(ExtensionOfQQZZSampleBase, MakeExtensionSample(QQZZMCSample)):
+  @classmethod
+  def allsamples(cls):
+    yield cls(2017, "4l")
 
 class ExtensionOfJHUGenJHUGenAnomalousCouplings(MakeExtensionSample(JHUGenJHUGenAnomCoupMCSample)):
   @classmethod
@@ -190,7 +191,8 @@ def MakeRedoSampleBase(basecls):
   return RedoSampleBase
 
 class RedoSampleBase(RedoSampleGlobalBase):
-  def variation(self): return super(RedoSampleBase, self).variations + ("Redo",)
+  @property
+  def variations(self): return super(RedoSampleBase, self).variations + ("Redo",)
   def __init__(self, *args, **kwargs):
     self.__reason = kwargs.pop("reason", None)
     super(RedoSampleBase, self).__init__(*args, **kwargs)
@@ -219,7 +221,8 @@ class RedoPOWHEGJHUGenMassScan(MakeRedoSample(POWHEGJHUGenMassScanMCSample)):
     return result
 
 class RedoForceCompletedSampleBase(RedoSampleGlobalBase):
-  def variation(self): return super(RedoForceCompletedSampleBase, self).variations + ("Redo",)
+  @property
+  def variations(self): return super(RedoForceCompletedSampleBase, self).variations + ("Redo",)
   def __init__(self, *args, **kwargs):
     prepidtouse = kwargs.pop("prepidtouse", None)
     super(RedoForceCompletedSampleBase, self).__init__(*args, **kwargs)
@@ -262,7 +265,7 @@ class RedoForceCompletedQQZZSample(MakeRedoForceCompletedSample(QQZZMCSample)):
     yield cls(2018, "4l")
     yield cls(2018, "2l2nu")
 
-class ExtensionOfRedoForceCompletedQQZZSample(MakeExtensionSample(RedoForceCompletedQQZZSample), ExtensionOfQQZZSample):
+class ExtensionOfRedoForceCompletedQQZZSample(ExtensionOfQQZZSampleBase, MakeExtensionSample(RedoForceCompletedQQZZSample)):
   @classmethod
   def allsamples(cls):
     yield cls(2018, "4l")
@@ -279,7 +282,8 @@ class RedoForceCompletedPOWHEGJHUGenMassScanMCSample(MakeRedoForceCompletedSampl
     yield cls(2017, 'ggH', '4l', '450', prepidtouse="HIG-RunIIFall17wmLHEGS-02123")
 
 class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSample)):
-  def variation(self): return super(RedoMCFMMoreNcalls, self).variations + ("morencalls",)
+  @property
+  def variations(self): return super(RedoMCFMMoreNcalls, self).variations + ("morencalls",)
 
   @property
   def reason(self): return "increase ncalls in the phase space generation"
@@ -334,6 +338,9 @@ class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSample)):
     return result
 
 class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
+  def __init__(self, *args, **kwargs):
+    super(RunIIFall17DRPremix_nonsubmittedBase, self).__init__(*args, **kwargs)
+    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00298": assert False
   @property
   def variations(self): return super(RunIIFall17DRPremix_nonsubmittedBase, self).variations + ("RunIIFall17DRPremix_nonsubmitted",)
   @property
