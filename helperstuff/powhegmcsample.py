@@ -109,7 +109,7 @@ class POWHEGMCSample(MCSampleBase):
       for coredump in glob.iglob("core.*"):
         os.remove(coredump)
       for p, x in (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 1), (3, 1):
-        for n in range(1, 11):
+        for n in range(10):
           if not os.path.exists("run_{}_{}_{}.log".format(p, x, n)):
             return p, x
     return 9, 1
