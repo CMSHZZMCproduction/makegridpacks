@@ -116,7 +116,7 @@ class POWHEGMCSample(MCSampleBase):
 
   def processmakegridpackstdout(self, stdout):
     if self.powhegsubmissionstrategy == "multicore":
-      matches = [int(_) for _ in re.findall("[0-9]* job(s) submitted to cluster ([0-9]*)[.]", stdout)]
+      matches = [int(_) for _ in re.findall("[0-9]* job[(]s[)] submitted to cluster ([0-9]*)[.]", stdout)]
       for match in matches:
         with open(os.path.join(self.workdirforgridpack, "jobisrunning_{}".format(match)), 'w') as f:
           pass

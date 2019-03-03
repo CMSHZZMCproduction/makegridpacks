@@ -556,7 +556,7 @@ class RedoPythiaVariationMINLO(MakeRedoSample(PythiaVariationMINLO)):
   @property
   def tarballversion(self):
     result = super(RedoPythiaVariationMINLO, self).tarballversion
-    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-01145": result += 2  #parallelize the gridpack
+    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-01145" and self.pythiavariation == "TuneUp": result += 2  #parallelize the gridpack
     return result
 
 RunIIFall17DRPremix_nonsubmittedPythiaVariation = MakeRunIIFall17DRPremix_nonsubmitted(PythiaVariationPOWHEGJHUGen)

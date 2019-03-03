@@ -6938,8 +6938,8 @@
                         "filterefficiencyerror": 0,
                         "nthreads": 4,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03149",
-                        "sizeperevent": 627,
-                        "timeperevent": 12.123416378735527
+                        "resettimeperevent": true,
+                        "sizeperevent": 627
                     },
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0,

@@ -119,7 +119,7 @@ output                  = CONDOR/$(ClusterId).$(ProcId).out
 error                   = CONDOR/$(ClusterId).$(ProcId).err
 log                     = CONDOR/$(ClusterId).log
 
-request_memory          = 4000M
+request_memory          = 2000M
 +JobFlavour             = "{jobflavor}"
 
 #https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
