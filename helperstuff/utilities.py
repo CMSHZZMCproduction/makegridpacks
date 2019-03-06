@@ -474,9 +474,6 @@ def request_fragment_check(*args):
   with cdtemp():
     with contextlib.closing(urlopen("https://github.com/cms-sw/genproductions/raw/master/bin/utils/request_fragment_check.py")) as f:
       contents = f.read()
-    cookies = [line for line in contents.split("\n") if "os.system" in line and "cookie" in line.lower()]
-    assert len(cookies) == 2
-    for cookie in cookies: contents = contents.replace(cookie, "#I already ate the cookie")
     with open("request_fragment_check.py", "w") as f:
       f.write(contents)
 

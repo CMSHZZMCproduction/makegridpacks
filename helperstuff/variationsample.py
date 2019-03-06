@@ -24,6 +24,11 @@ def NthOrderVariationSampleBase(n):
       if hasattr(self.mainsample, "mainsample"):
         return self.mainsample.mainsample
       return self.mainsample
+    @property
+    def previousprepids(self):
+      if isinstance(self.mainsample, VariationSampleBase):
+        return self.mainsample.previousprepids + (self.prepid,)
+      return self.mainsample.prepid, self.prepid
     @classmethod
     def allsamples(cls): return ()
     mainsampletype = None
@@ -216,7 +221,7 @@ class RedoPOWHEGJHUGenMassScan(MakeRedoSample(POWHEGJHUGenMassScanMCSample)):
   @property
   def validationtimemultiplier(self):
     result = super(RedoPOWHEGJHUGenMassScan, self).validationtimemultiplier
-    if self.mainsample.prepid == "HIG-RunIISummer15wmLHEGS-01906":
+    if "HIG-RunIISummer15wmLHEGS-01906" in self.previousprepids:
       result = max(result, 4)
     return result
 
@@ -340,7 +345,7 @@ class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSample)):
 class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
   def __init__(self, *args, **kwargs):
     super(RunIIFall17DRPremix_nonsubmittedBase, self).__init__(*args, **kwargs)
-    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00298": assert False
+    if "HIG-RunIIFall17wmLHEGS-00298" in self.previousprepids: assert False
   @property
   def variations(self): return super(RunIIFall17DRPremix_nonsubmittedBase, self).variations + ("RunIIFall17DRPremix_nonsubmitted",)
   @property
@@ -371,7 +376,7 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
   @property
   def validationtimemultiplier(self):
     result = super(RunIIFall17DRPremix_nonsubmittedBase, self).validationtimemultiplier
-    if self.prepid in ("HIG-RunIIFall17wmLHEGS-03116", "HIG-RunIIFall17wmLHEGS-03155"):
+    if any(_ in self.previousprepids for _ in ("HIG-RunIIFall17wmLHEGS-03116", "HIG-RunIIFall17wmLHEGS-03155")):
       result = max(result, 2)
     return result
 
@@ -396,10 +401,11 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
     from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
 
     if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass not in (125, 165, 170): v+=1  #removing some pdfs
-    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #try multicore
+    if not isinstance(self, PythiaVariationSampleBase):
+      if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #try multicore
+      if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #xargs instead of parallel
     if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ttH" and self.decaymode == "4l" and self.mass == 140: v+=1  #tweak seed to avoid fluctuation in filter efficiency
     if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (400, 3000): v+=1 #trying multicore in runcmsgrid.sh, copied the previous one too early
-    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #xargs instead of parallel
 
     if isinstance(self, JHUGenJHUGenAnomCoupMCSample) and self.productionmode == "VBF" and self.decaymode == "4l" and self.coupling == "L1Zg": v+=1
 
@@ -453,9 +459,10 @@ class PythiaVariationSampleBase(VariationSampleBase):
   @property
   def tarballversion(self):
     result = super(PythiaVariationSampleBase, self).tarballversion
-    if self.prepid == "HIG-RunIIFall17wmLHEGS-00509": result += 2
-    if self.prepid == "HIG-RunIIFall17wmLHEGS-01145": result -= 2  #this one finished, the main one was reset
-    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00917": result += 2
+    if "HIG-RunIIFall17wmLHEGS-00509" in self.previousprepids: result += 2
+    if "HIG-RunIIFall17wmLHEGS-00510" in self.previousprepids: result += 2
+    if "HIG-RunIIFall17wmLHEGS-01145" in self.previousprepids: result -= 2  #this one finished, the main one was reset
+    if "HIG-RunIIFall17wmLHEGS-00917" in self.previousprepids: result += 2
     return result
   @property
   def nevents(self):
@@ -539,12 +546,6 @@ class RedoPythiaVariationPOWHEGJHUGen(MakeRedoSample(PythiaVariationPOWHEGJHUGen
         if productionmode == "ZH" and systematic == "TuneUp": continue
         yield cls(2017, productionmode, "4l", 125, pythiavariation=systematic, reason="wrong tune variation settings\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5361/1/1/1/2/1/1/1/2/1.html")
 
-  @property
-  def tarballversion(self):
-    result = super(RedoPythiaVariationPOWHEGJHUGen, self).tarballversion
-    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-00510": result += 2  #parallelize the gridpack
-    return result
-
 class RedoPythiaVariationMINLO(MakeRedoSample(PythiaVariationMINLO)):
   @classmethod
   def allsamples(cls):
@@ -556,7 +557,7 @@ class RedoPythiaVariationMINLO(MakeRedoSample(PythiaVariationMINLO)):
   @property
   def tarballversion(self):
     result = super(RedoPythiaVariationMINLO, self).tarballversion
-    if self.mainsample.prepid == "HIG-RunIIFall17wmLHEGS-01145" and self.pythiavariation == "TuneUp": result += 2  #parallelize the gridpack
+    if "HIG-RunIIFall17wmLHEGS-01145" in self.previousprepids and self.pythiavariation == "TuneUp": result += 2  #parallelize the gridpack
     return result
 
 RunIIFall17DRPremix_nonsubmittedPythiaVariation = MakeRunIIFall17DRPremix_nonsubmitted(PythiaVariationPOWHEGJHUGen)

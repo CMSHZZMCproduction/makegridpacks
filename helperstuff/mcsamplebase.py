@@ -1160,6 +1160,9 @@ class MCSampleBase(JsonDict):
         if result == "ok": continue
         return result+"\n"+line
       else:
+        if "Current date and time: " in line: continue
+        if line.strip() == "Number of errors = 0": continue
+        if "Number of errors = " in line: raise RuntimeError("Number of errors != 0, but didn't see any error, please check above")
         if line.strip() == "*               set correctly as number of final state particles (BEFORE THE DECAYS)": continue
         if line.strip() == "*                                   in the LHE other than emitted extra parton.": continue
         if line.strip() == "*           which may not have all the necessary GEN code.": continue
@@ -1180,6 +1183,7 @@ class MCSampleBase(JsonDict):
         if line.strip().startswith("set ignore_six_quark_processes"): continue
         if line.strip().startswith("--------------") and "MG5_aMC LO/MLM Many Threads Patch Check" in line: continue
         if line.strip() == "grep: write error": continue #?
+        if line.strip().startswith("nFinal="): continue
         return "Unknown line in request_fragment_check output!\n"+line
 
   @property

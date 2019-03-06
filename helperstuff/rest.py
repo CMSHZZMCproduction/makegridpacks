@@ -24,6 +24,7 @@ class McM(object):
   def __new__(cls, *args, **kwargs):
     return super(McM, cls).__new__(cls, *args, **kwargs)
   def __init__(self, *args, **kwargs):
+    if "dev" not in kwargs: kwargs["dev"] = False
     if not hasattr(self, "_McM"):
       self._McM = None
     self.__McMargs = args
