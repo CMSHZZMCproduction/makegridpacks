@@ -4098,6 +4098,7 @@
                         "Redo": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "finished": true,
                             "nthreads": 1,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03364",
                             "sizeperevent": 623,
@@ -9057,6 +9058,7 @@
                 "160": {
                     "filterefficiency": 1,
                     "filterefficiencyerror": 0.0,
+                    "finished": true,
                     "nthreads": 1,
                     "prepid": "HIG-RunIIFall18wmLHEGS-00227",
                     "sizeperevent": 667,
