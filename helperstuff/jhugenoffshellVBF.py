@@ -119,6 +119,9 @@ class JHUGenOffshellVBF(JHUGenMCSample, MCSampleBase_DefaultCampaign, MCSampleWi
     return True
   @property
   def responsible(self):
+    if self.width != "GaSM": return "nobody"
+    if self.coupling not in ("SM", "a3"): return "nobody"
+    if self.finalstate != "4l": return "nobody"
     return "hroskes"
   @property
   def tags(self):
