@@ -385,3 +385,10 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if self.productionmode in ("WplusH", "WminusH", "VBF"): return 210
     return 165
     return super(POWHEGJHUGenMassScanMCSample, self).maxallowedtimeperevent
+
+  @property
+  def makegridpackseed(self):
+    result = super(POWHEGJHUGenMassScanMCSample, self).makegridpackseed
+    if self.productionmode == "ggH" and self.mass in (190, 200) and self.multicore_upto == 2:
+      result += 1
+    return result

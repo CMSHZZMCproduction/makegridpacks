@@ -3124,6 +3124,7 @@
                     "MUTL": {
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
+                        "finished": true,
                         "morencalls": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
@@ -6181,6 +6182,7 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 1.0,
                         "filterefficiencyerror": 0.0,
+                        "finished": true,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03260",
                         "sizeperevent": 638,
@@ -7952,6 +7954,7 @@
                         "2e2nue": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "finished": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-00999",
                             "sizeperevent": 664,
                             "timeperevent": 5.704929629693018,
@@ -7961,6 +7964,7 @@
                         "2e2num": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "finished": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01000",
                             "sizeperevent": 642,
                             "timeperevent": 4.718361030112581,

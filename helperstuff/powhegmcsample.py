@@ -44,6 +44,9 @@ class POWHEGMCSample(MCSampleBase):
       result.append({"functionname": "prunepwgrwl", "filter": self.pwgrwlfilter})
     return result
   @property
+  def makegridpackseed(self):
+    return hash(self)
+  @property
   def makegridpackcommand(self):
     args = {
       "-i": self.powhegcard,
@@ -54,7 +57,7 @@ class POWHEGMCSample(MCSampleBase):
       args.update({
         "-p": "f",
         "-n": "10",
-        "-s": str(hash(self) % 2147483647),
+        "-s": str(self.makegridpackseed % 2147483647),
         "-q": self.creategridpackqueue,
       })
     elif self.powhegsubmissionstrategy == "multicore":
