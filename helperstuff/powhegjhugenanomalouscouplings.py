@@ -25,7 +25,6 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
   @property
   def tarballversion(self):
     v = 1
-
     return v
 
   def cvmfstarball_anyversion(self, version):

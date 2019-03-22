@@ -7551,6 +7551,7 @@
                         "2e2nut": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "finished": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01024",
                             "sizeperevent": 709,
                             "timeperevent": 6.04649756628473,
@@ -8010,6 +8011,7 @@
                         "4e": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "finished": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-00997",
                             "sizeperevent": 674,
                             "timeperevent": 5.6349456791236525,

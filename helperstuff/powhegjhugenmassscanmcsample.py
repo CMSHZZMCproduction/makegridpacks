@@ -389,6 +389,4 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def makegridpackseed(self):
     result = super(POWHEGJHUGenMassScanMCSample, self).makegridpackseed
-    if self.productionmode == "ggH" and self.mass in (190, 200) and self.multicore_upto == 2:
-      result += 1
     return result

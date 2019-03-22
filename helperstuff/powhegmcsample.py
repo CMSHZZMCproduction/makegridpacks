@@ -52,12 +52,12 @@ class POWHEGMCSample(MCSampleBase):
       "-i": self.powhegcard,
       "-m": self.powhegprocess,
       "-f": self.foldernameforrunpwg,
+      "-s": str(self.makegridpackseed % 2147483647),
     }
     if self.powhegsubmissionstrategy == "onestep":
       args.update({
         "-p": "f",
         "-n": "10",
-        "-s": str(self.makegridpackseed % 2147483647),
         "-q": self.creategridpackqueue,
       })
     elif self.powhegsubmissionstrategy == "multicore":
