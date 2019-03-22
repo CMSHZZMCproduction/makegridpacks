@@ -20,7 +20,7 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
   def powhegcardusesscript(self): return True
 
   @property
-  def powhegsubmissionstrategy(self): return "onestep"
+  def powhegsubmissionstrategy(self): return "multicore"
 
   @property
   def tarballversion(self):

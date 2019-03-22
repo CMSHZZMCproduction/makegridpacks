@@ -139,7 +139,8 @@ class POWHEGMCSample(MCSampleBase):
       assert False, self.powhegsubmissionstrategy
   @property
   def gridpackjobsrunning(self):
-    if self.powhegsubmissionstrategy == "multicore" and os.path.exists(os.path.join(self.workdirforgridpack, self.foldernameforrunpwg, "pwhg_main")):
+    if self.powhegsubmissionstrategy == "multicore":
+      if not os.path.exists(os.path.join(self.workdirforgridpack, self.foldernameforrunpwg, "pwhg_main")): return False
       for filename in glob.iglob(os.path.join(self.workdirforgridpack, "jobisrunning_*")):
         jobid = int(os.path.basename(filename.replace("jobisrunning_", "")))
         if jobended(str(jobid)):

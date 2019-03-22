@@ -409,7 +409,8 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
 
     if isinstance(self, JHUGenJHUGenAnomCoupMCSample) and self.productionmode == "VBF" and self.decaymode == "4l" and self.coupling == "L1Zg": v+=1
 
-    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ggH" and self.mass in (190, 200): v+=1
+    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ggH" and self.mass in (125, 190, 200): v+=1
+    if isinstance(self, POWHEGJHUGenAnomCoupMCSample) and self.productionmode == "ggH": v+=1
 
     return v
 
