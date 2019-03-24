@@ -3,7 +3,8 @@
 import argparse, itertools, math, pprint
 
 from helperstuff import allsamples
-from helperstuff.utilities import request_fragment_check, restful
+from helperstuff.rest import McM
+from helperstuff.utilities import request_fragment_check
 
 def maketicket(block, chain, tags, year, filter=lambda sample: True, modifytickets=[], notes=None, dryrun=False, status=("defined",), onlymysamples=False):
   prepids = [sample.prepid for sample in allsamples(
@@ -38,7 +39,7 @@ def maketicket(block, chain, tags, year, filter=lambda sample: True, modifyticke
   tickets = []
   for i in xrange(ntickets):
     if i < len(modifytickets):
-      tickets.append(restful().get("mccms", modifytickets[i]))
+      tickets.append(McM().get("mccms", modifytickets[i]))
     else:
       tickets.append({
         "prepid": firstpart,
@@ -92,7 +93,7 @@ def maketicket(block, chain, tags, year, filter=lambda sample: True, modifyticke
   if dryrun: return
 
   for ticket in tickets:
-    answer = (restful().update if modifytickets else restful().put)('mccms', ticket)
+    answer = (McM().update if modifytickets else McM().put)('mccms', ticket)
     print answer
 
     if not answer['results']:
