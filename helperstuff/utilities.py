@@ -123,7 +123,7 @@ class KeepWhileOpenFile(object):
         return True
 
   def __exit__(self, *args):
-    logging.debug("exiting")
+    logging.debug("exiting KeepWhileOpenFile {}".format(self.filename))
     if self:
       try:
         with cd(self.pwd):
