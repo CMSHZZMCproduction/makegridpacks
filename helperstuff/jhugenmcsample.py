@@ -103,7 +103,7 @@ class JHUGenMCSample(UsesJHUGenLibraries):
       with open(os.path.join(folder, "JHUGen.input")) as f:
         productioncard = f.read()
     except IOError:
-      raise ValueError("no JHUGen.input in the tarball\n{}\n{}".format(self, self.cvmfstarball))
+      raise ValueError("no ./JHUGen.input or {}/JHUGen.input in the tarball\n{}\n{}".format(self.shortname+"_JHUGen", self, self.cvmfstarball))
 
     if productioncard != productiongitcard:
       with cd(here):

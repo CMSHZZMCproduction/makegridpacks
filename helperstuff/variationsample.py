@@ -7,6 +7,7 @@ from utilities import abstractclassmethod, cache, cacheaslist, cdtemp, fullinfo,
 from gridpackbysomeoneelse import MadGraphHJJFromThomasPlusJHUGen
 from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
 from jhugenjhugenmassscanmcsample import JHUGenJHUGenMassScanMCSample
+from jhugenmcsample import JHUGenMCSample
 from mcfmanomalouscouplings import MCFMAnomCoupMCSample
 from minlomcsample import MINLOMCSample
 from powhegjhugenanomalouscouplings import POWHEGJHUGenAnomCoupMCSample
@@ -14,7 +15,22 @@ from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 from qqZZmcsample import QQZZMCSample
 
 @cache
-def NthOrderVariationSampleBase(n):
+def NthOrderVariationSampleBase(n, *flags):
+  flags = list(frozenset(flags))
+  if sorted(flags) != flags: return NthOrderVariationSampleBase(n, *sorted(flags))
+
+  if "JHUGen" in flags:
+    flags.remove("JHUGen")
+    base = NthOrderVariationSampleBase(n, *flags)
+    class theclass(base, JHUGenMCSample):
+      @property
+      def shortname(self):
+        return self.mainmainsample.shortname
+    theclass.__name__ = base.__name__+"JHUGen"
+    return theclass
+
+  if flags: raise ValueError("Unknown flags: "+", ".join(flags))
+
   if n == 0: return MCSampleBase
   class VariationSampleBase(NthOrderVariationSampleBase(n-1)):
     @abc.abstractproperty
@@ -37,12 +53,23 @@ def NthOrderVariationSampleBase(n):
 
 VariationSampleBase = NthOrderVariationSampleBase(1)
 
+class JHUGenVariationSampleBase(VariationSampleBase, JHUGenMCSample):
+  @property
+  def shortname(self):
+    return self.mainmainsample.shortname
+
 @cache
 def MakeVariationSample(basecls):
   for i in itertools.count(0):
     if not issubclass(basecls, NthOrderVariationSampleBase(i)): break
   assert i > 0
-  class VariationSample(NthOrderVariationSampleBase(i), basecls):
+
+  flags = []
+  print basecls.__name__, issubclass(basecls, JHUGenMCSample)
+  if issubclass(basecls, JHUGenMCSample):
+    flags.append("JHUGen")
+
+  class VariationSample(NthOrderVariationSampleBase(i, *flags), basecls):
     def __init__(self, *args, **kwargs):
       super(VariationSample, self).__init__(*args, **kwargs)
       if self.filterefficiency is None and self.mainsample.filterefficiency is not None:
@@ -185,7 +212,7 @@ class RedoSampleGlobalBase(ExtensionSampleGlobalBase):
   @property
   def notes(self):
     result = "Redo of " + self.mainsample.prepid
-    if self.reason is not None: result += " "+self.__reason
+    if self.reason is not None: result += " "+self.reason
     supernotes = super(RedoSampleGlobalBase, self).notes
     return "\n\n".join(_ for _ in (result, supernotes) if _)
 
@@ -382,7 +409,6 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
 
   @property
   def extensionnumber(self):
-    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
     result = super(RunIIFall17DRPremix_nonsubmittedBase, self).extensionnumber
     if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.mass == 125:
       result += 1
@@ -397,8 +423,6 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
   @property
   def tarballversion(self):
     v = super(RunIIFall17DRPremix_nonsubmittedBase, self).tarballversion
-    from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
-    from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
 
     if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass not in (125, 165, 170): v+=1  #removing some pdfs
     if not isinstance(self, PythiaVariationSampleBase):
