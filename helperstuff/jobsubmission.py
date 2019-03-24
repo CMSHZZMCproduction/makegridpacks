@@ -1,4 +1,4 @@
-import abc, datetime, os, subprocess
+import abc, datetime, os, re, subprocess
 
 from utilities import cd, here, NamedTemporaryFile, KeyDefaultDict
 
@@ -114,7 +114,7 @@ def submitLSF(queue):
 
 condortemplate = """
 executable              = {here}/.makegridpacks_{jobflavor}.sh
-arguments               = "{here} --condorjobid $(ClusterId).$(ProcId) --condorjobflavor {jobflavor}"
+arguments               = "{here} --condorjobid $(ClusterId).$(ProcId) --condorjobflavor {jobflavor} --filter '{filter}'"
 output                  = CONDOR/$(ClusterId).$(ProcId).out
 error                   = CONDOR/$(ClusterId).$(ProcId).err
 log                     = CONDOR/$(ClusterId).log
@@ -146,14 +146,25 @@ transfer_output_files = {self.prepid}_rt.xml
 queue
 """
 
-def submitcondor(flavor):
+def submitcondor(flavor, sample, writejobid=None):
+  if writejobid is not None and os.path.exists(writejobid):
+    raise RuntimeError(writejobid + " already exists")
   flavor = JobQueue(flavor).condorflavor
   if __pendingjobsdct[flavor] > 0:
     __pendingjobsdct[flavor] -= 1
     return False
   with cd(here), NamedTemporaryFile(bufsize=0) as f:
-    f.write(condortemplate.format(jobflavor=flavor, here=here))
-    subprocess.check_call(["condor_submit", f.name])
+    f.write(condortemplate.format(
+      jobflavor=flavor,
+      here=here,
+      filter="lambda x: x.identifiers == (" + ", ".join(repr(i).replace("'", "''").replace('"', '""') for i in sample.identifiers)+")"
+    ))
+    output = subprocess.check_output(["condor_submit", f.name])
+    print output
+    outputjobid = re.match("1 job[(]s[)] submitted to cluster ([0-9]*)[.]".group(1) + ".0", output)
+    if writejobid is not None:
+      with open(writejobid, "w") as f:
+        f.write(outputjobid)
     return True
 
 def __npendingjobs(queue):

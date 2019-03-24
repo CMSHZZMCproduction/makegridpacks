@@ -5,7 +5,7 @@ import uncertainties
 import patches
 
 from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, request_fragment_check, scramarch, urlopen, wget
-from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitcondor
+from jobsubmission import condortemplate_sizeperevent, jobid, JobQueue, jobtype, queuematches, submitcondor
 from rest import McM
 
 class MCSampleBase(JsonDict):
@@ -241,13 +241,25 @@ class MCSampleBase(JsonDict):
 
     mkdir_p(os.path.dirname(self.tmptarball))
     with cd(self.workdirforgridpack), KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
+      try:
+        with open(self.tmptarball+".jobid") as f:
+          condorjobid = f.read().strip()
+      except IOError:
+        pass
+      else:
+        if condorjobid != jobid():
+          if jobended(condorjobid):
+            os.remove(self.tmptarball+".jobid")
+          else:
+            return "condor job "+condorjobid+" is already taking care of this tarball"
+
       if not kwof:
         try:
           with open(self.tmptarball+".tmp") as f:
-            jobid = float(f.read().strip())
+            kwofjobid = float(f.read().strip())
         except (ValueError, IOError):
           return "try running again, probably you just got really bad timing"
-        if jobended(str(jobid)):
+        if jobended(str(kwofjobid)):
           if self.makinggridpacksubmitsjob:
             os.remove(self.tmptarball+".tmp")
             return "job died at a very odd time, cleaned it up.  Try running again."
@@ -274,7 +286,7 @@ class MCSampleBase(JsonDict):
               except OSError:
                 shutil.rmtree(_)
         if not self.makinggridpacksubmitsjob and self.creategridpackqueue is not None:
-          if not jobtype(): return "need to create the gridpack, submitting to condor" if submitcondor(self.creategridpackqueue) else "need to create the gridpack, job is pending on condor"
+          if not jobtype(): return "need to create the gridpack, submitting to condor" if submitcondor(self.creategridpackqueue, sample=self, writejobid=self.tmptarball+".jobid") else "need to create the gridpack, job is pending on condor"
           if not queuematches(self.creategridpackqueue): return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))

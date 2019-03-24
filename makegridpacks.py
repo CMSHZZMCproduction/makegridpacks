@@ -24,7 +24,6 @@ from helperstuff.cleanupgridpacks import cleanupgridpacks
 from helperstuff.queues import ApprovalQueue, BadRequestQueue, CloneQueue
 
 def makegridpacks(args):
-  args.debug = True
   if args.debug: logging.getLogger().setLevel(logging.DEBUG)
 
   from helperstuff.jobsubmission import condorsetup

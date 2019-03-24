@@ -2505,8 +2505,8 @@
                             "filterefficiencyerror": 0,
                             "nthreads": 4,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03075",
-                            "sizeperevent": 596,
-                            "timeperevent": 11.018482402381755
+                            "sizeperevent": 601,
+                            "timeperevent": 7.777017358302744
                         }
                     },
                     "20": {
@@ -6655,8 +6655,8 @@
                         "filterefficiency": 1.0,
                         "filterefficiencyerror": 0.0,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03296",
-                        "sizeperevent": 578,
-                        "timeperevent": 6.82747649641216
+                        "resettimeperevent": true,
+                        "sizeperevent": 578
                     },
                     "SM": {
                         "RunIIFall17DRPremix_nonsubmitted": {
@@ -6665,8 +6665,8 @@
                             "needsupdate": true,
                             "nthreads": 2,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03143",
-                            "sizeperevent": 601,
-                            "timeperevent": 20.623446796663128
+                            "resettimeperevent": true,
+                            "sizeperevent": 601
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
@@ -6681,8 +6681,8 @@
                             "filterefficiencyerror": 0,
                             "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03151",
-                            "sizeperevent": 607,
-                            "timeperevent": 8.29077402666313
+                            "resettimeperevent": true,
+                            "sizeperevent": 607
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,

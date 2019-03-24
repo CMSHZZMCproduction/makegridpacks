@@ -65,7 +65,6 @@ def MakeVariationSample(basecls):
   assert i > 0
 
   flags = []
-  print basecls.__name__, issubclass(basecls, JHUGenMCSample)
   if issubclass(basecls, JHUGenMCSample):
     flags.append("JHUGen")
 
