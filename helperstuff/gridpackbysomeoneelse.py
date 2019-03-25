@@ -457,7 +457,7 @@ class MadgraphTWHPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSampl
     return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/thw_5f_ckm_LO_ctcvcp_MH125_JHUGen4l/v{}/thw_5f_ckm_LO_ctcvcp_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz".format(version)
   @property
   def genproductionscommit(self):
-    return "33db8976ede1855d24b3ad4bf9e3fc0591811eee"
+    return "04b3f0288d03f774eec6b4098877796cbd003b56"
   @property
   def hasnonJHUGenfilter(self):
     return False
@@ -493,3 +493,14 @@ class MadgraphTWHPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSampl
     folder = "thw_5f_ckm_LO_ctcvcp_MH125"
     return tuple(os.path.join(folder, "thw_5f_ckm_LO_ctcvcp_MH125_" + _ + ".dat")
       for _ in ("customizecards", "proc_card", "run_card", "extramodels", "reweight_card"))
+  @property
+  def madgraphcardsrename(self):
+    return "thw_5f_ckm_LO_ctcvcp_MH125", "thw_5f_ckm_LO_ctcvcp"
+
+  def comparecards(self, name, cardcontents, gitcardcontents):
+    if name.endswith("_customizecards.dat"):
+      gitcardcontents = gitcardcontents.replace("set param_card mass 25 125\n", "")
+    if name.endswith("_proc_card.dat"):
+      cardcontents = cardcontents.replace("define ll = l+ l-\n", "")
+      cardcontents = cardcontents.replace("define vll = vl vl~\n", "")
+    return super(MadgraphTWHPlusJHUGen, self).comparecards(name, cardcontents, gitcardcontents)

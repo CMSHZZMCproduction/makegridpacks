@@ -7504,7 +7504,6 @@
         "tWH": {
             "madgraphJHUGen": {
                 "4l": {
-                    "needsupdate": true,
                     "prepid": "HIG-RunIIFall17wmLHEGS-03785"
                 }
             }
@@ -12416,7 +12415,7 @@
         "tWH": {
             "madgraphJHUGen": {
                 "4l": {
-                    "needsupdate": true
+                    "prepid": "HIG-RunIIFall18wmLHEGS-01562"
                 }
             }
         },
