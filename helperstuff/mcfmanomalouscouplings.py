@@ -81,6 +81,16 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
     if self.year == 2018 and self.signalbkgbsi in ("SIG", "BSI"):
       v+=1  #increase ncalls1 and 2
 
+    if self.year == 2018 and identifierstr == "BSI 10 0PH ELMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 1 0M ELMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PM MUMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PL1f05ph0 TLTL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 1 0M TLTL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PH ELEL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
+
     return v
 
   def cvmfstarball_anyversion(self, version):
@@ -137,7 +147,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
   @property
   def genproductionscommit(self):
     if self.year == 2018 and self.signalbkgbsi != "BKG":
-      return "00354e6fe6c6b2a185c46c7efbad2958bd7a2633"
+      return "32f097d84517f364edf7e86630ce5646b12b835e"
     return "138efefa8acdcc246a0df4512bef3f660574cb77"
 
   @property

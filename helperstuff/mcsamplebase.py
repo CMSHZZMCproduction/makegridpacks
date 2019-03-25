@@ -1171,35 +1171,8 @@ class MCSampleBase(JsonDict):
         result = self.handle_request_fragment_check_patch(line)
         if result == "ok": continue
         return result+"\n"+line
-      else:
-        if "Current date and time: " in line: continue
-        if line.strip() == "Number of errors = 0": continue
-        if "Number of errors = " in line: raise RuntimeError("Number of errors != 0, but didn't see any error, please check above")
-        if re.match("Number of warnings = [0-9]*", line.strip()): continue
-        if line.strip() == "*               set correctly as number of final state particles (BEFORE THE DECAYS)": continue
-        if line.strip() == "*                                   in the LHE other than emitted extra parton.": continue
-        if line.strip() == "*           which may not have all the necessary GEN code.": continue
-        if line.strip() == "*                   'JetMatching:nJetMax' is set correctly as number of partons": continue
-        if line.strip() == "*                              in born matrix element for highest multiplicity.": continue
-        if line.strip() == "*                as number of partons in born matrix element for highest multiplicity.": continue
-        if line.strip() == "*           correctly as number of partons in born matrix element for highest multiplicity.": continue
-        if line.strip() == self.datasetname: continue
-        if line.strip().startswith("'POWHEG:nFinal"): continue
-        if line.strip() == self.cvmfstarball or line.strip() == self.eostarball: continue
-        if line.strip() == "grep from powheg pwhg_checklimits files": continue
-        if line.strip().startswith("coll-minus"): continue
-        if line.strip().startswith("coll-plus"): continue
-        if line.strip().startswith("emitter"): continue
-        if line.strip().startswith("coll  emitter"): continue
-        if line.strip().startswith("generate p p >"): continue
-        if line.strip().startswith("set group_subprocesses"): continue
-        if line.strip().startswith("set ignore_six_quark_processes"): continue
-        if line.strip().startswith("--------------") and "MG5_aMC LO/MLM Many Threads Patch Check" in line: continue
-        if line.strip() == "grep: write error": continue #?
-        if line.strip().startswith("nFinal="): continue
-        if line.strip() in ("powheg False", "powheg True", "mg False", "mg True"): continue
-        if line.strip() == "Data set name is regular: "+self.datasetname: continue
-        return "Unknown line in request_fragment_check output!\n"+line
+      elif line.startswith("*"):
+        return "Unknown line starting with * in request_fragment_check output!\n"+line
 
   @property
   def maxallowedtimeperevent(self): return None  #default to whatever request_fragment_check does

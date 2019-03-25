@@ -332,6 +332,18 @@ class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSample)):
   def tarballversion(self):
     v = self.mainsample.tarballversion+1
 
+    identifierstr = " ".join(str(_) for _ in self.mainsample.identifiers)
+
+    if identifierstr == "BSI 10 0PH ELMU": v+=1
+    if identifierstr == "BSI 1 0M ELMU": v+=1
+    if identifierstr == "BSI 10 0PM MUMU": v+=1
+    if identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
+    if identifierstr == "BSI 10 0PL1f05ph0 TLTL": v+=1
+    if identifierstr == "BSI 1 0M TLTL": v+=1
+    if identifierstr == "BSI 10 0PH ELEL": v+=1
+    if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
+    if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
+
     if self.year == 2017:
       othersample = MCFMAnomCoupMCSample(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
       if self.mainsample.signalbkgbsi == "BKG":
@@ -436,6 +448,11 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
     if isinstance(self, POWHEGJHUGenAnomCoupMCSample) and self.productionmode == "ggH": v+=1
 
     return v
+
+  @property
+  def JHUGenversion(self):
+    if isinstance(self, JHUGenJHUGenAnomCoupMCSample) and self.productionmode == "VBF" and self.decaymode == "4l" and self.coupling == "L1Zg": return "v7.2.7"
+    return super(RunIIFall17DRPremix_nonsubmittedBase, self).JHUGenversion
 
 @cache
 def MakeRunIIFall17DRPremix_nonsubmitted(basecls):

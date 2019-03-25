@@ -47,6 +47,8 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
     if self.year == 2016 and self.productionmode == "HJJ" and self.decaymode == "4l" and self.mass == 125 and version == 1:
       tarballname = tarballname.replace("V723", "V7011")
+    if self.year in (2017, 2018) and self.productionmode == "VBF" and self.decaymode == "4l" and self.mass == 125 and version == 2:
+      tarballname = tarballname.replace("V727", "V7011")
 
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
