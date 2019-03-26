@@ -81,12 +81,14 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     if self.__VV == "ZZd":
       return "/afs/cern.ch/work/d/drosenzw/public/HZZd_gridpacks/HAHM_variablesw_v3_eps{:.0e}_MZd{}_lhaid{}.tar.xz".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-0", "e-")
     if self.__VV == "ZdZd":
-      return "/afs/cern.ch/work/d/drosenzw/public/HZdZd4l_gridpacks/HAHM_variablesw_v3_eps{:.0e}_mZd{}_slc6_amd64_gcc481_CMSSW_7_1_30.tar.xz".format(self.__eps, self.__Zdmass).replace("e-0", "e-")
+      return "/afs/cern.ch/work/d/drosenzw/public/HZdZd4l_gridpacks/lhaid_306000_NNPDF3p1/HAHM_variablesw_v3_eps{:.0e}_mZd{}_lhaid{}_slc6_amd64_gcc481_CMSSW_7_1_30.tar.xz".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-0", "e-")
   @property
   def lhapdf(self):
     if self.__VV == "ZZd":
       if self.year == 2016: return 263000
       if self.year in (2017, 2018): return 306000
+    if self.__VV == "ZdZd":
+      return 306000
     assert False, self
 
   @classmethod

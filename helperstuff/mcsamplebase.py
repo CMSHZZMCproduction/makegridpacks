@@ -46,7 +46,7 @@ class MCSampleBase(JsonDict):
     """returns the job name"""
     assert False, self
   @abc.abstractproperty
-  def hasfilter(self): assert False, self
+  def hasfilter(self): return False
   @abc.abstractproperty
   def datasetname(self): assert False, self
   @property
