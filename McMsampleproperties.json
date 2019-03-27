@@ -4357,9 +4357,10 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03112",
-                            "sizeperevent": 742.6599384615384,
-                            "timeperevent": 38.2795633067418
+                            "resettimeperevent": true,
+                            "sizeperevent": 742.6599384615384
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
@@ -5340,8 +5341,8 @@
                             "filterefficiencyerror": 0,
                             "nthreads": 1,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03153",
-                            "sizeperevent": 702,
-                            "timeperevent": 84.76443962228966
+                            "sizeperevent": 735,
+                            "timeperevent": 119.30198792902486
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
@@ -7481,8 +7482,8 @@
                         "filterefficiencyerror": 0.0,
                         "nthreads": 2,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03433",
-                        "sizeperevent": 533,
-                        "timeperevent": 19.13187216848292
+                        "sizeperevent": 523,
+                        "timeperevent": 30.385069992008727
                     },
                     "filterefficiency": 1.0,
                     "filterefficiencyerror": 0.0,
@@ -8145,6 +8146,8 @@
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "prepid": "HIG-RunIIFall18wmLHEGS-01396",
+                        "sizeperevent": 606.8589078260869,
+                        "timeperevent": 102.08852708714889,
                         "xsec": 3.16776,
                         "xsecerror": 0.00104547
                     },
@@ -8560,6 +8563,8 @@
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "prepid": "HIG-RunIIFall18wmLHEGS-01397",
+                        "sizeperevent": 602.8234573913044,
+                        "timeperevent": 106.04993679423767,
                         "xsec": 3.59788,
                         "xsecerror": 0.00114851
                     },

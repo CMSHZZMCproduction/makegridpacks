@@ -228,12 +228,6 @@ class POWHEGMCSample(MCSampleBase):
       if (filename.endswith(".py") or filename.endswith(".sh") or filename.endswith("/patches")) and not os.path.exists(os.path.basename(filename)):
         yield filename
 
-  def handle_request_fragment_check_caution(self, line):
-    if line.strip() == "* [Caution: To check manually] This is a Powheg NLO sample. Please check 'nFinal' is":
-      print "nFinal is", self.nfinalparticles
-      return "ok"
-    return super(POWHEGMCSample, self).handle_request_fragment_check_warning(line)
-
 class AlternateWeight(collections.namedtuple("AlternateWeight", "lhapdf renscfact facscfact")):
   def __new__(cls, lhapdf, renscfact=None, facscfact=None):
     lhapdf = int(lhapdf)

@@ -146,6 +146,25 @@ transfer_output_files = {self.prepid}_rt.xml
 queue
 """
 
+condortemplate_filter = """
+executable            = {self.workdir}/$(i)/filterjobscript
+output                = {self.workdir}/$(i)/filterjob.out
+error                 = {self.workdir}/$(i)/filterjob.err
+log                   = {self.workdir}/$(i)/filterjob.log
+Initialdir            = {self.workdir}/$(i)
+
+request_memory        = 4000M
+request_cpus          = {self.nthreadsforfilter}
++JobFlavour           = "{self.filterefficiencyflavor}"
+
+#https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
+periodic_remove       = JobStatus == 5
+
+transfer_output_files = {self.filterresultsfile}
+
+queue i in {jobstoqueue}
+"""
+
 def submitcondor(flavor, sample, writejobid=None):
   if writejobid is not None and os.path.exists(writejobid):
     raise RuntimeError(writejobid + " already exists")

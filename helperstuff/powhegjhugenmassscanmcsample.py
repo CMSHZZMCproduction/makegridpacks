@@ -390,3 +390,10 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   def makegridpackseed(self):
     result = super(POWHEGJHUGenMassScanMCSample, self).makegridpackseed
     return result
+
+  def handle_request_fragment_check_warning(self, line):
+    if self.productionmode in ("ZH", "WplusH", "WminusH"):
+      if line.strip() == "* [WARNING] nFinal(=3) may not be equal to the number of final state particles before decays (=1)":
+        print "nFinal is", self.nfinalparticles
+        return "ok"
+    return super(POWHEGJHUGenMassScanMCSample, self).handle_request_fragment_check_warning(line)

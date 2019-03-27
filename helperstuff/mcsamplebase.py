@@ -5,7 +5,7 @@ import uncertainties
 import patches
 
 from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, request_fragment_check, scramarch, urlopen, wget
-from jobsubmission import condortemplate_sizeperevent, jobid, JobQueue, jobtype, queuematches, submitcondor
+from jobsubmission import condortemplate_filter, condortemplate_sizeperevent, jobid, JobQueue, jobtype, queuematches, submitcondor
 from rest import McM
 
 class MCSampleBase(JsonDict):
@@ -126,6 +126,8 @@ class MCSampleBase(JsonDict):
   def timepereventflavor(self): return JobQueue(self.timepereventqueue).condorflavor
   @property
   def filterefficiencyqueue(self): return "tomorrow"
+  @property
+  def filterefficiencyflavor(self): return JobQueue(self.filterefficiencyqueue).condorflavor
   @property
   def dovalidation(self):
     """Set this to false if a request fails so badly that the validation will never succeed"""
@@ -329,6 +331,61 @@ class MCSampleBase(JsonDict):
       shutil.rmtree(os.path.dirname(self.tmptarball))
       return "tarball is created and moved to this folder, to be copied to eos"
 
+  def findfilterefficiencycondor(self):
+    #figure out the filter efficiency
+    if not self.hasfilter:
+      self.filterefficiency = 1
+      return "filter efficiency is set to 1 +/- 0"
+
+    if not self.implementsfilter: raise ValueError("Can't find filter efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
+    mkdir_p(self.workdir)
+    jobsrunning = False
+    eventsprocessed = eventsaccepted = nfinished = 0
+    jobstosubmit = []
+    with cd(self.workdir):
+      for i in range(100):
+        mkdir_p(str(i))
+        with cd(str(i)), KeepWhileOpenFile("runningfilterjob.tmp", deleteifjobdied=True) as kwof:
+          if not kwof:
+            jobsrunning = True
+            continue
+          with open("filterjob.log") as f:
+            for line in f:
+              if line.startswith("004") or line.startswith("005") or line.startswith("009"): break
+            else:
+              jobsrunning = True
+              continue
+          if os.path.exists(self.filterresultsfile):
+            processed, accepted = self.getfilterresults(i)
+            if not processed is accepted is None:
+              eventsprocessed += processed
+              eventsaccepted += accepted
+              nfinished += 1
+              continue
+          if not os.path.exists(self.filterresultsfile):
+            with open("filterjobscript", "w") as f:
+              f.write(self.filterjobscript(i))
+            try:
+              os.remove("filterjob.log")
+            except OSError:
+              pass
+            os.chmod("filterjobscript", os.stat("filterjobscript").st_mode | stat.S_IEXEC)
+            jobstosubmit.append(str(i))
+            continue
+
+      if jobstosubmit:
+        jobsrunning = True
+        with tempfile.NamedTemporaryFile(bufsize=0) as f:
+          f.write(condortemplate_filter.format(self=self, jobstoqueue=" ".join(jobstosubmit)))
+          subprocess.check_call(["condor_submit", f.name])
+        return "submitted {} filter efficiency jobs".format(len(jobstosubmit))
+
+      if jobsrunning: return "some filter efficiency jobs are still running"
+      assert nfinished == 100, nfinished
+      self.filterefficiency = uncertainties.ufloat(1.0*eventsaccepted / eventsprocessed, (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5)
+      #shutil.rmtree(self.workdir)
+      return "filter efficiency is measured to be {}".format(self.filterefficiency)
+
   def findfilterefficiency(self):
     #figure out the filter efficiency
     if not self.hasfilter:
@@ -517,7 +574,7 @@ class MCSampleBase(JsonDict):
       if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
-      return self.findfilterefficiency()
+      return self.findfilterefficiencycondor()
 
     if not (self.sizeperevent and self.timeperevent) and not self.needsupdateiffailed:
       if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): self.needsupdate=True; return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
@@ -1179,7 +1236,7 @@ class MCSampleBase(JsonDict):
 
   def handle_request_fragment_check_warning(self, line):
     if re.match(r"\* \[WARNING\] Large time/event[=0-9.]* - please check", line.strip()):
-      print "time/event is", self.timeperevent
+      print "time/event is", self.fullinfo["time_event"][0]
       if self.maxallowedtimeperevent is not None and self.timeperevent < self.maxallowedtimeperevent: return "ok"
       return "please check it"
     return "request_fragment_check gave an unhandled warning!"
