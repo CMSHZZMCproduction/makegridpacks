@@ -84,3 +84,11 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
   @property
   def hasnonJHUGenfilter(self): return False
 
+  @property
+  def makegridpackseed(self):
+    result = super(POWHEGJHUGenAnomCoupMCSample, self).makegridpackseed
+    if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "L1Zg" and self.multicore_upto[0] == 2: result -= 5
+    if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "L1mix" and self.multicore_upto[0] == 2: result -= 4
+    if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "SM" and self.multicore_upto[0] == 2: result += 1
+    return result
+
