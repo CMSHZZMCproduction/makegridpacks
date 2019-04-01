@@ -91,6 +91,13 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
     if self.year == 2018 and identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
     if self.year == 2018 and identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
 
+    if self.year == 2018 and identifierstr == "BSI 10 0PM MUMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 1 0M TLTL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PH ELEL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
+
     return v
 
   def cvmfstarball_anyversion(self, version):
@@ -196,5 +203,11 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
     return super(MCFMAnomCoupMCSample, self).tweaktimepereventseed
   @property
   def tweakmakegridpackseed(self):
-    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PH": return 1
-    return super(MCFMAnomCoupMCSample, self).tweakmakegridpackseed
+    result = super(MCFMAnomCoupMCSample, self).tweakmakegridpackseed
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PH": result += 1
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PM": result += 1
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PHf05ph0": result += 1
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 1 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0M": result += 1
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PH": result += 1
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0Mf05ph0": result += 1
+    return result

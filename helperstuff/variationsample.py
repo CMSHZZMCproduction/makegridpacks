@@ -344,6 +344,13 @@ class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSample)):
     if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
     if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
 
+    if identifierstr == "BSI 10 0PM MUMU": v+=1
+    if identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
+    if identifierstr == "BSI 1 0M TLTL": v+=1
+    if identifierstr == "BSI 10 0PH ELEL": v+=1
+    if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
+    if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
+
     if self.year == 2017:
       othersample = MCFMAnomCoupMCSample(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
       if self.mainsample.signalbkgbsi == "BKG":
@@ -428,6 +435,12 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
     return result
 
   @property
+  def genproductionscommit(self):
+    if isinstance(self, POWHEGJHUGenAnomCoupMCSample) and self.productionmode == "ggH": return "7e0e1d97b576734eaef5ec63c821c9ab7fb7faed"
+    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ggH" and self.mass in (125, 190, 200): return "7e0e1d97b576734eaef5ec63c821c9ab7fb7faed"
+    return super(RunIIFall17DRPremix_nonsubmittedBase, self).genproductionscommit
+
+  @property
   def genproductionscommitforfragment(self):
     return "fd7d34a91c3160348fd0446ded445fa28f555e09"
 
@@ -446,6 +459,7 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
 
     if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ggH" and self.mass in (125, 190, 200): v+=1
     if isinstance(self, POWHEGJHUGenAnomCoupMCSample) and self.productionmode == "ggH": v+=1
+    if isinstance(self, POWHEGJHUGenAnomCoupMCSample) and self.productionmode == "ggH" and self.coupling == "L1": v+=1 #corrupt copy
 
     return v
 

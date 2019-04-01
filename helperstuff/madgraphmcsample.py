@@ -99,7 +99,7 @@ class MadGraphMCSample(MCSampleBase):
             f.write(cc)
           with open("gitcardcontents"+suffix, "w") as f:
             f.write(gcc)
-        raise ValueError(name + " in tarball != " + name + " in git\n{}\nSee ./cardcontents{} and ./gitcardcontents{}".format(self, suffix, suffix))
+        raise ValueError(name + " in tarball != " + name + " in git\n{}\n{}\nSee ./cardcontents{} and ./gitcardcontents{}".format(self, self.cvmfstarball, suffix, suffix))
 
     if self.madgraphcardscript:
       result = "\n#    ".join((scripturls[0],) + tuple(self.madgraphcards))

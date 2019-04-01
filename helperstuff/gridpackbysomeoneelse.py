@@ -121,10 +121,14 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     assert False, self.year
   @property
   def genproductionscommit(self):
-    return "34b9e3dc408110faa10cf6317a0d901cd74e3ae1"
+    if self.__VV == "ZZd":
+      return "34b9e3dc408110faa10cf6317a0d901cd74e3ae1"
+    if self.__VV == "ZdZd":
+      return "7e0e1d97b576734eaef5ec63c821c9ab7fb7faed"
+    assert False, self
   @property
   def genproductionscommitforfragment(self):
-    if self.year == 2018:
+    if self.__VV == "ZZd" and self.year == 2018:
       return "a93def45caca7548931ed014f933375828aaf8c8" #get the scale variations
     return super(MadGraphHZZdFromJake, self).genproductionscommitforfragment
   @property
@@ -139,14 +143,22 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
 
   @property
   def madgraphcardscript(self):
-    if self.year in (2017, 2018):
-      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
-    elif self.year == 2016:
-      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
-    return (os.path.join(maindir, "makecards.sh"),) + tuple(os.path.join(maindir, "HAHMcards_eps_MZD_lhaid_template", os.path.basename(_)) for _ in self.madgraphcards)
+    if self.__VV == "ZZd":
+      if self.year in (2017, 2018):
+        maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
+      elif self.year == 2016:
+        maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
+      subfolder = "HAHMcards_eps_MZD_lhaid_template"
+    elif self.__VV == "ZdZd":
+      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/HToZdZdTo4L_eps1e-2_13TeV_madgraph_pythia8/")
+      subfolder = "HToZdZdcards_lhaid306000_eps1e-2_template"
+    return (os.path.join(maindir, "makecards.sh"),) + tuple(os.path.join(maindir, subfolder, os.path.basename(_)) for _ in self.madgraphcards)
   @property
   def madgraphcards(self):
-    folder = "HAHMcards_eps{:.0e}_MZD{}_lhaid{}".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-02", "e-2")
+    if self.__VV == "ZZd":
+      folder = "HAHMcards_eps{:.0e}_MZD{}_lhaid{}".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-02", "e-2")
+    if self.__VV == "ZdZd":
+      folder = "HToZdZdcards_eps{:.0e}_MZD{}_lhaid{}".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-02", "e-2")
     basenames = "HAHM_variablesw_v3_customizecards.dat", "HAHM_variablesw_v3_extramodels.dat", "HAHM_variablesw_v3_proc_card.dat", "HAHM_variablesw_v3_run_card.dat"
     return tuple(os.path.join(folder, basename) for basename in basenames)
   @property
