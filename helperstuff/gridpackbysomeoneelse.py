@@ -74,6 +74,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     if self.(whatever) == (whatever): v += 1
     """
     if self.year in (2016, 2017, 2018) and self.__Zdmass == 20 and self.__eps == 1e-2 and self.__VV == "ZZd": v += 1 #comments on PR --> new tarball
+    if self.year in (2016, 2017, 2018) and self.__VV == "ZdZd" and self.__eps == 1e-2 and (self.__Zdmass in (4, 7) or self.__Zdmass >= 10): v+=1
     return v
 
   @property
@@ -94,12 +95,15 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
   @classmethod
   @cacheaslist
   def allsamples(cls):
-    for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60:
+    for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 30, 35:
       for eps in 1e-2,:
         for year in 2016, 2017, 2018:
-          for VV in "ZZd", "ZdZd":
-            if Zdmass <= 3 and VV == "ZdZd": continue
-            if Zdmass >= 40 and VV == "ZZd": continue
+          for VV in "ZZd",:
+            yield cls(year, VV, Zdmass, eps)
+    for Zdmass in 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60:
+      for eps in 1e-2,:
+        for year in 2016, 2017, 2018:
+          for VV in "ZdZd",:
             yield cls(year, VV, Zdmass, eps)
 
   @property
