@@ -1109,10 +1109,12 @@ class MCSampleBase(JsonDict):
 
   @property
   def approval(self):
+    if not self.prepid: return "none"
     return self.fullinfo["approval"]
   @property
   def status(self):
     if self.finished: return "done"
+    if not self.prepid: return "new"
     return self.fullinfo["status"]
 
   def delete(self):

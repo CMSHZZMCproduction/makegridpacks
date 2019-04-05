@@ -211,3 +211,9 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
     if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PH": result += 1
     if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0Mf05ph0": result += 1
     return result
+
+  @property
+  def neventsfortest(self):
+    return 1000
+    return super(MCFMAnomCoupMCSample, self).neventsfortest
+
