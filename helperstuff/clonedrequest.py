@@ -123,21 +123,11 @@ class ClonedRequest(MCSampleBase):
     assert False
   @property
   def responsible(self):
-    if (self.originalprepid, self.newcampaign) in (
-      ("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS"),
-      ("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS"),
-    ):
-      return "hroskes"
-    if self.newcampaign == "PhaseIISummer17wmLHEGENOnly":
-      if any(self.originalprepid == "HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_) for _ in (1, 2, 3, 4, 50, 51, 35)):
-        return "hroskes"
     assert False, self
   @classmethod
   @cacheaslist
   def allsamples(cls):
-    yield cls(2017, "HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
-    for _ in 1, 2, 3, 4, 50, 51, 35:
-      yield cls(2017, "HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_), "PhaseIISummer17wmLHEGENOnly")
+    return ()
 
   def createrequest(self, clonequeue):
     self.needsupdate = True
