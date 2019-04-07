@@ -535,10 +535,9 @@ class MCSampleBase(JsonDict):
 
   def makegridpack(self, approvalqueue, badrequestqueue, clonequeue, setneedsupdate=False):
     if self.finished: return "finished!"
-    if self.cmsswversion != cmsswversion or self.scramarch != scramarch:
-      return "try again in "+self.cmsswversion+" with scram arch "+self.scramarch
     if not self.cvmfstarballexists:
       if not os.path.exists(self.eostarball):
+        if self.cmsswversion != cmsswversion or self.scramarch != scramarch: return "try again in "+self.cmsswversion+" with scram arch "+self.scramarch
         if not os.path.exists(self.foreostarball):
           if self.needspatch: return self.patchtarball()
           return self.createtarball()
@@ -575,6 +574,7 @@ class MCSampleBase(JsonDict):
       if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
+      if self.cmsswversion != cmsswversion or self.scramarch != scramarch: return "try again in "+self.cmsswversion+" with scram arch "+self.scramarch
       return self.findfilterefficiencycondor()
 
     if not (self.sizeperevent and self.timeperevent) and not self.needsupdateiffailed:
@@ -582,6 +582,7 @@ class MCSampleBase(JsonDict):
       if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
+      if self.cmsswversion != cmsswversion or self.scramarch != scramarch: return "try again in "+self.cmsswversion+" with scram arch "+self.scramarch
       return self.getsizeandtimecondor()
 
     if jobtype():
