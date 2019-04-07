@@ -179,8 +179,10 @@ def submitcondor(flavor, sample, writejobid=None):
       filter="lambda x: x.identifiers == (" + ", ".join(repr(i).replace("'", "''").replace('"', '""') for i in sample.identifiers)+")"
     ))
     output = subprocess.check_output(["condor_submit", f.name])
-    print output
-    outputjobid = re.match("1 job[(]s[)] submitted to cluster ([0-9]*)[.]", output).group(1) + ".0"
+    match = re.search("1 job[(]s[)] submitted to cluster ([0-9]*)[.]", output)
+    if not match: raise ValueError("didn't match??\n\n"+output+"\n\n")
+    print output,
+    outputjobid = match.group(1) + ".0"
     if writejobid is not None:
       with open(writejobid, "w") as f:
         f.write(outputjobid)
