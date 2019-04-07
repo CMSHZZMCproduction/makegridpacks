@@ -17,7 +17,7 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 #    print folder
     cardbase = self.productionmode
     #card = os.path.join(folder, cardbase+"_NNPDF31_13TeV_M{:d}.input".format(self.mass))
-    card = os.path.join(folder, self.kind + ".input")
+    card = os.path.join(folder, self.coupling + ".input")
 
     if not os.path.exists(card):
       raise IOError(card+" does not exist")
@@ -34,7 +34,7 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def timepereventqueue(self):
-    return "1nw"
+    return "nextweek"
 
 
   def cvmfstarball_anyversion(self, version):
@@ -45,8 +45,10 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
     tarballname = self.datasetname+".tgz"
 
-    if self.year == 2016 and self.productionmode == "HJJ" and self.decaymode == "4l" and self.mass == 125 and self.tarballversion == 1:
+    if self.year == 2016 and self.productionmode == "HJJ" and self.decaymode == "4l" and self.mass == 125 and version == 1:
       tarballname = tarballname.replace("V723", "V7011")
+    if self.year in (2017, 2018) and self.productionmode == "VBF" and self.decaymode == "4l" and self.mass == 125 and version == 2:
+      tarballname = tarballname.replace("V727", "V7011")
 
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
@@ -99,14 +101,17 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     #for productionmode in "HJJ", "VBF"  :
       decaymode = "4l" 
       for mass in cls.getmasses(productionmode, decaymode):
-        for kind in cls.getkind(productionmode, decaymode):
+        for coupling in cls.getcouplings(productionmode, decaymode):
           for year in 2016, 2017, 2018:
             if year == 2016 and productionmode != "HJJ": continue
-            yield cls(year, productionmode, decaymode, mass, kind)
+            yield cls(year, productionmode, decaymode, mass, coupling)
 
   @property
   def responsible(self):
-     return "hroskes"
+     if self.productionmode == "ggZH":
+       return "qguo"
+     else:
+       return "hroskes"
 
   @property
   def JHUGenversion(self):
@@ -119,10 +124,9 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def maxallowedtimeperevent(self):
-    if self.productionmode in ("VBF", "HJJ"): return 205
+    if self.productionmode in ("VBF", "HJJ"): return 250
     return super(JHUGenJHUGenAnomCoupMCSample, self).maxallowedtimeperevent
 
   @property
   def dovalidation(self):
-    if self.year == 2016 and self.productionmode == "HJJ": return False
     return super(JHUGenJHUGenAnomCoupMCSample, self).dovalidation

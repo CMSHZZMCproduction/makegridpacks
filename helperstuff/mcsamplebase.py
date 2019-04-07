@@ -1,24 +1,30 @@
-import abc, collections, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess, tempfile
+import abc, collections, contextlib, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess, tempfile
 
 import uncertainties
 
 import patches
 
-from jobsubmission import condortemplate_sizeperevent, JobQueue, jobtype, queuematches, submitLSF
-from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, restful, scramarch, wget
+from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, request_fragment_check, scramarch, urlopen, wget
+from jobsubmission import condortemplate_filter, condortemplate_sizeperevent, jobid, JobQueue, jobtype, queuematches, submitcondor
+from rest import McM
 
 class MCSampleBase(JsonDict):
   @abc.abstractmethod
   def __init__(self, year):
     self.__year = int(year)
+  @abc.abstractproperty
+  def initargs(self): assert False, self
+  @property
+  def initkwargs(self): return {}
   @property
   def year(self):
     return self.__year
   @abc.abstractproperty
   def identifiers(self):
     """example: productionmode, decaymode, mass"""
+    assert False, self
   @abc.abstractproperty
-  def tarballversion(self): pass
+  def tarballversion(self): assert False, self
   @property
   def cvmfstarball(self):
     result = self.cvmfstarball_anyversion(self.tarballversion)
@@ -30,24 +36,25 @@ class MCSampleBase(JsonDict):
   def uselocaltarballfortest(self):
     return False
   @abc.abstractmethod
-  def cvmfstarball_anyversion(self, version): pass
+  def cvmfstarball_anyversion(self, version): assert False, self
   @abc.abstractproperty
-  def tmptarball(self): pass
+  def tmptarballbasename(self): assert False, self
   @abc.abstractproperty
-  def makegridpackcommand(self): pass
+  def makegridpackcommand(self): assert False, self
   @abc.abstractproperty
   def makinggridpacksubmitsjob(self):
     """returns the job name"""
+    assert False, self
   @abc.abstractproperty
-  def hasfilter(self): pass
+  def hasfilter(self): return False
   @abc.abstractproperty
-  def datasetname(self): pass
+  def datasetname(self): assert False, self
   @property
   def extensionnumber(self):
     """This should normally be 0, only change it for extension samples"""
     return 0
   @abc.abstractproperty
-  def nevents(self): pass
+  def nevents(self): assert False, self
   @property
   def generators(self):
     result = self.productiongenerators+self.decaygenerators
@@ -88,19 +95,19 @@ class MCSampleBase(JsonDict):
       result += "\n# this is here to fool the test script: /cvmfs/cms.cern.ch/phys_generator/gridpacks"
     return result.lstrip("\n")
   @abc.abstractproperty
-  def defaulttimeperevent(self): pass
+  def defaulttimeperevent(self): assert False, self
   @abc.abstractproperty
-  def tags(self): pass
+  def tags(self): assert False, self
   @abc.abstractproperty
-  def fragmentname(self): pass
+  def fragmentname(self): assert False, self
   @abc.abstractproperty
-  def genproductionscommit(self): pass
+  def genproductionscommit(self): assert False, self
   @property
   def genproductionscommitforfragment(self): return self.genproductionscommit
   @abc.abstractproperty
-  def makegridpackscriptstolink(self): pass
+  def makegridpackscriptstolink(self): assert False, self
   @abc.abstractproperty
-  def xsec(self): pass
+  def xsec(self): assert False, self
   @abc.abstractproperty
   def responsible(self): "put the lxplus username of whoever makes these gridpacks"
   @property
@@ -112,13 +119,15 @@ class MCSampleBase(JsonDict):
   @property
   def notes(self): return ""
   @property
-  def creategridpackqueue(self): return "1nd"
+  def creategridpackqueue(self): return "tomorrow"
   @property
-  def timepereventqueue(self): return "1nd"
+  def timepereventqueue(self): return "tomorrow"
   @property
   def timepereventflavor(self): return JobQueue(self.timepereventqueue).condorflavor
   @property
-  def filterefficiencyqueue(self): return "1nd"
+  def filterefficiencyqueue(self): return "tomorrow"
+  @property
+  def filterefficiencyflavor(self): return JobQueue(self.filterefficiencyqueue).condorflavor
   @property
   def dovalidation(self):
     """Set this to false if a request fails so badly that the validation will never succeed"""
@@ -131,12 +140,14 @@ class MCSampleBase(JsonDict):
   def gridpackjobsrunning(self):
     """powheg samples that need to run the grid in multiple steps need to modify this"""
     if not self.makinggridpacksubmitsjob: return False
-    return not jobended("-J", self.makinggridpacksubmitsjob)
+    raise RuntimeError("fix this")
+    #this doesn't work
+    return not jobended("-constraint", 'JobBatchName == "{}"'.format(self.makinggridpacksubmitsjob))
   def processmakegridpackstdout(self, stdout): "do nothing by default, powheg uses this"
 
   @abc.abstractmethod
   @cacheaslist
-  def allsamples(self): "should be a classmethod"
+  def allsamples(self): "should be a classmethod"; assert False, self
 
   def __eq__(self, other):
     return self.keys == other.keys
@@ -147,7 +158,8 @@ class MCSampleBase(JsonDict):
   def __str__(self):
     return " ".join(str(_) for _ in self.keys)
   def __repr__(self):
-    return type(self).__name__+"(" +  ", ".join(repr(_) for _ in self.keys) + ")"
+    return (type(self).__name__+"(" +  ", ".join(repr(_) for _ in self.initargs) + 
+                                       ", ".join("{}={!r}".format(k, v) for k, v in self.initkwargs.iteritems()) + ")")
 
   @property
   def eostarball(self):
@@ -169,15 +181,18 @@ class MCSampleBase(JsonDict):
 
   @property
   def workdirforgridpack(self):
-    result = os.path.dirname(self.tmptarball)
-    if os.path.commonprefix((result, os.path.join(here, "workdir"))) != os.path.join(here, "workdir"):
-      raise ValueError("{!r}.workdir is supposed to be in the workdir folder".format(self))
-    if result == os.path.join(here, "workdir"):
-      raise ValueError("{!r}.workdir is supposed to be a subfolder of the workdir folder, not workdir itself".format(self))
+    result = os.path.dirname(self.foreostarball)
+    result = result.replace(os.path.join(here, "gridpacks"), os.path.join(here, "workdir"))
+    assert result.startswith(os.path.join(here, "workdir")), result
     return result
+
   @property
   def workdir(self):
-    return self.workdirforgridpack.rstrip("/") + "_" + str(self.year) + "/"
+    return self.workdirforgridpack.rstrip("/") + "_" + str(self).replace(" ", "")
+
+  @property
+  def tmptarball(self):
+    return os.path.join(self.workdirforgridpack, self.tmptarballbasename)
 
   @property
   def cvmfstarballexists(self): return os.path.exists(self.cvmfstarball)
@@ -190,7 +205,7 @@ class MCSampleBase(JsonDict):
 
     samples = list(allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball))
 
-    mkdir_p(self.workdirforgridpack)
+    mkdir_p(os.path.dirname(self.tmptarball))
     with KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
       if not kwof:
         return "job to patch the tarball is already running"
@@ -226,15 +241,27 @@ class MCSampleBase(JsonDict):
     if os.path.exists(self.cvmfstarball) or os.path.exists(self.eostarball) or os.path.exists(self.foreostarball): return
     from . import allsamples
 
-    mkdir_p(self.workdirforgridpack)
+    mkdir_p(os.path.dirname(self.tmptarball))
     with cd(self.workdirforgridpack), KeepWhileOpenFile(self.tmptarball+".tmp") as kwof:
+      try:
+        with open(self.tmptarball+".jobid") as f:
+          condorjobid = f.read().strip()
+      except IOError:
+        pass
+      else:
+        if condorjobid != jobid():
+          if jobended(condorjobid):
+            os.remove(self.tmptarball+".jobid")
+          else:
+            return "condor job "+condorjobid+" is already taking care of this tarball"
+
       if not kwof:
         try:
           with open(self.tmptarball+".tmp") as f:
-            jobid = int(f.read().strip())
+            kwofjobid = float(f.read().strip())
         except (ValueError, IOError):
           return "try running again, probably you just got really bad timing"
-        if jobended(str(jobid)):
+        if jobended(str(kwofjobid)):
           if self.makinggridpacksubmitsjob:
             os.remove(self.tmptarball+".tmp")
             return "job died at a very odd time, cleaned it up.  Try running again."
@@ -261,7 +288,7 @@ class MCSampleBase(JsonDict):
               except OSError:
                 shutil.rmtree(_)
         if not self.makinggridpacksubmitsjob and self.creategridpackqueue is not None:
-          if not jobtype(): return "need to create the gridpack, submitting to LSF" if submitLSF(self.creategridpackqueue) else "need to create the gridpack, job is pending on LSF"
+          if not jobtype(): return "need to create the gridpack, submitting to condor" if submitcondor(self.creategridpackqueue, sample=self, writejobid=self.tmptarball+".jobid") else "need to create the gridpack, job is pending on condor"
           if not queuematches(self.creategridpackqueue): return "need to create the gridpack, but on the wrong queue"
         for filename in self.makegridpackscriptstolink:
           os.symlink(filename, os.path.basename(filename))
@@ -303,6 +330,61 @@ class MCSampleBase(JsonDict):
       shutil.move(self.tmptarball, self.foreostarball)
       shutil.rmtree(os.path.dirname(self.tmptarball))
       return "tarball is created and moved to this folder, to be copied to eos"
+
+  def findfilterefficiencycondor(self):
+    #figure out the filter efficiency
+    if not self.hasfilter:
+      self.filterefficiency = 1
+      return "filter efficiency is set to 1 +/- 0"
+
+    if not self.implementsfilter: raise ValueError("Can't find filter efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
+    mkdir_p(self.workdir)
+    jobsrunning = False
+    eventsprocessed = eventsaccepted = nfinished = 0
+    jobstosubmit = []
+    with cd(self.workdir):
+      for i in range(100):
+        mkdir_p(str(i))
+        with cd(str(i)), KeepWhileOpenFile("runningfilterjob.tmp", deleteifjobdied=True) as kwof:
+          if not kwof:
+            jobsrunning = True
+            continue
+          with open("filterjob.log") as f:
+            for line in f:
+              if line.startswith("004") or line.startswith("005") or line.startswith("009"): break
+            else:
+              jobsrunning = True
+              continue
+          if os.path.exists(self.filterresultsfile):
+            processed, accepted = self.getfilterresults(i)
+            if not processed is accepted is None:
+              eventsprocessed += processed
+              eventsaccepted += accepted
+              nfinished += 1
+              continue
+          if not os.path.exists(self.filterresultsfile):
+            with open("filterjobscript", "w") as f:
+              f.write(self.filterjobscript(i))
+            try:
+              os.remove("filterjob.log")
+            except OSError:
+              pass
+            os.chmod("filterjobscript", os.stat("filterjobscript").st_mode | stat.S_IEXEC)
+            jobstosubmit.append(str(i))
+            continue
+
+      if jobstosubmit:
+        jobsrunning = True
+        with tempfile.NamedTemporaryFile(bufsize=0) as f:
+          f.write(condortemplate_filter.format(self=self, jobstoqueue=" ".join(jobstosubmit)))
+          subprocess.check_call(["condor_submit", f.name])
+        return "submitted {} filter efficiency jobs".format(len(jobstosubmit))
+
+      if jobsrunning: return "some filter efficiency jobs are still running"
+      assert nfinished == 100, nfinished
+      self.filterefficiency = uncertainties.ufloat(1.0*eventsaccepted / eventsprocessed, (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5)
+      #shutil.rmtree(self.workdir)
+      return "filter efficiency is measured to be {}".format(self.filterefficiency)
 
   def findfilterefficiency(self):
     #figure out the filter efficiency
@@ -369,6 +451,7 @@ class MCSampleBase(JsonDict):
             cmsdriverindex = cmsdriverindex.pop()
             lines.insert(cmsdriverindex+1, 'sed -i "/Services/aprocess.RandomNumberGeneratorService.externalLHEProducer.initialSeed = process.RandomNumberGeneratorService.externalLHEProducer.initialSeed.value() + {:d}" *_cfg.py'.format(self.tweaktimepereventseed))
             testjob = "\n".join(lines)
+          testjob = testjob.replace("slc6", "slc7")
           with open(self.prepid, "w") as newf:
             newf.write(testjob)
           os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
@@ -492,7 +575,7 @@ class MCSampleBase(JsonDict):
       if setneedsupdate:
         result = self.setneedsupdate()
         if result: return result
-      return self.findfilterefficiency()
+      return self.findfilterefficiencycondor()
 
     if not (self.sizeperevent and self.timeperevent) and not self.needsupdateiffailed:
       if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): self.needsupdate=True; return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
@@ -808,7 +891,7 @@ class MCSampleBase(JsonDict):
 
       originalresult = result[:]
       for _ in result[:]:
-        if not jobtype() and not restful().get("requests", _):
+        if not jobtype() and not McM().get("requests", _):
           result.remove(_)
 
       if result != originalresult:
@@ -916,7 +999,7 @@ class MCSampleBase(JsonDict):
     return createLHEProducer(self.cvmfstarball, self.getcardsurl(), self.fragmentname, self.genproductionscommitforfragment)
 
   def getdictforupdate(self):
-    mcm = restful()
+    mcm = McM()
     req = mcm.get("requests", self.prepid)
     req["dataset_name"] = self.datasetname
     req["mcdb_id"] = 0
@@ -945,7 +1028,7 @@ class MCSampleBase(JsonDict):
     return req
 
   def updaterequest(self):
-    mcm = restful()
+    mcm = McM()
     req = self.getdictforupdate()
     try:
       answer = mcm.update('requests', req)
@@ -965,11 +1048,11 @@ class MCSampleBase(JsonDict):
   @property
   def pwg(self): return "HIG"
   @abc.abstractproperty
-  def campaign(self): pass
+  def campaign(self): assert False, self
 
   def createrequest(self, clonequeue):
     if jobtype(): return "run locally to submit to McM"
-    mcm = restful()
+    mcm = McM()
     req = {
       "pwg": self.pwg,
       "member_of_campaign": self.campaign,
@@ -989,7 +1072,9 @@ class MCSampleBase(JsonDict):
   def getprepid(self):
     if jobtype(): return
     query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.datasetname, self.extensionnumber, self.pwg, self.campaign)
-    output = restful().get('requests', query=query)
+    output = McM().get('requests', query=query)
+    if not output:
+      return None
     prepids = {_["prepid"] for _ in output}
     prepids -= frozenset(self.badprepid)
     if not prepids:
@@ -1025,10 +1110,12 @@ class MCSampleBase(JsonDict):
 
   @property
   def approval(self):
+    if not self.prepid: return "none"
     return self.fullinfo["approval"]
   @property
   def status(self):
     if self.finished: return "done"
+    if not self.prepid: return "new"
     return self.fullinfo["status"]
 
   def delete(self):
@@ -1037,15 +1124,15 @@ class MCSampleBase(JsonDict):
       response = raw_input("are you sure you want to delete {}? [yes/no]".format(self))
     if response == "no": return
     if self.prepid:
-      restful().approve("requests", self.prepid, 0)
-      restful().delete("requests", self.prepid)
+      McM().approve("requests", self.prepid, 0)
+      McM().delete("requests", self.prepid)
     with cd(here), self.writingdict():
       del self.value
 
   def optionreset(self):
     if self.prepid is None: return
     self.needsupdate = True
-    results = restful().get("restapi/requests/option_reset/"+self.prepid)
+    results = McM().get("restapi/requests/option_reset/"+self.prepid)
     try:
       success = bool(results["results"][self.prepid])
     except KeyError:
@@ -1117,54 +1204,42 @@ class MCSampleBase(JsonDict):
       return "there is a change in some parameters, setting needsupdate" + "iffailed"*(not setneedsupdate) + " = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((subkey, old[key].get(subkey), new[key].get(subkey)) for key in differentsub for subkey in differentsub[key]), ((subkey, old[key][0].get(subkey), new[key][0].get(subkey)) for key in differentsub for subkey in differentsublist[key])))
 
   def request_fragment_check(self):
-    with cdtemp():
-      with open(os.path.join(genproductions, "bin", "utils", "request_fragment_check.py")) as f:
-        contents = f.read()
-      cookies = [line for line in contents.split("\n") if "os.system" in line and "cookie" in line.lower()]
-      assert len(cookies) == 2
-      for cookie in cookies: contents = contents.replace(cookie, "#I already ate the cookie")
-      with open("request_fragment_check.py", "w") as f:
-        f.write(contents)
+    try:
+      output = request_fragment_check("--prepid", self.prepid, "--bypass_status")
+      print output,
+    except subprocess.CalledProcessError as e:
+      print e.output,
+      return "request_fragment_check failed!"
 
-      try:
-        output = subprocess.check_output(["python", "request_fragment_check.py", "--prepid", self.prepid, "--bypass_status"], stderr=subprocess.STDOUT)
-        print output,
-      except subprocess.CalledProcessError as e:
-        print e.output,
-        return "request_fragment_check failed!"
-
-      for line in output.split("\n"):
-        if line == self.prepid: continue
-        if re.match(r"{}\s*Status\s*=\s*\w*".format(self.prepid), line.strip()): continue
-        elif "cookie" in line: continue
-        elif not line.strip().strip("*"): continue
-        elif "will be checked:" in line: continue
-        elif line.startswith("* [OK]"): continue
-        elif line.startswith("* [ERROR]"): return "request_fragment_check gave an error!\n"+line
-        elif line.startswith("* [WARNING]"):
-          result = self.handle_request_fragment_check_warning(line)
-          if result == "ok": continue
-          return result+"\n"+line
-        elif line.startswith("* [Caution: To check manually]"):
-          result = self.handle_request_fragment_check_caution(line)
-          if result == "ok": continue
-          return result+"\n"+line
-        else:
-          if line.strip() == "*               set correctly as number of final state particles (BEFORE THE DECAYS)": continue
-          if line.strip() == "*                                   in the LHE other than emitted extra parton.": continue
-          if line.strip() == "*           which may not have all the necessary GEN code.": continue
-          if line.strip() == "*                   'JetMatching:nJetMax' is set correctly as number of partons": continue
-          if line.strip() == "*                              in born matrix element for highest multiplicity.": continue
-          if line.strip() == "*                as number of partons in born matrix element for highest multiplicity.": continue
-          if line.strip() == "*           correctly as number of partons in born matrix element for highest multiplicity.": continue
-          return "Unknown line in request_fragment_check output!\n"+line
+    for line in output.split("\n"):
+      if line == self.prepid: continue
+      if re.match(r"{}\s*Status\s*=\s*\w*".format(self.prepid), line.strip()): continue
+      elif "cookie" in line: continue
+      elif not line.strip().strip("*"): continue
+      elif "will be checked:" in line: continue
+      elif line.startswith("* [OK]"): continue
+      elif line.startswith("* [ERROR]"): return "request_fragment_check gave an error!\n"+line
+      elif line.startswith("* [WARNING]"):
+        result = self.handle_request_fragment_check_warning(line)
+        if result == "ok": continue
+        return result+"\n"+line
+      elif line.startswith("* [Caution: To check manually]"):
+        result = self.handle_request_fragment_check_caution(line)
+        if result == "ok": continue
+        return result+"\n"+line
+      elif line.startswith("* [PATCH]"):
+        result = self.handle_request_fragment_check_patch(line)
+        if result == "ok": continue
+        return result+"\n"+line
+      elif line.startswith("*"):
+        return "Unknown line starting with * in request_fragment_check output!\n"+line
 
   @property
   def maxallowedtimeperevent(self): return None  #default to whatever request_fragment_check does
 
   def handle_request_fragment_check_warning(self, line):
-    if line.strip() == "* [WARNING] Large time/event - please check":
-      print "time/event is", self.timeperevent
+    if re.match(r"\* \[WARNING\] Large time/event[=0-9.]* - please check", line.strip()):
+      print "time/event is", self.fullinfo["time_event"][0]
       if self.maxallowedtimeperevent is not None and self.timeperevent < self.maxallowedtimeperevent: return "ok"
       return "please check it"
     return "request_fragment_check gave an unhandled warning!"
@@ -1172,9 +1247,15 @@ class MCSampleBase(JsonDict):
   def handle_request_fragment_check_caution(self, line):
     return "request_fragment_check gave an unhandled caution!"
 
+  def handle_request_fragment_check_patch(self, line):
+    return "request_fragment_check gave an unhandled patch!"
+
   @property
   def tweaktimepereventseed(self):
     return None
+  @property
+  def tweakmakegridpackseed(self):
+    return 0
 
   @property
   def cmsswversion(self):

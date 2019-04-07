@@ -55,13 +55,16 @@ class MadGraphGridpackBySomeoneElse(GridpackBySomeoneElse, MadGraphMCSample):
   pass
 
 class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCampaign):
-  def __init__(self, year, Zdmass, eps):
+  def __init__(self, year, VV, Zdmass, eps):
+    self.__VV = VV
     self.__Zdmass = int(str(Zdmass))
     self.__eps = float(eps)
     super(MadGraphHZZdFromJake, self).__init__(year=year)
   @property
+  def initargs(self): return self.year, self.__VV, self.__Zdmass, self.__eps
+  @property
   def identifiers(self):
-    return "Jake", "HZZd", "madgraph", self.__Zdmass, self.__eps
+    return "Jake", "H"+self.__VV, "madgraph", self.__Zdmass, self.__eps
 
   @property
   def tarballversion(self):
@@ -70,16 +73,28 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     if the first tarball is copied to eos and then is found to be bad, add something like
     if self.(whatever) == (whatever): v += 1
     """
-    if self.year in (2016, 2017, 2018) and self.__Zdmass == 20 and self.__eps == 1e-2: v += 1 #comments on PR --> new tarball
+    if self.year in (2016, 2017, 2018) and self.__Zdmass == 20 and self.__eps == 1e-2 and self.__VV == "ZZd": v += 1 #comments on PR --> new tarball
+    if self.year in (2016, 2017, 2018) and self.__VV == "ZdZd" and self.__eps == 2e-2 and (self.__Zdmass in (4, 7) or self.__Zdmass >= 10): v+=1
     return v
 
   @property
+  def kap(self):
+    if self.__VV == "ZdZd" and self.__eps == 2e-2: return 1e-4
+    assert False, self
+
+  @property
   def originaltarball(self):
-    return "/afs/cern.ch/work/d/drosenzw/public/HZZd4l_gridpacks/HAHM_variablesw_v3_eps{:.0e}_MZd{}_lhaid{}.tar.xz".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-0", "e-")
+    if self.__VV == "ZZd":
+      return "/afs/cern.ch/work/d/drosenzw/public/HZZd_gridpacks/HAHM_variablesw_v3_eps{:.0e}_MZd{}_lhaid{}.tar.xz".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-0", "e-")
+    if self.__VV == "ZdZd":
+      return "/afs/cern.ch/work/d/drosenzw/public/HZdZd4l_gridpacks/HZdZd4l_lhapdf{lhapdf}_eps{eps:.0e}_kap{kap:.0e}/HAHM_variablesw_v3_eps{eps:.0e}_kap{kap:.0e}_mZd{Zdmass}_lhapdf{lhapdf}_slc6_amd64_gcc481_CMSSW_7_1_30.tar.xz".format(eps=self.__eps, Zdmass=self.__Zdmass, lhapdf=self.lhapdf, kap=self.kap).replace("e-0", "e-")
   @property
   def lhapdf(self):
-    if self.year == 2016: return 263000
-    if self.year in (2017, 2018): return 306000
+    if self.__VV == "ZZd":
+      if self.year == 2016: return 263000
+      if self.year in (2017, 2018): return 306000
+    if self.__VV == "ZdZd":
+      return 306000
     assert False, self
 
   @classmethod
@@ -88,16 +103,22 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 30, 35:
       for eps in 1e-2,:
         for year in 2016, 2017, 2018:
-          yield cls(year, Zdmass, eps)
+          for VV in "ZZd",:
+            yield cls(year, VV, Zdmass, eps)
+    for Zdmass in 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60:
+      for eps in 2e-2,:
+        for year in 2016, 2017, 2018:
+          for VV in "ZdZd",:
+            yield cls(year, VV, Zdmass, eps)
 
   @property
   def responsible(self):
     return "hroskes"
 
   def cvmfstarball_anyversion(self, version):
-    if self.year in (2017, 2018): year = "2017"
-    if self.year == 2016: year = "slc6_amd64_gcc481"
-    tarballname = "ggH125_LO_HtoZZd_MZd{}_eps{:.0e}".format(self.__Zdmass, self.__eps)
+    if self.year in (2017, 2018) or self.year == 2016 and self.__VV == "ZdZd": year = "2017"
+    if self.year == 2016 and self.__VV == "ZZd": year = "slc6_amd64_gcc481"
+    tarballname = "ggH125_LO_Hto"+self.__VV+"_MZd{}_eps{:.0e}".format(self.__Zdmass, self.__eps)
     folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/", year, "13TeV/madgraph/V5_2.4.2/")
     return os.path.join(folder, tarballname, "v{}".format(version), tarballname+".tar.xz")
   @property
@@ -109,10 +130,14 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     assert False, self.year
   @property
   def genproductionscommit(self):
-    return "34b9e3dc408110faa10cf6317a0d901cd74e3ae1"
+    if self.__VV == "ZZd":
+      return "34b9e3dc408110faa10cf6317a0d901cd74e3ae1"
+    if self.__VV == "ZdZd":
+      return "7e0e1d97b576734eaef5ec63c821c9ab7fb7faed"
+    assert False, self
   @property
   def genproductionscommitforfragment(self):
-    if self.year == 2018:
+    if self.__VV == "ZZd" and self.year == 2018:
       return "a93def45caca7548931ed014f933375828aaf8c8" #get the scale variations
     return super(MadGraphHZZdFromJake, self).genproductionscommitforfragment
   @property
@@ -127,20 +152,32 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
 
   @property
   def madgraphcardscript(self):
-    if self.year in (2017, 2018):
-      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
-    elif self.year == 2016:
-      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
-    return (os.path.join(maindir, "makecards.sh"),) + tuple(os.path.join(maindir, "HAHMcards_eps_MZD_lhaid_template", os.path.basename(_)) for _ in self.madgraphcards)
+    if self.__VV == "ZZd":
+      if self.year in (2017, 2018):
+        maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
+      elif self.year == 2016:
+        maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
+      subfolder = "HAHMcards_eps_MZD_lhaid_template"
+    elif self.__VV == "ZdZd":
+      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/HToZdZdTo4L_eps1e-2_13TeV_madgraph_pythia8/")
+      subfolder = "HToZdZdcards_lhaid306000_eps1e-2_template"
+    return (os.path.join(maindir, "makecards.sh"),) + tuple(os.path.join(maindir, subfolder, os.path.basename(_)) for _ in self.madgraphcards)
   @property
   def madgraphcards(self):
-    folder = "HAHMcards_eps{:.0e}_MZD{}_lhaid{}".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-02", "e-2")
+    if self.__VV == "ZZd":
+      folder = "HAHMcards_eps{:.0e}_MZD{}_lhaid{}".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-02", "e-2")
+    if self.__VV == "ZdZd":
+      folder = "HToZdZdcards_eps{:.0e}_MZD{}_lhaid{}".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-02", "e-2")
     basenames = "HAHM_variablesw_v3_customizecards.dat", "HAHM_variablesw_v3_extramodels.dat", "HAHM_variablesw_v3_proc_card.dat", "HAHM_variablesw_v3_run_card.dat"
     return tuple(os.path.join(folder, basename) for basename in basenames)
   @property
   def datasetname(self):
-    assert self.__eps == 1e-2
-    return "HToZZdTo4L_M125_MZd{}_eps1e-2_13TeV_madgraph_pythia8".format(self.__Zdmass)
+    if self.__VV == "ZZd":
+      assert self.__eps == 1e-2
+      return "HTo"+self.__VV+"To4L_M125_MZd{}_eps1e-2_13TeV_madgraph_pythia8".format(self.__Zdmass)
+    if self.__VV == "ZdZd":
+      assert self.__eps == 2e-2 and self.kap == 1e-4
+      return "HTo"+self.__VV+"To4L_M125_MZd{}_eps2e-2_kap1e-4_13TeV_madgraph_pythia8".format(self.__Zdmass)
 
   @property
   def nevents(self):
@@ -162,6 +199,9 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     super(MadGraphHJJFromThomasPlusJHUGen, self).__init__(year=year)
 
   @property
+  def initargs(self): return self.year, self.__coupling, self.__njets
+
+  @property
   def identifiers(self):
     return "Thomas", self.__njets, "madgraphJHUGen", self.__coupling
 
@@ -180,7 +220,7 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     result = super(MadGraphHJJFromThomasPlusJHUGen, self).patchkwargs
     result.append({
       "functionname": "addJHUGentomadgraph",
-      "JHUGenversion": "v7.1.4",
+      "JHUGenversion": self.JHUGenversion,
       "decaycard": self.decaycard,
     })
     return result
@@ -390,3 +430,104 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
       return 500000
     elif self.__njets == "HJJ":
       return 3000000
+
+class MadgraphTWHPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MCSampleBase_DefaultCampaign):
+  def __init__(self, year, finalstate):
+    self.finalstate = finalstate
+    super(MadgraphTWHPlusJHUGen, self).__init__(year)
+  @property
+  def initargs(self):
+    return self.year, self.finalstate
+  @property
+  def identifiers(self):
+    return "tWH", "madgraphJHUGen", self.finalstate
+  @classmethod
+  def allsamples(cls):
+    for year in 2016, 2017, 2018:
+      if year == 2016: continue
+      yield cls(year, "4l")
+  @property
+  def JHUGenversion(self):
+    return "v7.2.7"
+  @property
+  def decaycard(self):
+    assert self.finalstate == "4l"
+    return os.path.join(genproductions, "bin", "JHUGen", "cards", "decay", "ZZ2l2any_withtaus_filter4l.input")
+  @property
+  def responsible(self):
+    return "hroskes"
+  @property
+  def tags(self):
+    return ["HZZ"]
+  @property
+  def patchkwargs(self):
+    result = super(MadgraphTWHPlusJHUGen, self).patchkwargs
+    result.append({
+      "functionname": "addJHUGentomadgraph",
+      "JHUGenversion": self.JHUGenversion,
+      "decaycard": self.decaycard,
+    })
+    return result
+  @property
+  def xsec(self):
+    return 1 #unknown for unknown signal
+  @property
+  def fragmentname(self):
+    if self.year in (2017, 2018):
+      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py"
+  @property
+  def datasetname(self):
+    assert self.finalstate == "4l"
+    return "TWH_HToZZ_4LFilter_M125_13TeV_madgraph_JHUGenV727_pythia8"
+  def cvmfstarball_anyversion(self, version):
+    assert self.finalstate == "4l"
+    return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/thw_5f_ckm_LO_ctcvcp_MH125_JHUGen4l/v{}/thw_5f_ckm_LO_ctcvcp_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz".format(version)
+  @property
+  def genproductionscommit(self):
+    return "04b3f0288d03f774eec6b4098877796cbd003b56"
+  @property
+  def hasnonJHUGenfilter(self):
+    return False
+  @property
+  def originaltarball(self):
+    return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/thw_5f_ckm_LO_ctcvcp_MH125/v1/thw_5f_ckm_LO_ctcvcp_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
+  @property
+  def tarballversion(self):
+    v = 1
+    return v
+  @property
+  def nevents(self):
+    return 1000000
+  @property
+  def madgraphcards(self):
+    return [
+      os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/thq_4f_ckm_LO_ctcvcp_MH", _)
+      for _ in (
+        "thq_4f_ckm_LO_ctcvcp_MH_customizecards.dat",
+        "thq_4f_ckm_LO_ctcvcp_MH_proc_card.dat",
+        "thq_4f_ckm_LO_ctcvcp_MH_run_card.dat",
+        "thq_4f_ckm_LO_ctcvcp_MH_extramodels.dat",
+        "thq_4f_ckm_LO_ctcvcp_MH_reweight_card.dat",
+      )
+    ]
+  @property
+  def madgraphcardscript(self):
+    if self.year in (2017, 2018):
+      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs")
+    return (os.path.join(maindir, "thw_5f_ckm_LO_ctcvcp.sh"),) + tuple(os.path.join(maindir, "thw_5f_ckm_LO_ctcvcp_MH", os.path.basename(_).replace("125", "")) for _ in self.madgraphcards)
+  @property
+  def madgraphcards(self):
+    folder = "thw_5f_ckm_LO_ctcvcp_MH125"
+    return tuple(os.path.join(folder, "thw_5f_ckm_LO_ctcvcp_MH125_" + _ + ".dat")
+      for _ in ("customizecards", "proc_card", "run_card", "extramodels", "reweight_card"))
+  @property
+  def madgraphcardsrename(self):
+    return "thw_5f_ckm_LO_ctcvcp_MH125", "thw_5f_ckm_LO_ctcvcp"
+
+  def comparecards(self, name, cardcontents, gitcardcontents):
+    if name.endswith("_customizecards.dat"):
+      gitcardcontents = gitcardcontents.replace("set param_card mass 25 125\n", "")
+    if name.endswith("_proc_card.dat"):
+      cardcontents = cardcontents.replace("define ll = l+ l-\n", "")
+      cardcontents = cardcontents.replace("define vll = vl vl~\n", "")
+    return super(MadgraphTWHPlusJHUGen, self).comparecards(name, cardcontents, gitcardcontents)

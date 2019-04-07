@@ -82,20 +82,22 @@ class KeepWhileOpenFile(object):
       try:
         logging.debug("trying to open")
         self.fd = os.open(self.filename, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-      except OSError:
-        logging.debug("failed: it already exists")
-        if self.deleteifjobdied and self.jobdied():
-          logging.debug("but the job died")
-          try:
-            with cd(self.pwd):
-              logging.debug("trying to remove")
-              os.remove(self.filename)
-              logging.debug("removed")
-          except OSError:
-            logging.debug("failed")
-            pass #ignore it
-
-        return None
+      except OSError as e:
+        if e.errno == errno.EEXIST:
+          logging.debug("failed: it already exists")
+          if self.deleteifjobdied and self.jobdied():
+            logging.debug("but the job died")
+            try:
+              with cd(self.pwd):
+                logging.debug("trying to remove")
+                os.remove(self.filename)
+                logging.debug("removed")
+            except OSError:
+              logging.debug("failed")
+              pass #ignore it
+          return None
+        else:
+          raise
       else:
         logging.debug("succeeded: it didn't exist")
         logging.debug("does it now? {}".format(os.path.exists(self.filename)))
@@ -121,7 +123,7 @@ class KeepWhileOpenFile(object):
         return True
 
   def __exit__(self, *args):
-    logging.debug("exiting")
+    logging.debug("exiting KeepWhileOpenFile {}".format(self.filename))
     if self:
       try:
         with cd(self.pwd):
@@ -140,11 +142,12 @@ class KeepWhileOpenFile(object):
   def jobdied(self):
     try:
       with open(self.filename) as f:
+        strjobid = f.read().strip()
         try:
-          jobid = int(f.read().strip())
+          jobid = float(f.read().strip())
         except ValueError:
           return False
-        return jobended(str(jobid))
+        return jobended(strjobid)
     except IOError:
       return False
 
@@ -330,18 +333,38 @@ class JsonDict(object):
 @contextlib.contextmanager
 def nullcontext(): yield
 
-def jobended(*bjobsargs):
-  try:
-    bjobsout = subprocess.check_output(["bjobs"]+list(bjobsargs), stderr=subprocess.STDOUT)
-  except subprocess.CalledProcessError:
-    return True
-  if re.match("Job <.*> is not found", bjobsout.strip()):
-    return True
-  lines = bjobsout.strip().split("\n")
-  if len(lines) == 2 and lines[1].split()[2] in ("EXIT", "DONE"):
-    return True
+def jobended(*condorqargs):
+  from jobsubmission import jobtype
+  if jobtype(): return False  #can't use condor_q on condor machines
+  condorqout = subprocess.check_output(["condor_q"]+list(condorqargs), stderr=subprocess.STDOUT)
+  match = re.search("([0-9]*) jobs; ([0-9]*) completed, ([0-9]*) removed, ([0-9]*) idle, ([0-9]*) running, ([0-9]*) held, ([0-9]*) suspended", condorqout)
+  if not match: raise ValueError("Couldn't parse output of condor_q " + " ".join(condorqargs))
+  return all(int(match.group(i)) == 0 for i in xrange(4, 7))
 
-  return False
+def jobexitstatusfromlog(logfilename, okiffailed=False):
+  with open(logfilename) as f:
+    log = f.read()
+
+  jobid = re.search("^000 [(]([0-9]*[.][0-9]*)[.][0-9]*[)]", log)
+  if not jobid:
+    raise RuntimeError("Don't know how to interpret "+logfilename+", can't find the jobid in the file.")
+  jobid = jobid.group(1)
+
+  if "Job terminated" in log:
+    match = re.search("return value ([0-9]+)", log)
+    if match:
+      exitstatus = int(match.group(1))
+      if exitstatus and not okiffailed:
+        raise RuntimeError(logfilename+" failed with exit status {}".format(exitstatus))
+      return exitstatus
+    else:
+      raise RuntimeError("Don't know what to do with "+logfilename)
+  if "Job was aborted" in log:
+    if okiffailed: return -1
+    raise RuntimeError(logfilename+" was aborted")
+  return None
+
+
 
 @contextlib.contextmanager
 def redirect_stdout(target):
@@ -351,14 +374,6 @@ def redirect_stdout(target):
     yield
   finally:
     sys.stdout = original
-
-def restful(*args, **kwargs):
-  if "dev" not in kwargs: kwargs["dev"] = False
-  try:
-    with open("/dev/null", "w") as f, redirect_stdout(f):
-      return rest.McM(*args, **kwargs)
-  except:
-    raise
 
 here = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
@@ -400,15 +415,10 @@ class KeyDefaultDict(collections.defaultdict):
       ret = self[key] = self.default_factory(key)
       return ret
 
-from jobsubmission import jobtype
-
-if not jobtype():
-  sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
-  import rest
-
 @cache
 def fullinfo(prepid):
-  result = restful().get("requests", query="prepid="+prepid)
+  import rest
+  result = rest.McM().get("requests", query="prepid="+prepid)
   if not result:
     raise ValueError("mcm query for prepid="+prepid+" returned None!")
   if len(result) == 0:
@@ -460,3 +470,19 @@ externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
 
     return code
 
+def request_fragment_check(*args):
+  with cdtemp():
+    with contextlib.closing(urlopen("https://github.com/cms-sw/genproductions/raw/master/bin/utils/request_fragment_check.py")) as f:
+      contents = f.read()
+    with open("request_fragment_check.py", "w") as f:
+      f.write(contents)
+
+    return subprocess.check_output(["python", "request_fragment_check.py"] + list(args), stderr=subprocess.STDOUT)
+
+class abstractclassmethod(classmethod):
+  "https://stackoverflow.com/a/11218474"
+  __isabstractmethod__ = True
+
+  def __init__(self, callable):
+    callable.__isabstractmethod__ = True
+    super(abstractclassmethod, self).__init__(callable)

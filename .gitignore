@@ -9,4 +9,4 @@ productiongitcard
 *.tar.gz
 *.txz
 *.tar.xz
-
+*.cc

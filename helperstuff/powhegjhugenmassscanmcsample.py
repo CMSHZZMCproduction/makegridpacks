@@ -17,8 +17,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def powhegsubmissionstrategy(self):
-    if self.productionmode == "ZH": return "multicore"
-    return "onestep"
+    return "multicore"
 
   @property
   def powhegcard(self):
@@ -75,12 +74,12 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
 
   @property
   def creategridpackqueue(self):
-    if self.productionmode == "ttH": return "1nw"
+    if self.productionmode == "ttH": return "nextweek"
     return super(POWHEGJHUGenMassScanMCSample, self).creategridpackqueue
 
   @property
   def timepereventqueue(self):
-    if self.productionmode in ("ZH", "ttH"): return "1nw"
+    if self.productionmode in ("ZH", "ttH"): return "nextweek"
     return super(POWHEGJHUGenMassScanMCSample, self).timepereventqueue
 
   @property
@@ -178,15 +177,15 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def datasetname(self):
     if self.decaymode == "2l2nu":
-      result = type(self)(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Nu")
+      result = POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Nu")
     elif self.decaymode == "2l2q":
-      result = type(self)(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Q")
+      result = POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Q")
       if self.mass == 125:
         if self.productionmode in ("VBF", "WplusH", "WminusH"): result = result.replace("2L2Q", "2L2X")
         if self.productionmode == "ZH": result = "ZH_HToZZ_2LFilter_M125_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8"
         if self.productionmode == "ttH": result = "ttH_HToZZ_2LOSSFFilter_M125_13TeV_powheg2_JHUGenV7011_pythia8"
     elif self.productionmode in ("WplusH", "WminusH", "ZH") and self.mass > 230:
-      result = type(self)(self.year, self.productionmode, self.decaymode, 230).datasetname.replace("M230", "M{:d}".format(self.mass))
+      result = POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, self.decaymode, 230).datasetname.replace("M230", "M{:d}".format(self.mass))
     elif self.year == 2016:
       if 115 <= self.mass <= 270:
         result = self.olddatasetname.replace("JHUgenV6", "JHUGenV709")
@@ -386,3 +385,25 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
     if self.productionmode in ("WplusH", "WminusH", "VBF"): return 210
     return 165
     return super(POWHEGJHUGenMassScanMCSample, self).maxallowedtimeperevent
+
+  @property
+  def makegridpackseed(self):
+    result = super(POWHEGJHUGenMassScanMCSample, self).makegridpackseed
+    if self.productionmode == "ggH" and self.mass == 200 and self.decaymode == "4l" and self.multicore_upto[0] == 2: result += 6
+    return result
+
+  def handle_request_fragment_check_warning(self, line):
+    if self.productionmode in ("ZH", "WplusH", "WminusH"):
+      if line.strip() == "* [WARNING] nFinal(=3) may not be equal to the number of final state particles before decays (=1)":
+        print "nFinal is", self.nfinalparticles
+        return "ok"
+    return super(POWHEGJHUGenMassScanMCSample, self).handle_request_fragment_check_warning(line)
+
+  @property
+  def cmsswversion(self):
+    if self.productionmode == "ggH" and self.mass == 190 and self.decaymode == "4l" and self.tarballversion >= 5: return "CMSSW_9_3_14"
+    return super(POWHEGJHUGenMassScanMCSample, self).cmsswversion
+  @property
+  def scramarch(self):
+    if self.productionmode == "ggH" and self.mass == 190 and self.decaymode == "4l" and self.tarballversion >= 5: return "slc7_amd64_gcc630"
+    return super(POWHEGJHUGenMassScanMCSample, self).scramarch

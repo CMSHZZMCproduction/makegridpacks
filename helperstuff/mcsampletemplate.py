@@ -33,12 +33,10 @@ class MyMCSample(MCSampleBase):
   def hasfilter(self):
      "fill this (typically false, if there's a JHUGen or Pythia filter then true)"
   @property
-  def tmptarball(self):
+  def tmptarballbasename(self):
     """
     fill this
-    it has to be os.path.join(here, "workdir", ...)
-    the directory doesn't matter too much as long as it's different for every sample
-    the final tarball name (....tgz) has to be whatever is created by the script that makes the tarball
+    this has to be whatever is created by the script that makes the tarball
     """
   @property
   def tarballversion(self):
@@ -104,13 +102,13 @@ class MyMCSample(MCSampleBase):
     """
     fill this
     it's supposed to be a list of command line arguments
-    for example ["./run_pwg.py", "-p", ...]
+    for example ["./run_pwg_condor.py", "-p", ...]
     """
   @property
   def makinggridpacksubmitsjob(self):
     """
     fill this
-    if the script to create a gridpack (e.g. run_pwg.py) submits a job, return the job name
+    if the script to create a gridpack (e.g. run_pwg_condor.py) submits a job, return the job name
     otherwise return False or None
     """
   @property
@@ -158,19 +156,19 @@ class MyMCSample(MCSampleBase):
   def makegridpackscriptstolink(self):
     """
     fill this
-    it's basically the script to make the gridpack (e.g. run_pwg.py)
+    it's basically the script to make the gridpack (e.g. run_pwg_condor.py)
     and anything needed by it (e.g. other scripts, patches folder)
     """
 
   @property
   def creategridpackqueue(self):
-    """fill this or delete it (default 1nd)"""
+    """fill this or delete it (default tomorrow)"""
   @property
   def timepereventqueue(self):
-    """fill this or delete it (default 1nd)"""
+    """fill this or delete it (default tomorrow)"""
   @property
   def filterefficiencyqueue(self):
-    """fill this or delete it (default 1nd)"""
+    """fill this or delete it (default tomorrow)"""
 
 """
 finally, import this module in __init__.py in the helperstuff folder, inside the allsamples function

@@ -4,7 +4,7 @@ def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda 
   from mcsamplebase import MCSampleBase
 
   #import all modules that have classes that should be considered here
-  import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, \
+  import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, jhugenoffshellVBF, \
          powhegjhugenanomalouscouplings, powhegjhugenmassscanmcsample, powhegjhugenlifetime, \
          minlomcsample, mcfmanomalouscouplings, variationsample, phantommcsample, \
          qqZZmcsample, clonedrequest, gridpackbysomeoneelse, mtdtdr
@@ -32,6 +32,12 @@ def __checkforduplicates():
   prepids = Counter()
   datasets = Counter()
   for s in allsamples(onlymysamples=False):
+    try:
+      if s != type(s)(*s.initargs, **s.initkwargs):
+        raise ValueError("s = "+repr(s)+", type(s)(s.initargs) = "+repr(type(s)(*s.initargs)))
+    except TypeError:
+      print "initargs for", s, "are messed up"
+      raise
     identifiers[s.keys] += 1
     if isinstance(s, GridpackOnly): continue
     prepids[s.prepid] += 1

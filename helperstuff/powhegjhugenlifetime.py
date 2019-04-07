@@ -15,6 +15,8 @@ class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCam
     self.lifetime = int(str(lifetime))
     super(POWHEGJHUGenLifetimeMCSample, self).__init__(year=year)
   @property
+  def initargs(self): return self.year, self.productionmode, self.decaymode, self.mass, self.lifetime
+  @property
   def identifiers(self):
     return self.productionmode, self.decaymode, self.mass, "lifetime", self.lifetime
 

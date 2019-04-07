@@ -103,7 +103,7 @@ class JHUGenMCSample(UsesJHUGenLibraries):
       with open(os.path.join(folder, "JHUGen.input")) as f:
         productioncard = f.read()
     except IOError:
-      raise ValueError("no JHUGen.input in the tarball\n{}\n{}".format(self, self.cvmfstarball))
+      raise ValueError("no ./JHUGen.input or {}/JHUGen.input in the tarball\n{}\n{}".format(self.shortname+"_JHUGen", self, self.cvmfstarball))
 
     if productioncard != productiongitcard:
       with cd(here):
@@ -140,3 +140,10 @@ class JHUGenMCSample(UsesJHUGenLibraries):
   @property
   def JHUGentestargs(self):
     return super(JHUGenMCSample, self).JHUGentestargs + ["LHAPDF=NNPDF30_lo_as_0130/NNPDF30_lo_as_0130.info"]
+
+  @property
+  def tmptarballbasename(self):
+    return "JHUGen_"+self.shortname+"_"+self.scramarch+"_"+self.cmsswversion+".tgz"
+  @property
+  def shortname(self):
+    return re.sub(r"\W", "", str(self)).replace(str(self.year), "", 1)

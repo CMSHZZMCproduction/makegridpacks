@@ -11,6 +11,9 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
     self.cut = cut
     super(QQZZMCSample, self).__init__(year=year)
   @property
+  def initargs(self):
+    return self.year, self.finalstate, self.cut
+  @property
   def identifiers(self):
     result = ["qqZZ", self.finalstate]
     if self.cut: result.append(self.cut)
@@ -37,7 +40,7 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
   def powhegsubmissionstrategy(self): return "multicore"
   @property
   def creategridpackqueue(self):
-    if self.multicore_upto[0] == 1 and not self.cut: return "1nh"
+    if self.multicore_upto[0] == 1 and not self.cut: return "longlunch"
     return super(QQZZMCSample, self).creategridpackqueue
   @property
   def tarballversion(self):
@@ -86,6 +89,10 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
   @property
   def genproductionscommit(self):
     return "ce68f8a7ab05f530e0a99124088c08d1cc2bf355"
+  @property
+  def genproductionscommitforfragment(self):
+    if self.year == 2017: return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+    return super(QQZZMCSample, self).genproductionscommitforfragment
   @property
   def hasfilter(self): return False #the mass cut filter is done within powheg
   @property

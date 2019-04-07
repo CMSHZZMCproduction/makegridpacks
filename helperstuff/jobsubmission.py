@@ -1,4 +1,4 @@
-import abc, datetime, os, subprocess
+import abc, datetime, os, re, subprocess
 
 from utilities import cd, here, NamedTemporaryFile, KeyDefaultDict
 
@@ -6,7 +6,6 @@ def jobtype():
   result = set()
 
   if "_CONDOR_SCRATCH_DIR" in os.environ: result.add("condor")
-  if "LSB_JOBID" in os.environ: result.add("LSF")
 
   if not result: return None
   if len(result) == 1: return result.pop()
@@ -28,7 +27,6 @@ def condorsetup(jobid, flavor, time):
 def jobid():
   if jobtype() is None: return None
   if jobtype() == "condor": return __condor_jobid
-  if jobtype() == "LSF": return os.environ["LSB_JOBID"]
   assert False, jobtype()
 
 class JobTimeBase(object):
@@ -74,23 +72,6 @@ class JobTimeBase(object):
   @property
   def condorflavor(self):
     return min(((k, v) for k, v in self.condorflavors().iteritems() if v >= self.jobtime), key=lambda x: list(reversed(x)))[0]
-  @classmethod
-  def LSFqueues(self):
-    return {
-      "8nm": datetime.timedelta(minutes=8),
-      "1nh": datetime.timedelta(hours=1),
-      "8nh": datetime.timedelta(hours=8),
-      "1nd": datetime.timedelta(days=1),
-      "2nd": datetime.timedelta(days=2),
-      "1nw": datetime.timedelta(weeks=1),
-      "2nw": datetime.timedelta(weeks=2),
-      "cmscaf1nh": datetime.timedelta(hours=1),
-      "cmscaf1nd": datetime.timedelta(days=1),
-      "cmscaf1nw": datetime.timedelta(weeks=1),
-    }
-  @property
-  def LSFqueue(self):
-    return min(((k, v) for k, v in self.LSFqueues().iteritems() if v >= self.jobtime), key=lambda x: list(reversed(x)))[0]
 
 class JobQueue(JobTimeBase):
   def __init__(self, queue):
@@ -99,12 +80,10 @@ class JobQueue(JobTimeBase):
     return self.queue
   @property
   def jobtype(self):
-    if self.queue in self.LSFqueues(): return "LSF"
     if self.queue in self.condorflavors(): return "condor"
     assert False, self.queue
   @property
   def jobtime(self):
-    if self.jobtype == "LSF": return self.LSFqueues()[self.queue]
     if self.jobtype == "condor": return self.condorflavors()[self.queue]
 
 class JobTime(JobTimeBase):
@@ -121,8 +100,6 @@ def jobtime():
     return None
   if jobtype() == "condor":
     return __condor_jobtime
-  if jobtype() == "LSF":
-    return JobQueue(os.environ["LSB_QUEUE"])
   assert False, jobtype()
 
 def queuematches(queue):
@@ -133,25 +110,17 @@ def queuematches(queue):
 
 
 def submitLSF(queue):
-  queue = JobQueue(queue).LSFqueue
-  if __pendingjobsdct[queue] > 0:
-    __pendingjobsdct[queue] -= 1
-    return False
-  with cd(here):
-    job = "cd "+here+" && eval $(scram ru -sh) && ./makegridpacks.py --disable-duplicate-check"
-    pipe = subprocess.Popen(["echo", job], stdout=subprocess.PIPE)
-    subprocess.check_call(["bsub", "-q", queue, "-J", "makegridpacks"], stdin=pipe.stdout)
-    return True
+  raise RuntimeError("No more LSF!")
 
 condortemplate = """
 executable              = {here}/.makegridpacks_{jobflavor}.sh
-arguments               = "{here} --condorjobid $(ClusterId).$(ProcId) --condorjobflavor {jobflavor}"
+arguments               = "{here} --condorjobid $(ClusterId).$(ProcId) --condorjobflavor {jobflavor} --filter '{filter}'"
 output                  = CONDOR/$(ClusterId).$(ProcId).out
 error                   = CONDOR/$(ClusterId).$(ProcId).err
 log                     = CONDOR/$(ClusterId).log
 
-request_memory          = 4000M
-+JobFlavour             = {jobflavor}
+request_memory          = 2000M
++JobFlavour             = "{jobflavor}"
 
 #https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
 periodic_remove         = JobStatus == 5
@@ -177,21 +146,50 @@ transfer_output_files = {self.prepid}_rt.xml
 queue
 """
 
-def submitcondor(flavor):
+condortemplate_filter = """
+executable            = {self.workdir}/$(i)/filterjobscript
+output                = {self.workdir}/$(i)/filterjob.out
+error                 = {self.workdir}/$(i)/filterjob.err
+log                   = {self.workdir}/$(i)/filterjob.log
+Initialdir            = {self.workdir}/$(i)
+
+request_memory        = 4000M
+request_cpus          = {self.nthreadsforfilter}
++JobFlavour           = "{self.filterefficiencyflavor}"
+
+#https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
+periodic_remove       = JobStatus == 5
+
+transfer_output_files = {self.filterresultsfile}
+
+queue i in {jobstoqueue}
+"""
+
+def submitcondor(flavor, sample, writejobid=None):
+  if writejobid is not None and os.path.exists(writejobid):
+    raise RuntimeError(writejobid + " already exists")
   flavor = JobQueue(flavor).condorflavor
   if __pendingjobsdct[flavor] > 0:
     __pendingjobsdct[flavor] -= 1
     return False
   with cd(here), NamedTemporaryFile(bufsize=0) as f:
-    f.write(condortemplate.format(jobflavor=flavor, here=here))
-    subprocess.check_call(["condor_submit", f.name])
+    f.write(condortemplate.format(
+      jobflavor=flavor,
+      here=here,
+      filter="lambda x: x.identifiers == (" + ", ".join(repr(i).replace("'", "''").replace('"', '""') for i in sample.identifiers)+")"
+    ))
+    output = subprocess.check_output(["condor_submit", f.name])
+    match = re.search("1 job[(]s[)] submitted to cluster ([0-9]*)[.]", output)
+    if not match: raise ValueError("didn't match??\n\n"+output+"\n\n")
+    print output,
+    outputjobid = match.group(1) + ".0"
+    if writejobid is not None:
+      with open(writejobid, "w") as f:
+        f.write(outputjobid)
     return True
 
 def __npendingjobs(queue):
   jobtype = JobQueue(queue).jobtype
-  if jobtype == "LSF":
-    output = subprocess.check_output(["bjobs", "-q", queue, "-J", "makegridpacks"], stderr=subprocess.STDOUT)
-    return len(list(line for line in output.split("\n") if "PEND" in line.split()))
   if jobtype == "condor":
     output = subprocess.check_output(["condor_q", "-wide:10000"])
     result = 0

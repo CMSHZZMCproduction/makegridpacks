@@ -6,6 +6,7 @@ from utilities import cd, cdtemp
 
 from addJHUGentomadgraph import addJHUGentomadgraph
 from parallelizepowheg import parallelizepowheg
+from parallelizeJHUGen import parallelizeJHUGen
 from patchmcfmgridpack import patchmcfmgridpack
 from prunepwgrwl import prunepwgrwl
 from replacepowheg import replacepowheg
@@ -31,7 +32,7 @@ def multiplepatches(oldfilename, newfilename, listofkwargs):
 
 functiondict = {
   function.__name__: function
-    for function in (addJHUGentomadgraph, parallelizepowheg, patchmcfmgridpack, prunepwgrwl, tweakseed, multiplepatches, replacepowheg)
+    for function in (addJHUGentomadgraph, parallelizeJHUGen, parallelizepowheg, patchmcfmgridpack, prunepwgrwl, tweakseed, multiplepatches, replacepowheg)
 }
 
 def dopatch(functionname, oldfilename, newfilename, **kwargs):

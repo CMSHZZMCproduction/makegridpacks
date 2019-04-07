@@ -3,7 +3,7 @@ import abc, os, contextlib, re, filecmp, glob, pycurl, shutil, stat, subprocess,
 import uncertainties
 
 from jobsubmission import jobid, jobtype
-from utilities import cache, cd, cdtemp, genproductions, here, makecards, mkdir_p, wget, KeepWhileOpenFile, jobended, urlopen
+from utilities import cache, cd, cdtemp, genproductions, here, jobexitstatusfromlog, makecards, mkdir_p, wget, KeepWhileOpenFile, jobended, urlopen
 
 from jhugenmcsample import UsesJHUGenLibraries
 from mcsamplebase import MCSampleBase
@@ -82,8 +82,8 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
   def cardbase(self):
     return os.path.basename(self.productioncard).split(".DAT")[0]
   @property
-  def tmptarball(self):
-    return os.path.join(here, "workdir", self.datasetname, "MCFM_%s_%s_%s_%s.tgz" % (self.method, self.scramarch, self.cmsswversion, self.datasetname))
+  def tmptarballbasename(self):
+    return "MCFM_%s_%s_%s_%s.tgz" % (self.method, self.scramarch, self.cmsswversion, self.datasetname)
   @property
   def makegridpackcommand(self):
     args = {
@@ -92,14 +92,25 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
 	'--bsisigbkg': self.signalbkgbsi,
 	'-d': self.datasetname,
 	'-q': self.creategridpackqueue,
-	'-s': str(hash(self) % 2147483647),
+	'-s': str(hash(self) % 2147483647 + self.tweakmakegridpackseed),
 	}
     return ['./run_mcfm_AC.py'] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
- 
+
   @property
   def makinggridpacksubmitsjob(self):
-    return 'MCFM_submit_%s.sh'%(self.datasetname)
-
+    return True
+  @property
+  def gridpackjobsrunning(self):
+    if not os.path.exists(self.workdirforgridpack):
+      return False
+    with cd(self.workdirforgridpack):
+      logs = glob.glob("condor.*.log")
+      if len(logs) > 1: raise RuntimeError("Multiple logs in "+self.workdirforgridpack)
+      if not logs: return False
+      exitstatus = jobexitstatusfromlog(logs[0], okiffailed=True)
+      if exitstatus is None: return True
+      return False
+ 
   def getxsec(self):
     with cdtemp():
       if not os.path.exists(self.cvmfstarball): raise NoXsecError

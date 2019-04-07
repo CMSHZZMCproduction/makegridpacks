@@ -17,7 +17,7 @@ def replacepowheg(oldfilename, newfilename, powhegprocess, jhugen):
 
       card = "examples/gg_H_quark-mass-effects_withJHUGen_NNPDF30_13TeV/gg_H_quark-mass-effects_NNPDF30_13TeV.input"
       JHUGencard = "examples/gg_H_quark-mass-effects_withJHUGen_NNPDF30_13TeV/JHUGen.input"
-      command = ["./run_pwg.py", "-i", card, "-m", powhegprocess, '-f', "tmp", "-p", "0", "-d", "1"]
+      command = ["./run_pwg_condor.py", "-i", card, "-m", powhegprocess, '-f', "tmp", "-p", "0", "-d", "1"]
       if jhugen: command += ["-g", JHUGencard]
       subprocess.check_call(command)
 

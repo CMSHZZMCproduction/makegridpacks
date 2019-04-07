@@ -1,7 +1,7 @@
 import collections
 
-from utilities import restful
 from requesturl import requesturl_prepids
+from rest import McM
 
 class ApprovalQueue(object):
   def __enter__(self):
@@ -17,7 +17,7 @@ class ApprovalQueue(object):
       print
       print "approving", len(prepids), "requests to level", level
       for prepid in sorted(prepids): print " ", prepid
-      print restful().approve("requests", ",".join(prepids), level)
+      print McM().approve("requests", ",".join(prepids), level)
 
 class BadRequestQueue(object):
   def __enter__(self):
