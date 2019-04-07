@@ -7242,7 +7242,6 @@
                     },
                     "filterefficiency": 1.0,
                     "filterefficiencyerror": 0.0,
-                    "needsupdate": true,
                     "otherprepids": [
                         "HIG-RunIIFall17wmLHEGS-02149"
                     ],
