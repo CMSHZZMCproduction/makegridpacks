@@ -9763,8 +9763,14 @@
             }
         },
         "MTDTDR": {
-            "VBF": {},
-            "ZH": {}
+            "VBF": {
+                "finished": true,
+                "needsupdate": true
+            },
+            "ZH": {
+                "finished": true,
+                "needsupdate": true
+            }
         },
         "SIG": {
             "1": {
