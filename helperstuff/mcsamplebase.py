@@ -451,6 +451,7 @@ class MCSampleBase(JsonDict):
             cmsdriverindex = cmsdriverindex.pop()
             lines.insert(cmsdriverindex+1, 'sed -i "/Services/aprocess.RandomNumberGeneratorService.externalLHEProducer.initialSeed = process.RandomNumberGeneratorService.externalLHEProducer.initialSeed.value() + {:d}" *_cfg.py'.format(self.tweaktimepereventseed))
             testjob = "\n".join(lines)
+          testjob = testjob.replace("slc6", "slc7")
           with open(self.prepid, "w") as newf:
             newf.write(testjob)
           os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
