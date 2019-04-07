@@ -74,15 +74,20 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     if self.(whatever) == (whatever): v += 1
     """
     if self.year in (2016, 2017, 2018) and self.__Zdmass == 20 and self.__eps == 1e-2 and self.__VV == "ZZd": v += 1 #comments on PR --> new tarball
-    if self.year in (2016, 2017, 2018) and self.__VV == "ZdZd" and self.__eps == 1e-2 and (self.__Zdmass in (4, 7) or self.__Zdmass >= 10): v+=1
+    if self.year in (2016, 2017, 2018) and self.__VV == "ZdZd" and self.__eps == 2e-2 and (self.__Zdmass in (4, 7) or self.__Zdmass >= 10): v+=1
     return v
+
+  @property
+  def kap(self):
+    if self.__VV == "ZdZd" and self.__eps == 2e-2: return 1e-4
+    assert False, self
 
   @property
   def originaltarball(self):
     if self.__VV == "ZZd":
       return "/afs/cern.ch/work/d/drosenzw/public/HZZd_gridpacks/HAHM_variablesw_v3_eps{:.0e}_MZd{}_lhaid{}.tar.xz".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-0", "e-")
     if self.__VV == "ZdZd":
-      return "/afs/cern.ch/work/d/drosenzw/public/HZdZd4l_gridpacks/lhaid_306000_NNPDF3p1/HAHM_variablesw_v3_eps{:.0e}_mZd{}_lhaid{}_slc6_amd64_gcc481_CMSSW_7_1_30.tar.xz".format(self.__eps, self.__Zdmass, self.lhapdf).replace("e-0", "e-")
+      return "/afs/cern.ch/work/d/drosenzw/public/HZdZd4l_gridpacks/HZdZd4l_lhapdf{lhapdf}_eps{eps:.0e}_kap{kap:.0e}/HAHM_variablesw_v3_eps{eps:.0e}_kap{kap:.0e}_mZd{Zdmass}_lhapdf{lhapdf}_slc6_amd64_gcc481_CMSSW_7_1_30.tar.xz".format(eps=self.__eps, Zdmass=self.__Zdmass, lhapdf=self.lhapdf, kap=self.kap).replace("e-0", "e-")
   @property
   def lhapdf(self):
     if self.__VV == "ZZd":
@@ -101,7 +106,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
           for VV in "ZZd",:
             yield cls(year, VV, Zdmass, eps)
     for Zdmass in 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60:
-      for eps in 1e-2,:
+      for eps in 2e-2,:
         for year in 2016, 2017, 2018:
           for VV in "ZdZd",:
             yield cls(year, VV, Zdmass, eps)
@@ -167,8 +172,12 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     return tuple(os.path.join(folder, basename) for basename in basenames)
   @property
   def datasetname(self):
-    assert self.__eps == 1e-2
-    return "HTo"+self.__VV+"To4L_M125_MZd{}_eps1e-2_13TeV_madgraph_pythia8".format(self.__Zdmass)
+    if self.__VV == "ZZd":
+      assert self.__eps == 1e-2
+      return "HTo"+self.__VV+"To4L_M125_MZd{}_eps1e-2_13TeV_madgraph_pythia8".format(self.__Zdmass)
+    if self.__VV == "ZdZd":
+      assert self.__eps == 2e-2 and self.kap == 1e-4
+      return "HTo"+self.__VV+"To4L_M125_MZd{}_eps2e-2_kap1e-4_13TeV_madgraph_pythia8".format(self.__Zdmass)
 
   @property
   def nevents(self):

@@ -460,6 +460,7 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
     if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ggH" and self.mass in (125, 190, 200): v+=1
     if isinstance(self, POWHEGJHUGenAnomCoupMCSample) and self.productionmode == "ggH": v+=1
     if isinstance(self, POWHEGJHUGenAnomCoupMCSample) and self.productionmode == "ggH" and self.coupling == "L1": v+=1 #corrupt copy
+    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ggH" and self.mass == 190: v+=1 #something got messed up
 
     return v
 
