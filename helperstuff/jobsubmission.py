@@ -115,8 +115,8 @@ def submitLSF(queue):
 condortemplate = """
 executable              = {here}/.makegridpacks_{jobflavor}.sh
 arguments               = "{here} --condorjobid $(ClusterId).$(ProcId) --condorjobflavor {jobflavor} --filter '{filter}'"
-output                  = CONDOR/$(ClusterId).$(ProcId).out
-error                   = CONDOR/$(ClusterId).$(ProcId).err
+output                  = CONDOR/$(ClusterId).out
+error                   = CONDOR/$(ClusterId).err
 log                     = CONDOR/$(ClusterId).log
 
 request_memory          = 2000M
@@ -130,8 +130,8 @@ queue
 
 condortemplate_sizeperevent = """
 executable            = {self.workdir}/{self.prepid}
-output                = {self.workdir}/$(ClusterId).$(ProcId).out
-error                 = {self.workdir}/$(ClusterId).$(ProcId).err
+output                = {self.workdir}/$(ClusterId).out
+error                 = {self.workdir}/$(ClusterId).err
 log                   = {self.workdir}/$(ClusterId).log
 
 request_memory        = 4000M

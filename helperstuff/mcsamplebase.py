@@ -304,7 +304,7 @@ class MCSampleBase(JsonDict):
         self.processmakegridpackstdout(makegridpackstdout)
         pipe.communicate()
         if pipe.returncode:
-            raise RuntimeError("makegridpackcommand gave an error ^^^")
+            raise RuntimeError("makegridpackcommand {} gave an error ^^^".format(self.makegridpackcommand))
 
         if makinggridpacksubmitsjob:
           return "submitted the gridpack creation job"
