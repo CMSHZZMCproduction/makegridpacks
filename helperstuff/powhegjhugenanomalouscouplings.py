@@ -90,5 +90,6 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
     if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "L1Zg" and self.multicore_upto[0] == 2: result = -5347775664555457122
     if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "L1mix" and self.multicore_upto[0] == 2: result = -5347775664555457122
     if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "SM" and self.multicore_upto[0] == 2: result = -5347775664555457122
+    if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "a2mix" and self.multicore_upto == (1, 5): result = -5347775664555457122
     return result
 

@@ -98,6 +98,9 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
     if self.year == 2018 and identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
     if self.year == 2018 and identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
 
+    if self.year == 2018 and self.signalbkgbsi in ("SIG", "BSI"):
+      v+=1  #csmax patch
+
     return v
 
   def cvmfstarball_anyversion(self, version):
@@ -191,6 +194,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def responsible(self):
+     if self.signalbkgbsi != "BKG" or "TL" in self.finalstate or "NU" in self.finalstate: return "nobody"
      return "hroskes"
 
   @property
@@ -216,4 +220,11 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
   def neventsfortest(self):
     return 1000
     return super(MCFMAnomCoupMCSample, self).neventsfortest
+
+  @property
+  def cmsswversion(self):
+    return "CMSSW_9_3_14"
+  @property
+  def scramarch(self):
+    return "slc7_amd64_gcc630"
 

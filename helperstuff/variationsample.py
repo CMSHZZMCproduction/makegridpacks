@@ -351,6 +351,8 @@ class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSample)):
     if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
     if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
 
+    v+=1  #csmax patch
+
     if self.year == 2017:
       othersample = MCFMAnomCoupMCSample(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
       if self.mainsample.signalbkgbsi == "BKG":
