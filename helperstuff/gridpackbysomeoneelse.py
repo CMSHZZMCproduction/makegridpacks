@@ -75,6 +75,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     """
     if self.year in (2016, 2017, 2018) and self.__Zdmass == 20 and self.__eps == 1e-2 and self.__VV == "ZZd": v += 1 #comments on PR --> new tarball
     if self.year in (2016, 2017, 2018) and self.__VV == "ZdZd" and self.__eps == 2e-2 and (self.__Zdmass in (4, 7) or self.__Zdmass >= 10): v+=1
+    if self.year in (2016, 2017, 2018) and self.__VV == "ZdZd" and self.__eps == 2e-2: v+=1
     return v
 
   @property
@@ -189,7 +190,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     if the original tarball was modified before this time, ignore it
     until it's replaced
     """
-    return datetime.datetime(year=2018, month=9, day=19)
+    return datetime.datetime(year=2019, month=4, day=16)
 
 
 class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MadGraphFXFXMCSample, MCSampleBase_DefaultCampaign):
