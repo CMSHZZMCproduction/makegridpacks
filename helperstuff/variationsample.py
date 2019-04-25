@@ -556,8 +556,7 @@ class PythiaVariationSampleBase(VariationSampleBase):
     return result
   @property
   def genproductionscommit(self):
-    if self.year == 2017: return "49196efff87a61016833754619a299772ba3c33d"
-    if self.year == 2018: return "2b8965cf8a27822882b5acdcd39282361bf07961"
+    return "2b8965cf8a27822882b5acdcd39282361bf07961"
     assert False, self
   @property
   def extensionnumber(self):

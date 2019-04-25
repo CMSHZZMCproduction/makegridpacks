@@ -4727,6 +4727,7 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
+                            "finished": true,
                             "nthreads": 1,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03111",
                             "sizeperevent": 716,
@@ -4890,6 +4891,7 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
+                            "finished": true,
                             "nthreads": 1,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03118",
                             "sizeperevent": 802,
@@ -6236,6 +6238,7 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "filterefficiency": 0.14835550966597078,
                             "filterefficiencyerror": 0.00018236587065478363,
+                            "needsupdate": true,
                             "nthreads": 8,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03294",
                             "sizeperevent": 999,
@@ -6548,6 +6551,7 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "finished": true,
                         "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03289",
                         "sizeperevent": 782,
@@ -6654,6 +6658,7 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "finished": true,
                         "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03291",
                         "sizeperevent": 771,
@@ -6863,6 +6868,7 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 1.0,
                         "filterefficiencyerror": 0.0,
+                        "finished": true,
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03256",
                         "sizeperevent": 660,
@@ -7987,6 +7993,7 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "filterefficiency": 0.13203,
                             "filterefficiencyerror": 0.0010705049233889585,
+                            "finished": true,
                             "nthreads": 4,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03136",
                             "sizeperevent": 866,
