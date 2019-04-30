@@ -11,6 +11,9 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
     self.cut = cut
     super(QQZZMCSample, self).__init__(year=year)
   @property
+  def initargs(self):
+    return self.year, self.finalstate, self.cut
+  @property
   def identifiers(self):
     result = ["qqZZ", self.finalstate]
     if self.cut: result.append(self.cut)

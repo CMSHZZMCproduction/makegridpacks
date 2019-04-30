@@ -15,6 +15,9 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
     super(MINLOMCSample, self).__init__(year=year)
 
   @property
+  def initargs(self): return self.year, self.decaymode, self.mass, self.energy
+
+  @property
   def identifiers(self):
     result = ["MINLO", self.decaymode, self.mass]
     if self.energy != 13: result.append(str(self.energy)+"TeV")
@@ -177,80 +180,3 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   @property
   def maxallowedtimeperevent(self):
     return 500
-
-class MINLOatLO(MINLOMCSample):
-  def __init__(self, *args, **kwargs):
-    self.powhegpythiaconfig = kwargs.pop("powhegpythiaconfig")
-    self.bornsuppressionfactor = kwargs.pop("bornsuppressionfactor")
-    return super(MINLOatLO, self).__init__(*args, **kwargs)
-  @property
-  def identifiers(self):
-    result = super(MINLOatLO, self).identifiers + ("LO_LOPDF",)
-    if self.powhegpythiaconfig: result = result + ("powhegpythiaconfig",)
-    if self.bornsuppressionfactor: result = result + ("bornsuppressionfactor",)
-    return result
-  @property
-  def powhegcard(self):
-    result = super(MINLOatLO, self).powhegcard.replace(".input", "_LO_LOPDF.input")
-    if self.bornsuppressionfactor: result = result.replace(".input", "_bornsuppressionfactor.input")
-    return result
-  def cvmfstarball_anyversion(self, version):
-    result = super(MINLOatLO, self).cvmfstarball_anyversion(version)
-    result = result.replace("13TeV", "13TeV_LO_LOPDF").replace("13TeV_LO_LOPDF", "13TeV", 1)
-    assert "LO_LOPDF" in result, result
-    if self.bornsuppressionfactor:
-      result = result.replace("LO_LOPDF", "LO_LOPDF_bornsuppressionfactor", 1)
-    return result
-  @property
-  def uselocaltarballfortest(self):
-    return True
-  @property
-  def datasetname(self):
-    result = "GluGluHToZZTo4L_M%d_%dTeV_powheg2_HJJ_JHUGenV7011_pythia8"%(self.mass, self.energy)
-    if self.bornsuppressionfactor:
-      result += "_bornsuppressionfactor"
-    if not self.powhegpythiaconfig:
-      result += "_JHUGenpythiaconfig"
-    return result
-  @classmethod
-  def allsamples(cls):
-    for bsf in True, False:
-      yield cls(2018, "4l", 125, powhegpythiaconfig=True, bornsuppressionfactor=bsf)
-      yield cls(2017, "4l", 125, powhegpythiaconfig=True, bornsuppressionfactor=bsf)
-    yield cls(2018, "4l", 125, powhegpythiaconfig=False, bornsuppressionfactor=True)
-    yield cls(2017, "4l", 125, powhegpythiaconfig=False, bornsuppressionfactor=True)
-  @property
-  def makegridpackcommand(self):
-    result = super(MINLOatLO, self).makegridpackcommand
-    result += ["-d", "1"]
-    return result
-  @property
-  def tarballversion(self):
-    if self.powhegpythiaconfig: return 7
-    return 6
-
-  @property
-  def genproductionscommit(self):
-    return "62b6317b3ac208df37a03136c3c8f27d91cfd59d"
-  @property
-  def fragmentname(self):
-    if self.powhegpythiaconfig: return super(MINLOatLO, self).fragmentname
-    return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py"
-  @property
-  def genproductionscommitforfragment(self):
-    if self.year == 2017: return "0a45459a3c47f0b445f38fce310c1d354f182a00"
-    return super(MINLOatLO, self).genproductionscommitforfragment
-
-  @property
-  def pwgrwlfilter(self):
-    return lambda weight: False
-
-  @property
-  def dovalidation(self):
-    return False
-
-  @property
-  def creategridpackqueue(self):
-    if super(MINLOatLO, self).creategridpackqueue is None: return None
-    if self.multicore_upto[0] == 3: return "tomorrow"
-    return "longlunch"

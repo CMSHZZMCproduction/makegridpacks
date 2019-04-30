@@ -3,9 +3,10 @@
 import argparse, itertools, math, pprint
 
 from helperstuff import allsamples
-from helperstuff.utilities import restful
+from helperstuff.rest import McM
+from helperstuff.utilities import request_fragment_check
 
-def maketicket(block, chain, tags, year, filter=lambda sample: True, modifyticket=None, notes=None, dryrun=False, status=("defined",), onlymysamples=False):
+def maketicket(block, chain, tags, year, filter=lambda sample: True, modifytickets=[], notes=None, dryrun=False, status=("defined",), onlymysamples=False):
   prepids = [sample.prepid for sample in allsamples(
     filter=lambda sample:
       not sample.finished
@@ -31,12 +32,14 @@ def maketicket(block, chain, tags, year, filter=lambda sample: True, modifyticke
 
   ntickets = int(math.ceil(len(prepids) / 40.))
   ineachticket = int(math.ceil(1.*len(prepids) / ntickets))
-  i = 0
+
+  if len(modifytickets) > ntickets:
+    raise ValueError("Too many tickets to modify, there are only enough requests for "+str(ntickets))
 
   tickets = []
   for i in xrange(ntickets):
-    if i == 0 and modifyticket is not None:
-      tickets.append(restful().get("mccms", modifyticket))
+    if i < len(modifytickets):
+      tickets.append(McM().get("mccms", modifytickets[i]))
     else:
       tickets.append({
         "prepid": firstpart,
@@ -47,6 +50,7 @@ def maketicket(block, chain, tags, year, filter=lambda sample: True, modifyticke
   requests = []
   currentrequestrange = []
 
+  i = 0
   for prepid in prepids:
     if i == 0:
       requests = []
@@ -89,11 +93,15 @@ def maketicket(block, chain, tags, year, filter=lambda sample: True, modifyticke
   if dryrun: return
 
   for ticket in tickets:
-    answer = (restful().update if modifyticket else restful().put)('mccms', ticket)
+    answer = (McM().update if modifytickets else McM().put)('mccms', ticket)
     print answer
 
     if not answer['results']:
       raise RuntimeError(answer)
+
+    if "prepid" not in answer: answer["prepid"] = ticket["prepid"]
+
+    print request_fragment_check("--ticket", answer["prepid"], "--bypass_status")
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
@@ -101,7 +109,7 @@ if __name__ == "__main__":
   parser.add_argument("--chain", "-c", required=True)
   parser.add_argument("--filter", "-f", type=eval, default=lambda sample: True)
   parser.add_argument("--year", "-y", type=int, required=True)
-  parser.add_argument("--modify", "-m")
+  parser.add_argument("--modify", "-m", action="append", default=[])
   parser.add_argument("--notes")
   parser.add_argument("--tags", "-t", action="append", required=True)
   parser.add_argument("--dry-run", "-n", action="store_true")
@@ -117,4 +125,4 @@ if __name__ == "__main__":
   elif args.status: status = args.status
   else: status = ("defined",)
 
-  maketicket(block=args.block, chain=args.chain, filter=args.filter, modifyticket=args.modify, notes=args.notes, tags=args.tags, dryrun=args.dry_run, status=status, onlymysamples=not args.everyones_samples, year=args.year)
+  maketicket(block=args.block, chain=args.chain, filter=args.filter, modifytickets=args.modify, notes=args.notes, tags=args.tags, dryrun=args.dry_run, status=status, onlymysamples=not args.everyones_samples, year=args.year)

@@ -74,7 +74,10 @@ class MadGraphMCSample(MCSampleBase):
 
 
     cardnamesintarball = tuple(
-      os.path.join("InputCards", os.path.basename(_[1] if len(_) == 2 else _))
+      os.path.join(
+        "InputCards",
+        os.path.basename(_[1] if len(_) == 2 else _).replace(*self.madgraphcardsrename)
+      )
       for _ in self.madgraphcards
     )
     cardcontents = []
@@ -83,20 +86,20 @@ class MadGraphMCSample(MCSampleBase):
         with open(cardnameintarball) as f:
           cardcontents.append(getcontents(f))
       except IOError:
-        raise ValueError("no "+cardnameintarball+" in the tarball\n{}".format(self))
+        raise ValueError("no "+cardnameintarball+" in the tarball\n{}\n{}".format(self.cvmfstarball, self))
     for _ in glob.iglob("InputCards/*"):
-      if _ not in cardnamesintarball and not _.endswith(".tar.gz") and not _.endswith(".~1~") and _ not in self.otherthingsininputcards:
+      if _ not in cardnamesintarball and not _.endswith(".tar.gz") and not _.endswith(".~1~") and not _.endswith(".dat~") and _ not in self.otherthingsininputcards:
         raise ValueError("unknown thing "+_+" in InputCards\n{}".format(self))
 
     for name, cc, gcc in itertools.izip(cardnamesintarball, cardcontents, gitcardcontents):
       _, suffix = os.path.splitext(os.path.basename(name))
-      if cc != gcc:
+      if not self.comparecards(name, cc, gcc):
         with cd(here):
           with open("cardcontents"+suffix, "w") as f:
             f.write(cc)
           with open("gitcardcontents"+suffix, "w") as f:
             f.write(gcc)
-        raise ValueError(name + " in tarball != " + name + " in git\n{}\nSee ./cardcontents{} and ./gitcardcontents{}".format(self, suffix, suffix))
+        raise ValueError(name + " in tarball != " + name + " in git\n{}\n{}\nSee ./cardcontents{} and ./gitcardcontents{}".format(self, self.cvmfstarball, suffix, suffix))
 
     if self.madgraphcardscript:
       result = "\n#    ".join((scripturls[0],) + tuple(self.madgraphcards))
@@ -108,12 +111,24 @@ class MadGraphMCSample(MCSampleBase):
 
     return result
 
+  def comparecards(self, name, cardcontents, gitcardcontents):
+    if name.endswith("proc_card.dat"):
+      gitcardcontents = gitcardcontents.replace(*self.madgraphcardsrename)
+    return cardcontents == gitcardcontents
 
   @property
   def madgraphcardscript(self): return None
 
   @abc.abstractproperty
   def madgraphcards(self): return []
+
+  @property
+  def madgraphcardsrename(self):
+    """
+    Will replace the first one with the second
+    when looking for the madgraph cards in the gridpack
+    """
+    return "", ""
 
   @property
   def otherthingsininputcards(self): return []
@@ -132,3 +147,8 @@ class MadGraphMCSample(MCSampleBase):
   @property
   def makinggridpacksubmitsjob(self):
     assert False
+
+  def handle_request_fragment_check_patch(self, line):
+    if line.strip() == "* [PATCH] MG5_aMC@NLO LO nthreads patch not made in EOS":
+      return "Needs madgraph LO nthreads patch"
+    return super(MadGraphMCSample, self).handle_request_fragment_check_patch(line)

@@ -28,8 +28,7 @@ class POWHEGMCSample(MCSampleBase):
     return super(POWHEGMCSample, self).creategridpackqueue
   @property
   def tmptarballbasename(self):
-    return os.path.join(self.foldernameforrunpwg,
-             self.powhegprocess+"_"+self.scramarch+"_"+self.cmsswversion+"_"+self.foldernameforrunpwg+".tgz")
+    return self.powhegprocess+"_"+self.scramarch+"_"+self.cmsswversion+"_"+self.foldernameforrunpwg+".tgz"
   @property
   def pwgrwlfilter(self):
     """
@@ -44,17 +43,20 @@ class POWHEGMCSample(MCSampleBase):
       result.append({"functionname": "prunepwgrwl", "filter": self.pwgrwlfilter})
     return result
   @property
+  def makegridpackseed(self):
+    return hash(self)
+  @property
   def makegridpackcommand(self):
     args = {
       "-i": self.powhegcard,
       "-m": self.powhegprocess,
       "-f": self.foldernameforrunpwg,
+      "-s": str(self.makegridpackseed % 2147483647),
     }
     if self.powhegsubmissionstrategy == "onestep":
       args.update({
         "-p": "f",
         "-n": "10",
-        "-s": str(hash(self) % 2147483647),
         "-q": self.creategridpackqueue,
       })
     elif self.powhegsubmissionstrategy == "multicore":
@@ -83,7 +85,7 @@ class POWHEGMCSample(MCSampleBase):
         assert False, self.multicore_upto
     else:
       assert False, self.powhegsubmissionstrategy
-    return ["./run_pwg.py"] + sum(([k, v] for k, v in args.iteritems()), [])
+    return ["./run_pwg_condor.py"] + sum(([k, v] for k, v in args.iteritems()), [])
 
   @property
   def inthemiddleofmultistepgridpackcreation(self):
@@ -109,14 +111,14 @@ class POWHEGMCSample(MCSampleBase):
       for coredump in glob.iglob("core.*"):
         os.remove(coredump)
       for p, x in (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 1), (3, 1):
-        for n in range(1, 11):
+        for n in range(10):
           if not os.path.exists("run_{}_{}_{}.log".format(p, x, n)):
             return p, x
     return 9, 1
 
   def processmakegridpackstdout(self, stdout):
     if self.powhegsubmissionstrategy == "multicore":
-      matches = [int(_) for _ in re.findall("Job <(.*)> is submitted to queue <.*>[.]", stdout)]
+      matches = [int(_) for _ in re.findall("[0-9]* job[(]s[)] submitted to cluster ([0-9]*)[.]", stdout)]
       for match in matches:
         with open(os.path.join(self.workdirforgridpack, "jobisrunning_{}".format(match)), 'w') as f:
           pass
@@ -136,7 +138,8 @@ class POWHEGMCSample(MCSampleBase):
       assert False, self.powhegsubmissionstrategy
   @property
   def gridpackjobsrunning(self):
-    if self.powhegsubmissionstrategy == "multicore" and os.path.exists(os.path.join(self.workdirforgridpack, self.foldernameforrunpwg, "pwhg_main")):
+    if self.powhegsubmissionstrategy == "multicore":
+      if not os.path.exists(os.path.join(self.workdirforgridpack, self.foldernameforrunpwg, "pwhg_main")): return False
       for filename in glob.iglob(os.path.join(self.workdirforgridpack, "jobisrunning_*")):
         jobid = int(os.path.basename(filename.replace("jobisrunning_", "")))
         if jobended(str(jobid)):
@@ -223,12 +226,6 @@ class POWHEGMCSample(MCSampleBase):
     for filename in glob.iglob(os.path.join(genproductions, "bin", "Powheg", "*")):
       if (filename.endswith(".py") or filename.endswith(".sh") or filename.endswith("/patches")) and not os.path.exists(os.path.basename(filename)):
         yield filename
-
-  def handle_request_fragment_check_caution(self, line):
-    if line.strip() == "* [Caution: To check manually] This is a Powheg NLO sample. Please check 'nFinal' is":
-      print "nFinal is", self.nfinalparticles
-      return "ok"
-    return super(POWHEGMCSample, self).handle_request_fragment_check_warning(line)
 
 class AlternateWeight(collections.namedtuple("AlternateWeight", "lhapdf renscfact facscfact")):
   def __new__(cls, lhapdf, renscfact=None, facscfact=None):

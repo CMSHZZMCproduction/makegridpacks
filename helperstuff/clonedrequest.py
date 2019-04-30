@@ -2,7 +2,8 @@ from collections import namedtuple
 import os
 
 from jobsubmission import jobtype
-from utilities import cache, cacheaslist, here, restful
+from utilities import cache, cacheaslist, here
+from rest import McM
 
 from mcsamplebase import MCSampleBase
 
@@ -24,12 +25,15 @@ class ClonedRequest(MCSampleBase):
       self.sizeperevent = self.originalfullinfo["size_event"][0]
 
   @property
+  def initargs(self): return self.year, self.originalprepid, self.newcampaign
+
+  @property
   def campaign(self): return self.newcampaign
 
   @property
   @cache
   def originalfullinfo(self):
-    result = restful().get("requests", query="prepid="+self.originalprepid)
+    result = McM().get("requests", query="prepid="+self.originalprepid)
     if not result:
       raise ValueError("mcm query for prepid="+self.originalprepid+" returned None!")
     if len(result) == 0:
@@ -119,28 +123,18 @@ class ClonedRequest(MCSampleBase):
     assert False
   @property
   def responsible(self):
-    if (self.originalprepid, self.newcampaign) in (
-      ("HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS"),
-      ("BTV-RunIIFall17wmLHEGS-00006", "RunIISpring18wmLHEGS"),
-    ):
-      return "hroskes"
-    if self.newcampaign == "PhaseIISummer17wmLHEGENOnly":
-      if any(self.originalprepid == "HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_) for _ in (1, 2, 3, 4, 50, 51, 35)):
-        return "hroskes"
     assert False, self
   @classmethod
   @cacheaslist
   def allsamples(cls):
-    yield cls(2017, "HIG-RunIIFall17wmLHEGS-00304", "RunIISpring18wmLHEGS")
-    for _ in 1, 2, 3, 4, 50, 51, 35:
-      yield cls(2017, "HIG-PhaseIITDRFall17wmLHEGS-{:05d}".format(_), "PhaseIISummer17wmLHEGENOnly")
+    return ()
 
   def createrequest(self, clonequeue):
     self.needsupdate = True
     return clonequeue.add(self, self.pwg, self.newcampaign)
 
     if jobtype(): return "run locally to submit to McM"
-    mcm = restful()
+    mcm = McM()
     clone_req = mcm.get('requests', self.originalprepid)
     clone_req['member_of_campaign'] = self.campaign
     answer = mcm.clone(self.originalprepid, clone_req)
@@ -157,7 +151,7 @@ class ClonedRequest(MCSampleBase):
     if self.prepid: return
     if jobtype(): return
     query = "dataset_name={}&extension={}&prepid={}-{}-*".format(self.originalfullinfo["dataset_name"], self.extensionnumber, self.pwg, self.campaign)
-    output = restful().get('requests', query=query)
+    output = McM().get('requests', query=query)
     prepids = {_["prepid"] for _ in output}
     if not prepids:
       return None

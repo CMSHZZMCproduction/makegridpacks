@@ -12,6 +12,9 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
     self.coupling = coupling
     super(AnomalousCouplingMCSample, self).__init__(year=year)
   @property
+  def initargs(self):
+    return self.year, self.productionmode, self.decaymode, self.mass, self.coupling
+  @property
   def identifiers(self):
     return self.productionmode, self.decaymode, self.mass, self.coupling
   @property

@@ -47,6 +47,8 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
     if self.year == 2016 and self.productionmode == "HJJ" and self.decaymode == "4l" and self.mass == 125 and version == 1:
       tarballname = tarballname.replace("V723", "V7011")
+    if self.year in (2017, 2018) and self.productionmode == "VBF" and self.decaymode == "4l" and self.mass == 125 and version == 2:
+      tarballname = tarballname.replace("V727", "V7011")
 
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
@@ -122,71 +124,9 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def maxallowedtimeperevent(self):
-    if self.productionmode in ("VBF", "HJJ"): return 205
+    if self.productionmode in ("VBF", "HJJ"): return 250
     return super(JHUGenJHUGenAnomCoupMCSample, self).maxallowedtimeperevent
 
   @property
   def dovalidation(self):
     return super(JHUGenJHUGenAnomCoupMCSample, self).dovalidation
-
-class JHUGenJHUGenHJJScalingByPtJet(JHUGenJHUGenAnomCoupMCSample):
-  @property
-  def identifiers(self):
-    return super(JHUGenJHUGenHJJScalingByPtJet, self).identifiers + ("scalebysoftestjetpT",)
-  
-  @property
-  def tarballversion(self):
-    v = 1
-    return v
-
-  def cvmfstarball_anyversion(self, version):
-    if self.year in (2017, 2018):
-      folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/jhugen/V726", self.productionmode+"_ZZ_NNPDF31_13TeV")
-    elif self.year == 2016:
-      folder = os.path.join("/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc481/13TeV/jhugen/V726", self.productionmode+"_ZZ_NNPDF30_13TeV")
-
-    tarballname = self.datasetname+".tgz"
-
-    return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
-
-  @property
-  def JHUGenversion(self):
-    return "v7.2.6"
-
-  @classmethod
-  def allsamples(cls):
-    for productionmode in "HJJ",:
-      decaymode = "4l"
-      for mass in cls.getmasses(productionmode, decaymode):
-        for coupling in cls.getcouplings(productionmode, decaymode):
-          for year in 2016, 2017, 2018:
-            yield cls(year, productionmode, decaymode, mass, coupling)
-
-  @property
-  def fragmentname(self):
-    if self.year in (2017, 2018):
-      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_LHE_pythia8_cff.py"
-    if self.year == 2016:
-      return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCUETP8M1_13TeV_pTmaxMatch_1_LHE_pythia8_cff.py"
-    assert False, self
-
-  @property
-  def uselocaltarballfortest(self):
-    return True
-  @property
-  def dovalidation(self):
-    return False
-
-  @property
-  def genproductionscommit(self):
-    return "fab3ff79790176a61018aeb2c51305d4ae8586c4"
-  @property
-  def genproductionscommitforfragment(self):
-    if self.year == 2016:
-      return "ed512ae283cc2d8710e72ecf37c2ae6cd663aee6"
-    if self.year == 2017:
-      return "fd7d34a91c3160348fd0446ded445fa28f555e09"
-    if self.year == 2018:
-      return "f256d395f40acf771f12fd6dbecd622341e9731a"
-    assert False, self
-

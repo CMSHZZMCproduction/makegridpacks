@@ -82,20 +82,22 @@ class KeepWhileOpenFile(object):
       try:
         logging.debug("trying to open")
         self.fd = os.open(self.filename, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-      except OSError:
-        logging.debug("failed: it already exists")
-        if self.deleteifjobdied and self.jobdied():
-          logging.debug("but the job died")
-          try:
-            with cd(self.pwd):
-              logging.debug("trying to remove")
-              os.remove(self.filename)
-              logging.debug("removed")
-          except OSError:
-            logging.debug("failed")
-            pass #ignore it
-
-        return None
+      except OSError as e:
+        if e.errno == errno.EEXIST:
+          logging.debug("failed: it already exists")
+          if self.deleteifjobdied and self.jobdied():
+            logging.debug("but the job died")
+            try:
+              with cd(self.pwd):
+                logging.debug("trying to remove")
+                os.remove(self.filename)
+                logging.debug("removed")
+            except OSError:
+              logging.debug("failed")
+              pass #ignore it
+          return None
+        else:
+          raise
       else:
         logging.debug("succeeded: it didn't exist")
         logging.debug("does it now? {}".format(os.path.exists(self.filename)))
@@ -121,7 +123,7 @@ class KeepWhileOpenFile(object):
         return True
 
   def __exit__(self, *args):
-    logging.debug("exiting")
+    logging.debug("exiting KeepWhileOpenFile {}".format(self.filename))
     if self:
       try:
         with cd(self.pwd):
@@ -140,11 +142,12 @@ class KeepWhileOpenFile(object):
   def jobdied(self):
     try:
       with open(self.filename) as f:
+        strjobid = f.read().strip()
         try:
-          jobid = int(f.read().strip())
+          jobid = float(f.read().strip())
         except ValueError:
           return False
-        return jobended(str(jobid))
+        return jobended(strjobid)
     except IOError:
       return False
 
@@ -372,14 +375,6 @@ def redirect_stdout(target):
   finally:
     sys.stdout = original
 
-def restful(*args, **kwargs):
-  if "dev" not in kwargs: kwargs["dev"] = False
-  try:
-    with open("/dev/null", "w") as f, redirect_stdout(f):
-      return rest.McM(*args, **kwargs)
-  except:
-    raise
-
 here = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
 genproductions = os.path.join(os.environ["CMSSW_BASE"], "src", "genproductions")
@@ -420,15 +415,10 @@ class KeyDefaultDict(collections.defaultdict):
       ret = self[key] = self.default_factory(key)
       return ret
 
-from jobsubmission import jobtype
-
-if not jobtype():
-  sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
-  import rest
-
 @cache
 def fullinfo(prepid):
-  result = restful().get("requests", query="prepid="+prepid)
+  import rest
+  result = rest.McM().get("requests", query="prepid="+prepid)
   if not result:
     raise ValueError("mcm query for prepid="+prepid+" returned None!")
   if len(result) == 0:
@@ -480,3 +470,19 @@ externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
 
     return code
 
+def request_fragment_check(*args):
+  with cdtemp():
+    with contextlib.closing(urlopen("https://github.com/cms-sw/genproductions/raw/master/bin/utils/request_fragment_check.py")) as f:
+      contents = f.read()
+    with open("request_fragment_check.py", "w") as f:
+      f.write(contents)
+
+    return subprocess.check_output(["python", "request_fragment_check.py"] + list(args), stderr=subprocess.STDOUT)
+
+class abstractclassmethod(classmethod):
+  "https://stackoverflow.com/a/11218474"
+  __isabstractmethod__ = True
+
+  def __init__(self, callable):
+    callable.__isabstractmethod__ = True
+    super(abstractclassmethod, self).__init__(callable)

@@ -8,6 +8,8 @@ class MTDTDRSample(POWHEGGridpackOnly):
     self.productionmode = productionmode
     super(MTDTDRSample, self).__init__(year)
   @property
+  def initargs(self): return self.year, self.productionmode
+  @property
   def identifiers(self):
     return "MTDTDR", self.productionmode
   @classmethod

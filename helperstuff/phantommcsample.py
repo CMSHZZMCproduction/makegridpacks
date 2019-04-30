@@ -15,6 +15,8 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     self.width = width
     super(PhantomMCSample, self).__init__(year=year)
   @property
+  def initargs(self): return self.year, self.signalbkgbsi, self.finalstate, self.mass, self.width
+  @property
   def identifiers(self):
     return self.signalbkgbsi, "PHANTOM", self.mass, self.width, self.finalstate
   @property

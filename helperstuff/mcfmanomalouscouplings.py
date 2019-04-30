@@ -13,6 +13,8 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
     self.finalstate = finalstate
     super(MCFMAnomCoupMCSample, self).__init__(year=year)
   @property
+  def initargs(self): return self.year, self.signalbkgbsi, self.width, self.coupling, self.finalstate
+  @property
   def identifiers(self):
     return self.signalbkgbsi, self.width, self.coupling, self.finalstate
   @property
@@ -79,6 +81,26 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
     if self.year == 2018 and self.signalbkgbsi in ("SIG", "BSI"):
       v+=1  #increase ncalls1 and 2
 
+    if self.year == 2018 and identifierstr == "BSI 10 0PH ELMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 1 0M ELMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PM MUMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PL1f05ph0 TLTL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 1 0M TLTL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PH ELEL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
+
+    if self.year == 2018 and identifierstr == "BSI 10 0PM MUMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
+    if self.year == 2018 and identifierstr == "BSI 1 0M TLTL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PH ELEL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
+    if self.year == 2018 and identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
+
+    if self.year == 2018 and self.signalbkgbsi in ("SIG", "BSI"):
+      v+=1  #csmax patch
+
     return v
 
   def cvmfstarball_anyversion(self, version):
@@ -135,7 +157,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
   @property
   def genproductionscommit(self):
     if self.year == 2018 and self.signalbkgbsi != "BKG":
-      return "00354e6fe6c6b2a185c46c7efbad2958bd7a2633"
+      return "32f097d84517f364edf7e86630ce5646b12b835e"
     return "138efefa8acdcc246a0df4512bef3f660574cb77"
 
   @property
@@ -172,6 +194,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def responsible(self):
+     if self.signalbkgbsi != "BKG" or "TL" in self.finalstate or "NU" in self.finalstate: return "nobody"
      return "hroskes"
 
   @property
@@ -184,5 +207,24 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
     return super(MCFMAnomCoupMCSample, self).tweaktimepereventseed
   @property
   def tweakmakegridpackseed(self):
-    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PH": return 1
-    return super(MCFMAnomCoupMCSample, self).tweakmakegridpackseed
+    result = super(MCFMAnomCoupMCSample, self).tweakmakegridpackseed
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PH": result += 1
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PM": result += 1
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PHf05ph0": result += 1
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 1 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0M": result += 1
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0PH": result += 1
+    if self.year in (2017, 2018) and self.signalbkgbsi == "BSI" and self.width == 10 and self.finalstate in ("ELEL MUMU TLTL") and self.coupling == "0Mf05ph0": result += 1
+    return result
+
+  @property
+  def neventsfortest(self):
+    return 1000
+    return super(MCFMAnomCoupMCSample, self).neventsfortest
+
+  @property
+  def cmsswversion(self):
+    return "CMSSW_9_3_14"
+  @property
+  def scramarch(self):
+    return "slc7_amd64_gcc630"
+

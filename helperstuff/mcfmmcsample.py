@@ -105,7 +105,7 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
       return False
     with cd(self.workdirforgridpack):
       logs = glob.glob("condor.*.log")
-      if len(logs) > 1: raise RuntimeError("Multiple logs in "+self.workdir)
+      if len(logs) > 1: raise RuntimeError("Multiple logs in "+self.workdirforgridpack)
       if not logs: return False
       exitstatus = jobexitstatusfromlog(logs[0], okiffailed=True)
       if exitstatus is None: return True

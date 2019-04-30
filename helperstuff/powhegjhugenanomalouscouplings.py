@@ -20,12 +20,11 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
   def powhegcardusesscript(self): return True
 
   @property
-  def powhegsubmissionstrategy(self): return "onestep"
+  def powhegsubmissionstrategy(self): return "multicore"
 
   @property
   def tarballversion(self):
     v = 1
-
     return v
 
   def cvmfstarball_anyversion(self, version):
@@ -84,4 +83,13 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
 
   @property
   def hasnonJHUGenfilter(self): return False
+
+  @property
+  def makegridpackseed(self):
+    result = super(POWHEGJHUGenAnomCoupMCSample, self).makegridpackseed
+    if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "L1Zg" and self.multicore_upto[0] == 2: result = -5347775664555457122
+    if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "L1mix" and self.multicore_upto[0] == 2: result = -5347775664555457122
+    if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "SM" and self.multicore_upto[0] == 2: result = -5347775664555457122
+    if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "a2mix" and self.multicore_upto == (1, 5): result = -5347775664555457122
+    return result
 
