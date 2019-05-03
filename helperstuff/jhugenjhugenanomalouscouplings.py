@@ -27,6 +27,11 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   def productioncardusesscript(self):
     return False
 
+#  @property
+#  def filter4L(self):
+#    if self.productionmode == "ggZH": return True
+#    return False
+
   @property
   def tarballversion(self):
     v = 1
@@ -35,7 +40,6 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   @property
   def timepereventqueue(self):
     return "nextweek"
-
 
   def cvmfstarball_anyversion(self, version):
     if self.year in (2017, 2018):
@@ -50,17 +54,27 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     if self.year in (2017, 2018) and self.productionmode == "VBF" and self.decaymode == "4l" and self.mass == 125 and version == 2:
       tarballname = tarballname.replace("V727", "V7011")
 
+#    decaymode = self.decaymode
+#    if "ZZ2l2any_withtaus.input" in self.decaycard: decaymode == "2l2X"
+#    elif "ZZany_filter2lOSSF.input" in self.decaycard: decaymode = "_filter2l"
+#    elif "ZZ2l2any_withtaus_filter4l.input" in self.decaycard: decaymode = "2l2X_filter4l"
+#    elif "ZZany_filter2l2jet.input" in self.decaycard: decaymode = "_filter2l2q"
+
+#    tarballname = tarballname.replace("NNPDF31", "ZZ"+self.decaymode+"_NNPDF31")
+#    tarballname = tarballname.replace("NNPDF30", "ZZ"+self.decaymode+"_NNPDF30")
+
     return os.path.join(folder, tarballname.replace(".tgz", ""), "v{}".format(version), tarballname)
 
   @property
   def validationtimemultiplier(self):
     result = super(JHUGenJHUGenAnomCoupMCSample, self).validationtimemultiplier
-    if self.productionmode in ("ZH", "ttH"):
+    if self.productionmode in ("ZH", "ttH", "ggZH"):  ###?
       result = max(result, 2)
     return result
 
   @property
   def defaulttimeperevent(self):
+#    if self.productionmode == "ggZH": return 3 #####?
     return 30
     assert False
 
@@ -72,6 +86,7 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def genproductionscommit(self):
+    if self.productionmode == "ggZH": return "f1aed113172ee2e33f1ed2e8c4a52df8356619f7"###
     if self.year == 2016:
       return "ed512ae283cc2d8710e72ecf37c2ae6cd663aee6"
     if self.year == 2017:
@@ -79,6 +94,17 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     if self.year == 2018:
       return "f256d395f40acf771f12fd6dbecd622341e9731a"
     assert False, self
+
+#  @property
+#  def genproductionscommitforfragment(self):
+#    if self.productionmode == "ggZH":
+#      if self.year == 2017:
+#        return "fd7d34a91c3160348fd0446ded445fa28f555e09"
+#      elif self.year == 2016:
+#        return "ef267369910e01ce1eb4f4fabe5b223339829ff5"
+#    if self.year == 2018:
+#      return "20ac197949817a9bc02aa346f3fe23d157371b74"
+#    return super(JHUGenJHUGenAnomCoupMCSample, self).genproductionscommitforfragment
 
   @property
   def fragmentname(self):
@@ -97,13 +123,15 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   @classmethod
   @cacheaslist
   def allsamples(cls):
-    for productionmode in "HJJ", "VBF", "ZH","WH","ttH" :
+    for productionmode in "HJJ", "VBF", "ZH", "WH", "ttH", "ggZH":
     #for productionmode in "HJJ", "VBF"  :
-      decaymode = "4l" 
+      decaymode = "4l"
+      #mass = 125
       for mass in cls.getmasses(productionmode, decaymode):
         for coupling in cls.getcouplings(productionmode, decaymode):
           for year in 2016, 2017, 2018:
-            if year == 2016 and productionmode != "HJJ": continue
+            if year == 2016 and productionmode != "HJJ" and productionmode != "ggZH": continue
+            #if year == 2016 and productionmode != "HJJ" : continue
             yield cls(year, productionmode, decaymode, mass, coupling)
 
   @property
@@ -115,16 +143,24 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
 
   @property
   def JHUGenversion(self):
-    if self.year in (2017, 2018): return "v7.0.11"
+    if self.year in (2017, 2018): 
+      #if self.productionmode == "ggZH": return "v7.2.3"###?
+      #else: 
+      #  return "v7.0.11"
+      return "v7.0.11"
     if self.year == 2016: return "v7.2.3"
     assert False, self
 
   @property
   def hasnonJHUGenfilter(self): return False
 
+  def linkmela(self): ###
+    if self.productionmode == "ggZH": return True
+    return False
+
   @property
   def maxallowedtimeperevent(self):
-    if self.productionmode in ("VBF", "HJJ"): return 250
+    if self.productionmode in ("VBF", "HJJ", "ggZH"): return 250
     return super(JHUGenJHUGenAnomCoupMCSample, self).maxallowedtimeperevent
 
   @property
