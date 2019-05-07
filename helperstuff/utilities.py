@@ -262,7 +262,7 @@ class JsonDict(object):
   @classmethod
   def writedict(cls):
     dct = cls.getdict()
-    jsonstring = json.dumps(dct, sort_keys=True, indent=4, separators=(',', ': '))
+    jsonstring = json.dumps(dct, sort_keys=True, indent=4, separators=(',', ': ')) + "\n"
     with open(cls.dictfile, "w") as f:
       f.write(jsonstring)
 
