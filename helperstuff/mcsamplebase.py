@@ -1269,7 +1269,7 @@ class MCSampleBase(JsonDict):
   def makerequest(self):
     return True
 
-class MCSampleBase_DefaultCampaign(MCSampleBase):
+class Run2MCSampleBase(MCSampleBase):
   @property
   def campaign(self):
     if self.year == 2016:
@@ -1278,4 +1278,15 @@ class MCSampleBase_DefaultCampaign(MCSampleBase):
       return "RunIIFall17wmLHEGS"
     if self.year == 2018:
       return "RunIIFall18wmLHEGS"
+    assert False, self.year
+
+class Run2UltraLegacyBase(MCSampleBase):
+  @property
+  def campaign(self):
+    if self.year == 2016:
+      return "RunIISummer19UL16wmLHEGS"
+    if self.year == 2017:
+      return "RunIISummer19UL17wmLHEGS"
+    if self.year == 2018:
+      return "RunIISummer19UL18wmLHEGS"
     assert False, self.year

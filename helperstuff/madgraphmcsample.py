@@ -2,7 +2,7 @@ import abc, contextlib, glob, itertools, os, re, subprocess
 
 from utilities import cache, cd, cdtemp, genproductions, here, makecards, mkdir_p, wget
 
-from mcsamplebase import MCSampleBase, MCSampleBase_DefaultCampaign
+from mcsamplebase import MCSampleBase
 
 class MadGraphMCSample(MCSampleBase):
   @property

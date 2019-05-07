@@ -4,15 +4,15 @@ import abc, contextlib, csv, itertools, json, os, re, subprocess
 from mcsamplebase import MCSampleBase
 from utilities import abstractclassmethod, cache, cacheaslist, cdtemp, fullinfo, here, recursivesubclasses
 
-from gridpackbysomeoneelse import MadGraphHJJFromThomasPlusJHUGen
-from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSample
-from jhugenjhugenmassscanmcsample import JHUGenJHUGenMassScanMCSample
+from gridpackbysomeoneelse import MadGraphHJJFromThomasPlusJHUGenRun2
+from jhugenjhugenanomalouscouplings import JHUGenJHUGenAnomCoupMCSampleRun2
+from jhugenjhugenmassscanmcsample import JHUGenJHUGenMassScanMCSampleRun2
 from jhugenmcsample import JHUGenMCSample
-from mcfmanomalouscouplings import MCFMAnomCoupMCSample
-from minlomcsample import MINLOMCSample
-from powhegjhugenanomalouscouplings import POWHEGJHUGenAnomCoupMCSample
-from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
-from qqZZmcsample import QQZZMCSample
+from mcfmanomalouscouplings import MCFMAnomCoupMCSampleRun2
+from minlomcsample import MINLOMCSampleRun2
+from powhegjhugenanomalouscouplings import POWHEGJHUGenAnomCoupMCSampleRun2
+from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSampleRun2
+from qqZZmcsample import QQZZMCSampleRun2
 
 @cache
 def NthOrderVariationSampleBase(n, *flags):
@@ -159,7 +159,6 @@ def MakeExtensionSample(basecls):
 
 class ExtensionOfQQZZSampleBase(MCSampleBase):
   def handle_request_fragment_check_warning(self, line):
-    from qqZZmcsample import QQZZMCSample
     if self.finalstate == "4l":
       if line.strip() == "* [WARNING] Is 100000000 events what you really wanted - please check!":
         #yes it is
@@ -175,12 +174,12 @@ class ExtensionOfQQZZSampleBase(MCSampleBase):
 
     assert False, self
 
-class ExtensionOfQQZZSample(ExtensionOfQQZZSampleBase, MakeExtensionSample(QQZZMCSample)):
+class ExtensionOfQQZZSampleRun2(ExtensionOfQQZZSampleBase, MakeExtensionSample(QQZZMCSampleRun2)):
   @classmethod
   def allsamples(cls):
     yield cls(2017, "4l")
 
-class ExtensionOfJHUGenJHUGenAnomalousCouplings(MakeExtensionSample(JHUGenJHUGenAnomCoupMCSample)):
+class ExtensionOfJHUGenJHUGenAnomalousCouplingsRun2(MakeExtensionSample(JHUGenJHUGenAnomCoupMCSampleRun2)):
   @classmethod
   def allsamples(cls):
     yield cls(2018, "HJJ", "4l", 125, "SM")
@@ -191,7 +190,7 @@ class ExtensionOfJHUGenJHUGenAnomalousCouplings(MakeExtensionSample(JHUGenJHUGen
     if productionmode == "HJJ":
       return 1500000 - 250000
 
-class ExtensionOfMadGraphHJJFromThomasPlusJHUGen(MakeExtensionSample(MadGraphHJJFromThomasPlusJHUGen)):
+class ExtensionOfMadGraphHJJFromThomasPlusJHUGenRun2(MakeExtensionSample(MadGraphHJJFromThomasPlusJHUGenRun2)):
   @classmethod
   def allsamples(cls):
     for year in 2016, 2017, 2018:
@@ -238,7 +237,7 @@ def MakeRedoSample(basecls):
   RedoSample.__name__ = "Redo"+basecls.__name__
   return RedoSample
 
-class RedoPOWHEGJHUGenMassScan(MakeRedoSample(POWHEGJHUGenMassScanMCSample)):
+class RedoPOWHEGJHUGenMassScanRun2(MakeRedoSample(POWHEGJHUGenMassScanMCSampleRun2)):
   @classmethod
   def allsamples(cls):
     for productionmode in "VBF", "ttH":
@@ -290,104 +289,27 @@ def MakeRedoForceCompletedSample(basecls):
   RedoForceCompletedSample.__name__ = "RedoForceCompleted"+basecls.__name__
   return RedoForceCompletedSample
 
-class RedoForceCompletedQQZZSample(MakeRedoForceCompletedSample(QQZZMCSample)):
+class RedoForceCompletedQQZZSampleRun2(MakeRedoForceCompletedSample(QQZZMCSampleRun2)):
   @classmethod
   def allsamples(cls):
     yield cls(2018, "4l")
     yield cls(2018, "2l2nu")
 
-class ExtensionOfRedoForceCompletedQQZZSample(ExtensionOfQQZZSampleBase, MakeExtensionSample(RedoForceCompletedQQZZSample)):
+class ExtensionOfRedoForceCompletedQQZZSampleRun2(ExtensionOfQQZZSampleBase, MakeExtensionSample(RedoForceCompletedQQZZSampleRun2)):
   @classmethod
   def allsamples(cls):
     yield cls(2018, "4l")
     yield cls(2018, "2l2nu")
 
-class RedoForceCompletedQQZZExtensionSample(MakeRedoForceCompletedSample(ExtensionOfQQZZSample)):
+class RedoForceCompletedQQZZExtensionSampleRun2(MakeRedoForceCompletedSample(ExtensionOfQQZZSampleRun2)):
   @classmethod
   def allsamples(cls):
     yield cls(2017, "4l", prepidtouse="HIG-RunIIFall17wmLHEGS-02149")
 
-class RedoForceCompletedPOWHEGJHUGenMassScanMCSample(MakeRedoForceCompletedSample(POWHEGJHUGenMassScanMCSample)):
+class RedoForceCompletedPOWHEGJHUGenMassScanMCSampleRun2(MakeRedoForceCompletedSample(POWHEGJHUGenMassScanMCSampleRun2)):
   @classmethod
   def allsamples(cls):
     yield cls(2017, 'ggH', '4l', '450', prepidtouse="HIG-RunIIFall17wmLHEGS-02123")
-
-class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSample)):
-  @property
-  def variations(self): return super(RedoMCFMMoreNcalls, self).variations + ("morencalls",)
-
-  @property
-  def reason(self): return "increase ncalls in the phase space generation"
-
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for sample in MCFMAnomCoupMCSample.allsamples():
-      if sample.year == 2017:
-        yield cls(*sample.initargs, **sample.initkwargs)
-      if sample.year == 2018 and sample.signalbkgbsi == "BKG":
-        yield cls(*sample.initargs, **sample.initkwargs)
-
-  @property
-  def tarballversion(self):
-    v = self.mainsample.tarballversion+1
-
-    identifierstr = " ".join(str(_) for _ in self.mainsample.identifiers)
-
-    if identifierstr == "BSI 10 0PH ELMU": v+=1
-    if identifierstr == "BSI 1 0M ELMU": v+=1
-    if identifierstr == "BSI 10 0PM MUMU": v+=1
-    if identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
-    if identifierstr == "BSI 10 0PL1f05ph0 TLTL": v+=1
-    if identifierstr == "BSI 1 0M TLTL": v+=1
-    if identifierstr == "BSI 10 0PH ELEL": v+=1
-    if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
-    if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
-
-    if identifierstr == "BSI 10 0PM MUMU": v+=1
-    if identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
-    if identifierstr == "BSI 1 0M TLTL": v+=1
-    if identifierstr == "BSI 10 0PH ELEL": v+=1
-    if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
-    if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
-
-    v+=1  #csmax patch
-
-    if self.year == 2017:
-      othersample = MCFMAnomCoupMCSample(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
-      if self.mainsample.signalbkgbsi == "BKG":
-        othersample = RedoMCFMMoreNcalls(*othersample.initargs, **othersample.initkwargs)
-      assert v == othersample.tarballversion, (v, othersample.tarballversion)
-
-    return v
-
-  @property
-  def genproductionscommit(self):
-    return "a8ea4bc76df07ee2fa16bd9a67b72e7b648dec64"
-
-  def createtarball(self, *args, **kwargs):
-    with cdtemp():
-      subprocess.check_output(["tar", "xvaf", self.mainsample.cvmfstarball])
-      with open("readInput.DAT") as f:
-        for line in f:
-          if "ncalls" in line:
-            assert int(line.split()[0]) < 1000000, (self, self.mainsample.cvmfstarball, line)
-    return super(RedoMCFMMoreNcalls, self).createtarball(*args, **kwargs)
-
-  @property
-  def cardsurl(self):
-    with open("readInput.DAT") as f:
-      for line in f:
-        if "ncalls" in line and int(line.split()[0]) != 5000000:
-          raise ValueError(line+"\nshould be 5000000")
-    return super(RedoMCFMMoreNcalls, self).cardsurl
-
-  @property
-  def extensionnumber(self):
-    result = super(RedoMCFMMoreNcalls, self).extensionnumber
-    if any(_.datasetname == self.datasetname and _.year == self.year and _.extensionnumber == result for subcls in recursivesubclasses(RunIIFall17DRPremix_nonsubmittedBase) for _ in subcls.allsamples()):
-      result += 1
-    return result
 
 class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
   def __init__(self, *args, **kwargs):
@@ -430,7 +352,7 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
   @property
   def extensionnumber(self):
     result = super(RunIIFall17DRPremix_nonsubmittedBase, self).extensionnumber
-    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.mass == 125:
+    if isinstance(self, POWHEGJHUGenMassScanMCSampleRun2) and self.mass == 125:
       result += 1
       if self.productionmode == "ggH":
         result += 1
@@ -450,25 +372,25 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
   def tarballversion(self):
     v = super(RunIIFall17DRPremix_nonsubmittedBase, self).tarballversion
 
-    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass not in (125, 165, 170): v+=1  #removing some pdfs
+    if isinstance(self, POWHEGJHUGenMassScanMCSampleRun2) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass not in (125, 165, 170): v+=1  #removing some pdfs
     if not isinstance(self, PythiaVariationSampleBase):
-      if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #try multicore
-      if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #xargs instead of parallel
-    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ttH" and self.decaymode == "4l" and self.mass == 140: v+=1  #tweak seed to avoid fluctuation in filter efficiency
-    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (400, 3000): v+=1 #trying multicore in runcmsgrid.sh, copied the previous one too early
+      if isinstance(self, POWHEGJHUGenMassScanMCSampleRun2) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #try multicore
+      if isinstance(self, POWHEGJHUGenMassScanMCSampleRun2) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (120, 124, 125, 126, 130, 135, 140, 145, 150, 155, 160, 175, 180, 190, 200, 210, 250, 270, 300, 400, 450, 550, 600, 700, 1000, 2000, 2500, 3000): v+=1 #xargs instead of parallel
+    if isinstance(self, POWHEGJHUGenMassScanMCSampleRun2) and self.productionmode == "ttH" and self.decaymode == "4l" and self.mass == 140: v+=1  #tweak seed to avoid fluctuation in filter efficiency
+    if isinstance(self, POWHEGJHUGenMassScanMCSampleRun2) and self.productionmode == "ZH" and self.decaymode == "4l" and self.mass in (400, 3000): v+=1 #trying multicore in runcmsgrid.sh, copied the previous one too early
 
-    if isinstance(self, JHUGenJHUGenAnomCoupMCSample) and self.productionmode == "VBF" and self.decaymode == "4l" and self.coupling == "L1Zg": v+=1
+    if isinstance(self, JHUGenJHUGenAnomCoupMCSampleRun2) and self.productionmode == "VBF" and self.decaymode == "4l" and self.coupling == "L1Zg": v+=1
 
-    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ggH" and self.mass in (125, 190, 200): v+=1
-    if isinstance(self, POWHEGJHUGenAnomCoupMCSample) and self.productionmode == "ggH": v+=1
-    if isinstance(self, POWHEGJHUGenAnomCoupMCSample) and self.productionmode == "ggH" and self.coupling == "L1": v+=1 #corrupt copy
-    if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ggH" and self.mass == 190: v+=1 #something got messed up
+    if isinstance(self, POWHEGJHUGenMassScanMCSampleRun2) and self.productionmode == "ggH" and self.mass in (125, 190, 200): v+=1
+    if isinstance(self, POWHEGJHUGenAnomCoupMCSampleRun2) and self.productionmode == "ggH": v+=1
+    if isinstance(self, POWHEGJHUGenAnomCoupMCSampleRun2) and self.productionmode == "ggH" and self.coupling == "L1": v+=1 #corrupt copy
+    if isinstance(self, POWHEGJHUGenMassScanMCSampleRun2) and self.productionmode == "ggH" and self.mass == 190: v+=1 #something got messed up
 
     return v
 
   @property
   def JHUGenversion(self):
-    if isinstance(self, JHUGenJHUGenAnomCoupMCSample) and self.productionmode == "VBF" and self.decaymode == "4l" and self.coupling == "L1Zg": return "v7.2.7"
+    if isinstance(self, JHUGenJHUGenAnomCoupMCSampleRun2) and self.productionmode == "VBF" and self.decaymode == "4l" and self.coupling == "L1Zg": return "v7.2.7"
     return super(RunIIFall17DRPremix_nonsubmittedBase, self).JHUGenversion
 
 @cache
@@ -477,11 +399,11 @@ def MakeRunIIFall17DRPremix_nonsubmitted(basecls):
   RunIIFall17DRPremix_nonsubmitted.__name__ = "RunIIFall17DRPremix_nonsubmitted"+basecls.__name__
   return RunIIFall17DRPremix_nonsubmitted
 
-RunIIFall17DRPremix_nonsubmittedJHUGenJHUGenAnomalous = MakeRunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenAnomCoupMCSample)
-RunIIFall17DRPremix_nonsubmittedPOWHEGJHUGenAnomalous = MakeRunIIFall17DRPremix_nonsubmitted(POWHEGJHUGenAnomCoupMCSample)
-RunIIFall17DRPremix_nonsubmittedJHUGenJHUGenMassScan = MakeRunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenMassScanMCSample)
-RunIIFall17DRPremix_nonsubmittedPOWHEGJHUGenMassScan = MakeRunIIFall17DRPremix_nonsubmitted(POWHEGJHUGenMassScanMCSample)
-RunIIFall17DRPremix_nonsubmittedMCFMAnomalous = MakeRunIIFall17DRPremix_nonsubmitted(MCFMAnomCoupMCSample)
+RunIIFall17DRPremix_nonsubmittedJHUGenJHUGenAnomalous = MakeRunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenAnomCoupMCSampleRun2)
+RunIIFall17DRPremix_nonsubmittedPOWHEGJHUGenAnomalous = MakeRunIIFall17DRPremix_nonsubmitted(POWHEGJHUGenAnomCoupMCSampleRun2)
+RunIIFall17DRPremix_nonsubmittedJHUGenJHUGenMassScan = MakeRunIIFall17DRPremix_nonsubmitted(JHUGenJHUGenMassScanMCSampleRun2)
+RunIIFall17DRPremix_nonsubmittedPOWHEGJHUGenMassScan = MakeRunIIFall17DRPremix_nonsubmitted(POWHEGJHUGenMassScanMCSampleRun2)
+RunIIFall17DRPremix_nonsubmittedMCFMAnomalous = MakeRunIIFall17DRPremix_nonsubmitted(MCFMAnomCoupMCSampleRun2)
 
 class ExtensionOfFall17NonSubJHUGenJHUGenAnomalousCouplings(MakeExtensionSample(RunIIFall17DRPremix_nonsubmittedJHUGenJHUGenAnomalous)):
   @classmethod
@@ -568,7 +490,7 @@ class PythiaVariationSampleBase(VariationSampleBase):
   def allsamples(cls):
     for nominal in cls.nominalsamples():
       for systematic in "TuneUp", "TuneDown", "ScaleExtension":
-        if isinstance(nominal, MINLOMCSample) and systematic == "ScaleExtension": continue
+        if isinstance(nominal, MINLOMCSampleRun2) and systematic == "ScaleExtension": continue
         if nominal.year != 2017 and systematic == "ScaleExtension": continue
         yield cls(*nominal.initargs, pythiavariation=systematic)
 
@@ -581,21 +503,20 @@ def MakePythiaVariationSample(basecls):
   PythiaVariationSample.__name__ = "PythiaVariationOf"+basecls.__name__
   return PythiaVariationSample
 
-class PythiaVariationPOWHEGJHUGen(MakePythiaVariationSample(POWHEGJHUGenMassScanMCSample)):
+class PythiaVariationPOWHEGJHUGenRun2(MakePythiaVariationSample(POWHEGJHUGenMassScanMCSampleRun2)):
   @classmethod
   def nominalsamples(cls):
     for productionmode in "ggH", "VBF", "ZH", "WplusH", "WminusH", "ttH":
-      yield POWHEGJHUGenMassScanMCSample(2017, productionmode, "4l", 125)
-      yield POWHEGJHUGenMassScanMCSample(2018, productionmode, "4l", 125)
+      yield POWHEGJHUGenMassScanMCSampleRun2(2017, productionmode, "4l", 125)
+      yield POWHEGJHUGenMassScanMCSampleRun2(2018, productionmode, "4l", 125)
 
-class PythiaVariationMINLO(MakePythiaVariationSample(MINLOMCSample)):
+class PythiaVariationMINLORun2(MakePythiaVariationSample(MINLOMCSampleRun2)):
   @classmethod
   def nominalsamples(cls):
-    for sample in MINLOMCSample.allsamples():
-      if sample.energy == 13:
-        yield sample
+    for sample in MINLOMCSampleRun2.allsamples():
+      yield sample
 
-class RedoPythiaVariationPOWHEGJHUGen(MakeRedoSample(PythiaVariationPOWHEGJHUGen)):
+class RedoPythiaVariationPOWHEGJHUGenRun2(MakeRedoSample(PythiaVariationPOWHEGJHUGenRun2)):
   @classmethod
   def allsamples(cls):
     for systematic in "TuneUp", "TuneDown":
@@ -603,7 +524,7 @@ class RedoPythiaVariationPOWHEGJHUGen(MakeRedoSample(PythiaVariationPOWHEGJHUGen
         if productionmode == "ZH" and systematic == "TuneUp": continue
         yield cls(2017, productionmode, "4l", 125, pythiavariation=systematic, reason="wrong tune variation settings\n\nhttps://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/5361/1/1/1/2/1/1/1/2/1.html")
 
-class RedoPythiaVariationMINLO(MakeRedoSample(PythiaVariationMINLO)):
+class RedoPythiaVariationMINLORun2(MakeRedoSample(PythiaVariationMINLORun2)):
   @classmethod
   def allsamples(cls):
     for systematic in "TuneUp", "TuneDown":
@@ -617,4 +538,4 @@ class RedoPythiaVariationMINLO(MakeRedoSample(PythiaVariationMINLO)):
     if "HIG-RunIIFall17wmLHEGS-01145" in self.previousprepids and self.pythiavariation == "TuneUp": result += 2  #parallelize the gridpack
     return result
 
-RunIIFall17DRPremix_nonsubmittedPythiaVariation = MakeRunIIFall17DRPremix_nonsubmitted(PythiaVariationPOWHEGJHUGen)
+RunIIFall17DRPremix_nonsubmittedPythiaVariation = MakeRunIIFall17DRPremix_nonsubmitted(PythiaVariationPOWHEGJHUGenRun2)

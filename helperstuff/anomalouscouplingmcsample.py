@@ -2,9 +2,9 @@ import abc, contextlib, csv, os, re
 
 from utilities import cache, genproductions, urlopen
 
-from mcsamplebase import MCSampleBase_DefaultCampaign
+from mcsamplebase import MCSampleBase
 
-class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
+class AnomalousCouplingMCSample(MCSampleBase):
   def __init__(self, year, productionmode, decaymode, mass,coupling):
     self.productionmode = productionmode
     self.decaymode = decaymode

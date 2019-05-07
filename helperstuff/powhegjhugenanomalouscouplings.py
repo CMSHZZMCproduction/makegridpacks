@@ -3,6 +3,7 @@ import contextlib, csv, os, re, subprocess
 from utilities import cache, cacheaslist, cd, genproductions, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
+from mcsamplebase import Run2MCSampleBase
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
 from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 
@@ -61,16 +62,6 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
     if self.productionmode == "ggH": return 1
     raise ValueError("No fragment for {}".format(self))
 
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for productionmode in "ggH", :
-      decaymode = "4l"
-      for mass in cls.getmasses(productionmode, decaymode):
-        for coupling in cls.getcouplings(productionmode, decaymode):
-          for year in 2017, 2018:
-            yield cls(year, productionmode, decaymode, mass, coupling)
-
   @property
   def responsible(self):
      return "hroskes"
@@ -92,4 +83,15 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
     if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "SM" and self.multicore_upto[0] == 2: result = -5347775664555457122
     if self.productionmode == "ggH" and self.decaymode == "4l" and self.coupling == "a2mix" and self.multicore_upto == (1, 5): result = -5347775664555457122
     return result
+
+class POWHEGJHUGenAnomCoupMCSampleRun2(POWHEGJHUGenAnomCoupMCSample, Run2MCSampleBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for productionmode in "ggH", :
+      decaymode = "4l"
+      for mass in cls.getmasses(productionmode, decaymode):
+        for coupling in cls.getcouplings(productionmode, decaymode):
+          for year in 2017, 2018:
+            yield cls(year, productionmode, decaymode, mass, coupling)
 

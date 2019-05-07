@@ -3,6 +3,7 @@ import contextlib, csv, os, re, subprocess
 from utilities import cache, cacheaslist, cd, genproductions, makecards, urlopen
 
 from massscanmcsample import MassScanMCSample
+from mcsamplebase import Run2MCSampleBase
 from jhugenjhugenmcsample import JHUGenJHUGenMCSample
 
 class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
@@ -181,20 +182,6 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
       if productionmode in ("bbH", "tqH", "ggZH"):
         return ()
 
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for year in 2017, 2018:
-      for productionmode in "bbH", "tqH", "ggZH":
-        for decaymode in "4l", "2l2q", "2l2nu":
-          for mass in cls.getmasses(productionmode, decaymode):
-            yield cls(year, productionmode, decaymode, mass)
-    for year in 2016,:
-      for productionmode in "ggZH",:
-        for decaymode in "4l", "2l2q", "2l2nu":
-          for mass in cls.getmasses(productionmode, decaymode):
-            yield cls(year, productionmode, decaymode, mass)
-
   @property
   def responsible(self):
     if self.productionmode == "ggZH": return "qguo"
@@ -257,3 +244,17 @@ class JHUGenJHUGenMassScanMCSample(MassScanMCSample, JHUGenJHUGenMCSample):
       if self.timeperevent <= 180 and self.productionmode == "bbH": return "ok"
     return super(JHUGenJHUGenMassScanMCSample, self).handle_request_fragment_check_warning(line)
 
+class JHUGenJHUGenMassScanMCSampleRun2(JHUGenJHUGenMassScanMCSample, Run2MCSampleBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for year in 2017, 2018:
+      for productionmode in "bbH", "tqH", "ggZH":
+        for decaymode in "4l", "2l2q", "2l2nu":
+          for mass in cls.getmasses(productionmode, decaymode):
+            yield cls(year, productionmode, decaymode, mass)
+    for year in 2016,:
+      for productionmode in "ggZH",:
+        for decaymode in "4l", "2l2q", "2l2nu":
+          for mass in cls.getmasses(productionmode, decaymode):
+            yield cls(year, productionmode, decaymode, mass)

@@ -4,6 +4,7 @@ from utilities import cache, cacheaslist, cd, genproductions, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
 from jhugenjhugenmcsample import JHUGenJHUGenMCSample
+from mcsamplebase import Run2MCSampleBase
 
 class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSample):
   @property
@@ -120,20 +121,6 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
         return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCUETP8M1_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py"
     raise ValueError("No fragment for {}".format(self))
 
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for productionmode in "HJJ", "VBF", "ZH", "WH", "ttH", "ggZH":
-    #for productionmode in "HJJ", "VBF"  :
-      decaymode = "4l"
-      #mass = 125
-      for mass in cls.getmasses(productionmode, decaymode):
-        for coupling in cls.getcouplings(productionmode, decaymode):
-          for year in 2016, 2017, 2018:
-            if year == 2016 and productionmode != "HJJ" and productionmode != "ggZH": continue
-            #if year == 2016 and productionmode != "HJJ" : continue
-            yield cls(year, productionmode, decaymode, mass, coupling)
-
   @property
   def responsible(self):
      if self.productionmode == "ggZH":
@@ -166,3 +153,18 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   @property
   def dovalidation(self):
     return super(JHUGenJHUGenAnomCoupMCSample, self).dovalidation
+
+class JHUGenJHUGenAnomCoupMCSampleRun2(JHUGenJHUGenAnomCoupMCSample, Run2MCSampleBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for productionmode in "HJJ", "VBF", "ZH", "WH", "ttH", "ggZH":
+    #for productionmode in "HJJ", "VBF"  :
+      decaymode = "4l"
+      #mass = 125
+      for mass in cls.getmasses(productionmode, decaymode):
+        for coupling in cls.getcouplings(productionmode, decaymode):
+          for year in 2016, 2017, 2018:
+            if year == 2016 and productionmode != "HJJ" and productionmode != "ggZH": continue
+            #if year == 2016 and productionmode != "HJJ" : continue
+            yield cls(year, productionmode, decaymode, mass, coupling)
