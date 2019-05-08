@@ -1260,10 +1260,12 @@ class MCSampleBase(JsonDict):
 
   @property
   def cmsswversion(self):
-    return "CMSSW_9_3_0"
+    return "CMSSW_9_3_14"
+    #return "CMSSW_9_3_0"
   @property
   def scramarch(self):
-    return "slc6_amd64_gcc630"
+    return "slc7_amd64_gcc630"
+    #return "slc6_amd64_gcc630"
 
   @property
   def makerequest(self):

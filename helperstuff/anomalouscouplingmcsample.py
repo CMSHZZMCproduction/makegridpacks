@@ -81,8 +81,8 @@ class AnomalousCouplingMCSample(MCSampleBase):
       "0Mmix": "0Mf05ph0",  #for ttH
       "L1mix": "0L1f05ph0",
       "L1Zgmix": "0L1Zgf05ph0",
-      "box": "box", #### ggZH
-      "triangle": "triangle" #### ggZH
+      "box": "0PBOX", #### ggZH
+      "triangle": "0PTRI" #### ggZH
     }[self.coupling]
 
     result += "ToZZ"

@@ -131,11 +131,12 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
   @property
   def JHUGenversion(self):
     if self.year in (2017, 2018): 
-      #if self.productionmode == "ggZH": return "v7.2.3"###?
-      #else: 
-      #  return "v7.0.11"
+      if self.productionmode == "ggZH": return "v7.2.7"###?
       return "v7.0.11"
-    if self.year == 2016: return "v7.2.3"
+    if self.year == 2016: 
+      if  self.productionmode == "ggZH": return "v7.2.7"
+      return "v7.2.3"
+    #if self.year == 2016: return "v7.2.3"
     assert False, self
 
   @property
