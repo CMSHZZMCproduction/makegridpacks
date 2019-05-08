@@ -349,12 +349,13 @@ class MCSampleBase(JsonDict):
           if not kwof:
             jobsrunning = True
             continue
-          with open("filterjob.log") as f:
-            for line in f:
-              if line.startswith("004") or line.startswith("005") or line.startswith("009"): break
-            else:
-              jobsrunning = True
-              continue
+          if os.path.exists("filterjob.log"):
+            with open("filterjob.log") as f:
+              for line in f:
+                if line.startswith("004") or line.startswith("005") or line.startswith("009"): break
+              else:
+                jobsrunning = True
+                continue
           if os.path.exists(self.filterresultsfile):
             processed, accepted = self.getfilterresults(i)
             if not processed is accepted is None:

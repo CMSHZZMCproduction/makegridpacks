@@ -13,13 +13,17 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
       folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "2017", "13TeV", "anomalouscouplings", self.productionmode+"_NNPDF31_13TeV")
     elif self.year == 2016:
       folder = os.path.join(genproductions, "bin", "JHUGen", "cards", "pre2017", "anomalouscouplings", self.productionmode+"_NNPDF30_13TeV")
+
     if os.path.exists(os.path.join(folder, "makecards.py")):
       makecards(folder)
 #    print folder
     cardbase = self.productionmode
     #card = os.path.join(folder, cardbase+"_NNPDF31_13TeV_M{:d}.input".format(self.mass))
     card = os.path.join(folder, self.coupling + ".input")
-
+    if self.year in (2017, 2018) and cardbase == "ggZH" and self.coupling == "SM":
+      card = os.path.join(folder, "../..", cardbase+"_NNPDF31_13TeV", cardbase+"_NNPDF31_13TeV_M{:d}.input".format(self.mass))
+    elif self.year ==2016 and cardbase == "ggZH" and self.coupling == "SM": 
+      card = os.path.join(folder, "../..", cardbase+"_NNPDF30_13TeV", cardbase+"_NNPDF30_13TeV_M{:d}.input".format(self.mass))
     if not os.path.exists(card):
       raise IOError(card+" does not exist")
     return card
@@ -53,6 +57,10 @@ class JHUGenJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, JHUGenJHUGenMCSamp
     if self.year == 2016 and self.productionmode == "HJJ" and self.decaymode == "4l" and self.mass == 125 and version == 1:
       tarballname = tarballname.replace("V723", "V7011")
     if self.year in (2017, 2018) and self.productionmode == "VBF" and self.decaymode == "4l" and self.mass == 125 and version == 2:
+      tarballname = tarballname.replace("V727", "V7011")
+    if self.year == 2016 and self.productionmode == "ggZH" and version == 1:
+      tarballname = tarballname.replace("V727", "V723")
+    if self.year in (2017, 2018) and self.productionmode == "ggZH" and version == 1:
       tarballname = tarballname.replace("V727", "V7011")
 
 #    decaymode = self.decaymode
