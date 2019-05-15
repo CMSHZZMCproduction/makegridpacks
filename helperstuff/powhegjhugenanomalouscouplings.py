@@ -5,17 +5,13 @@ from utilities import cache, cacheaslist, cd, genproductions, makecards
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
 from mcsamplebase import Run2MCSampleBase
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
-from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
+from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSampleRun2
 
 class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSample):
   @property
   def powhegprocess(self):
     if self.productionmode == "ggH": return "gg_H_quark-mass-effects"
     raise ValueError("Unknown productionmode "+self.productionmode)
-
-  @property
-  def powhegcard(self):
-    return POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, self.decaymode, self.mass).powhegcard
 
   @property
   def powhegcardusesscript(self): return True
@@ -85,6 +81,10 @@ class POWHEGJHUGenAnomCoupMCSample(AnomalousCouplingMCSample, POWHEGJHUGenMCSamp
     return result
 
 class POWHEGJHUGenAnomCoupMCSampleRun2(POWHEGJHUGenAnomCoupMCSample, Run2MCSampleBase):
+  @property
+  def powhegcard(self):
+    return POWHEGJHUGenMassScanMCSampleRun2(self.year, self.productionmode, self.decaymode, self.mass).powhegcard
+
   @classmethod
   @cacheaslist
   def allsamples(cls):

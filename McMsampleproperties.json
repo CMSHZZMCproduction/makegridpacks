@@ -4512,6 +4512,7 @@
                     "RunIIFall17DRPremix_nonsubmitted": {
                         "filterefficiency": 0.14835550966597078,
                         "filterefficiencyerror": 0.00018236587065478363,
+                        "finished": true,
                         "nthreads": 8,
                         "prepid": "HIG-RunIIFall17wmLHEGS-03288",
                         "sizeperevent": 768,
