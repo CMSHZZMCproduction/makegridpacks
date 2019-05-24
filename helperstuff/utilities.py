@@ -383,6 +383,28 @@ if not os.path.exists(genproductions):
 cmsswversion = os.environ["CMSSW_VERSION"]
 scramarch = os.environ["SCRAM_ARCH"]
 
+def osversion():
+  try:
+    with open("/etc/os-release") as f:
+      if 'VERSION_ID="7"' in f.read():
+        return 7
+  except IOError:
+    pass
+
+  try:
+    with open("/etc/redhat-release") as f:
+      if "Scientific Linux CERN SLC release 6.10 (Carbon)" in f.read():
+        return 6
+  except IOError:
+    pass
+
+  raise RuntimeError("Can't figure out what lxplus version you're on.  Check osversion in utilities.py")
+
+osversion = osversion()
+
+if not scramarch.startswith("slc{:d}".format(osversion)):
+  raise RuntimeError("You're on the wrong lxplus.  SCRAM_ARCH={}, you're on {}".format(scramarch, osversion))
+
 def recursivesubclasses(cls):
   result = [cls]
   for subcls in cls.__subclasses__():
