@@ -75,7 +75,6 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     """
     if self.year in (2016, 2017, 2018) and self.__Zdmass == 20 and self.__eps == 1e-2 and self.__VV == "ZZd": v += 1 #comments on PR --> new tarball
     if self.year in (2016, 2017, 2018) and self.__VV == "ZdZd" and self.__eps == 2e-2 and (self.__Zdmass in (4, 7) or self.__Zdmass >= 10): v+=1
-    if self.year in (2016, 2017, 2018) and self.__VV == "ZdZd" and self.__eps == 2e-2: v+=1
     return v
 
   @property
@@ -134,7 +133,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     if self.__VV == "ZZd":
       return "34b9e3dc408110faa10cf6317a0d901cd74e3ae1"
     if self.__VV == "ZdZd":
-      return "7e0e1d97b576734eaef5ec63c821c9ab7fb7faed"
+      return "6a37ef337c6cc5bf056e5b471af45ca85e1a8826"
     assert False, self
   @property
   def genproductionscommitforfragment(self):
@@ -160,8 +159,8 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
         maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/pre2017/13TeV/Higgs/HToZZdTo4L_M125_MZd20_eps1e-2_13TeV_madgraph_pythia8")
       subfolder = "HAHMcards_eps_MZD_lhaid_template"
     elif self.__VV == "ZdZd":
-      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/HToZdZdTo4L_eps1e-2_13TeV_madgraph_pythia8/")
-      subfolder = "HToZdZdcards_lhaid306000_eps1e-2_template"
+      maindir = os.path.join(genproductions, "bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/HToZdZdTo4L_eps2e-2_13TeV_madgraph_pythia8/")
+      subfolder = "HToZdZdcards_lhaid306000_eps2e-2_template"
     return (os.path.join(maindir, "makecards.sh"),) + tuple(os.path.join(maindir, subfolder, os.path.basename(_)) for _ in self.madgraphcards)
   @property
   def madgraphcards(self):
@@ -180,6 +179,16 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
       assert self.__eps == 2e-2 and self.kap == 1e-4
       return "HTo"+self.__VV+"To4L_M125_MZd{}_eps2e-2_kap1e-4_13TeV_madgraph_pythia8".format(self.__Zdmass)
 
+  def comparecards(self, name, cardcontents, gitcardcontents):
+    if self.__VV == "ZdZd":
+      if name.endswith("_customizecards.dat"):
+        cardcontents = cardcontents.replace("set param_card hidden 4 1.000000e-04", "set param_card hidden 4 1.000000e-09")
+      if name.endswith("_proc_card.dat"):
+        cardcontents = cardcontents.replace("zp", "Zp")
+      if name.endswith("_run_card.dat"):
+        cardcontents = gitcardcontents
+    return super(MadGraphHZZdFromJake, self).comparecards(name, cardcontents, gitcardcontents)
+
   @property
   def nevents(self):
     return 100000
@@ -190,7 +199,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     if the original tarball was modified before this time, ignore it
     until it's replaced
     """
-    return datetime.datetime(year=2019, month=4, day=16)
+    return datetime.datetime(year=2019, month=4, day=5)
 
 
 class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MadGraphFXFXMCSample, MCSampleBase_DefaultCampaign):
