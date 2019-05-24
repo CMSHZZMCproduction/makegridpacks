@@ -213,10 +213,10 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def cmsswversion(self):
-    return "CMSSW_9_3_14"
+    return "CMSSW_9_3_0"
   @property
   def scramarch(self):
-    return "slc7_amd64_gcc630"
+    return "slc6_amd64_gcc630"
 
 class MCFMAnomCoupMCSampleRun2(MCFMAnomCoupMCSample, Run2MCSampleBase):
   @classmethod
@@ -227,17 +227,4 @@ class MCFMAnomCoupMCSampleRun2(MCFMAnomCoupMCSample, Run2MCSampleBase):
         for coupling in cls.getcouplings(signalbkgbsi):
           for width in cls.getwidths(signalbkgbsi, coupling):
             for year in 2017, 2018:
-              if year == 2018 and signalbkgbsi != "BKG": continue
-              yield cls(year, signalbkgbsi, width, coupling, finalstate)
-
-class MCFMAnomCoupMCSampleRun2UL(MCFMAnomCoupMCSample, Run2UltraLegacyBase):
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for signalbkgbsi in [ "BSI","SIG", "BKG"]:
-      for finalstate in ["ELTL",'MUTL','ELMU',"ELNU","MUMU","MUNU","TLTL","ELEL"]:
-        for coupling in cls.getcouplings(signalbkgbsi):
-          for width in cls.getwidths(signalbkgbsi, coupling):
-            for year in 2018,:
-              if signalbkgbsi == "BKG": continue  #they are covered in ultralegacy.py
               yield cls(year, signalbkgbsi, width, coupling, finalstate)
