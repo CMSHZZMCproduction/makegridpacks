@@ -3,9 +3,9 @@ import contextlib, csv, os, re, subprocess
 from utilities import cache, cacheaslist, cd, genproductions, here, makecards
 
 from mcfmmcsample import MCFMMCSample
-from mcsamplebase import MCSampleBase_DefaultCampaign
+from mcsamplebase import MCSampleBase, Run2MCSampleBase, Run2UltraLegacyBase
 
-class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
+class MCFMAnomCoupMCSample(MCFMMCSample):
   def __init__(self, year, signalbkgbsi, width, coupling, finalstate):
     self.signalbkgbsi = signalbkgbsi
     self.width = int(width)
@@ -182,16 +182,6 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
       if coupling == "0PM": return 1, 10
       return 1, 10
 
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for signalbkgbsi in [ "BSI","SIG", "BKG"]:
-      for finalstate in ["ELTL",'MUTL','ELMU',"ELNU","MUMU","MUNU","TLTL","ELEL"]:
-        for coupling in cls.getcouplings(signalbkgbsi):
-          for width in cls.getwidths(signalbkgbsi, coupling):
-            for year in 2017, 2018:
-              yield cls(year, signalbkgbsi, width, coupling, finalstate)
-
   @property
   def responsible(self):
      if self.signalbkgbsi != "BKG" or "TL" in self.finalstate or "NU" in self.finalstate: return "nobody"
@@ -228,3 +218,26 @@ class MCFMAnomCoupMCSample(MCFMMCSample, MCSampleBase_DefaultCampaign):
   def scramarch(self):
     return "slc7_amd64_gcc630"
 
+class MCFMAnomCoupMCSampleRun2(MCFMAnomCoupMCSample, Run2MCSampleBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for signalbkgbsi in [ "BSI","SIG", "BKG"]:
+      for finalstate in ["ELTL",'MUTL','ELMU',"ELNU","MUMU","MUNU","TLTL","ELEL"]:
+        for coupling in cls.getcouplings(signalbkgbsi):
+          for width in cls.getwidths(signalbkgbsi, coupling):
+            for year in 2017, 2018:
+              if year == 2018 and signalbkgbsi != "BKG": continue
+              yield cls(year, signalbkgbsi, width, coupling, finalstate)
+
+class MCFMAnomCoupMCSampleRun2UL(MCFMAnomCoupMCSample, Run2UltraLegacyBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for signalbkgbsi in [ "BSI","SIG", "BKG"]:
+      for finalstate in ["ELTL",'MUTL','ELMU',"ELNU","MUMU","MUNU","TLTL","ELEL"]:
+        for coupling in cls.getcouplings(signalbkgbsi):
+          for width in cls.getwidths(signalbkgbsi, coupling):
+            for year in 2018,:
+              if signalbkgbsi == "BKG": continue  #they are covered in ultralegacy.py
+              yield cls(year, signalbkgbsi, width, coupling, finalstate)

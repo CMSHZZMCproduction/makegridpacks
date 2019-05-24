@@ -2,10 +2,10 @@ import os
 
 from utilities import cacheaslist, genproductions
 
-from mcsamplebase import MCSampleBase_DefaultCampaign
+from mcsamplebase import MCSampleBase, Run2MCSampleBase
 from powhegmcsample import POWHEGMCSample
 
-class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
+class QQZZMCSample(POWHEGMCSample, MCSampleBase):
   def __init__(self, year, finalstate, cut=None):
     self.finalstate = finalstate
     self.cut = cut
@@ -118,12 +118,14 @@ class QQZZMCSample(POWHEGMCSample, MCSampleBase_DefaultCampaign):
     if self.finalstate == "2l2nu" and self.cut is None: return 0.6008
     assert False, "need to fill this\n"+self.cvmfstarball
 
+  @property
+  def responsible(self):
+    return "hroskes"
+
+class QQZZMCSampleRun2(QQZZMCSample, Run2MCSampleBase):
   @classmethod
   @cacheaslist
   def allsamples(cls):
     yield cls(2018, "4l")
     yield cls(2018, "2l2nu")
     yield cls(2017, "4l")
-  @property
-  def responsible(self):
-    return "hroskes"

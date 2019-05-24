@@ -4,10 +4,10 @@ import uncertainties
 
 from utilities import cache, cacheaslist, cd, cdtemp, genproductions, here, makecards, mkdir_p, wget
 
-from mcsamplebase import MCSampleBase_DefaultCampaign
+from mcsamplebase import MCSampleBase, Run2MCSampleBase
 from mcsamplewithxsec import MCSampleWithXsec, NoXsecError
 
-class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
+class PhantomMCSample(MCSampleWithXsec):
   def __init__(self, year, signalbkgbsi, finalstate, mass, width):
     self.signalbkgbsi = signalbkgbsi
     self.finalstate = finalstate
@@ -95,16 +95,6 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
   @property
   def genproductionscommit(self):
     return "59eab4505ac61b2fcd677d82c15aa8d6d0ced28f"
-
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for signalbkgbsi in ["SIG", "BSI", "BKG"]:
-      for finalstate in ["2e2mu","4e","4mu","2e2nue","2e2num","2e2nut","2mu2nue","2mu2num","2mu2nut"]:
-        for mass in 125,:
-          for width in 1,:
-            for year in 2017, 2018:
-              yield cls(year, signalbkgbsi, finalstate, mass, width)
 
   @property
   def responsible(self):
@@ -196,3 +186,14 @@ class PhantomMCSample(MCSampleBase_DefaultCampaign, MCSampleWithXsec):
     if self.year == 2018:
       return "101b9cce48742765790db48e6d24d76e6bf2edf1"
     return super(PhantomMCSample, self).genproductionscommitforfragment
+
+class PhantomMCSampleRun2(PhantomMCSample, Run2MCSampleBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for signalbkgbsi in ["SIG", "BSI", "BKG"]:
+      for finalstate in ["2e2mu","4e","4mu","2e2nue","2e2num","2e2nut","2mu2nue","2mu2num","2mu2nut"]:
+        for mass in 125,:
+          for width in 1,:
+            for year in 2017, 2018:
+              yield cls(year, signalbkgbsi, finalstate, mass, width)

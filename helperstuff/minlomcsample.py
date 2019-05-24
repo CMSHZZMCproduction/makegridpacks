@@ -3,40 +3,30 @@ import contextlib, csv, os, re, subprocess
 from utilities import cache, cacheaslist, cd, genproductions, here, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
-from mcsamplebase import MCSampleBase_DefaultCampaign
+from mcsamplebase import MCSampleBase, Run2MCSampleBase
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
 from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 
-class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
-  def __init__(self, year, decaymode, mass, energy=13):
+class MINLOMCSample(POWHEGJHUGenMCSample):
+  def __init__(self, year, decaymode, mass):
     self.decaymode = decaymode
     self.mass = int(str(mass))
-    self.energy = int(str(energy))
     super(MINLOMCSample, self).__init__(year=year)
 
   @property
-  def initargs(self): return self.year, self.decaymode, self.mass, self.energy
+  def initargs(self): return self.year, self.decaymode, self.mass
 
   @property
   def identifiers(self):
     result = ["MINLO", self.decaymode, self.mass]
-    if self.energy != 13: result.append(str(self.energy)+"TeV")
     return tuple(result)
-
-  @property
-  def makegridpackcommand(self):
-    result = super(MINLOMCSample, self).makegridpackcommand
-    if self.energy == 14:
-      result += ["-d", "1"]
-    return result
 
   @property
   def pwgrwlfilter(self):
     def filter(weight):
-      if self.energy == 13:
-        if weight.pdfname.startswith("NNPDF31_"): return True
-        if weight.pdfname.startswith("NNPDF30_"): return True
-        if weight.pdfname.startswith("PDF4LHC15"): return True
+      if weight.pdfname.startswith("NNPDF31_"): return True
+      if weight.pdfname.startswith("NNPDF30_"): return True
+      if weight.pdfname.startswith("PDF4LHC15"): return True
       return False
     return filter
 
@@ -54,10 +44,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def powhegcard(self):
-    if self.energy == 13:
-      return os.path.join(genproductions, "bin/Powheg/production/2017/13TeV/Higgs/HJJ_NNPDF31_13TeV/HJJ_NNPDF31_13TeV_M{}.input".format(self.mass))
-    elif self.energy == 14:
-      return os.path.join(genproductions, "bin/Powheg/production/pre2017/14TeV/HJJ_NNPDF30_14TeV/HJJ_NNPDF30_14TeV_M{mass}.input".format(mass=self.mass))
+    return os.path.join(genproductions, "bin/Powheg/production/2017/13TeV/Higgs/HJJ_NNPDF31_13TeV/HJJ_NNPDF31_13TeV_M{}.input".format(self.mass))
 
   @property
   def powhegcardusesscript(self): return False
@@ -73,16 +60,13 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   def tarballversion(self):
     v = 1
     if self.year in (2017, 2018):
-      if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1
-      if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some pdfs
-      if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove some more pdfs
-      if self.mass == 125 and self.energy == 14 and self.decaymode == "4l":  v+=1  #remove ALL pdfs
-      if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
-      if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #remove some pdfs
-      if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize
-      if self.mass == 300 and self.energy == 13 and self.decaymode == "4l":  v+=1  #parallelize with xargs
+      if self.mass == 125 and self.decaymode == "4l":  v+=1
+      if self.mass == 125 and self.decaymode == "4l":  v+=1  #remove some pdfs
+      if self.mass == 300 and self.decaymode == "4l":  v+=1  #remove some pdfs
+      if self.mass == 300 and self.decaymode == "4l":  v+=1  #parallelize
+      if self.mass == 300 and self.decaymode == "4l":  v+=1  #parallelize with xargs
     if self.year == 2018:
-      if self.mass == 125 and self.energy == 13 and self.decaymode == "4l":  v+=2  #parallelize with xargs
+      if self.mass == 125 and self.decaymode == "4l":  v+=2  #parallelize with xargs
     return v
 
   @property
@@ -92,19 +76,14 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
     return result
 
   def cvmfstarball_anyversion(self, version):
-    if self.energy == 13: year = "2017"
-    if self.energy == 14: year = "slc6_amd64_gcc481"
-    repmap = dict(version=version, mass=self.mass, energy=self.energy, year=year)
+    year = "2017"
+    repmap = dict(version=version, mass=self.mass, year=year)
 
-    maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/{year}/{energy}TeV/powheg/V2"
-    if self.energy == 13:
-      folder = "HJJ_M{mass}_{energy}TeV"
-    elif self.energy == 14:
-      folder = "HJJ_HZZ4L_NNPDF30_14TeV_M125_JHUGenV710"
-    else: assert False
+    maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/{year}/13TeV/powheg/V2"
+    folder = "HJJ_M{mass}_13TeV"
 
-    if self.energy == 13 and (version == 1 or self.mass == 125 and self.decaymode == "4l" and version == 2):
-      tarballname = "HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_{energy}TeV_M{mass}.tgz"
+    if version == 1 or self.mass == 125 and self.decaymode == "4l" and version == 2:
+      tarballname = "HJJ_slc6_amd64_gcc630_CMSSW_9_3_0_HJJ_NNPDF31_13TeV_M{mass}.tgz"
     else:
       tarballname = folder+".tgz"
 
@@ -112,19 +91,10 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
 
   @property
   def datasetname(self):
-    return "GluGluHToZZTo4L_M%d_%dTeV_powheg2_minloHJJ_JHUGenV7011_pythia8"%(self.mass, self.energy)
-
-  @property
-  def campaign(self):
-    if self.energy == 13:
-      return super(MINLOMCSample, self).campaign
-    if self.energy == 14:
-      if self.year == 2017: return "PhaseIISummer17wmLHEGENOnly"
-    assert False
+    return "GluGluHToZZTo4L_M%d_13TeV_powheg2_minloHJJ_JHUGenV7011_pythia8"%(self.mass)
 
   @property
   def nevents(self):
-    if self.energy == 14: return 1000000
     return 3000000
 
   @property
@@ -135,7 +105,7 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   @property
   def tags(self):
     result = ["HZZ"]
-    if self.year == 2017 and self.energy == 13: result.append("Fall17P2A")
+    if self.year == 2017: result.append("Fall17P2A")
     return result
 
   @property
@@ -155,15 +125,6 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   @property
   def validationtimemultiplier(self): return max(super(MINLOMCSample, self).validationtimemultiplier, 2)
 
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for mass in 125, 300:
-      for decaymode in "4l",:
-        for year in 2017, 2018:
-          yield cls(year, decaymode, mass)
-    yield cls(2017, "4l", 125, energy=14)
-
   @property
   def responsible(self):
      return "hroskes"
@@ -180,3 +141,71 @@ class MINLOMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
   @property
   def maxallowedtimeperevent(self):
     return 500
+
+class MINLOMCSamplePhaseII(MINLOMCSample):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    yield cls(2017, "4l", 125)
+  @property
+  def identifiers(self):
+    result = super(MINLOMCSamplePhaseII, self).identifiers
+    result = result + ("14TeV",)
+    return result
+  @property
+  def makegridpackcommand(self):
+    result = super(MINLOMCSamplePhaseII, self).makegridpackcommand
+    if self.energy == 14:
+      result += ["-d", "1"]
+    return result
+  @property
+  def pwgrwlfilter(self):
+    return lambda weight: False
+  @property
+  def powhegcard(self):
+    return os.path.join(genproductions, "bin/Powheg/production/pre2017/14TeV/HJJ_NNPDF30_14TeV/HJJ_NNPDF30_14TeV_M{mass}.input".format(mass=self.mass))
+  @property
+  def tarballversion(self):
+    v = 1
+    assert self.year == 2017, self
+    if self.mass == 125 and self.decaymode == "4l":  v+=1  #remove some pdfs
+    if self.mass == 125 and self.decaymode == "4l":  v+=1  #remove some more pdfs
+    if self.mass == 125 and self.decaymode == "4l":  v+=1  #remove ALL pdfs
+    return v
+
+  def cvmfstarball_anyversion(self, version):
+    year = "slc6_amd64_gcc481"
+    repmap = dict(version=version, mass=self.mass, year=year)
+
+    maindir = "/cvmfs/cms.cern.ch/phys_generator/gridpacks/{year}/14TeV/powheg/V2"
+    folder = "HJJ_HZZ4L_NNPDF30_14TeV_M125_JHUGenV710"
+
+    tarballname = folder+".tgz"
+
+    return os.path.join(maindir, folder, "v{version}", tarballname).format(**repmap)
+
+  @property
+  def datasetname(self):
+    return "GluGluHToZZTo4L_M%d_14TeV_powheg2_minloHJJ_JHUGenV7011_pythia8"%(self.mass)
+
+  @property
+  def campaign(self):
+    if self.year == 2017: return "PhaseIISummer17wmLHEGENOnly"
+    assert False
+
+  @property
+  def nevents(self):
+    return 1000000
+
+  @property
+  def tags(self):
+    return ["HZZ"]
+
+class MINLOMCSampleRun2(MINLOMCSample, Run2MCSampleBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for mass in 125, 300:
+      for decaymode in "4l",:
+        for year in 2017, 2018:
+          yield cls(year, decaymode, mass)

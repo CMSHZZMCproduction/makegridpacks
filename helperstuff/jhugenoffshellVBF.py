@@ -5,10 +5,10 @@ import os
 from utilities import cacheaslist, genproductions
 
 from jhugenmcsample import JHUGenMCSample
-from mcsamplebase import MCSampleBase_DefaultCampaign
+from mcsamplebase import Run2UltraLegacyBase
 from mcsamplewithxsec import MCSampleWithXsec_RunZeroEvents
 
-class JHUGenOffshellVBF(JHUGenMCSample, MCSampleBase_DefaultCampaign, MCSampleWithXsec_RunZeroEvents):
+class JHUGenOffshellVBF(JHUGenMCSample, MCSampleWithXsec_RunZeroEvents):
   def __init__(self, year, signalbkgbsi, width, coupling, finalstate):
     self.signalbkgbsi = signalbkgbsi
     self.width = width
@@ -49,19 +49,6 @@ class JHUGenOffshellVBF(JHUGenMCSample, MCSampleBase_DefaultCampaign, MCSampleWi
   @property
   def gridpackjobsrunning(self):
     return False  #--check-jobs will pick it up anyway
-
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for year in 2016, 2017, 2018:
-      if year == 2016: continue
-      for finalstate in "4l", "2l2nu":
-        for signalbkgbsi in "signal", "bkg", "BSI":
-          for coupling in "SM", "a3", "a3mix", "a2", "a2mix", "L1", "L1mix":
-            for width in "GaSM", "10GaSM":
-              if signalbkgbsi == "bkg" and coupling != "SM": continue
-              if width == "10GaSM" and signalbkgbsi != "BSI": continue
-              yield cls(year, signalbkgbsi, width, coupling, finalstate)
 
   @property
   def JHUGenversion(self):
@@ -148,3 +135,17 @@ class JHUGenOffshellVBF(JHUGenMCSample, MCSampleBase_DefaultCampaign, MCSampleWi
   def creategridpackqueue(self):
     if self.inthemiddleofmultistepgridpackcreation: return None
     return "longlunch"
+
+class JHUGenOffshellVBFRun2UL(JHUGenOffshellVBF, Run2UltraLegacyBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for year in 2016, 2017, 2018:
+      if year == 2016: continue
+      for finalstate in "4l", "2l2nu":
+        for signalbkgbsi in "signal", "bkg", "BSI":
+          for coupling in "SM", "a3", "a3mix", "a2", "a2mix", "L1", "L1mix":
+            for width in "GaSM", "10GaSM":
+              if signalbkgbsi == "bkg" and coupling != "SM": continue
+              if width == "10GaSM" and signalbkgbsi != "BSI": continue
+              yield cls(year, signalbkgbsi, width, coupling, finalstate)

@@ -349,12 +349,13 @@ class MCSampleBase(JsonDict):
           if not kwof:
             jobsrunning = True
             continue
-          with open("filterjob.log") as f:
-            for line in f:
-              if line.startswith("004") or line.startswith("005") or line.startswith("009"): break
-            else:
-              jobsrunning = True
-              continue
+          if os.path.exists("filterjob.log"):
+            with open("filterjob.log") as f:
+              for line in f:
+                if line.startswith("004") or line.startswith("005") or line.startswith("009"): break
+              else:
+                jobsrunning = True
+                continue
           if os.path.exists(self.filterresultsfile):
             processed, accepted = self.getfilterresults(i)
             if not processed is accepted is None:
@@ -1260,16 +1261,18 @@ class MCSampleBase(JsonDict):
 
   @property
   def cmsswversion(self):
-    return "CMSSW_9_3_0"
+    return "CMSSW_9_3_14"
+    #return "CMSSW_9_3_0"
   @property
   def scramarch(self):
-    return "slc6_amd64_gcc630"
+    return "slc7_amd64_gcc630"
+    #return "slc6_amd64_gcc630"
 
   @property
   def makerequest(self):
     return True
 
-class MCSampleBase_DefaultCampaign(MCSampleBase):
+class Run2MCSampleBase(MCSampleBase):
   @property
   def campaign(self):
     if self.year == 2016:
@@ -1278,4 +1281,15 @@ class MCSampleBase_DefaultCampaign(MCSampleBase):
       return "RunIIFall17wmLHEGS"
     if self.year == 2018:
       return "RunIIFall18wmLHEGS"
+    assert False, self.year
+
+class Run2UltraLegacyBase(MCSampleBase):
+  @property
+  def campaign(self):
+    if self.year == 2016:
+      return "RunIISummer19UL16wmLHEGS"
+    if self.year == 2017:
+      return "RunIISummer19UL17wmLHEGS"
+    if self.year == 2018:
+      return "RunIISummer19UL18wmLHEGS"
     assert False, self.year

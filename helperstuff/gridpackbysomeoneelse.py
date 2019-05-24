@@ -4,7 +4,7 @@ from utilities import cacheaslist, cdtemp, genproductions, KeepWhileOpenFile, mk
 
 import patches
 
-from mcsamplebase import MCSampleBase, MCSampleBase_DefaultCampaign
+from mcsamplebase import MCSampleBase, Run2MCSampleBase, Run2UltraLegacyBase
 from madgraphfxfxmcsample import MadGraphFXFXMCSample
 from madgraphmcsample import MadGraphMCSample
 from madgraphjhugenmcsample import MadGraphJHUGenMCSample
@@ -54,7 +54,7 @@ class GridpackBySomeoneElse(MCSampleBase):
 class MadGraphGridpackBySomeoneElse(GridpackBySomeoneElse, MadGraphMCSample):
   pass
 
-class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCampaign):
+class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
   def __init__(self, year, VV, Zdmass, eps):
     self.__VV = VV
     self.__Zdmass = int(str(Zdmass))
@@ -96,20 +96,6 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     if self.__VV == "ZdZd":
       return 306000
     assert False, self
-
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 30, 35:
-      for eps in 1e-2,:
-        for year in 2016, 2017, 2018:
-          for VV in "ZZd",:
-            yield cls(year, VV, Zdmass, eps)
-    for Zdmass in 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60:
-      for eps in 2e-2,:
-        for year in 2016, 2017, 2018:
-          for VV in "ZdZd",:
-            yield cls(year, VV, Zdmass, eps)
 
   @property
   def responsible(self):
@@ -201,8 +187,27 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MCSampleBase_DefaultCa
     """
     return datetime.datetime(year=2019, month=4, day=5)
 
+class MadGraphHZZdFromJakeRun2(MadGraphHZZdFromJake, Run2MCSampleBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for Zdmass in 1, 2, 3, 4, 7, 10, 15, 20, 25, 30, 35:
+      for eps in 1e-2,:
+        for year in 2016, 2017, 2018:
+          for VV in "ZZd",:
+            yield cls(year, VV, Zdmass, eps)
 
-class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MadGraphFXFXMCSample, MCSampleBase_DefaultCampaign):
+class MadGraphHZZdFromJakeRun2UL(MadGraphHZZdFromJake, Run2UltraLegacyBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for Zdmass in 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60:
+      for eps in 2e-2,:
+        for year in 2016, 2017, 2018:
+          for VV in "ZdZd",:
+            yield cls(year, VV, Zdmass, eps)
+
+class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MadGraphFXFXMCSample):
   def __init__(self, year, coupling, njets):
     self.__coupling = coupling
     self.__njets = njets
@@ -335,13 +340,6 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
           return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/GluGluToMaxmixHToTauTauPlusTwoJets_M125_13TeV_amcatnloFXFX_pythia8/v1/GluGluToMaxmixHToTauTauPlusTwoJets_M125_13TeV_amcatnloFXFX_pythia8_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz"
     assert False, self
 
-  @classmethod
-  def allsamples(cls):
-    for year in 2016, 2017, 2018:
-      for coupling in "SM", "a3", "a3mix":
-        yield cls(year, coupling, "H012J")
-        yield cls(year, coupling, "HJJ")
-
   @property
   def JHUGenversion(self): return "v7.1.4"
   @property
@@ -441,7 +439,15 @@ class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHU
     elif self.__njets == "HJJ":
       return 3000000
 
-class MadgraphTWHPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MCSampleBase_DefaultCampaign):
+class MadGraphHJJFromThomasPlusJHUGenRun2(MadGraphHJJFromThomasPlusJHUGen, Run2MCSampleBase):
+  @classmethod
+  def allsamples(cls):
+    for year in 2016, 2017, 2018:
+      for coupling in "SM", "a3", "a3mix":
+        yield cls(year, coupling, "H012J")
+        yield cls(year, coupling, "HJJ")
+
+class MadgraphTWHPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample):
   def __init__(self, year, finalstate):
     self.finalstate = finalstate
     super(MadgraphTWHPlusJHUGen, self).__init__(year)
@@ -451,11 +457,6 @@ class MadgraphTWHPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSampl
   @property
   def identifiers(self):
     return "tWH", "madgraphJHUGen", self.finalstate
-  @classmethod
-  def allsamples(cls):
-    for year in 2016, 2017, 2018:
-      if year == 2016: continue
-      yield cls(year, "4l")
   @property
   def JHUGenversion(self):
     return "v7.2.7"
@@ -541,3 +542,10 @@ class MadgraphTWHPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSampl
       cardcontents = cardcontents.replace("define ll = l+ l-\n", "")
       cardcontents = cardcontents.replace("define vll = vl vl~\n", "")
     return super(MadgraphTWHPlusJHUGen, self).comparecards(name, cardcontents, gitcardcontents)
+
+class MadgraphTWHPlusJHUGenRun2(MadgraphTWHPlusJHUGen, Run2MCSampleBase):
+  @classmethod
+  def allsamples(cls):
+    for year in 2016, 2017, 2018:
+      if year == 2016: continue
+      yield cls(year, "4l")

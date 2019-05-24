@@ -3,6 +3,7 @@ import contextlib, csv, os, re, subprocess
 from utilities import cache, cacheaslist, cd, genproductions, makecards, urlopen
 
 from massscanmcsample import MassScanMCSample
+from mcsamplebase import Run2MCSampleBase
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
 
 class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
@@ -177,15 +178,15 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   @property
   def datasetname(self):
     if self.decaymode == "2l2nu":
-      result = POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Nu")
+      result = POWHEGJHUGenMassScanMCSampleRun2(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Nu")
     elif self.decaymode == "2l2q":
-      result = POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Q")
+      result = POWHEGJHUGenMassScanMCSampleRun2(self.year, self.productionmode, "4l", self.mass).datasetname.replace("4L", "2L2Q")
       if self.mass == 125:
         if self.productionmode in ("VBF", "WplusH", "WminusH"): result = result.replace("2L2Q", "2L2X")
         if self.productionmode == "ZH": result = "ZH_HToZZ_2LFilter_M125_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8"
         if self.productionmode == "ttH": result = "ttH_HToZZ_2LOSSFFilter_M125_13TeV_powheg2_JHUGenV7011_pythia8"
     elif self.productionmode in ("WplusH", "WminusH", "ZH") and self.mass > 230:
-      result = POWHEGJHUGenMassScanMCSample(self.year, self.productionmode, self.decaymode, 230).datasetname.replace("M230", "M{:d}".format(self.mass))
+      result = POWHEGJHUGenMassScanMCSampleRun2(self.year, self.productionmode, self.decaymode, 230).datasetname.replace("M230", "M{:d}".format(self.mass))
     elif self.year == 2016:
       if 115 <= self.mass <= 270:
         result = self.olddatasetname.replace("JHUgenV6", "JHUGenV709")
@@ -287,19 +288,6 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
         return 125, 200, 250, 300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1500, 2000, 2500, 3000
       if productionmode in ("WplusH", "WminusH", "ZH", "ttH"):
         return 125,
-
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
-      for decaymode in "4l", "2l2q", "2l2nu":
-        for mass in cls.getmasses(productionmode, decaymode):
-          for year in 2017, 2018:
-            yield cls(year, productionmode, decaymode, mass)
-
-    #need these to make extensions
-    yield cls(2016, "VBF", "4l", 125)
-    yield cls(2016, "ttH", "4l", 125)
 
   @property
   def responsible(self):
@@ -408,3 +396,17 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   def scramarch(self):
     if self.productionmode == "ggH" and self.mass == 190 and self.decaymode == "4l" and self.tarballversion >= 5: return "slc7_amd64_gcc630"
     return super(POWHEGJHUGenMassScanMCSample, self).scramarch
+
+class POWHEGJHUGenMassScanMCSampleRun2(POWHEGJHUGenMassScanMCSample, Run2MCSampleBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for productionmode in "ggH", "VBF", "WplusH", "WminusH", "ZH", "ttH":
+      for decaymode in "4l", "2l2q", "2l2nu":
+        for mass in cls.getmasses(productionmode, decaymode):
+          for year in 2017, 2018:
+            yield cls(year, productionmode, decaymode, mass)
+
+    #need these to make extensions
+    yield cls(2016, "VBF", "4l", 125)
+    yield cls(2016, "ttH", "4l", 125)

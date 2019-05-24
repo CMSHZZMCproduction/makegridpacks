@@ -3,11 +3,11 @@ import contextlib, csv, os, re, subprocess
 from utilities import cache, cacheaslist, cd, genproductions, makecards
 
 from anomalouscouplingmcsample import AnomalousCouplingMCSample
-from mcsamplebase import MCSampleBase_DefaultCampaign
+from mcsamplebase import MCSampleBase, Run2MCSampleBase
 from powhegjhugenmcsample import POWHEGJHUGenMCSample
 from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample
 
-class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample, MCSampleBase_DefaultCampaign):
+class POWHEGJHUGenLifetimeMCSample(POWHEGJHUGenMCSample, MCSampleBase):
   def __init__(self, year, productionmode, decaymode, mass, lifetime):
     self.productionmode = productionmode
     self.decaymode = decaymode
@@ -86,12 +86,6 @@ tarballname)
     if self.productionmode == "ggH": return 1
     raise ValueError("No fragment for {}".format(self))
 
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for lifetime in 50, 200, 800:
-      yield cls(2017, "ggH", "4l", 125, lifetime)
-
   @property
   def responsible(self):
      return "hroskes"
@@ -108,3 +102,9 @@ tarballname)
   @property
   def hasnonJHUGenfilter(self): return False
 
+class POWHEGJHUGenLifetimeMCSampleRun2(POWHEGJHUGenLifetimeMCSample, Run2MCSampleBase):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for lifetime in 50, 200, 800:
+      yield cls(2017, "ggH", "4l", 125, lifetime)

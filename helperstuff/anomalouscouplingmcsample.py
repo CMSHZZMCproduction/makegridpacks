@@ -2,9 +2,9 @@ import abc, contextlib, csv, os, re
 
 from utilities import cache, genproductions, urlopen
 
-from mcsamplebase import MCSampleBase_DefaultCampaign
+from mcsamplebase import MCSampleBase
 
-class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
+class AnomalousCouplingMCSample(MCSampleBase):
   def __init__(self, year, productionmode, decaymode, mass,coupling):
     self.productionmode = productionmode
     self.decaymode = decaymode
@@ -26,7 +26,8 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
     couplings = ["L1","L1Zg","L1Zgmix","L1mix","a2","a2mix","a3","a3mix"]
 
     if self.decaymode == "4l" :
-        if self.productionmode == "ZH" :
+        if self.productionmode in ("ZH", "ggZH") :
+        #if self.productionmode in ("ZH") :
             decaymode = "ZZ2l2any_withtaus_filter4l"
         elif self.productionmode == "ttH" :
             decaymode = "ZZ2l2any_withtaus_filter4lOSSF"
@@ -34,6 +35,8 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
             decaymode = "ZZ4l_withtaus"
 
         if self.coupling == "SM" or self.productionmode in ("HJJ", "ttH") :
+            filename = decaymode+".input"
+        elif self.productionmode == "ggZH" and ( self.coupling == "box" or self.coupling == "triangle" ):
             filename = decaymode+".input"
 
         else :
@@ -63,6 +66,8 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
       "ZH":  "ZHiggs",
       "WH":  "WHiggs",
       "ttH": "ttHiggs",
+      #"ggZH": "ggZHiggs"
+      "ggZH": "GluGluToZHiggs"
     }[self.productionmode]
     result += {
       "SM": "0PM",
@@ -76,6 +81,8 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
       "0Mmix": "0Mf05ph0",  #for ttH
       "L1mix": "0L1f05ph0",
       "L1Zgmix": "0L1Zgf05ph0",
+      "box": "0PBOX", #### ggZH
+      "triangle": "0PTRI" #### ggZH
     }[self.coupling]
 
     result += "ToZZ"
@@ -93,7 +100,7 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
       result += "_powheg2"
     result += "_JHUGen"+self.JHUGenversion.upper().replace(".", "")+"_pythia8"
 
-    pm = self.productionmode.replace("HJJ", "JJH").replace("H", "Higgs").replace("ggHiggs", "Higgs")
+    pm = self.productionmode.replace("HJJ", "JJH").replace("H", "Higgs").replace("ggHiggs", "Higgs").replace("ggZHiggs", "GluGluToZHiggs")
     dm = self.decaymode.upper().replace("NU", "Nu")
     searchfor = [pm, dm, "M{:d}".format(self.mass), "JHUGen"+self.JHUGenversion.upper().replace(".", "")+"_"]
     shouldntbethere = []
@@ -106,11 +113,11 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
 
     searchfor = re.sub("JHUGenV[0-9]+", "JHUgenV6", result.replace("Zg", ""))
     reader = csv.DictReader(self.csvfile2016())
-    for row in reader:
-      if row["dataset"] and row["dataset"].split("/")[1] == searchfor:
-        break
-    else:
-      raise ValueError("Couldn't find dataset name {}".format(searchfor))
+    #for row in reader:
+    #  if row["dataset"] and row["dataset"].split("/")[1] == searchfor:
+    #    break
+    #else:
+    #  raise ValueError("Couldn't find dataset name {}".format(searchfor))
 
     return result
 
@@ -124,13 +131,15 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
         return 500000
       elif self.productionmode == "ZH":
         return 750000
+      elif self.productionmode == "ggZH":
+        return 750000  #####?
 
     raise ValueError("No nevents for {}".format(self))
 
   @classmethod
   def getmasses(cls, productionmode, decaymode):
     if decaymode == "4l":
-      if productionmode == "ggH" or productionmode == "HJJ" or productionmode == "VBF" or productionmode == "ZH" or productionmode == "WH" or productionmode == "ttH":
+      if productionmode == "ggH" or productionmode == "HJJ" or productionmode == "VBF" or productionmode == "ZH" or productionmode == "WH" or productionmode == "ttH" or productionmode == "ggZH":
         return 125,
     raise ValueError("No masses for {} {}".format(productionmode, decaymode))
 
@@ -148,3 +157,5 @@ class AnomalousCouplingMCSample(MCSampleBase_DefaultCampaign):
       return "L1","L1Zg","L1Zgmix","L1mix","SM","a2","a2mix","a3","a3mix" 
     if productionmode == "ttH" :
       return "0M","0Mmix","SM"
+    if productionmode == "ggZH":
+      return "L1", "L1Zg", "L1Zgmix", "L1mix", "SM", "box", "triangle"

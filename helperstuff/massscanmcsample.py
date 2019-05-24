@@ -2,9 +2,9 @@ import abc, os
 
 from utilities import genproductions
 
-from mcsamplebase import MCSampleBase_DefaultCampaign
+from mcsamplebase import MCSampleBase
 
-class MassScanMCSample(MCSampleBase_DefaultCampaign):
+class MassScanMCSample(MCSampleBase):
   def __init__(self, year, productionmode, decaymode, mass):
     self.productionmode = productionmode
     self.decaymode = decaymode
