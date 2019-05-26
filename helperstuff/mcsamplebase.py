@@ -967,6 +967,12 @@ class MCSampleBase(JsonDict):
   def fullfragment(self):
     return createLHEProducer(self.cvmfstarball, self.getcardsurl(), self.fragmentname, self.genproductionscommitforfragment)
 
+  @property
+  def tune(self):
+    return {
+      "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py": "TuneCP5",
+    }[self.fragmentname]
+
   def getdictforupdate(self):
     mcm = McM()
     req = mcm.get("requests", self.prepid)

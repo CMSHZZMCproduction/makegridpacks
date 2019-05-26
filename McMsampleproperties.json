@@ -151,6 +151,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02604"
                         }
                     },
@@ -193,6 +194,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02598"
                         }
                     },
@@ -214,6 +216,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02599"
                         }
                     },
@@ -235,6 +238,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02600"
                         }
                     },
@@ -249,6 +253,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02601"
                         }
                     },
@@ -256,6 +261,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02602"
                         }
                     },
@@ -263,6 +269,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02603"
                         }
                     }
@@ -2730,6 +2737,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03984"
                         }
                     },
@@ -2772,6 +2780,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03978"
                         }
                     },
@@ -2793,6 +2802,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03979"
                         }
                     },
@@ -2814,6 +2824,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03980"
                         }
                     },
@@ -2828,6 +2839,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03981"
                         }
                     },
@@ -2835,6 +2847,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03982"
                         }
                     },
@@ -2842,6 +2855,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03983"
                         }
                     }
@@ -7074,6 +7088,7 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
+                            "finished": true,
                             "nthreads": 1,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03146",
                             "sizeperevent": 652,
@@ -8278,6 +8293,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01981"
                         }
                     },
@@ -8299,6 +8315,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01982"
                         }
                     },
@@ -8320,6 +8337,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01983"
                         }
                     },
@@ -8334,6 +8352,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01984"
                         }
                     },
@@ -8341,6 +8360,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01985"
                         }
                     },
@@ -8348,6 +8368,7 @@
                         "0.02": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01986"
                         }
                     }

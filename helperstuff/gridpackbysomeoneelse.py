@@ -109,9 +109,9 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
     return os.path.join(folder, tarballname, "v{}".format(version), tarballname+".tar.xz")
   @property
   def fragmentname(self):
-    if self.year in (2017, 2018):
+    if self.year in (2017, 2018) or self.__VV == "ZdZd":
       return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py"
-    if self.year == 2016:
+    if self.year == 2016 and self.__VV == "ZZd":
       return "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff.py"
     assert False, self.year
   @property
@@ -163,7 +163,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
       return "HTo"+self.__VV+"To4L_M125_MZd{}_eps1e-2_13TeV_madgraph_pythia8".format(self.__Zdmass)
     if self.__VV == "ZdZd":
       assert self.__eps == 2e-2 and self.kap == 1e-4
-      return "HTo"+self.__VV+"To4L_M125_MZd{}_eps2e-2_kap1e-4_13TeV_madgraph_pythia8".format(self.__Zdmass)
+      return "HTo"+self.__VV+"To4L_M125_MZd{}_eps2e-2_kap1e-4_{}_13TeV_madgraph_pythia8".format(self.tune, self.__Zdmass)
 
   def comparecards(self, name, cardcontents, gitcardcontents):
     if self.__VV == "ZdZd":
