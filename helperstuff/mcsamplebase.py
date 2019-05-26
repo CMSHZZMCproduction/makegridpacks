@@ -387,44 +387,11 @@ class MCSampleBase(JsonDict):
       #shutil.rmtree(self.workdir)
       return "filter efficiency is measured to be {}".format(self.filterefficiency)
 
-  def findfilterefficiency(self):
-    #figure out the filter efficiency
-    if not self.hasfilter:
-      self.filterefficiency = 1
-      return "filter efficiency is set to 1 +/- 0"
-    else:
-      if not self.implementsfilter: raise ValueError("Can't find filter efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
-      mkdir_p(self.workdir)
-      jobsrunning = False
-      eventsprocessed = eventsaccepted = 0
-      with cd(self.workdir):
-        for i in range(100):
-          mkdir_p(str(i))
-          with cd(str(i)), KeepWhileOpenFile("runningfilterjob.tmp", deleteifjobdied=True) as kwof:
-            if not kwof:
-              jobsrunning = True
-              continue
-            if not os.path.exists(self.filterresultsfile):
-              if not jobtype():
-                submitLSF(self.filterefficiencyqueue)
-                jobsrunning = True
-                continue
-              if not queuematches(self.filterefficiencyqueue):
-                jobsrunning = True
-                continue
-              self.dofilterjob(i)
-            processed, accepted = self.getfilterresults(i)
-            eventsprocessed += processed
-            eventsaccepted += accepted
-
-        if jobsrunning: return "some filter efficiency jobs are still running"
-        self.filterefficiency = uncertainties.ufloat(1.0*eventsaccepted / eventsprocessed, (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5)
-        #shutil.rmtree(self.workdir)
-        return "filter efficiency is measured to be {}".format(self.filterefficiency)
-
   implementsfilter = False
 
   def getsizeandtimecondor(self):
+    check = self.request_fragment_check()
+    if check: return check
     mkdir_p(self.workdir)
     xmlfile = self.prepid+"_rt.xml"
     with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), deleteifjobdied=True) as kwof:
