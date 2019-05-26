@@ -163,7 +163,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
       return "HTo"+self.__VV+"To4L_M125_MZd{}_eps1e-2_13TeV_madgraph_pythia8".format(self.__Zdmass)
     if self.__VV == "ZdZd":
       assert self.__eps == 2e-2 and self.kap == 1e-4
-      return "HTo"+self.__VV+"To4L_M125_MZd{}_eps2e-2_kap1e-4_{}_13TeV_madgraph_pythia8".format(self.tune, self.__Zdmass)
+      return "HTo"+self.__VV+"To4L_M125_MZd{}_eps2e-2_kap1e-4_{}_13TeV_madgraph_pythia8".format(self.__Zdmass, self.tune)
 
   def comparecards(self, name, cardcontents, gitcardcontents):
     if self.__VV == "ZdZd":
