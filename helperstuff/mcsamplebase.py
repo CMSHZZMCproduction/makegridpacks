@@ -1274,14 +1274,14 @@ class Run2UltraLegacyBase(MCSampleBase):
   @property
   def cardsurl(self):
     PDFname, PDFmemberid = self.findPDFfromtarball()
-    if PDFname != self.desiredPDFname:
-      raise ValueError("Wrong PDF!  Tarball has {}, should be {}".format(PDFname, self.desiredPDFname))
+    if PDFname not in self.desiredPDFnames:
+      raise ValueError("Wrong PDF!  Tarball has {}, should be {}".format(PDFname, " or ".join(self.desiredPDFnames)))
     if PDFmemberid != self.desiredPDFmemberid:
       raise ValueError("Wrong PDF member id!  Tarball has {}, should be {}".format(PDFmemberid, self.desiredPDFmemberid))
     return super(Run2UltraLegacyBase, self).cardsurl
 
   @abc.abstractproperty
-  def desiredPDFname(self): pass
+  def desiredPDFnames(self): pass
   @property
   def desiredPDFmemberid(self): return 0
 
@@ -1291,9 +1291,12 @@ class Run2UltraLegacyStandardPDF(Run2UltraLegacyBase):
   def desiredPDForder(self): pass
 
   @property
-  def desiredPDFname(self):
+  def desiredPDFnames(self):
     return {
-      "NNLO": "NNPDF31_nnlo_as_0118_mc_hessian_pdfas",
-      "NLO": "NNPDF31_nlo_hessian_pdfas",
-      "LO": "NNPDF31_lo_as_0130",
+      "NNLO": {"NNPDF31_nnlo_as_0118_mc_hessian_pdfas"} | ({"NNPDF31_nnlo_hessian_pdfas"} if not self.needPDFtobewellbehavedathighmass else set()),
+      "NLO": {"NNPDF31_nlo_hessian_pdfas"},
+      "LO": {"NNPDF31_lo_as_0130"},
     }[self.desiredPDForder]
+
+  @property
+  def needPDFtobewellbehavedathighmass(self): return True

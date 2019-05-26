@@ -160,7 +160,7 @@ class MadGraphMCSample(MCSampleBase):
     result = None
     with open(runcard[0]) as f:
       for line in f:
-        match = re.match(r"([0-9])+\s*=\s*lhaid\b", line.strip())
+        match = re.match(r"([0-9]+)\s*=\s*lhaid\b", line.strip())
         if match:
           if result is not None:
             raise ValueError("Multiple lhaid lines in the run card")

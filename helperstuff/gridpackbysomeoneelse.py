@@ -61,6 +61,8 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
     self.__eps = float(eps)
     super(MadGraphHZZdFromJake, self).__init__(year=year)
   @property
+  def VV(self): return self.__VV
+  @property
   def initargs(self): return self.year, self.__VV, self.__Zdmass, self.__eps
   @property
   def identifiers(self):

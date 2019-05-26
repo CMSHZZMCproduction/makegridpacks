@@ -23,22 +23,34 @@ class RepeatHZZdandHZdZdAsUltraLegacy(MakeRepeatAsUltraLegacySample(MadGraphHZZd
   @classmethod
   @cacheaslist
   def allsamples(cls):
-    for sample in MadGraphHZZdFromJakeRun2.allsamples():
+    for sample in cls.mainsampletype.allsamples():
       yield cls(*sample.initargs, **sample.initkwargs)
 
   @property
   def desiredPDForder(self): return "NNLO"
+  @property
+  def needPDFtobewellbehavedathighmass(self): return False
+
+  def cvmfstarball_anyversion(self, version):
+    if self.year in (2017, 2018) or self.VV == "ZdZd":
+      return super(RepeatHZZdandHZdZdAsUltraLegacy, self).cvmfstarball_anyversion(version)
+    if self.year == 2016 and self.VV == "ZZd":
+      return type(self)(2018, *self.initargs[1:], **self.initkwargs).cvmfstarball_anyversion(version)
+
+  @property
+  def genproductionscommit(self):
+    if self.year in (2017, 2018) or self.VV == "ZdZd":
+      return super(RepeatHZZdandHZdZdAsUltraLegacy, self).genproductionscommit
+    if self.year == 2016 and self.VV == "ZZd":
+      return type(self)(2018, *self.initargs[1:], **self.initkwargs).genproductionscommit
 
 class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample)):
   @classmethod
   @cacheaslist
   def allsamples(cls):
     return
-    for sample in MCFMAnomCoupMCSample.allsamples():
-      if sample.year == 2017:
-        yield cls(*sample.initargs, **sample.initkwargs)
-      if sample.year == 2018:
-        yield cls(*sample.initargs, **sample.initkwargs)
+    for sample in cls.mainsampletype.allsamples():
+      yield cls(*sample.initargs, **sample.initkwargs)
 
   @property
   def tarballversion(self):
