@@ -2,9 +2,7 @@
 
 import argparse, collections, glob, os, re, shutil, subprocess, sys
 
-from utilities import cache, cdtemp, OrderedCounter
-
-sys.path.append(os.path.join(os.environ["LHAPDF_DATA_PATH"], "..", "..", "lib", "python2.7", "site-packages"))
+from utilities import cache, cdtemp, OrderedCounter, PDFname, PDFmemberid
 
 class AlternateWeight(collections.namedtuple("AlternateWeight", "lhapdf renscfact facscfact")):
   def __new__(cls, lhapdf, renscfact=None, facscfact=None):
@@ -19,17 +17,11 @@ class AlternateWeight(collections.namedtuple("AlternateWeight", "lhapdf renscfac
     return float(scalefactor.replace("d", "e").replace("D", "E"))
 
   @property
-  @cache
-  def pdf(self):
-    import lhapdf
-    return lhapdf.mkPDF(self.lhapdf)
-
-  @property
   def pdfname(self):
-    return self.pdf.set().name
+    return PDFname(self.lhapdf)
   @property
   def pdfmemberid(self):
-    return self.pdf.memberID
+    return PDFmemberid(self.lhapdf)
 
 def prunepwgrwl(oldfilename, newfilename, filter, verbose=False):
   oldfilename = os.path.abspath(oldfilename)

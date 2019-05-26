@@ -1,6 +1,6 @@
 import abc, collections, contextlib, glob, os, re, shutil, subprocess
 
-from utilities import cache, cd, cdtemp, genproductions, here, jobended, makecards, OrderedCounter, wget
+from utilities import cache, cd, cdtemp, genproductions, here, jobended, makecards, OrderedCounter, PDFname, PDFmemberid, wget
 
 from mcsamplebase import MCSampleBase
 
@@ -240,14 +240,8 @@ class AlternateWeight(collections.namedtuple("AlternateWeight", "lhapdf renscfac
     return float(scalefactor.replace("d", "e").replace("D", "E"))
 
   @property
-  @cache
-  def pdf(self):
-    import lhapdf
-    return lhapdf.mkPDF(self.lhapdf)
-
-  @property
   def pdfname(self):
-    return self.pdf.set().name
+    return PDFname(self.lhapdf)
   @property
   def pdfmemberid(self):
-    return self.pdf.memberID
+    return PDFmemberid(self.lhapdf)

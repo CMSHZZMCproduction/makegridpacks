@@ -508,3 +508,16 @@ class abstractclassmethod(classmethod):
   def __init__(self, callable):
     callable.__isabstractmethod__ = True
     super(abstractclassmethod, self).__init__(callable)
+
+#LHAPDF
+sys.path.append(os.path.join(os.environ["LHAPDF_DATA_PATH"], "..", "..", "lib", "python2.7", "site-packages"))
+
+@cache
+def lhaPDF(PDFnumber):
+  import lhapdf
+  return lhapdf.mkPDF(PDFnumber)
+
+def PDFname(PDFnumber):
+  return lhaPDF(PDFnumber).set().name
+def PDFmemberid(PDFnumber):
+  return lhaPDF(PDFnumber).memberID

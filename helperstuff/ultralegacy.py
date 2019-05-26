@@ -75,4 +75,3 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
         if "ncalls" in line and int(line.split()[0]) != 5000000:
           raise ValueError(line+"\nshould be 5000000")
     return super(RedoMCFMMoreNcalls, self).cardsurl
-

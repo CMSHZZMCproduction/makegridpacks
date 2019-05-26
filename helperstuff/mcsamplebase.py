@@ -1293,3 +1293,34 @@ class Run2UltraLegacyBase(MCSampleBase):
     if self.year == 2018:
       return "RunIISummer19UL18wmLHEGS"
     assert False, self.year
+
+
+  @abc.abstractmethod
+  def findPDFfromtarball(self): pass
+
+  @property
+  def cardsurl(self):
+    PDFname, PDFmemberid = self.findPDFfromtarball()
+    if PDFname != self.desiredPDFname:
+      raise ValueError("Wrong PDF!  Tarball has {}, should be {}".format(PDFname, self.desiredPDFname))
+    if PDFmemberid != self.desiredPDFmemberid:
+      raise ValueError("Wrong PDF member id!  Tarball has {}, should be {}".format(PDFmemberid, self.desiredPDFmemberid))
+    return super(Run2UltraLegacyBase, self).cardsurl
+
+  @abc.abstractproperty
+  def desiredPDFname(self): pass
+  @property
+  def desiredPDFmemberid(self): return 0
+
+class Run2UltraLegacyStandardPDF(Run2UltraLegacyBase):
+
+  @abc.abstractproperty
+  def desiredPDForder(self): pass
+
+  @property
+  def desiredPDFname(self):
+    return {
+      "NNLO": "NNPDF31_nnlo_as_0118_mc_hessian_pdfas",
+      "NLO": "NNPDF31_nlo_hessian_pdfas",
+      "LO": "NNPDF31_lo_as_0130",
+    }[self.desiredPDForder]
