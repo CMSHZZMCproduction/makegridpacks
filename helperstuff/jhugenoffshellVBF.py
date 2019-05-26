@@ -5,7 +5,7 @@ import os
 from utilities import cacheaslist, genproductions
 
 from jhugenmcsample import JHUGenMCSample
-from mcsamplebase import Run2UltraLegacyBase
+from mcsamplebase import Run2MCSampleBase
 from mcsamplewithxsec import MCSampleWithXsec_RunZeroEvents
 
 class JHUGenOffshellVBF(JHUGenMCSample, MCSampleWithXsec_RunZeroEvents):
@@ -136,7 +136,7 @@ class JHUGenOffshellVBF(JHUGenMCSample, MCSampleWithXsec_RunZeroEvents):
     if self.inthemiddleofmultistepgridpackcreation: return None
     return "longlunch"
 
-class JHUGenOffshellVBFRun2UL(JHUGenOffshellVBF, Run2UltraLegacyBase):
+class JHUGenOffshellVBFRun2(JHUGenOffshellVBF, Run2MCSampleBase):
   @classmethod
   @cacheaslist
   def allsamples(cls):

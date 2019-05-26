@@ -196,11 +196,6 @@ class MadGraphHZZdFromJakeRun2(MadGraphHZZdFromJake, Run2MCSampleBase):
         for year in 2016, 2017, 2018:
           for VV in "ZZd",:
             yield cls(year, VV, Zdmass, eps)
-
-class MadGraphHZZdFromJakeRun2UL(MadGraphHZZdFromJake, Run2UltraLegacyBase):
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
     for Zdmass in 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60:
       for eps in 2e-2,:
         for year in 2016, 2017, 2018:
