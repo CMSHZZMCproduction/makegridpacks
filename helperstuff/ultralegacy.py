@@ -1,4 +1,11 @@
-class RepeatAsUltraLegacyBase(VariationSampleBase, Run2UltraLegacyBase): pass
+from gridpackbysomeoneelse import MadGraphHZZdFromJakeRun2
+from madgraphmcsample import MadGraphMCSample
+from mcfmanomalouscouplings import MCFMAnomCoupMCSample
+from mcsamplebase import Run2UltraLegacyBase, Run2UltraLegacyStandardPDF
+from utilities import cache, cacheaslist
+from variationsample import MakeVariationSample, VariationSampleBase
+
+class RepeatAsUltraLegacyBase(VariationSampleBase, Run2UltraLegacyBase):
   @property
   def variations(self):
     return super(RepeatAsUltraLegacyBase, self).variations+("UltraLegacy",)
@@ -9,12 +16,24 @@ class RepeatAsUltraLegacyBase(VariationSampleBase, Run2UltraLegacyBase): pass
 @cache
 def MakeRepeatAsUltraLegacySample(basecls):
   class RepeatAsUltraLegacy(RepeatAsUltraLegacyBase, MakeVariationSample(basecls)): pass
-  RepeatAsUltraLegacy.__name__ = basecls+"UltraLegacy"
+  RepeatAsUltraLegacy.__name__ = basecls.__name__+"UltraLegacy"
+  return RepeatAsUltraLegacy
+
+class RepeatHZZdandHZdZdAsUltraLegacy(MakeRepeatAsUltraLegacySample(MadGraphHZZdFromJakeRun2), Run2UltraLegacyStandardPDF):
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for sample in MadGraphHZZdFromJakeRun2.allsamples():
+      yield cls(*sample.initargs, **sample.initkwargs)
+
+  @property
+  def desiredPDForder(self): return "NNLO"
 
 class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample)):
   @classmethod
   @cacheaslist
   def allsamples(cls):
+    return
     for sample in MCFMAnomCoupMCSample.allsamples():
       if sample.year == 2017:
         yield cls(*sample.initargs, **sample.initkwargs)

@@ -1245,6 +1245,9 @@ class MCSampleBase(JsonDict):
   def makerequest(self):
     return True
 
+  @abc.abstractmethod
+  def findPDFfromtarball(self): pass
+
 class Run2MCSampleBase(MCSampleBase):
   @property
   def campaign(self):
@@ -1267,9 +1270,6 @@ class Run2UltraLegacyBase(MCSampleBase):
       return "RunIISummer19UL18wmLHEGS"
     assert False, self.year
 
-
-  @abc.abstractmethod
-  def findPDFfromtarball(self): pass
 
   @property
   def cardsurl(self):

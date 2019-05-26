@@ -187,6 +187,10 @@ class PhantomMCSample(MCSampleWithXsec):
       return "101b9cce48742765790db48e6d24d76e6bf2edf1"
     return super(PhantomMCSample, self).genproductionscommitforfragment
 
+  @property
+  def findPDFfromtarball(self):
+    raise NotImplementedError("Have to implement this before continuing...")
+
 class PhantomMCSampleRun2(PhantomMCSample, Run2MCSampleBase):
   @classmethod
   @cacheaslist

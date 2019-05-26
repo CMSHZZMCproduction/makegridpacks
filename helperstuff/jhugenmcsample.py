@@ -147,3 +147,17 @@ class JHUGenMCSample(UsesJHUGenLibraries):
   @property
   def shortname(self):
     return re.sub(r"\W", "", str(self)).replace(str(self.year), "", 1)
+
+  @property
+  def findPDFfromtarball(self):
+    name = None
+    memberid = 0
+    with open("JHUGen.input") as f:
+      for option in f.read().split():
+        if "=" not in option: continue
+        k, v = option.split("=")
+        if k == "LHAPDF": name = v.split("/")[0]
+        if k == "LHAPDFMem": memberid = int(v)
+    if name is None:
+      raise ValueError("No LHAPDF in JHUGen.input")
+    return name, memberid

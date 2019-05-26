@@ -35,6 +35,11 @@
                 "madgraph": {
                     "1": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -45,6 +50,11 @@
                     },
                     "10": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -55,6 +65,11 @@
                     },
                     "15": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -65,6 +80,11 @@
                     },
                     "2": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -75,6 +95,11 @@
                     },
                     "20": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -85,6 +110,11 @@
                     },
                     "25": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -95,6 +125,11 @@
                     },
                     "3": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -105,6 +140,11 @@
                     },
                     "30": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "finished": true,
@@ -115,6 +155,11 @@
                     },
                     "35": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -125,6 +170,11 @@
                     },
                     "4": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -135,6 +185,11 @@
                     },
                     "7": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -149,14 +204,23 @@
                 "madgraph": {
                     "10": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02604"
                         }
                     },
                     "15": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02605"
@@ -164,6 +228,11 @@
                     },
                     "20": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02606"
@@ -171,6 +240,11 @@
                     },
                     "25": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02607"
@@ -178,6 +252,11 @@
                     },
                     "30": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02608"
@@ -185,6 +264,11 @@
                     },
                     "35": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02609"
@@ -192,14 +276,23 @@
                     },
                     "4": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02598"
                         }
                     },
                     "40": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02610"
@@ -207,6 +300,11 @@
                     },
                     "45": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02611"
@@ -214,14 +312,23 @@
                     },
                     "5": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02599"
                         }
                     },
                     "50": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02612"
@@ -229,6 +336,11 @@
                     },
                     "55": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02613"
@@ -236,14 +348,23 @@
                     },
                     "6": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02600"
                         }
                     },
                     "60": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02614"
@@ -251,25 +372,37 @@
                     },
                     "7": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02601"
                         }
                     },
                     "8": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02602"
                         }
                     },
                     "9": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer15wmLHEGS-02603"
                         }
                     }
@@ -2618,6 +2751,11 @@
                 "madgraph": {
                     "1": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -2629,6 +2767,11 @@
                     },
                     "10": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -2640,6 +2783,11 @@
                     },
                     "15": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03080",
@@ -2649,6 +2797,11 @@
                     },
                     "2": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 4,
@@ -2659,6 +2812,11 @@
                     },
                     "20": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 1,
@@ -2669,6 +2827,11 @@
                     },
                     "25": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 4,
@@ -2679,6 +2842,11 @@
                     },
                     "3": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -2690,6 +2858,11 @@
                     },
                     "30": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "finished": true,
@@ -2700,6 +2873,11 @@
                     },
                     "35": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 2,
@@ -2710,6 +2888,11 @@
                     },
                     "4": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "finished": true,
@@ -2721,6 +2904,11 @@
                     },
                     "7": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 1,
@@ -2735,14 +2923,23 @@
                 "madgraph": {
                     "10": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03984"
                         }
                     },
                     "15": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03985"
@@ -2750,6 +2947,11 @@
                     },
                     "20": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03986"
@@ -2757,6 +2959,11 @@
                     },
                     "25": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03987"
@@ -2764,6 +2971,11 @@
                     },
                     "30": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03988"
@@ -2771,6 +2983,11 @@
                     },
                     "35": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03989"
@@ -2778,14 +2995,23 @@
                     },
                     "4": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03978"
                         }
                     },
                     "40": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03990"
@@ -2793,6 +3019,11 @@
                     },
                     "45": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03991"
@@ -2800,14 +3031,23 @@
                     },
                     "5": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03979"
                         }
                     },
                     "50": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03992"
@@ -2815,6 +3055,11 @@
                     },
                     "55": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03993"
@@ -2822,14 +3067,23 @@
                     },
                     "6": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03980"
                         }
                     },
                     "60": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03994"
@@ -2837,25 +3091,37 @@
                     },
                     "7": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03981"
                         }
                     },
                     "8": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03982"
                         }
                     },
                     "9": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03983"
                         }
                     }
@@ -8135,6 +8401,11 @@
                 "madgraph": {
                     "1": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 4,
@@ -8145,6 +8416,11 @@
                     },
                     "10": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 4,
@@ -8155,6 +8431,11 @@
                     },
                     "15": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 2,
@@ -8165,6 +8446,11 @@
                     },
                     "2": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 2,
@@ -8175,6 +8461,11 @@
                     },
                     "20": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 4,
@@ -8185,6 +8476,11 @@
                     },
                     "25": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 4,
@@ -8195,6 +8491,11 @@
                     },
                     "3": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 4,
@@ -8205,6 +8506,11 @@
                     },
                     "30": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "finished": true,
@@ -8215,6 +8521,11 @@
                     },
                     "35": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 2,
@@ -8225,6 +8536,11 @@
                     },
                     "4": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 4,
@@ -8235,6 +8551,11 @@
                     },
                     "7": {
                         "0.01": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
                             "nthreads": 4,
@@ -8249,6 +8570,11 @@
                 "madgraph": {
                     "10": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01987"
@@ -8256,6 +8582,11 @@
                     },
                     "15": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01988"
@@ -8263,6 +8594,11 @@
                     },
                     "20": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01989"
@@ -8270,6 +8606,11 @@
                     },
                     "25": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01990"
@@ -8277,6 +8618,11 @@
                     },
                     "30": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01991"
@@ -8284,6 +8630,11 @@
                     },
                     "35": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01992"
@@ -8291,14 +8642,23 @@
                     },
                     "4": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01981"
                         }
                     },
                     "40": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01993"
@@ -8306,6 +8666,11 @@
                     },
                     "45": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01994"
@@ -8313,14 +8678,23 @@
                     },
                     "5": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01982"
                         }
                     },
                     "50": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01995"
@@ -8328,6 +8702,11 @@
                     },
                     "55": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01996"
@@ -8335,14 +8714,23 @@
                     },
                     "6": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01983"
                         }
                     },
                     "60": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01997"
@@ -8350,25 +8738,37 @@
                     },
                     "7": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01984"
                         }
                     },
                     "8": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01985"
                         }
                     },
                     "9": {
                         "0.02": {
+                            "UltraLegacy": {
+                                "filterefficiency": 1.0,
+                                "filterefficiencyerror": 0.0,
+                                "needsupdate": true
+                            },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
-                            "needsupdate": true,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01986"
                         }
                     }

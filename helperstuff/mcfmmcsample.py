@@ -212,3 +212,20 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
   @property
   def JHUGenlocationintarball(self):
     return None
+
+  @property
+  def findPDFfromtarball(self):
+    name = None
+    memberid = 0
+    with open("readInput.DAT") as f:
+      for line in f:
+        match = re.match(line, "'([^']+)'\s*[LHAPDF group]")
+        if match: name = match.group(1)
+        match = re.match(line, "([0-9]+)\s*[LHAPDF set]")
+        if match: memberid = int(match.group(1))
+    if name is None:
+      raise ValueError("No LHAPDF group in readInput.DAT")
+    if memberid is None:
+      raise ValueError("No LHAPDF set in readInput.DAT")
+    return name, memberid
+
