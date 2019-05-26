@@ -19,7 +19,6 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
       if sample.year == 2017:
         yield cls(*sample.initargs, **sample.initkwargs)
       if sample.year == 2018:
-        assert sample.signalbkgbsi == "BKG":
         yield cls(*sample.initargs, **sample.initkwargs)
 
   @property
@@ -28,22 +27,23 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
 
     identifierstr = " ".join(str(_) for _ in self.mainsample.identifiers)
 
-    if identifierstr == "BSI 10 0PH ELMU": v+=1
-    if identifierstr == "BSI 1 0M ELMU": v+=1
-    if identifierstr == "BSI 10 0PM MUMU": v+=1
-    if identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
-    if identifierstr == "BSI 10 0PL1f05ph0 TLTL": v+=1
-    if identifierstr == "BSI 1 0M TLTL": v+=1
-    if identifierstr == "BSI 10 0PH ELEL": v+=1
-    if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
-    if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
+    if year == 2017:
+      if identifierstr == "BSI 10 0PH ELMU": v+=1
+      if identifierstr == "BSI 1 0M ELMU": v+=1
+      if identifierstr == "BSI 10 0PM MUMU": v+=1
+      if identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
+      if identifierstr == "BSI 10 0PL1f05ph0 TLTL": v+=1
+      if identifierstr == "BSI 1 0M TLTL": v+=1
+      if identifierstr == "BSI 10 0PH ELEL": v+=1
+      if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
+      if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
 
-    if identifierstr == "BSI 10 0PM MUMU": v+=1
-    if identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
-    if identifierstr == "BSI 1 0M TLTL": v+=1
-    if identifierstr == "BSI 10 0PH ELEL": v+=1
-    if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
-    if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
+      if identifierstr == "BSI 10 0PM MUMU": v+=1
+      if identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
+      if identifierstr == "BSI 1 0M TLTL": v+=1
+      if identifierstr == "BSI 10 0PH ELEL": v+=1
+      if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
+      if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
 
     v+=1  #csmax patch
 
