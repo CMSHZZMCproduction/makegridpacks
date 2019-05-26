@@ -539,3 +539,80 @@ class RedoPythiaVariationMINLORun2(MakeRedoSample(PythiaVariationMINLORun2)):
     return result
 
 RunIIFall17DRPremix_nonsubmittedPythiaVariation = MakeRunIIFall17DRPremix_nonsubmitted(PythiaVariationPOWHEGJHUGenRun2)
+
+class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSampleRun2)):
+  @property
+  def variations(self): return super(RedoMCFMMoreNcalls, self).variations + ("morencalls",)
+
+  @property
+  def reason(self): return "increase ncalls in the phase space generation"
+
+  @classmethod
+  @cacheaslist
+  def allsamples(cls):
+    for sample in MCFMAnomCoupMCSampleRun2.allsamples():
+      if sample.year == 2017:
+        yield cls(*sample.initargs, **sample.initkwargs)
+      if sample.year == 2018 and sample.signalbkgbsi == "BKG":
+        yield cls(*sample.initargs, **sample.initkwargs)
+
+  @property
+  def tarballversion(self):
+    v = self.mainsample.tarballversion+1
+
+    identifierstr = " ".join(str(_) for _ in self.mainsample.identifiers)
+
+    if identifierstr == "BSI 10 0PH ELMU": v+=1
+    if identifierstr == "BSI 1 0M ELMU": v+=1
+    if identifierstr == "BSI 10 0PM MUMU": v+=1
+    if identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
+    if identifierstr == "BSI 10 0PL1f05ph0 TLTL": v+=1
+    if identifierstr == "BSI 1 0M TLTL": v+=1
+    if identifierstr == "BSI 10 0PH ELEL": v+=1
+    if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
+    if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
+
+    if identifierstr == "BSI 10 0PM MUMU": v+=1
+    if identifierstr == "BSI 10 0PHf05ph0 MUMU": v+=1
+    if identifierstr == "BSI 1 0M TLTL": v+=1
+    if identifierstr == "BSI 10 0PH ELEL": v+=1
+    if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
+    if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
+
+    v+=1  #csmax patch
+
+    if self.year == 2017:
+      othersample = MCFMAnomCoupMCSampleRun2(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
+      if self.mainsample.signalbkgbsi == "BKG":
+        othersample = RedoMCFMMoreNcalls(*othersample.initargs, **othersample.initkwargs)
+      assert v == othersample.tarballversion, (v, othersample.tarballversion)
+
+    return v
+
+  @property
+  def genproductionscommit(self):
+    return "a8ea4bc76df07ee2fa16bd9a67b72e7b648dec64"
+
+  def createtarball(self, *args, **kwargs):
+    with cdtemp():
+      subprocess.check_output(["tar", "xvaf", self.mainsample.cvmfstarball])
+      with open("readInput.DAT") as f:
+        for line in f:
+          if "ncalls" in line:
+            assert int(line.split()[0]) < 1000000, (self, self.mainsample.cvmfstarball, line)
+    return super(RedoMCFMMoreNcalls, self).createtarball(*args, **kwargs)
+
+  @property
+  def cardsurl(self):
+    with open("readInput.DAT") as f:
+      for line in f:
+        if "ncalls" in line and int(line.split()[0]) != 5000000:
+          raise ValueError(line+"\nshould be 5000000")
+    return super(RedoMCFMMoreNcalls, self).cardsurl
+
+  @property
+  def extensionnumber(self):
+    result = super(RedoMCFMMoreNcalls, self).extensionnumber
+    if any(_.datasetname == self.datasetname and _.year == self.year and _.extensionnumber == result for subcls in recursivesubclasses(RunIIFall17DRPremix_nonsubmittedBase) for _ in subcls.allsamples()):
+      result += 1
+    return result
