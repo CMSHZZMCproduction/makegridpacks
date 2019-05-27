@@ -3,7 +3,7 @@ import abc, os, contextlib, re, filecmp, glob, pycurl, shutil, stat, subprocess,
 import uncertainties
 
 from jobsubmission import jobid, jobtype
-from utilities import cache, cd, cdtemp, genproductions, here, jobexitstatusfromlog, makecards, mkdir_p, wget, KeepWhileOpenFile, jobended, urlopen
+from utilities import cache, cd, cdtemp, genproductions, here, jobexitstatusfromlog, jobended, KeepWhileOpenFile, makecards, mkdir_p, osversion, wget, urlopen
 
 from jhugenmcsample import UsesJHUGenLibraries
 from mcsamplebase import MCSampleBase
@@ -94,6 +94,8 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
 	'-q': self.creategridpackqueue,
 	'-s': str(hash(self) % 2147483647 + self.tweakmakegridpackseed),
 	}
+    if osversion == 6:
+      args["--slc6"] = None
     return ['./run_mcfm_AC.py'] + sum(([k] if v is None else [k, v] for k, v in args.iteritems()), [])
 
   @property

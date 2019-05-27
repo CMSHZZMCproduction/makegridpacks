@@ -1,6 +1,6 @@
 import abc, datetime, os, re, subprocess
 
-from utilities import cd, here, NamedTemporaryFile, KeyDefaultDict
+from utilities import cd, here, KeyDefaultDict, NamedTemporaryFile, osversion
 
 def jobtype():
   result = set()
@@ -118,6 +118,7 @@ arguments               = "{here} --condorjobid $(ClusterId).$(ProcId) --condorj
 output                  = CONDOR/$(ClusterId).out
 error                   = CONDOR/$(ClusterId).err
 log                     = CONDOR/$(ClusterId).log
+{requirements}
 
 request_memory          = 2000M
 +JobFlavour             = "{jobflavor}"
@@ -176,7 +177,8 @@ def submitcondor(flavor, sample, writejobid=None):
     f.write(condortemplate.format(
       jobflavor=flavor,
       here=here,
-      filter="lambda x: x.identifiers == (" + ", ".join(repr(i).replace("'", "''").replace('"', '""') for i in sample.identifiers)+")"
+      filter="lambda x: x.identifiers == (" + ", ".join(repr(i).replace("'", "''").replace('"', '""') for i in sample.identifiers)+")",
+      requirements='requirements = (OpSysAndVer =?= "SLCern6")' if osversion == 6 else ""),
     ))
     output = subprocess.check_output(["condor_submit", f.name])
     match = re.search("1 job[(]s[)] submitted to cluster ([0-9]*)[.]", output)
