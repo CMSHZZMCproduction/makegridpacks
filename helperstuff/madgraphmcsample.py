@@ -1,6 +1,6 @@
 import abc, contextlib, glob, itertools, os, re, subprocess
 
-from utilities import cache, cd, cdtemp, genproductions, here, makecards, mkdir_p, wget
+from utilities import cache, cd, cdtemp, genproductions, here, makecards, mkdir_p, PDFmemberid, PDFname, wget
 
 from mcsamplebase import MCSampleBase
 
@@ -152,3 +152,19 @@ class MadGraphMCSample(MCSampleBase):
     if line.strip() == "* [PATCH] MG5_aMC@NLO LO nthreads patch not made in EOS":
       return "Needs madgraph LO nthreads patch"
     return super(MadGraphMCSample, self).handle_request_fragment_check_patch(line)
+
+  def findPDFfromtarball(self):
+    runcard = glob.glob("InputCards/*_run_card.dat")
+    if len(runcard) > 1:
+      raise ValueError("More than one run card: "+", ".join(runcard))
+    result = None
+    with open(runcard[0]) as f:
+      for line in f:
+        match = re.match(r"([0-9]+)\s*=\s*lhaid\b", line.strip())
+        if match:
+          if result is not None:
+            raise ValueError("Multiple lhaid lines in the run card")
+          result = int(match.group(1))
+    if result is None:
+      raise ValueError("No lhaid line in the run card")
+    return PDFname(result), PDFmemberid(result)

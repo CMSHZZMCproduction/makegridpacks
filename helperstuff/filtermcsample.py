@@ -70,8 +70,10 @@ class GenericFilter(FilterImplementation):
       else:
         raise IOError("File is corrupted: "+os.path.abspath(self.filterresultsfile))
 
-  def findfilterefficiency(self):
-    result = super(GenericFilter, self).findfilterefficiency()
+  def findfilterefficiencycondor(self):
+    check = self.request_fragment_check()
+    if check: return check
+    result = super(GenericFilter, self).findfilterefficiencycondor()
     if self.filterefficiency is not None:
       if self.sizeperevent is None and len(self.__sizesperevent) == 100:
         self.sizeperevent = sum(self.__sizesperevent[i] * self.__nevents[i] for i in range(100)) / sum(self.__nevents[i] for i in range(100))

@@ -7,7 +7,7 @@ def allsamples(filter=lambda sample: True, onlymysamples=True, clsfilter=lambda 
   import jhugenjhugenanomalouscouplings, jhugenjhugenmassscanmcsample, jhugenoffshellVBF, \
          powhegjhugenanomalouscouplings, powhegjhugenmassscanmcsample, powhegjhugenlifetime, \
          minlomcsample, mcfmanomalouscouplings, variationsample, phantommcsample, \
-         qqZZmcsample, clonedrequest, gridpackbysomeoneelse, mtdtdr
+         qqZZmcsample, clonedrequest, gridpackbysomeoneelse, mtdtdr, ultralegacy
 
   __checkforduplicates()
 

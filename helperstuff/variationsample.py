@@ -10,8 +10,8 @@ from jhugenjhugenmassscanmcsample import JHUGenJHUGenMassScanMCSampleRun2
 from jhugenmcsample import JHUGenMCSample
 from mcfmanomalouscouplings import MCFMAnomCoupMCSampleRun2
 from minlomcsample import MINLOMCSampleRun2
-from powhegjhugenanomalouscouplings import POWHEGJHUGenAnomCoupMCSampleRun2
-from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSampleRun2
+from powhegjhugenanomalouscouplings import POWHEGJHUGenAnomCoupMCSample, POWHEGJHUGenAnomCoupMCSampleRun2
+from powhegjhugenmassscanmcsample import POWHEGJHUGenMassScanMCSample, POWHEGJHUGenMassScanMCSampleRun2
 from qqZZmcsample import QQZZMCSampleRun2
 
 @cache
@@ -99,7 +99,7 @@ def MakeVariationSample(basecls):
         raise ValueError("Wrong number of variations\n{}\n{}".format(self.variations, i))
       return super(VariationSample, self).identifiers + self.variations
 
-    def findfilterefficiency(self):
+    def findfilterefficiencycondor(self):
       return "this is a variation sample, the filter efficiency is the same as for the main sample"
     @property
     def defaulttimeperevent(self):

@@ -227,6 +227,26 @@ class POWHEGMCSample(MCSampleBase):
       if (filename.endswith(".py") or filename.endswith(".sh") or filename.endswith("/patches")) and not os.path.exists(os.path.basename(filename)):
         yield filename
 
+  def findPDFfromtarball(self):
+    result = {1: None, 2: None}
+    with open("powheg.input") as f:
+      for line in f:
+        match = re.match(r"([0-9])+\s+lhans(1|2)\b", line.strip())
+        if match:
+          i = int(match.group(2))
+          if result[i] is not None:
+            raise ValueError("Multiple lhans{} lines in the run card".format(i))
+          result[i] = int(match.group(1))
+    for _ in 1, 2:
+      if result[i] is None:
+        raise ValueError("No lhans{} line in the run card".format(i))
+    result = set(result.values())
+    if len(result) != 1:
+      raise ValueError("lhans1 != lhans2: {} {}".format(*result))
+    result = result.pop()
+    return PDFname(result), PDFmemberid(result)
+
+
 class AlternateWeight(collections.namedtuple("AlternateWeight", "lhapdf renscfact facscfact")):
   def __new__(cls, lhapdf, renscfact=None, facscfact=None):
     lhapdf = int(lhapdf)

@@ -387,44 +387,11 @@ class MCSampleBase(JsonDict):
       #shutil.rmtree(self.workdir)
       return "filter efficiency is measured to be {}".format(self.filterefficiency)
 
-  def findfilterefficiency(self):
-    #figure out the filter efficiency
-    if not self.hasfilter:
-      self.filterefficiency = 1
-      return "filter efficiency is set to 1 +/- 0"
-    else:
-      if not self.implementsfilter: raise ValueError("Can't find filter efficiency for {.__name__} which doesn't implement filtering!".format(type(self)))
-      mkdir_p(self.workdir)
-      jobsrunning = False
-      eventsprocessed = eventsaccepted = 0
-      with cd(self.workdir):
-        for i in range(100):
-          mkdir_p(str(i))
-          with cd(str(i)), KeepWhileOpenFile("runningfilterjob.tmp", deleteifjobdied=True) as kwof:
-            if not kwof:
-              jobsrunning = True
-              continue
-            if not os.path.exists(self.filterresultsfile):
-              if not jobtype():
-                submitLSF(self.filterefficiencyqueue)
-                jobsrunning = True
-                continue
-              if not queuematches(self.filterefficiencyqueue):
-                jobsrunning = True
-                continue
-              self.dofilterjob(i)
-            processed, accepted = self.getfilterresults(i)
-            eventsprocessed += processed
-            eventsaccepted += accepted
-
-        if jobsrunning: return "some filter efficiency jobs are still running"
-        self.filterefficiency = uncertainties.ufloat(1.0*eventsaccepted / eventsprocessed, (1.0*eventsaccepted * (eventsprocessed-eventsaccepted) / eventsprocessed**3) ** .5)
-        #shutil.rmtree(self.workdir)
-        return "filter efficiency is measured to be {}".format(self.filterefficiency)
-
   implementsfilter = False
 
   def getsizeandtimecondor(self):
+    check = self.request_fragment_check()
+    if check: return check
     mkdir_p(self.workdir)
     xmlfile = self.prepid+"_rt.xml"
     with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), deleteifjobdied=True) as kwof:
@@ -1000,6 +967,12 @@ class MCSampleBase(JsonDict):
   def fullfragment(self):
     return createLHEProducer(self.cvmfstarball, self.getcardsurl(), self.fragmentname, self.genproductionscommitforfragment)
 
+  @property
+  def tune(self):
+    return {
+      "Configuration/GenProduction/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_generic_LHE_pythia8_cff.py": "TuneCP5",
+    }[self.fragmentname]
+
   def getdictforupdate(self):
     mcm = McM()
     req = mcm.get("requests", self.prepid)
@@ -1272,6 +1245,9 @@ class MCSampleBase(JsonDict):
   def makerequest(self):
     return True
 
+  @abc.abstractmethod
+  def findPDFfromtarball(self): pass
+
 class Run2MCSampleBase(MCSampleBase):
   @property
   def campaign(self):
@@ -1295,20 +1271,17 @@ class Run2UltraLegacyBase(MCSampleBase):
     assert False, self.year
 
 
-  @abc.abstractmethod
-  def findPDFfromtarball(self): pass
-
   @property
   def cardsurl(self):
     PDFname, PDFmemberid = self.findPDFfromtarball()
-    if PDFname != self.desiredPDFname:
-      raise ValueError("Wrong PDF!  Tarball has {}, should be {}".format(PDFname, self.desiredPDFname))
+    if PDFname not in self.desiredPDFnames:
+      raise ValueError("Wrong PDF!  Tarball has {}, should be {}".format(PDFname, " or ".join(self.desiredPDFnames)))
     if PDFmemberid != self.desiredPDFmemberid:
       raise ValueError("Wrong PDF member id!  Tarball has {}, should be {}".format(PDFmemberid, self.desiredPDFmemberid))
     return super(Run2UltraLegacyBase, self).cardsurl
 
   @abc.abstractproperty
-  def desiredPDFname(self): pass
+  def desiredPDFnames(self): pass
   @property
   def desiredPDFmemberid(self): return 0
 
@@ -1318,9 +1291,12 @@ class Run2UltraLegacyStandardPDF(Run2UltraLegacyBase):
   def desiredPDForder(self): pass
 
   @property
-  def desiredPDFname(self):
+  def desiredPDFnames(self):
     return {
-      "NNLO": "NNPDF31_nnlo_as_0118_mc_hessian_pdfas",
-      "NLO": "NNPDF31_nlo_hessian_pdfas",
-      "LO": "NNPDF31_lo_as_0130",
+      "NNLO": {"NNPDF31_nnlo_as_0118_mc_hessian_pdfas"} | ({"NNPDF31_nnlo_hessian_pdfas"} if not self.needPDFtobewellbehavedathighmass else set()),
+      "NLO": {"NNPDF31_nlo_hessian_pdfas"},
+      "LO": {"NNPDF31_lo_as_0130"},
     }[self.desiredPDForder]
+
+  @property
+  def needPDFtobewellbehavedathighmass(self): return True
