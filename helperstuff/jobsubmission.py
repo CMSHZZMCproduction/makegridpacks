@@ -178,7 +178,7 @@ def submitcondor(flavor, sample, writejobid=None):
       jobflavor=flavor,
       here=here,
       filter="lambda x: x.identifiers == (" + ", ".join(repr(i).replace("'", "''").replace('"', '""') for i in sample.identifiers)+")",
-      requirements='requirements = (OpSysAndVer =?= "SLCern6")' if osversion == 6 else ""),
+      requirements='requirements = (OpSysAndVer =?= "SLCern6")' if osversion == 6 else "",
     ))
     output = subprocess.check_output(["condor_submit", f.name])
     match = re.search("1 job[(]s[)] submitted to cluster ([0-9]*)[.]", output)
