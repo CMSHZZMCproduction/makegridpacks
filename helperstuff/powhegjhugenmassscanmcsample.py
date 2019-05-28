@@ -388,15 +388,6 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
         return "ok"
     return super(POWHEGJHUGenMassScanMCSample, self).handle_request_fragment_check_warning(line)
 
-  @property
-  def cmsswversion(self):
-    if self.productionmode == "ggH" and self.mass == 190 and self.decaymode == "4l" and self.tarballversion >= 5: return "CMSSW_9_3_14"
-    return super(POWHEGJHUGenMassScanMCSample, self).cmsswversion
-  @property
-  def scramarch(self):
-    if self.productionmode == "ggH" and self.mass == 190 and self.decaymode == "4l" and self.tarballversion >= 5: return "slc7_amd64_gcc630"
-    return super(POWHEGJHUGenMassScanMCSample, self).scramarch
-
 class POWHEGJHUGenMassScanMCSampleRun2(POWHEGJHUGenMassScanMCSample, Run2MCSampleBase):
   @classmethod
   @cacheaslist

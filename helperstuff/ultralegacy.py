@@ -12,6 +12,13 @@ class RepeatAsUltraLegacyBase(VariationSampleBase, Run2UltraLegacyBase):
   @property
   def extensionnumber(self):
     return 0
+  @property
+  def cmsswversion(self):
+    #use the old slc because the gridpacks are typically the same as the main Run2 sample
+    return "CMSSW_9_3_0"
+  @property
+  def scramarch(self):
+    return "slc6_amd64_gcc630"
 
 @cache
 def MakeRepeatAsUltraLegacySample(basecls):

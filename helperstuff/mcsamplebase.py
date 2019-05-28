@@ -1238,15 +1238,6 @@ class MCSampleBase(JsonDict):
     return 0
 
   @property
-  def cmsswversion(self):
-    return "CMSSW_9_3_14"
-    #return "CMSSW_9_3_0"
-  @property
-  def scramarch(self):
-    return "slc7_amd64_gcc630"
-    #return "slc6_amd64_gcc630"
-
-  @property
   def makerequest(self):
     return True
 
@@ -1263,6 +1254,13 @@ class Run2MCSampleBase(MCSampleBase):
     if self.year == 2018:
       return "RunIIFall18wmLHEGS"
     assert False, self.year
+  @property
+  def cmsswversion(self):
+    return "CMSSW_9_3_0"
+  @property
+  def scramarch(self):
+    return "slc6_amd64_gcc630"
+
 
 class Run2UltraLegacyBase(MCSampleBase):
   @property
@@ -1274,6 +1272,13 @@ class Run2UltraLegacyBase(MCSampleBase):
     if self.year == 2018:
       return "RunIISummer19UL18wmLHEGS"
     assert False, self.year
+  @property
+  def cmsswversion(self):
+    return "CMSSW_9_3_14"
+  @property
+  def scramarch(self):
+    return "slc7_amd64_gcc630"
+
 
 
   @property
