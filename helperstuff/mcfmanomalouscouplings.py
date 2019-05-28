@@ -211,13 +211,6 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
     return 1000
     return super(MCFMAnomCoupMCSample, self).neventsfortest
 
-  @property
-  def cmsswversion(self):
-    return "CMSSW_9_3_0"
-  @property
-  def scramarch(self):
-    return "slc6_amd64_gcc630"
-
 class MCFMAnomCoupMCSampleRun2(MCFMAnomCoupMCSample, Run2MCSampleBase):
   @classmethod
   @cacheaslist
