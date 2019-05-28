@@ -1,4 +1,4 @@
-import abc, collections, contextlib, filecmp, glob, itertools, json, os, pycurl, re, shutil, stat, subprocess, tempfile
+import abc, collections, contextlib, filecmp, glob, itertools, json, os, pprint, pycurl, re, shutil, stat, subprocess, tempfile
 
 import uncertainties
 
@@ -976,30 +976,35 @@ class MCSampleBase(JsonDict):
   def getdictforupdate(self):
     mcm = McM()
     req = mcm.get("requests", self.prepid)
-    req["dataset_name"] = self.datasetname
-    req["mcdb_id"] = 0
-    req["total_events"] = self.nevents
-    req["fragment"] = self.fullfragment
-    req["time_event"] = [(self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent)]
-    req["size_event"] = [self.sizeperevent if self.sizeperevent is not None else 600]
-    req["generators"] = self.generators
-    if self.filterefficiency is not None:
-      req["generator_parameters"][0].update({
-        "filter_efficiency": self.filterefficiency.nominal_value,
-        "filter_efficiency_error": self.filterefficiency.std_dev,
-        "match_efficiency": self.matchefficiency.nominal_value,
-        "match_efficiency_error": self.matchefficiency.std_dev,
-        "cross_section": uncertainties.nominal_value(self.xsec),
+    try:
+      req["dataset_name"] = self.datasetname
+      req["mcdb_id"] = 0
+      req["total_events"] = self.nevents
+      req["fragment"] = self.fullfragment
+      req["time_event"] = [(self.timeperevent if self.timeperevent is not None else self.defaulttimeperevent)]
+      req["size_event"] = [self.sizeperevent if self.sizeperevent is not None else 600]
+      req["generators"] = self.generators
+      if self.filterefficiency is not None:
+        if not req["generator_parameters"]: req["generator_parameters"].append({})
+        req["generator_parameters"][0].update({
+          "filter_efficiency": self.filterefficiency.nominal_value,
+          "filter_efficiency_error": self.filterefficiency.std_dev,
+          "match_efficiency": self.matchefficiency.nominal_value,
+          "match_efficiency_error": self.matchefficiency.std_dev,
+          "cross_section": uncertainties.nominal_value(self.xsec),
+        })
+      req["sequences"][0]["nThreads"] = self.nthreads
+      req["keep_output"][0] = bool(self.keepoutput)
+      req["tags"] = list(self.tags)
+      req["memory"] = self.memory
+      req["validation"].update({
+        "time_multiplier": self.validationtimemultiplier,
       })
-    req["sequences"][0]["nThreads"] = self.nthreads
-    req["keep_output"][0] = bool(self.keepoutput)
-    req["tags"] = list(self.tags)
-    req["memory"] = self.memory
-    req["validation"].update({
-      "time_multiplier": self.validationtimemultiplier,
-    })
-    req["extension"] = self.extensionnumber
-    req["notes"] = self.notes
+      req["extension"] = self.extensionnumber
+      req["notes"] = self.notes
+    except:
+      pprint.pprint(req)
+      raise
     return req
 
   def updaterequest(self):

@@ -53,7 +53,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL16wmLHEGS-00253"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -68,7 +68,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL16wmLHEGS-00254"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -83,7 +83,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL16wmLHEGS-00249"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -98,7 +98,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL16wmLHEGS-00255"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -113,7 +113,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL16wmLHEGS-00256"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -128,7 +128,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL16wmLHEGS-00250"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -143,7 +143,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL16wmLHEGS-00257"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
@@ -158,7 +158,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL16wmLHEGS-00258"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -173,7 +173,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL16wmLHEGS-00251"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -188,7 +188,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL16wmLHEGS-00252"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -207,7 +207,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00237"
                             },
                             "filterefficiency": 1,
@@ -220,7 +219,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00238"
                             },
                             "filterefficiency": 1,
@@ -233,7 +231,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00239"
                             },
                             "filterefficiency": 1,
@@ -246,7 +243,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00240"
                             },
                             "filterefficiency": 1,
@@ -259,7 +255,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00241"
                             },
                             "filterefficiency": 1,
@@ -272,7 +267,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00242"
                             },
                             "filterefficiency": 1,
@@ -285,7 +279,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00231"
                             },
                             "filterefficiency": 1,
@@ -298,7 +291,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00243"
                             },
                             "filterefficiency": 1,
@@ -311,7 +303,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00244"
                             },
                             "filterefficiency": 1,
@@ -324,7 +315,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00232"
                             },
                             "filterefficiency": 1,
@@ -337,7 +327,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00245"
                             },
                             "filterefficiency": 1,
@@ -350,7 +339,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00246"
                             },
                             "filterefficiency": 1,
@@ -363,7 +351,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00233"
                             },
                             "filterefficiency": 1,
@@ -376,7 +363,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00247"
                             },
                             "filterefficiency": 1,
@@ -389,7 +375,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00234"
                             },
                             "filterefficiency": 1,
@@ -402,7 +387,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00235"
                             },
                             "filterefficiency": 1,
@@ -415,7 +399,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00236"
                             },
                             "filterefficiency": 1,
@@ -2771,7 +2754,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00248"
                             },
                             "filterefficiency": 1,
@@ -2788,7 +2770,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL17wmLHEGS-00253"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -2804,7 +2786,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL17wmLHEGS-00254"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -2818,7 +2800,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL17wmLHEGS-00249"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -2833,7 +2815,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL17wmLHEGS-00255"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -2848,7 +2830,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL17wmLHEGS-00256"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -2863,7 +2845,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL17wmLHEGS-00250"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -2879,7 +2861,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL17wmLHEGS-00257"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
@@ -2894,7 +2876,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL17wmLHEGS-00258"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -2909,7 +2891,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL17wmLHEGS-00251"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -2925,7 +2907,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL17wmLHEGS-00252"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -2944,7 +2926,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00237"
                             },
                             "filterefficiency": 1,
@@ -2957,7 +2938,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00238"
                             },
                             "filterefficiency": 1,
@@ -2970,7 +2950,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00239"
                             },
                             "filterefficiency": 1,
@@ -2983,7 +2962,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00240"
                             },
                             "filterefficiency": 1,
@@ -2996,7 +2974,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00241"
                             },
                             "filterefficiency": 1,
@@ -3009,7 +2986,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00242"
                             },
                             "filterefficiency": 1,
@@ -3022,7 +2998,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00231"
                             },
                             "filterefficiency": 1,
@@ -3035,7 +3010,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00243"
                             },
                             "filterefficiency": 1,
@@ -3048,7 +3022,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00244"
                             },
                             "filterefficiency": 1,
@@ -3061,7 +3034,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00232"
                             },
                             "filterefficiency": 1,
@@ -3074,7 +3046,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00245"
                             },
                             "filterefficiency": 1,
@@ -3087,7 +3058,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00246"
                             },
                             "filterefficiency": 1,
@@ -3100,7 +3070,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00233"
                             },
                             "filterefficiency": 1,
@@ -3113,7 +3082,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00247"
                             },
                             "filterefficiency": 1,
@@ -3126,7 +3094,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00234"
                             },
                             "filterefficiency": 1,
@@ -3139,7 +3106,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00235"
                             },
                             "filterefficiency": 1,
@@ -3152,7 +3118,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL17wmLHEGS-00236"
                             },
                             "filterefficiency": 1,
@@ -8440,7 +8405,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL18wmLHEGS-00248"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -8455,7 +8420,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL18wmLHEGS-00253"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -8470,7 +8435,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL18wmLHEGS-00254"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -8485,7 +8450,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL18wmLHEGS-00249"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -8500,7 +8465,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL18wmLHEGS-00255"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -8515,7 +8480,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL18wmLHEGS-00256"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -8530,7 +8495,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL18wmLHEGS-00250"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -8545,7 +8510,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL18wmLHEGS-00257"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
@@ -8560,7 +8525,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL18wmLHEGS-00258"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -8575,7 +8540,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL18wmLHEGS-00251"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -8590,7 +8555,7 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "prepid": "HIG-RunIISummer19UL18wmLHEGS-00252"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
@@ -8609,7 +8574,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00237"
                             },
                             "filterefficiency": 1,
@@ -8622,7 +8586,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00238"
                             },
                             "filterefficiency": 1,
@@ -8635,7 +8598,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00239"
                             },
                             "filterefficiency": 1,
@@ -8648,7 +8610,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00240"
                             },
                             "filterefficiency": 1,
@@ -8661,7 +8622,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00241"
                             },
                             "filterefficiency": 1,
@@ -8674,7 +8634,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00242"
                             },
                             "filterefficiency": 1,
@@ -8687,7 +8646,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00231"
                             },
                             "filterefficiency": 1,
@@ -8700,7 +8658,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00243"
                             },
                             "filterefficiency": 1,
@@ -8713,7 +8670,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00244"
                             },
                             "filterefficiency": 1,
@@ -8726,7 +8682,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00232"
                             },
                             "filterefficiency": 1,
@@ -8739,7 +8694,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00245"
                             },
                             "filterefficiency": 1,
@@ -8752,7 +8706,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00246"
                             },
                             "filterefficiency": 1,
@@ -8765,7 +8718,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00233"
                             },
                             "filterefficiency": 1,
@@ -8778,7 +8730,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00247"
                             },
                             "filterefficiency": 1,
@@ -8791,7 +8742,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00234"
                             },
                             "filterefficiency": 1,
@@ -8804,7 +8754,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00235"
                             },
                             "filterefficiency": 1,
@@ -8817,7 +8766,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL18wmLHEGS-00236"
                             },
                             "filterefficiency": 1,
