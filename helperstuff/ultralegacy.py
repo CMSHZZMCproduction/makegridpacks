@@ -32,17 +32,27 @@ class RepeatHZZdandHZdZdAsUltraLegacy(MakeRepeatAsUltraLegacySample(MadGraphHZZd
   def needPDFtobewellbehavedathighmass(self): return False
 
   def cvmfstarball_anyversion(self, version):
-    if self.year in (2017, 2018) or self.VV == "ZdZd":
-      return super(RepeatHZZdandHZdZdAsUltraLegacy, self).cvmfstarball_anyversion(version)
     if self.year == 2016 and self.VV == "ZZd":
       return type(self)(2018, *self.initargs[1:], **self.initkwargs).cvmfstarball_anyversion(version)
+    return super(RepeatHZZdandHZdZdAsUltraLegacy, self).cvmfstarball_anyversion(version)
 
   @property
   def genproductionscommit(self):
-    if self.year in (2017, 2018) or self.VV == "ZdZd":
-      return super(RepeatHZZdandHZdZdAsUltraLegacy, self).genproductionscommit
     if self.year == 2016 and self.VV == "ZZd":
       return type(self)(2018, *self.initargs[1:], **self.initkwargs).genproductionscommit
+    return super(RepeatHZZdandHZdZdAsUltraLegacy, self).genproductionscommit
+
+  @property
+  def madgraphcardscript(self):
+    if self.year == 2016 and self.VV == "ZZd":
+      return type(self)(2018, *self.initargs[1:], **self.initkwargs).madgraphcardscript
+    return super(RepeatHZZdandHZdZdAsUltraLegacy, self).madgraphcardscript
+
+  @property
+  def madgraphcards(self):
+    if self.year == 2016 and self.VV == "ZZd":
+      return type(self)(2018, *self.initargs[1:], **self.initkwargs).madgraphcards
+    return super(RepeatHZZdandHZdZdAsUltraLegacy, self).madgraphcards
 
 class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample)):
   @classmethod

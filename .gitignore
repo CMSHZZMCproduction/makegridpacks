@@ -5,6 +5,8 @@ McMsampleproperties.json.tmp
 AAAA
 productioncard
 productiongitcard
+cardcontents.dat
+gitcardcontents.dat
 *.tgz
 *.tar.gz
 *.txz

@@ -38,7 +38,6 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true,
                                 "prepid": "HIG-RunIISummer19UL16wmLHEGS-00248"
                             },
                             "filterefficiency": 1,
@@ -2772,7 +2771,8 @@
                             "UltraLegacy": {
                                 "filterefficiency": 1.0,
                                 "filterefficiencyerror": 0.0,
-                                "needsupdate": true
+                                "needsupdate": true,
+                                "prepid": "HIG-RunIISummer19UL17wmLHEGS-00248"
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
