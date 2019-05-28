@@ -24,6 +24,6 @@ class MadGraphFXFXMCSample(MadGraphMCSample):
 class MadGraphMCSampleNoJets(MadGraphMCSample):
   def handle_request_fragment_check_warning(self, line):
     if line == "* [WARNING] To check manually - This is a matched MadGraph LO sample. Please check 'JetMatching:nJetMax' =100 is OK and":
-      return "ok as per https://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/6138.html"
+      return "ok" #as per https://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/6138.html
     return super(MadgraphFXFXMCSample, self).handle_request_fragment_check_warning(line)
 
