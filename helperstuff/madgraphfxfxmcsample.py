@@ -12,8 +12,12 @@ class MadGraphFXFXMCSample(MadGraphMCSample):
   def nmaxjets(self):
     pass
   def handle_request_fragment_check_caution(self, line):
-    if line.strip() == "* [Caution: To check manually] This is a FxFx sample. Please check 'JetMatching:nJetMax' is set":
-      print "nmaxjets is", self.nmaxjets
-      return "ok"
+    match = re.match(r"\* \[WARNING\] To check manually - This is a matched MadGraph LO sample\. Please check 'JetMatching:nJetMax' =\s*(\d+)\s*is OK and", line.strip())
+    if match:
+      if self.nmaxjets == int(match.group(1)):
+        print "nmaxjets is", self.nmaxjets
+        return "ok"
+      else:
+        return "Number of jets is not set correctly (?)"
     return super(MadgraphFXFXMCSample, self).handle_request_fragment_check_caution(line)
 

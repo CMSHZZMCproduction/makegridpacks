@@ -63,6 +63,8 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
   @property
   def VV(self): return self.__VV
   @property
+  def Zdmass(self): return self.__Zdmass
+  @property
   def initargs(self): return self.year, self.__VV, self.__Zdmass, self.__eps
   @property
   def identifiers(self):

@@ -61,6 +61,14 @@ class RepeatHZZdandHZdZdAsUltraLegacy(MakeRepeatAsUltraLegacySample(MadGraphHZZd
       return type(self)(2018, *self.initargs[1:], **self.initkwargs).madgraphcards
     return super(RepeatHZZdandHZdZdAsUltraLegacy, self).madgraphcards
 
+  @property
+  def datasetname(self):
+    if self.VV == "ZZd":
+      result = "HTo"+self.VV+"To4L_M125_MZd{}_eps1e-2_TuneCP5_13TeV_madgraph_pythia8".format(self.Zdmass)
+      assert result == super(RepeatHZZdandHZdZdAsUltraLegacy, self).datasetname.replace("13TeV", "TuneCP5_13TeV")
+      return result
+    return super(RepeatHZZdandHZdZdAsUltraLegacy, self).datasetname
+
 class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample)):
   @classmethod
   @cacheaslist

@@ -1184,6 +1184,9 @@ class MCSampleBase(JsonDict):
       return "there is a change in some parameters, setting needsupdate" + "iffailed"*(not setneedsupdate) + " = True:\n" + "\n".join("{}: {} --> {}".format(*_) for _ in itertools.chain(((key, old.get(key), new.get(key)) for key in different), ((subkey, old[key].get(subkey), new[key].get(subkey)) for key in differentsub for subkey in differentsub[key]), ((subkey, old[key][0].get(subkey), new[key][0].get(subkey)) for key in differentsub for subkey in differentsublist[key])))
 
   def request_fragment_check(self):
+    if self.fullinfo["cmssw_release"].endswith("X"):
+      return "CMSSW release is "+self.fullinfo["cmssw_release"]+", which is not a real release.  Once the campaign has a real release, do an option reset."
+
     try:
       output = request_fragment_check("--prepid", self.prepid, "--bypass_status")
       print output,
