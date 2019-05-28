@@ -11,7 +11,7 @@ class MadGraphFXFXMCSample(MadGraphMCSample):
   @abc.abstractproperty
   def nmaxjets(self):
     pass
-  def handle_request_fragment_check_caution(self, line):
+  def handle_request_fragment_check_warning(self, line):
     match = re.match(r"\* \[WARNING\] To check manually - This is a matched MadGraph LO sample\. Please check 'JetMatching:nJetMax' =\s*(\d+)\s*is OK and", line.strip())
     if match:
       if self.nmaxjets == int(match.group(1)):
@@ -19,5 +19,11 @@ class MadGraphFXFXMCSample(MadGraphMCSample):
         return "ok"
       else:
         return "Number of jets is not set correctly (?)"
-    return super(MadgraphFXFXMCSample, self).handle_request_fragment_check_caution(line)
+    return super(MadgraphFXFXMCSample, self).handle_request_fragment_check_warning(line)
+
+class MadGraphMCSampleNoJets(MadGraphMCSample):
+  def handle_request_fragment_check_warning(self, line):
+    if line == "* [WARNING] To check manually - This is a matched MadGraph LO sample. Please check 'JetMatching:nJetMax' =100 is OK and":
+      return "ok as per https://hypernews.cern.ch/HyperNews/CMS/get/prep-ops/6138.html"
+    return super(MadgraphFXFXMCSample, self).handle_request_fragment_check_warning(line)
 

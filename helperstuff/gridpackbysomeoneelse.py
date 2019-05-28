@@ -5,7 +5,7 @@ from utilities import cacheaslist, cdtemp, genproductions, KeepWhileOpenFile, mk
 import patches
 
 from mcsamplebase import MCSampleBase, Run2MCSampleBase, Run2UltraLegacyBase
-from madgraphfxfxmcsample import MadGraphFXFXMCSample
+from madgraphfxfxmcsample import MadGraphFXFXMCSample, MadGraphMCSampleNoJets
 from madgraphmcsample import MadGraphMCSample
 from madgraphjhugenmcsample import MadGraphJHUGenMCSample
 
@@ -54,7 +54,7 @@ class GridpackBySomeoneElse(MCSampleBase):
 class MadGraphGridpackBySomeoneElse(GridpackBySomeoneElse, MadGraphMCSample):
   pass
 
-class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse):
+class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MadGraphMCSampleNoJets):
   def __init__(self, year, VV, Zdmass, eps):
     self.__VV = VV
     self.__Zdmass = int(str(Zdmass))
