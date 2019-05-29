@@ -390,8 +390,6 @@ class MCSampleBase(JsonDict):
   implementsfilter = False
 
   def getsizeandtimecondor(self):
-    check = self.request_fragment_check()
-    if check: return check
     mkdir_p(self.workdir)
     xmlfile = self.prepid+"_rt.xml"
     with KeepWhileOpenFile(os.path.join(self.workdir, self.prepid+".tmp"), deleteifjobdied=True) as kwof:
@@ -405,6 +403,8 @@ class MCSampleBase(JsonDict):
               else:
                 return "job {} to get the size and time is already running".format(jobfile.replace(".log", ""))
           if jobtype(): return "need to get time and size per event, run locally to submit to condor"
+          check = self.request_fragment_check()
+          if check: return check
           wget(os.path.join("https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/", self.prepid, str(self.neventsfortest) if self.neventsfortest else "").rstrip("/"), output=self.prepid)
           with open(self.prepid) as f:
             testjob = f.read()
@@ -537,6 +537,14 @@ class MCSampleBase(JsonDict):
       else:
         return "found prepid: {}".format(self.prepid)
 
+    if (self.approval, self.status) == ("submit", "done"):
+      if self.needsupdate:
+        return "{} is already finished, but needs update!".format(self)
+      self.needsupdateiffailed = False
+      self.gettimepereventfromMcM()
+      self.finished = True
+      return "finished!"
+
     if self.filterefficiency is None and not self.needsupdateiffailed:
       if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): self.needsupdate=True; return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
       if setneedsupdate:
@@ -622,13 +630,6 @@ class MCSampleBase(JsonDict):
         return "{} is already submitted, but needs update!".format(self)
       self.needsupdateiffailed = False
       return "submitted"
-    if (self.approval, self.status) == ("submit", "done"):
-      if self.needsupdate:
-        return "{} is already finished, but needs update!".format(self)
-      self.needsupdateiffailed = False
-      self.gettimepereventfromMcM()
-      self.finished = True
-      return "finished!"
     return "Unknown approval "+self.approval+" and status "+self.status
 
   @property
@@ -1214,8 +1215,8 @@ class MCSampleBase(JsonDict):
         result = self.handle_request_fragment_check_patch(line)
         if result == "ok": continue
         return result+"\n"+line
-      elif line.startswith("*"):
-        return "Unknown line starting with * in request_fragment_check output!\n"+line
+      elif line.startswith("* ["):
+        return "Unknown line starting with * [ in request_fragment_check output!\n"+line
 
   @property
   def maxallowedtimeperevent(self): return None  #default to whatever request_fragment_check does
@@ -1225,6 +1226,9 @@ class MCSampleBase(JsonDict):
       print "time/event is", self.fullinfo["time_event"][0]
       if self.maxallowedtimeperevent is not None and self.timeperevent < self.maxallowedtimeperevent: return "ok"
       return "please check it"
+    if line == "* [WARNING] Do you really want to have tune CP5 in this campaign?":
+      if self.year == 2016 and "/2017/" in self.cvmfstarball:
+        return "ok"
     return "request_fragment_check gave an unhandled warning!"
 
   def handle_request_fragment_check_caution(self, line):

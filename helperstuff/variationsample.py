@@ -393,6 +393,11 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
     if isinstance(self, JHUGenJHUGenAnomCoupMCSampleRun2) and self.productionmode == "VBF" and self.decaymode == "4l" and self.coupling == "L1Zg": return "v7.2.7"
     return super(RunIIFall17DRPremix_nonsubmittedBase, self).JHUGenversion
 
+  def handle_request_fragment_check_warning(self, line):
+    if line.strip() == "* [WARNING] Dataset name does not have the tune name:"+self.datasetname:
+      return "ok"
+    return super(RunIIFall17DRPremix_nonsubmittedBase, self).handle_request_fragment_check_warning(line)
+
 @cache
 def MakeRunIIFall17DRPremix_nonsubmitted(basecls):
   class RunIIFall17DRPremix_nonsubmitted(RunIIFall17DRPremix_nonsubmittedBase, MakeRedoSampleBase(basecls)): pass

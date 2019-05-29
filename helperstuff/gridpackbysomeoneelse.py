@@ -127,7 +127,7 @@ class MadGraphHZZdFromJake(MadGraphGridpackBySomeoneElse, MadGraphMCSampleNoJets
     assert False, self
   @property
   def genproductionscommitforfragment(self):
-    if self.__VV == "ZZd" and self.year == 2018:
+    if self.year == 2018:
       return "a93def45caca7548931ed014f933375828aaf8c8" #get the scale variations
     return super(MadGraphHZZdFromJake, self).genproductionscommitforfragment
   @property
