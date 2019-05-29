@@ -133,6 +133,10 @@ class MCSampleBase(JsonDict):
     """Set this to false if a request fails so badly that the validation will never succeed"""
     return True
   @property
+  def holdrequest(self):
+    """set this to true if you don't want to start the size and time etc. quite yet"""
+    return False
+  @property
   def inthemiddleofmultistepgridpackcreation(self):
     """powheg samples that need to run the grid in multiple steps should sometimes return true"""
     return False
@@ -544,6 +548,8 @@ class MCSampleBase(JsonDict):
       self.gettimepereventfromMcM()
       self.finished = True
       return "finished!"
+
+    if self.holdrequest: return "holding request, set holdrequest to false and run again to continue"
 
     if self.filterefficiency is None and not self.needsupdateiffailed:
       if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): self.needsupdate=True; return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)
@@ -1303,6 +1309,10 @@ class Run2UltraLegacyBase(MCSampleBase):
   def desiredPDFmemberid(self): return 0
 
 class Run2UltraLegacyStandardPDF(Run2UltraLegacyBase):
+  @property
+  def holdrequest(self):
+    "campaigns are not quite ready yet"
+    return True
 
   @abc.abstractproperty
   def desiredPDForder(self): pass
