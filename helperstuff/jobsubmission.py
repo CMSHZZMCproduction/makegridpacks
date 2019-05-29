@@ -1,4 +1,4 @@
-import abc, datetime, os, re, subprocess
+import abc, datetime, os, re, subprocess, textwrap
 
 from utilities import cd, here, KeyDefaultDict, NamedTemporaryFile, osversion
 
@@ -129,42 +129,59 @@ periodic_remove         = JobStatus == 5
 queue
 """
 
-condortemplate_sizeperevent = """
-executable            = {self.workdir}/{self.prepid}
-output                = {self.workdir}/$(ClusterId).out
-error                 = {self.workdir}/$(ClusterId).err
-log                   = {self.workdir}/$(ClusterId).log
+def condortemplate_sizeperevent(self):
+  return textwrap.dedent("""
+    executable            = {self.workdir}/{self.prepid}
+    output                = {self.workdir}/$(ClusterId).out
+    error                 = {self.workdir}/$(ClusterId).err
+    log                   = {self.workdir}/$(ClusterId).log
+    {requirements}
 
-request_memory        = 4000M
-request_cpus          = {self.nthreads}
-+JobFlavour           = "{self.timepereventflavor}"
+    request_memory        = 4000M
+    request_cpus          = {self.nthreads}
+    +JobFlavour           = "{self.timepereventflavor}"
 
-#https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
-periodic_remove       = JobStatus == 5
+    #https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
+    periodic_remove       = JobStatus == 5
 
-transfer_output_files = {self.prepid}_rt.xml
+    transfer_output_files = {self.prepid}_rt.xml
 
-queue
-"""
+    queue
+  """).format(
+    self=self,
+    requirements=requirements(osversion),
+  )
 
-condortemplate_filter = """
-executable            = {self.workdir}/$(i)/filterjobscript
-output                = {self.workdir}/$(i)/filterjob.out
-error                 = {self.workdir}/$(i)/filterjob.err
-log                   = {self.workdir}/$(i)/filterjob.log
-Initialdir            = {self.workdir}/$(i)
+def condortemplate_filter(self, jobstoqueue):
+  return textwrap.dedent("""
+    executable            = {self.workdir}/$(i)/filterjobscript
+    output                = {self.workdir}/$(i)/filterjob.out
+    error                 = {self.workdir}/$(i)/filterjob.err
+    log                   = {self.workdir}/$(i)/filterjob.log
+    Initialdir            = {self.workdir}/$(i)
+    {requirements}
 
-request_memory        = 4000M
-request_cpus          = {self.nthreadsforfilter}
-+JobFlavour           = "{self.filterefficiencyflavor}"
+    request_memory        = 4000M
+    request_cpus          = {self.nthreadsforfilter}
+    +JobFlavour           = "{self.filterefficiencyflavor}"
 
-#https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
-periodic_remove       = JobStatus == 5
+    #https://www-auth.cs.wisc.edu/lists/htcondor-users/2010-September/msg00009.shtml
+    periodic_remove       = JobStatus == 5
 
-transfer_output_files = {self.filterresultsfile}
+    transfer_output_files = {self.filterresultsfile}
 
-queue i in {jobstoqueue}
-"""
+    queue i in {jobstoqueue}
+  """).format(
+    self=self,
+    jobstoqueue=jobstoqueue,
+    requirements=requirements(osversion),
+  )
+
+def requirements(osversion):
+  return {
+    6: 'requirements = (OpSysAndVer =?= "SLCern6")',
+    7: '',
+  }[osversion]
 
 def submitcondor(flavor, sample, writejobid=None):
   if writejobid is not None and os.path.exists(writejobid):
@@ -178,7 +195,7 @@ def submitcondor(flavor, sample, writejobid=None):
       jobflavor=flavor,
       here=here,
       filter="lambda x: x.identifiers == (" + ", ".join(repr(i).replace("'", "''").replace('"', '""') for i in sample.identifiers)+")",
-      requirements='requirements = (OpSysAndVer =?= "SLCern6")' if osversion == 6 else "",
+      requirements=requirements(osversion),
     ))
     output = subprocess.check_output(["condor_submit", f.name])
     match = re.search("1 job[(]s[)] submitted to cluster ([0-9]*)[.]", output)

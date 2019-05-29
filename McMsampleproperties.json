@@ -7375,10 +7375,9 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
-                            "nthreads": 4,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03145",
-                            "sizeperevent": 629.676562962963,
-                            "timeperevent": 17.7999288002848
+                            "sizeperevent": 629.676562962963
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,

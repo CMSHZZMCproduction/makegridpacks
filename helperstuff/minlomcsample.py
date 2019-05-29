@@ -201,6 +201,11 @@ class MINLOMCSamplePhaseII(MINLOMCSample):
   def tags(self):
     return ["HZZ"]
 
+  @property
+  def cmsswversion(self): return "CMSSW_9_3_0"
+  @property
+  def scramarch(self): return "slc6_amd64_gcc630"
+
 class MINLOMCSampleRun2(MINLOMCSample, Run2MCSampleBase):
   @classmethod
   @cacheaslist

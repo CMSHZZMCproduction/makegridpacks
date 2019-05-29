@@ -488,7 +488,7 @@ class MadgraphTWHPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSampl
   @property
   def datasetname(self):
     assert self.finalstate == "4l"
-    return "TWH_HToZZ_4LFilter_M125_13TeV_madgraph_JHUGenV727_pythia8"
+    return "TWH_HToZZ_4LFilter_M125_TuneCP5_13TeV_madgraph_JHUGenV727_pythia8"
   def cvmfstarball_anyversion(self, version):
     assert self.finalstate == "4l"
     return "/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.4.2/thw_5f_ckm_LO_ctcvcp_MH125_JHUGen4l/v{}/thw_5f_ckm_LO_ctcvcp_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz".format(version)

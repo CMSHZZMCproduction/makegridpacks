@@ -4,7 +4,7 @@ import uncertainties
 
 import patches
 
-from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, request_fragment_check, scramarch, urlopen, wget
+from utilities import cache, cacheaslist, cd, cdtemp, cmsswversion, createLHEProducer, fullinfo, genproductions, here, jobended, JsonDict, KeepWhileOpenFile, mkdir_p, osversion, request_fragment_check, scramarch, urlopen, wget
 from jobsubmission import condortemplate_filter, condortemplate_sizeperevent, jobid, JobQueue, jobtype, queuematches, submitcondor
 from rest import McM
 
@@ -381,7 +381,7 @@ class MCSampleBase(JsonDict):
       if jobstosubmit:
         jobsrunning = True
         with tempfile.NamedTemporaryFile(bufsize=0) as f:
-          f.write(condortemplate_filter.format(self=self, jobstoqueue=" ".join(jobstosubmit)))
+          f.write(condortemplate_filter(self=self, jobstoqueue=" ".join(jobstosubmit)))
           subprocess.check_call(["condor_submit", f.name])
         return "submitted {} filter efficiency jobs".format(len(jobstosubmit))
 
@@ -423,12 +423,16 @@ class MCSampleBase(JsonDict):
             cmsdriverindex = cmsdriverindex.pop()
             lines.insert(cmsdriverindex+1, 'sed -i "/Services/aprocess.RandomNumberGeneratorService.externalLHEProducer.initialSeed = process.RandomNumberGeneratorService.externalLHEProducer.initialSeed.value() + {:d}" *_cfg.py'.format(self.tweaktimepereventseed))
             testjob = "\n".join(lines)
-          testjob = testjob.replace("slc6", "slc7")
+
+          for scramarchversion in re.findall("slc([0-9]+)", testjob):
+            if int(scramarchversion) != osversion:
+              raise ValueError("Wrong slc version {} in {}".format(scramarchversion, os.path.abspath(self.prepid)))
+
           with open(self.prepid, "w") as newf:
             newf.write(testjob)
           os.chmod(self.prepid, os.stat(self.prepid).st_mode | stat.S_IEXEC)
           with tempfile.NamedTemporaryFile(bufsize=0) as f:
-            f.write(condortemplate_sizeperevent.format(self=self))
+            f.write(condortemplate_sizeperevent(self=self))
             subprocess.check_call(["condor_submit", f.name])
           return "need to get time and size per event, submitting to condor"
 
@@ -1256,6 +1260,13 @@ class MCSampleBase(JsonDict):
 
   @abc.abstractmethod
   def findPDFfromtarball(self): pass
+
+  @abc.abstractproperty
+  def cmsswversion(self):
+    return "CMSSW_9_3_0"
+  @abc.abstractproperty
+  def scramarch(self):
+    return "slc6_amd64_gcc630"
 
 class Run2MCSampleBase(MCSampleBase):
   @property
