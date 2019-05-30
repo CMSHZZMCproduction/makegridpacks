@@ -205,6 +205,8 @@ class MINLOMCSamplePhaseII(MINLOMCSample):
   def cmsswversion(self): return "CMSSW_9_3_0"
   @property
   def scramarch(self): return "slc6_amd64_gcc630"
+  @property
+  def defaultnthreads(self): return 8
 
 class MINLOMCSampleRun2(MINLOMCSample, Run2MCSampleBase):
   @classmethod

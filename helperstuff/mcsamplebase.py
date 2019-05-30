@@ -951,7 +951,9 @@ class MCSampleBase(JsonDict):
     with cd(here):
       if "nthreads" not in self.value and self.prepid and (self.finished or self.status in ("submitted", "approved")):
         self.value["nthreads"] = self.fullinfo["sequences"][0]["nThreads"]
-      return self.value.get("nthreads", 8 if self.year >= 2017 else 1)
+      return self.value.get("nthreads", self.defaultnthreads)
+  @abc.abstractproperty
+  def defaultnthreads(self): pass
   @nthreads.setter
   def nthreads(self, value):
     if "nthreads" in self.value and value == self.nthreads: return
@@ -1285,6 +1287,8 @@ class Run2MCSampleBase(MCSampleBase):
   @property
   def scramarch(self):
     return "slc6_amd64_gcc630"
+  @property
+  def defaultnthreads(self): return 8 if self.year >= 2017 else 1
 
 
 class Run2UltraLegacyBase(MCSampleBase):
@@ -1319,6 +1323,9 @@ class Run2UltraLegacyBase(MCSampleBase):
   def desiredPDFnames(self): pass
   @property
   def desiredPDFmemberid(self): return 0
+
+  @property
+  def defaultnthreads(self): return 8
 
 class Run2UltraLegacyStandardPDF(Run2UltraLegacyBase):
   @property

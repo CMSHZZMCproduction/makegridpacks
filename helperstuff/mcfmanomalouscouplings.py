@@ -208,7 +208,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def neventsfortest(self):
-    return 4000
+    return 500 * self.nthreads
     return super(MCFMAnomCoupMCSample, self).neventsfortest
 
 class MCFMAnomCoupMCSampleRun2(MCFMAnomCoupMCSample, Run2MCSampleBase):
