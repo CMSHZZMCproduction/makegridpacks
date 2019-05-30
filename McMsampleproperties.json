@@ -591,6 +591,13 @@
             "1": {
                 "0PM": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIISummer19UL17wmLHEGS-00261",
+                            "xsec": 1.6175,
+                            "xsecerror": 0.00633912
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -608,6 +615,13 @@
                         "xsecerror": 0.0348474
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIISummer19UL17wmLHEGS-00259",
+                            "xsec": 3.29188,
+                            "xsecerror": 0.00126743
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -625,6 +639,11 @@
                         "xsecerror": 0.00958021
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -640,6 +659,11 @@
                         "xsecerror": 0.0171695
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -655,6 +679,13 @@
                         "xsecerror": 0.00958021
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIISummer19UL17wmLHEGS-00260",
+                            "xsec": 1.60794,
+                            "xsecerror": 0.00992388
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -672,6 +703,11 @@
                         "xsecerror": 0.0348474
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -687,6 +723,11 @@
                         "xsecerror": 0.0171695
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -702,6 +743,11 @@
                         "xsecerror": 0.00958021
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -819,6 +865,11 @@
             "1": {
                 "0M": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -834,6 +885,11 @@
                         "xsecerror": 0.0349911
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -849,6 +905,11 @@
                         "xsecerror": 0.00842924
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -875,6 +936,11 @@
                             "xsec": 3.39454,
                             "xsecerror": 0.00842924
                         },
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -890,6 +956,11 @@
                         "xsecerror": 0.00842924
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -905,6 +976,11 @@
                         "xsecerror": 0.0349911
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -920,6 +996,11 @@
                         "xsecerror": 0.0217829
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -935,6 +1016,11 @@
                         "xsecerror": 0.00842924
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -952,6 +1038,11 @@
                 },
                 "0Mf05ph0": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -967,6 +1058,11 @@
                         "xsecerror": 0.0455691
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -982,6 +1078,11 @@
                         "xsecerror": 0.0100517
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -997,6 +1098,11 @@
                         "xsecerror": 0.031359
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1012,6 +1118,11 @@
                         "xsecerror": 0.0100517
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1027,6 +1138,11 @@
                         "xsecerror": 0.0455691
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1042,6 +1158,11 @@
                         "xsecerror": 0.031359
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1057,6 +1178,11 @@
                         "xsecerror": 0.0100517
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1074,6 +1200,11 @@
                 },
                 "0PH": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1089,6 +1220,11 @@
                         "xsecerror": 0.0359051
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1104,6 +1240,11 @@
                         "xsecerror": 0.00830446
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1119,6 +1260,11 @@
                         "xsecerror": 0.0189522
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1134,6 +1280,11 @@
                         "xsecerror": 0.00830446
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1149,6 +1300,11 @@
                         "xsecerror": 0.0359051
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1164,6 +1320,11 @@
                         "xsecerror": 0.0189522
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1179,6 +1340,11 @@
                         "xsecerror": 0.00830446
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1196,6 +1362,11 @@
                 },
                 "0PHf05ph0": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1211,6 +1382,11 @@
                         "xsecerror": 0.0461724
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1226,6 +1402,11 @@
                         "xsecerror": 0.0100694
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1241,6 +1422,11 @@
                         "xsecerror": 0.0341238
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1256,6 +1442,11 @@
                         "xsecerror": 0.0100694
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1271,6 +1462,11 @@
                         "xsecerror": 0.0461724
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1286,6 +1482,11 @@
                         "xsecerror": 0.0341238
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1301,6 +1502,11 @@
                         "xsecerror": 0.0100694
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1318,6 +1524,11 @@
                 },
                 "0PL1": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1333,6 +1544,11 @@
                         "xsecerror": 0.0611936
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1348,6 +1564,11 @@
                         "xsecerror": 0.00933488
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1363,6 +1584,11 @@
                         "xsecerror": 0.0262382
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1378,6 +1604,11 @@
                         "xsecerror": 0.00933488
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1393,6 +1624,11 @@
                         "xsecerror": 0.0611936
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1408,6 +1644,11 @@
                         "xsecerror": 0.0262382
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1423,6 +1664,11 @@
                         "xsecerror": 0.00933488
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1440,6 +1686,11 @@
                 },
                 "0PL1f05ph0": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1455,6 +1706,11 @@
                         "xsecerror": 0.044402
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1470,6 +1726,11 @@
                         "xsecerror": 0.00914247
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1485,6 +1746,11 @@
                         "xsecerror": 0.0269962
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1500,6 +1766,11 @@
                         "xsecerror": 0.00914247
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1515,6 +1786,11 @@
                         "xsecerror": 0.0440907
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1530,6 +1806,11 @@
                         "xsecerror": 0.0269962
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1545,6 +1826,11 @@
                         "xsecerror": 0.00914247
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1562,6 +1848,11 @@
                 },
                 "0PM": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1577,6 +1868,11 @@
                         "xsecerror": 0.0467753
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1592,6 +1888,11 @@
                         "xsecerror": 0.0101918
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1607,6 +1908,11 @@
                         "xsecerror": 0.0305425
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1622,6 +1928,11 @@
                         "xsecerror": 0.0101918
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1637,6 +1948,11 @@
                         "xsecerror": 0.0467753
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1652,6 +1968,11 @@
                         "xsecerror": 0.0305425
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1667,6 +1988,11 @@
                         "xsecerror": 0.0101918
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1686,6 +2012,11 @@
             "10": {
                 "0M": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1701,6 +2032,11 @@
                         "xsecerror": 0.0678318
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1716,6 +2052,11 @@
                         "xsecerror": 0.00982992
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1731,6 +2072,11 @@
                         "xsecerror": 0.0250613
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1746,6 +2092,11 @@
                         "xsecerror": 0.00982992
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1761,6 +2112,11 @@
                         "xsecerror": 0.0678318
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1776,6 +2132,11 @@
                         "xsecerror": 0.0250613
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1791,6 +2152,11 @@
                         "xsecerror": 0.00982992
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1808,6 +2174,11 @@
                 },
                 "0Mf05ph0": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1827,6 +2198,11 @@
                         "xsecerror": 0.106231
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1842,6 +2218,11 @@
                         "xsecerror": 0.0123518
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1857,6 +2238,11 @@
                         "xsecerror": 0.0409423
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1872,6 +2258,11 @@
                         "xsecerror": 0.0123518
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1887,6 +2278,11 @@
                         "xsecerror": 0.106231
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1902,6 +2298,11 @@
                         "xsecerror": 0.0409423
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1917,6 +2318,11 @@
                         "xsecerror": 0.0123518
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1934,6 +2340,11 @@
                 },
                 "0PH": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1949,6 +2360,11 @@
                         "xsecerror": 0.0311908
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1964,6 +2380,11 @@
                         "xsecerror": 0.00873135
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1979,6 +2400,11 @@
                         "xsecerror": 0.0204305
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -1994,6 +2420,11 @@
                         "xsecerror": 0.00873135
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2009,6 +2440,11 @@
                         "xsecerror": 0.0311908
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2024,6 +2460,11 @@
                         "xsecerror": 0.0204305
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2039,6 +2480,11 @@
                         "xsecerror": 0.00873135
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2056,6 +2502,11 @@
                 },
                 "0PHf05ph0": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2071,6 +2522,11 @@
                         "xsecerror": 0.0680914
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2086,6 +2542,11 @@
                         "xsecerror": 0.0126189
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2101,6 +2562,11 @@
                         "xsecerror": 0.0426242
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2116,6 +2582,11 @@
                         "xsecerror": 0.0126189
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2131,6 +2602,11 @@
                         "xsecerror": 0.0680914
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2146,6 +2622,11 @@
                         "xsecerror": 0.0426242
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2161,6 +2642,11 @@
                         "xsecerror": 0.0126189
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2178,6 +2664,11 @@
                 },
                 "0PL1": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2193,6 +2684,11 @@
                         "xsecerror": 0.0454392
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2208,6 +2704,11 @@
                         "xsecerror": 0.0122672
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2223,6 +2724,11 @@
                         "xsecerror": 0.0366125
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2238,6 +2744,11 @@
                         "xsecerror": 0.0122672
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2253,6 +2764,11 @@
                         "xsecerror": 0.0454392
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2268,6 +2784,11 @@
                         "xsecerror": 0.0366125
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2283,6 +2804,11 @@
                         "xsecerror": 0.0122672
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2300,6 +2826,11 @@
                 },
                 "0PL1f05ph0": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2315,6 +2846,11 @@
                         "xsecerror": 0.0429664
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2330,6 +2866,11 @@
                         "xsecerror": 0.00892247
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2345,6 +2886,11 @@
                         "xsecerror": 0.0264502
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2360,6 +2906,11 @@
                         "xsecerror": 0.00892247
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2375,6 +2926,11 @@
                         "xsecerror": 0.0429664
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2390,6 +2946,11 @@
                         "xsecerror": 0.0264502
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2405,6 +2966,11 @@
                         "xsecerror": 0.00892247
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2422,6 +2988,11 @@
                 },
                 "0PM": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2437,6 +3008,11 @@
                         "xsecerror": 0.101433
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2452,6 +3028,11 @@
                         "xsecerror": 0.0104609
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2467,6 +3048,11 @@
                         "xsecerror": 0.0321978
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2482,6 +3068,11 @@
                         "xsecerror": 0.0104609
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2497,6 +3088,11 @@
                         "xsecerror": 0.101433
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2512,6 +3108,11 @@
                         "xsecerror": 0.0321978
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -2527,6 +3128,11 @@
                         "xsecerror": 0.0104609
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3291,6 +3897,11 @@
             "1": {
                 "0M": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3306,6 +3917,11 @@
                         "xsecerror": 0.00821157
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3321,6 +3937,11 @@
                         "xsecerror": 0.00189721
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3336,6 +3957,11 @@
                         "xsecerror": 0.0118364
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3351,6 +3977,11 @@
                         "xsecerror": 0.00189721
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3366,6 +3997,11 @@
                         "xsecerror": 0.00821157
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3381,6 +4017,11 @@
                         "xsecerror": 0.0118364
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3396,6 +4037,11 @@
                         "xsecerror": 0.00189721
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3413,6 +4059,11 @@
                 },
                 "0Mf05ph0": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3428,6 +4079,11 @@
                         "xsecerror": 0.00515379
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3443,6 +4099,11 @@
                         "xsecerror": 0.00147926
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3458,6 +4119,11 @@
                         "xsecerror": 0.0104152
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3473,6 +4139,11 @@
                         "xsecerror": 0.00147926
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3488,6 +4159,11 @@
                         "xsecerror": 0.00515379
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3503,6 +4179,11 @@
                         "xsecerror": 0.0104152
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "morencalls": {
@@ -3517,6 +4198,11 @@
                         "xsecerror": 0.00147926
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3534,6 +4220,11 @@
                 },
                 "0PH": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3549,6 +4240,11 @@
                         "xsecerror": 0.0147991
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3564,6 +4260,11 @@
                         "xsecerror": 0.00187231
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3579,6 +4280,11 @@
                         "xsecerror": 0.0140612
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3594,6 +4300,11 @@
                         "xsecerror": 0.00255806
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3609,6 +4320,11 @@
                         "xsecerror": 0.0147991
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3624,6 +4340,11 @@
                         "xsecerror": 0.0140612
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3639,6 +4360,11 @@
                         "xsecerror": 0.00187231
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3656,6 +4382,11 @@
                 },
                 "0PHf05ph0": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3671,6 +4402,11 @@
                         "xsecerror": 0.0110382
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3686,6 +4422,11 @@
                         "xsecerror": 0.00201905
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3701,6 +4442,11 @@
                         "xsecerror": 0.01292
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3716,6 +4462,11 @@
                         "xsecerror": 0.00201905
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3731,6 +4482,11 @@
                         "xsecerror": 0.0110382
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3746,6 +4502,11 @@
                         "xsecerror": 0.01292
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3761,6 +4522,11 @@
                         "xsecerror": 0.00201905
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3778,6 +4544,11 @@
                 },
                 "0PL1": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3793,6 +4564,11 @@
                         "xsecerror": 5.08632e-11
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3808,6 +4584,11 @@
                         "xsecerror": 1.73606e-11
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3823,6 +4604,11 @@
                         "xsecerror": 1.44436e-10
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3838,6 +4624,11 @@
                         "xsecerror": 1.73606e-11
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3853,6 +4644,11 @@
                         "xsecerror": 5.08632e-11
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3868,6 +4664,11 @@
                         "xsecerror": 1.44436e-10
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3883,6 +4684,11 @@
                         "xsecerror": 1.73606e-11
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3900,6 +4706,11 @@
                 },
                 "0PL1f05ph0": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3915,6 +4726,11 @@
                         "xsecerror": 0.000332827
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3930,6 +4746,11 @@
                         "xsecerror": 0.000259815
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3945,6 +4766,11 @@
                         "xsecerror": 0.00180896
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3960,6 +4786,11 @@
                         "xsecerror": 0.000259815
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3975,6 +4806,11 @@
                         "xsecerror": 0.000332827
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -3990,6 +4826,11 @@
                         "xsecerror": 0.00180896
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -4005,6 +4846,11 @@
                         "xsecerror": 0.000259815
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -4022,6 +4868,11 @@
                 },
                 "0PM": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -4037,6 +4888,11 @@
                         "xsecerror": 0.00430136
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -4052,6 +4908,11 @@
                         "xsecerror": 0.00129003
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -4067,6 +4928,11 @@
                         "xsecerror": 0.00767952
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -4082,6 +4948,11 @@
                         "xsecerror": 0.00126982
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -4097,6 +4968,11 @@
                         "xsecerror": 0.00430136
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -4112,6 +4988,11 @@
                         "xsecerror": 0.00767952
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -4127,6 +5008,11 @@
                         "xsecerror": 0.00129003
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
                         "finished": true,
@@ -7352,10 +8238,9 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0,
-                            "nthreads": 4,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03151",
-                            "sizeperevent": 603.7235409836065,
-                            "timeperevent": 14.126787921596327
+                            "sizeperevent": 603.7235409836065
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
@@ -8100,6 +8985,13 @@
             "1": {
                 "0PM": {
                     "ELEL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIISummer19UL18wmLHEGS-00261",
+                            "xsec": 1.6175,
+                            "xsecerror": 0.00633912
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "finished": true,
@@ -8118,6 +9010,13 @@
                         "xsecerror": 0.0348474
                     },
                     "ELMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIISummer19UL18wmLHEGS-00259",
+                            "xsec": 3.29188,
+                            "xsecerror": 0.00126743
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "finished": true,
@@ -8135,6 +9034,11 @@
                         "xsecerror": 0.00958021
                     },
                     "ELNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "finished": true,
@@ -8150,6 +9054,11 @@
                         "xsecerror": 0.0171695
                     },
                     "ELTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "finished": true,
@@ -8165,6 +9074,13 @@
                         "xsecerror": 0.00958021
                     },
                     "MUMU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "prepid": "HIG-RunIISummer19UL18wmLHEGS-00260",
+                            "xsec": 1.60794,
+                            "xsecerror": 0.00992388
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "finished": true,
@@ -8183,6 +9099,11 @@
                         "xsecerror": 0.0348474
                     },
                     "MUNU": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "finished": true,
@@ -8199,6 +9120,11 @@
                         "xsecerror": 0.0171695
                     },
                     "MUTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "finished": true,
@@ -8215,6 +9141,11 @@
                         "xsecerror": 0.00958021
                     },
                     "TLTL": {
+                        "UltraLegacy": {
+                            "filterefficiency": 1.0,
+                            "filterefficiencyerror": 0.0,
+                            "needsupdate": true
+                        },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "finished": true,
@@ -8706,8 +9637,8 @@
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-01990",
-                            "sizeperevent": 620.5962666666667,
-                            "timeperevent": 4.283407364890623
+                            "sizeperevent": 624,
+                            "timeperevent": 3.820380968390168
                         }
                     },
                     "30": {

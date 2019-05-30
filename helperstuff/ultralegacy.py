@@ -1,7 +1,7 @@
-from gridpackbysomeoneelse import MadGraphHZZdFromJakeRun2
+from gridpackbysomeoneelse import MadGraphHZZdFromJake, MadGraphHZZdFromJakeRun2
 from madgraphmcsample import MadGraphMCSample
-from mcfmanomalouscouplings import MCFMAnomCoupMCSample
-from mcsamplebase import Run2UltraLegacyBase, Run2UltraLegacyStandardPDF
+from mcfmanomalouscouplings import MCFMAnomCoupMCSample, MCFMAnomCoupMCSampleRun2
+from mcsamplebase import Run2MCSampleBase, Run2UltraLegacyBase, Run2UltraLegacyStandardPDF
 from utilities import cache, cacheaslist
 from variationsample import MakeVariationSample, VariationSampleBase
 
@@ -21,18 +21,25 @@ class RepeatAsUltraLegacyBase(VariationSampleBase, Run2UltraLegacyBase):
     return "slc6_amd64_gcc630"
 
 @cache
-def MakeRepeatAsUltraLegacySample(basecls):
-  class RepeatAsUltraLegacy(RepeatAsUltraLegacyBase, MakeVariationSample(basecls)): pass
+def MakeRepeatAsUltraLegacySample(basecls, baseclsrun2, forsubclassing=False):
+  for _ in basecls, Run2MCSampleBase:
+    if not issubclass(baseclsrun2, _):
+      raise TypeError("{} is not a subclass of {}".format(baseclsrun2, _))
+  if issubclass(basecls, Run2MCSampleBase):
+    raise TypeError("{} is a subclass of {}".format(basecls, Run2MCSampleBase))
+  class RepeatAsUltraLegacy(RepeatAsUltraLegacyBase, MakeVariationSample(basecls)):
+    @classmethod
+    @cacheaslist
+    def allsamples(cls):
+      if forsubclassing and cls == RepeatAsUltraLegacy: return
+      for sample in baseclsrun2.allsamples():
+        yield cls(*sample.initargs, **sample.initkwargs)
+    mainsampletype = baseclsrun2
+
   RepeatAsUltraLegacy.__name__ = basecls.__name__+"UltraLegacy"
   return RepeatAsUltraLegacy
 
-class RepeatHZZdandHZdZdAsUltraLegacy(MakeRepeatAsUltraLegacySample(MadGraphHZZdFromJakeRun2), Run2UltraLegacyStandardPDF):
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    for sample in cls.mainsampletype.allsamples():
-      yield cls(*sample.initargs, **sample.initkwargs)
-
+class RepeatHZZdandHZdZdAsUltraLegacy(MakeRepeatAsUltraLegacySample(MadGraphHZZdFromJake, MadGraphHZZdFromJakeRun2, forsubclassing=True), Run2UltraLegacyStandardPDF):
   @property
   def desiredPDForder(self): return "NNLO"
   @property
@@ -69,13 +76,9 @@ class RepeatHZZdandHZdZdAsUltraLegacy(MakeRepeatAsUltraLegacySample(MadGraphHZZd
       return result
     return super(RepeatHZZdandHZdZdAsUltraLegacy, self).datasetname
 
-class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample)):
-  @classmethod
-  @cacheaslist
-  def allsamples(cls):
-    return
-    for sample in cls.mainsampletype.allsamples():
-      yield cls(*sample.initargs, **sample.initkwargs)
+class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample, MCFMAnomCoupMCSampleRun2, forsubclassing=True), Run2UltraLegacyStandardPDF):
+  @property
+  def desiredPDForder(self): return "LO"
 
   @property
   def tarballversion(self):
@@ -83,7 +86,7 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
 
     identifierstr = " ".join(str(_) for _ in self.mainsample.identifiers)
 
-    if year == 2017:
+    if self.year == 2017:
       if identifierstr == "BSI 10 0PH ELMU": v+=1
       if identifierstr == "BSI 1 0M ELMU": v+=1
       if identifierstr == "BSI 10 0PM MUMU": v+=1
@@ -104,9 +107,9 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
     v+=1  #csmax patch
 
     if self.year == 2017:
-      othersample = MCFMAnomCoupMCSample(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
+      othersample = self.mainsampletype(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
       if self.mainsample.signalbkgbsi == "BKG":
-        othersample = RepeatMCFMAsUltraLegacy(*othersample.initargs, **othersample.initkwargs)
+        othersample = type(self)(*othersample.initargs, **othersample.initkwargs)
       assert v == othersample.tarballversion, (v, othersample.tarballversion)
 
     return v
@@ -122,7 +125,7 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
         for line in f:
           if "ncalls" in line:
             assert int(line.split()[0]) < 1000000, (self, self.mainsample.cvmfstarball, line)
-    return super(RedoMCFMMoreNcalls, self).createtarball(*args, **kwargs)
+    return super(RepeatMCFMAsUltraLegacy, self).createtarball(*args, **kwargs)
 
   @property
   def cardsurl(self):
@@ -130,4 +133,4 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
       for line in f:
         if "ncalls" in line and int(line.split()[0]) != 5000000:
           raise ValueError(line+"\nshould be 5000000")
-    return super(RedoMCFMMoreNcalls, self).cardsurl
+    return super(RepeatMCFMAsUltraLegacy, self).cardsurl

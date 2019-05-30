@@ -553,7 +553,8 @@ class MCSampleBase(JsonDict):
       self.finished = True
       return "finished!"
 
-    if self.holdrequest: return "holding request, set holdrequest to false and run again to continue"
+    if self.holdrequest and not self.needsupdateiffailed:
+      return "holding request, set holdrequest to false and run again to continue"
 
     if self.filterefficiency is None and not self.needsupdateiffailed:
       if os.path.exists(self.cvmfstarball_anyversion(self.tarballversion+1)): self.needsupdate=True; return "tarball version is v{}, but v{} exists".format(self.tarballversion, self.tarballversion+1)

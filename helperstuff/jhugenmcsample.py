@@ -148,7 +148,6 @@ class JHUGenMCSample(UsesJHUGenLibraries):
   def shortname(self):
     return re.sub(r"\W", "", str(self)).replace(str(self.year), "", 1)
 
-  @property
   def findPDFfromtarball(self):
     name = None
     memberid = 0

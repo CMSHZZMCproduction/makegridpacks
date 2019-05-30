@@ -378,6 +378,7 @@ class POWHEGJHUGenMassScanMCSample(MassScanMCSample, POWHEGJHUGenMCSample):
   def makegridpackseed(self):
     result = super(POWHEGJHUGenMassScanMCSample, self).makegridpackseed
     if self.productionmode == "ggH" and self.mass == 200 and self.decaymode == "4l" and self.multicore_upto[0] == 2: result += 16
+    if self.productionmode == "ggH" and self.mass == 190 and self.decaymode == "4l" and self.multicore_upto[0] == 2: result += 10
     if self.productionmode == "ggH" and self.mass == 125 and self.decaymode == "4l" and self.multicore_upto[0] == 2: result = -5347775664555457122
     return result
 

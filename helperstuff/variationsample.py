@@ -80,7 +80,7 @@ def MakeVariationSample(basecls):
     mainsampletype = basecls
     @property
     def mainsample(self):
-      return basecls(*self.mainsampleinitargs, **self.mainsampleinitkwargs)
+      return self.mainsampletype(*self.mainsampleinitargs, **self.mainsampleinitkwargs)
     #initargs is inherited from basecls and can be overridden
     @property
     def mainsampleinitargs(self):

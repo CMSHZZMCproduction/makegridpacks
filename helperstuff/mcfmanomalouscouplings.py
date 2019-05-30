@@ -221,3 +221,9 @@ class MCFMAnomCoupMCSampleRun2(MCFMAnomCoupMCSample, Run2MCSampleBase):
           for width in cls.getwidths(signalbkgbsi, coupling):
             for year in 2017, 2018:
               yield cls(year, signalbkgbsi, width, coupling, finalstate)
+
+  def handle_request_fragment_check_warning(self, line):
+    if line.strip() == "* [WARNING] Dataset name does not have the tune name:"+self.datasetname:
+      return "ok"
+    return super(MCFMAnomCoupMCSampleRun2, self).handle_request_fragment_check_warning(line)
+
