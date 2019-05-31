@@ -54,7 +54,11 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   @property
   def creategridpackqueue(self):
     return "testmatch"
-
+  @property
+  def timepereventqueue(self):
+    if self.finalstate in ("ELEL", "MUMU", "TLTL"):
+      return "testmatch"
+    return "tomorrow"
 
   @property
   def tarballversion(self):
