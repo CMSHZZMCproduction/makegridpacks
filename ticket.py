@@ -4,7 +4,6 @@ import argparse, itertools, math, pprint
 
 from helperstuff import allsamples
 from helperstuff.rest import McM
-from helperstuff.utilities import request_fragment_check
 
 def maketicket(block, chain, tags, year, filter=lambda sample: True, modifytickets=[], notes=None, dryrun=False, status=("defined",), onlymysamples=False):
   prepids = [sample.prepid for sample in allsamples(
@@ -98,10 +97,6 @@ def maketicket(block, chain, tags, year, filter=lambda sample: True, modifyticke
 
     if not answer['results']:
       raise RuntimeError(answer)
-
-    if "prepid" not in answer: answer["prepid"] = ticket["prepid"]
-
-    print request_fragment_check("--ticket", answer["prepid"], "--bypass_status")
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
