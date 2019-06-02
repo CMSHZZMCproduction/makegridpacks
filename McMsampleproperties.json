@@ -605,6 +605,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03999",
+                            "sizeperevent": 602,
+                            "timeperevent": 15.242578007703598,
                             "xsec": 1.6175,
                             "xsecerror": 0.00633912
                         },
@@ -9007,6 +9009,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIIFall18wmLHEGS-02003",
+                            "sizeperevent": 626,
+                            "timeperevent": 16.7619303038938,
                             "xsec": 1.6175,
                             "xsecerror": 0.00633912
                         },
