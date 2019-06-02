@@ -556,6 +556,7 @@ class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSampleRun2)):
   @cacheaslist
   def allsamples(cls):
     for sample in MCFMAnomCoupMCSampleRun2.allsamples():
+      if sample.finalstate not in ("ELEL", "MUMU", "TLTL"): continue
       if sample.year == 2017:
         yield cls(*sample.initargs, **sample.initkwargs)
       if sample.year == 2018 and sample.signalbkgbsi == "BKG":
