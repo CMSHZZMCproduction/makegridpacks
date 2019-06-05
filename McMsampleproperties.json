@@ -667,9 +667,7 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
-                            "prepid": "HIG-RunIISummer19UL17wmLHEGS-00260",
-                            "xsec": 1.60794,
-                            "xsecerror": 0.00992388
+                            "prepid": "HIG-RunIISummer19UL17wmLHEGS-00260"
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0,
@@ -677,9 +675,7 @@
                         "morencalls": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
-                            "prepid": "HIG-RunIIFall17wmLHEGS-03998",
-                            "xsec": 1.60794,
-                            "xsecerror": 0.00992388
+                            "prepid": "HIG-RunIIFall17wmLHEGS-03998"
                         },
                         "prepid": "HIG-RunIIFall17wmLHEGS-00937",
                         "sizeperevent": 557,
@@ -8521,9 +8517,7 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
-                            "prepid": "HIG-RunIISummer19UL18wmLHEGS-00260",
-                            "xsec": 1.60794,
-                            "xsecerror": 0.00992388
+                            "prepid": "HIG-RunIISummer19UL18wmLHEGS-00260"
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
@@ -8531,9 +8525,7 @@
                         "morencalls": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
-                            "prepid": "HIG-RunIIFall18wmLHEGS-02002",
-                            "xsec": 1.60794,
-                            "xsecerror": 0.00992388
+                            "prepid": "HIG-RunIIFall18wmLHEGS-02002"
                         },
                         "nthreads": 1,
                         "prepid": "HIG-RunIIFall18wmLHEGS-00471",

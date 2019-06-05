@@ -585,6 +585,8 @@ class RedoMCFMMoreNcalls(MakeRedoSampleBase(MCFMAnomCoupMCSampleRun2)):
     if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
     if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
 
+    if identifierstr == "BKG 1 0PM MUMU": v+=1
+
     v+=1  #csmax patch
 
     if self.year == 2017:

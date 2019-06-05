@@ -104,6 +104,8 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
       if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
       if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
 
+    if identifierstr == "BKG 1 0PM MUMU": v+=1
+
     v+=1  #csmax patch
 
     if self.year == 2017:
@@ -117,15 +119,6 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
   @property
   def genproductionscommit(self):
     return "a8ea4bc76df07ee2fa16bd9a67b72e7b648dec64"
-
-  def createtarball(self, *args, **kwargs):
-    with cdtemp():
-      subprocess.check_output(["tar", "xvaf", self.mainsample.cvmfstarball])
-      with open("readInput.DAT") as f:
-        for line in f:
-          if "ncalls" in line:
-            assert int(line.split()[0]) < 1000000, (self, self.mainsample.cvmfstarball, line)
-    return super(RepeatMCFMAsUltraLegacy, self).createtarball(*args, **kwargs)
 
   @property
   def cardsurl(self):
