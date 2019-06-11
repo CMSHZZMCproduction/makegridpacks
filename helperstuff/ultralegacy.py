@@ -32,8 +32,20 @@ def MakeRepeatAsUltraLegacySample(basecls, baseclsrun2, forsubclassing=False):
     @cacheaslist
     def allsamples(cls):
       if forsubclassing and cls == RepeatAsUltraLegacy: return
+      seen = []
       for sample in baseclsrun2.allsamples():
-        yield cls(*sample.initargs, **sample.initkwargs)
+        seen.append(cls(*sample.initargs, **sample.initkwargs))
+        yield seen[-1]
+
+      for sample in baseclsrun2.allsamples():
+        initargs, initkwargs = list(sample.initargs), dict(sample.initkwargs)
+        assert initargs[0] in (2016, 2017, 2018), initargs[0]
+        initargs[0] = 2016
+        nextone = cls(*initargs, **initkwargs)
+        if nextone in seen: continue
+        seen.append(nextone)
+        yield nextone
+
     mainsampletype = baseclsrun2
 
   RepeatAsUltraLegacy.__name__ = basecls.__name__+"UltraLegacy"
