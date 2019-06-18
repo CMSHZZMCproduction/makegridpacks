@@ -188,7 +188,6 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
 
   @property
   def responsible(self):
-     if self.signalbkgbsi != "BKG" or "TL" in self.finalstate or "NU" in self.finalstate: return "nobody"
      return "hroskes"
 
   @property
