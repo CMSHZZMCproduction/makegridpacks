@@ -63,7 +63,7 @@ class MCFMAnomCoupMCSample(MCFMMCSample):
   @property
   def tarballversion(self):
     v = 1
-    if self.year in (2017, 2018):
+    if self.year in (2016, 2017, 2018):
       v += 1
 #      if self.signalbkgbsi == "BKG": v
       identifierstr = ' '.join(map(str,self.identifiers))

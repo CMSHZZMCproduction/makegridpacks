@@ -539,7 +539,7 @@ class RedoPythiaVariationMINLORun2(MakeRedoSample(PythiaVariationMINLORun2)):
 
   @property
   def tarballversion(self):
-    result = super(RedoPythiaVariationMINLO, self).tarballversion
+    result = super(RedoPythiaVariationMINLORun2, self).tarballversion
     if "HIG-RunIIFall17wmLHEGS-01145" in self.previousprepids and self.pythiavariation == "TuneUp": result += 2  #parallelize the gridpack
     return result
 

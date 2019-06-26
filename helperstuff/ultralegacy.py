@@ -98,7 +98,7 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
 
     identifierstr = " ".join(str(_) for _ in self.mainsample.identifiers)
 
-    if self.year == 2017:
+    if self.year in (2016, 2017):
       if identifierstr == "BSI 10 0PH ELMU": v+=1
       if identifierstr == "BSI 1 0M ELMU": v+=1
       if identifierstr == "BSI 10 0PM MUMU": v+=1
@@ -120,7 +120,7 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
 
     v+=1  #csmax patch
 
-    if self.year == 2017:
+    if self.year in (2016, 2017):
       othersample = self.mainsampletype(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
       if self.mainsample.signalbkgbsi == "BKG":
         othersample = type(self)(*othersample.initargs, **othersample.initkwargs)
