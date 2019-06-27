@@ -94,11 +94,13 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
 
   @property
   def tarballversion(self):
-    v = self.mainsample.tarballversion+1
+    v = self.mainsample.tarballversion
 
     identifierstr = " ".join(str(_) for _ in self.mainsample.identifiers)
 
-    if self.year in (2016, 2017):
+    if self.year in (2016, 2017) or self.signalbkgbsi == "BKG":
+      v+=1
+
       if identifierstr == "BSI 10 0PH ELMU": v+=1
       if identifierstr == "BSI 1 0M ELMU": v+=1
       if identifierstr == "BSI 10 0PM MUMU": v+=1
@@ -116,15 +118,15 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
       if identifierstr == "BSI 10 0PHf05ph0 ELEL": v+=1
       if identifierstr == "BSI 10 0Mf05ph0 ELEL": v+=1
 
+      v+=1  #csmax patch
+
     if identifierstr == "BKG 1 0PM MUMU": v+=1
 
-    v+=1  #csmax patch
-
-    if self.year in (2016, 2017):
+    if not (self.year == 2018 and self.signalbkgbsi == "BKG"):
       othersample = self.mainsampletype(2018, self.mainsample.signalbkgbsi, self.mainsample.width, self.mainsample.coupling, self.mainsample.finalstate)
       if self.mainsample.signalbkgbsi == "BKG":
         othersample = type(self)(*othersample.initargs, **othersample.initkwargs)
-      assert v == othersample.tarballversion, (v, othersample.tarballversion)
+      assert v == othersample.tarballversion, (self, othersample, v, othersample.tarballversion)
 
     return v
 

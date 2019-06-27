@@ -19,9 +19,7 @@
                     },
                     "MUMU": {
                         "UltraLegacy": {
-                            "prepid": "HIG-RunIISummer19UL16wmLHEGS-00260",
-                            "xsec": 1.62055,
-                            "xsecerror": 0.00849235
+                            "prepid": "HIG-RunIISummer19UL16wmLHEGS-00260"
                         }
                     }
                 }
@@ -940,9 +938,7 @@
                             "nthreads": 2,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03150",
                             "sizeperevent": 566,
-                            "timeperevent": 24.8529945373118,
-                            "xsec": 3.39454,
-                            "xsecerror": 0.00842924
+                            "timeperevent": 24.8529945373118
                         },
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
