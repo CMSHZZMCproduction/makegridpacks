@@ -27,9 +27,24 @@
         },
         "BSI": {
             "1": {
+                "0PH": {
+                    "ELTL": {
+                        "UltraLegacy": {
+                            "needsupdate": true
+                        }
+                    }
+                },
+                "0PHf05ph0": {
+                    "ELTL": {
+                        "UltraLegacy": {
+                            "needsupdate": true
+                        }
+                    }
+                },
                 "0PM": {
                     "ELTL": {
                         "UltraLegacy": {
+                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGS-00262"
                         }
                     }
@@ -8743,6 +8758,37 @@
             }
         },
         "BSI": {
+            "1": {
+                "0PH": {
+                    "ELTL": {
+                        "UltraLegacy": {
+                            "needsupdate": true
+                        },
+                        "prepid": "HIG-RunIIFall18wmLHEGS-02023",
+                        "xsec": 3.16765,
+                        "xsecerror": 0.00103754
+                    }
+                },
+                "0PHf05ph0": {
+                    "ELTL": {
+                        "UltraLegacy": {
+                            "needsupdate": true
+                        },
+                        "needsupdate": true,
+                        "prepid": "HIG-RunIIFall18wmLHEGS-02024"
+                    }
+                },
+                "0PM": {
+                    "ELTL": {
+                        "UltraLegacy": {
+                            "needsupdate": true
+                        },
+                        "prepid": "HIG-RunIIFall18wmLHEGS-02022",
+                        "xsec": 3.91488,
+                        "xsecerror": 0.00124876
+                    }
+                }
+            },
             "PHANTOM": {
                 "125": {
                     "1": {
