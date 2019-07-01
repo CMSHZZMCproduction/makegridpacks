@@ -20,6 +20,22 @@ class RepeatAsUltraLegacyBase(VariationSampleBase, Run2UltraLegacyBase):
   def scramarch(self):
     return "slc6_amd64_gcc630"
 
+  def updateprepid(self):
+    if not self.prepid or "wmLHEGEN" in self.prepid: return
+    assert "wmLHEGS" in self.prepid
+    if self.datasetname != self.fullinfo["dataset_name"]:
+      raise ValueError("Dataset name is not consistent with the request on McM.  Please change it, if only temporarily.\n"+self.datasetname+"\n"+self.fullinfo["dataset_name"])
+
+    oldprepid = self.prepid
+    try:
+      del self.prepid
+      self.getprepid()
+      assert self.prepid
+    except:
+      self.prepid = oldprepid
+      print "failed", self.datasetname, self.extensionnumber
+#      raise
+
 @cache
 def MakeRepeatAsUltraLegacySample(basecls, baseclsrun2, forsubclassing=False):
   for _ in basecls, Run2MCSampleBase:
