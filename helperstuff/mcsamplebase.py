@@ -1295,11 +1295,11 @@ class Run2UltraLegacyBase(MCSampleBase):
   @property
   def campaign(self):
     if self.year == 2016:
-      return "RunIISummer19UL16wmLHEGS"
+      return "RunIISummer19UL16wmLHEGEN"
     if self.year == 2017:
-      return "RunIISummer19UL17wmLHEGS"
+      return "RunIISummer19UL17wmLHEGEN"
     if self.year == 2018:
-      return "RunIISummer19UL18wmLHEGS"
+      return "RunIISummer19UL18wmLHEGEN"
     assert False, self.year
   @property
   def cmsswversion(self):
