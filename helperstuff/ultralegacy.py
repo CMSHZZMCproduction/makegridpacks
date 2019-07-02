@@ -14,11 +14,16 @@ class RepeatAsUltraLegacyBase(VariationSampleBase, Run2UltraLegacyBase):
     return 0
   @property
   def cmsswversion(self):
-    #use the old slc because the gridpacks are typically the same as the main Run2 sample
-    return "CMSSW_9_3_0"
+    if not os.path.exists(self.cvmfstarball):
+      return "CMSSW_9_3_0"
+    else:
+      return "CMSSW_9_3_14"
   @property
   def scramarch(self):
-    return "slc6_amd64_gcc630"
+    if not os.path.exists(self.cvmfstarball):
+      return "slc6_amd64_gcc630"
+    else:
+      return "slc7_amd64_gcc630"
 
   def updateprepid(self):
     if not self.prepid or "wmLHEGEN" in self.prepid: return

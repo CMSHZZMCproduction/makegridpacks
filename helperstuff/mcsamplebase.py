@@ -512,6 +512,9 @@ class MCSampleBase(JsonDict):
   def makegridpack(self, approvalqueue, badrequestqueue, clonequeue, setneedsupdate=False):
     if self.finished: return "finished!"
     if not self.cvmfstarballexists:
+      from . import allsamples
+      for _ in allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball):
+        _.needsupdate = True
       if not os.path.exists(self.eostarball):
         if self.cmsswversion != cmsswversion or self.scramarch != scramarch: return "try again in "+self.cmsswversion+" with scram arch "+self.scramarch
         if not os.path.exists(self.foreostarball):
@@ -523,9 +526,6 @@ class MCSampleBase(JsonDict):
     if os.path.exists(self.foreostarball):
       if filecmp.cmp(self.cvmfstarball, self.foreostarball, shallow=False):
         if self.cvmfstarball.startswith("/cvmfs/"):
-          from . import allsamples
-          for _ in allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball):
-            _.needsupdate = True
           os.remove(self.foreostarball)
       else:
         return "gridpack exists on cvmfs, but it's wrong!"
