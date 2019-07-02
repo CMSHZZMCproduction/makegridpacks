@@ -362,6 +362,7 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
   def genproductionscommit(self):
     if isinstance(self, POWHEGJHUGenAnomCoupMCSample) and self.productionmode == "ggH": return "7e0e1d97b576734eaef5ec63c821c9ab7fb7faed"
     if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ggH" and self.mass in (125, 190, 200): return "7e0e1d97b576734eaef5ec63c821c9ab7fb7faed"
+    if isinstance(self, MCFMAnomCoupMCSampleRun2): return "a8ea4bc76df07ee2fa16bd9a67b72e7b648dec64"
     return super(RunIIFall17DRPremix_nonsubmittedBase, self).genproductionscommit
 
   @property

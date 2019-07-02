@@ -1154,7 +1154,7 @@ class MCSampleBase(JsonDict):
           pass
         elif key in ("time_event", "size_event") and not validated:
           pass
-        elif key in ("total_events", "generators", "tags", "dataset_name", "fragment", "notes"):
+        elif key in ("total_events", "generators", "tags", "dataset_name", "fragment", "notes", "keep_output"):
           different.add(key)
           setneedsupdate = True
         elif key in ("memory",):
@@ -1175,11 +1175,11 @@ class MCSampleBase(JsonDict):
           assert len(old[key]) == len(new[key]) == 1
           for subkey in set(old[key][0].keys()) | set(new[key][0].keys()):
             if old[key][0].get(subkey) != new[key][0].get(subkey):
-              if subkey in ("filter_efficiency", "filter_efficiency_error", "match_efficiency", "match_efficiency_error"):
+              if subkey in ("filter_efficiency", "filter_efficiency_error", "match_efficiency", "match_efficiency_error", "cross_section"):
                 setneedsupdate = True
                 differentsublist["generator_parameters"].add(subkey)
               else:
-                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(subkey, old[key][0].get(subkey), new[key][0].get(subkey), self.prepid))
+                raise ValueError("Don't know what to do with {} ({} --> {}) in generator_parameters for {}".format(subkey, old[key][0].get(subkey), new[key][0].get(subkey), self.prepid))
         elif key == "validation":
           for subkey in set(old[key].keys()) | set(new[key].keys()):
             if old[key].get(subkey) != new[key].get(subkey):
@@ -1307,6 +1307,8 @@ class Run2UltraLegacyBase(MCSampleBase):
   @property
   def scramarch(self):
     return "slc7_amd64_gcc630"
+  @property
+  def keepoutput(self): return True
 
 
 
@@ -1328,11 +1330,6 @@ class Run2UltraLegacyBase(MCSampleBase):
   def defaultnthreads(self): return 8
 
 class Run2UltraLegacyStandardPDF(Run2UltraLegacyBase):
-  @property
-  def holdrequest(self):
-    "campaigns are not quite ready yet"
-    return True
-
   @abc.abstractproperty
   def desiredPDForder(self): pass
 
