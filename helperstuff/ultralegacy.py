@@ -1,3 +1,5 @@
+import os
+
 from gridpackbysomeoneelse import MadGraphHZZdFromJake, MadGraphHZZdFromJakeRun2
 from madgraphmcsample import MadGraphMCSample
 from mcfmanomalouscouplings import MCFMAnomCoupMCSample, MCFMAnomCoupMCSampleRun2
@@ -109,6 +111,10 @@ class RepeatHZZdandHZdZdAsUltraLegacy(MakeRepeatAsUltraLegacySample(MadGraphHZZd
       return result
     return super(RepeatHZZdandHZdZdAsUltraLegacy, self).datasetname
 
+  @property
+  def holdrequest(self):
+    return True
+
 class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample, MCFMAnomCoupMCSampleRun2, forsubclassing=True), Run2UltraLegacyStandardPDF):
   @property
   def desiredPDForder(self): return "LO"
@@ -162,3 +168,6 @@ class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample
         if "ncalls" in line and int(line.split()[0]) != 5000000:
           raise ValueError(line+"\nshould be 5000000")
     return super(RepeatMCFMAsUltraLegacy, self).cardsurl
+
+  def cvmfstarball_anyversion(self, version):
+    return self.mainsample.cvmfstarball_anyversion(version)  #avoid cmsswversion and scramarch infinite loop
