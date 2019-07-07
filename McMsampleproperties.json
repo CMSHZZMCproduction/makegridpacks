@@ -17,9 +17,31 @@
                             "xsecerror": 0.00958021
                         }
                     },
+                    "ELNU": {
+                        "UltraLegacy": {
+                            "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00201"
+                        }
+                    },
+                    "ELTL": {
+                        "UltraLegacy": {
+                            "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00199"
+                        }
+                    },
                     "MUMU": {
                         "UltraLegacy": {
-                            "needsupdate": true
+                            "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00202",
+                            "xsec": 1.59718,
+                            "xsecerror": 0.0128174
+                        }
+                    },
+                    "MUNU": {
+                        "UltraLegacy": {
+                            "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00203"
+                        }
+                    },
+                    "MUTL": {
+                        "UltraLegacy": {
+                            "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00200"
                         }
                     },
                     "TLTL": {
@@ -799,8 +821,9 @@
                     },
                     "ELNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
-                            "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00153"
+                            "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00153",
+                            "xsec": 25.6235,
+                            "xsecerror": 0.00449216
                         }
                     },
                     "ELTL": {
@@ -1285,7 +1308,6 @@
                 "0M": {
                     "ELEL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00083",
                             "xsec": 0.422582,
                             "xsecerror": 0.00560207
@@ -1300,7 +1322,6 @@
                     },
                     "ELNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00055",
                             "xsec": 6.17283,
                             "xsecerror": 0.00118126
@@ -1315,7 +1336,6 @@
                     },
                     "MUMU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00062",
                             "xsec": 0.432652,
                             "xsecerror": 0.00539467
@@ -1323,7 +1343,6 @@
                     },
                     "MUNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00069",
                             "xsec": 6.17124,
                             "xsecerror": 0.00117784
@@ -1338,7 +1357,6 @@
                     },
                     "TLTL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00076",
                             "xsec": 0.429634,
                             "xsecerror": 0.00782704
@@ -1348,7 +1366,6 @@
                 "0Mf05ph0": {
                     "ELEL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00084",
                             "xsec": 0.513525,
                             "xsecerror": 0.00185254
@@ -1363,7 +1380,6 @@
                     },
                     "ELNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00056",
                             "xsec": 6.81686,
                             "xsecerror": 0.00115281
@@ -1378,7 +1394,6 @@
                     },
                     "MUMU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00063",
                             "xsec": 0.512918,
                             "xsecerror": 0.00216456
@@ -1386,7 +1401,6 @@
                     },
                     "MUNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00070",
                             "xsec": 6.81596,
                             "xsecerror": 0.00114409
@@ -1401,7 +1415,6 @@
                     },
                     "TLTL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00077",
                             "xsec": 0.501621,
                             "xsecerror": 0.00180893
@@ -1411,7 +1424,6 @@
                 "0PH": {
                     "ELEL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00079",
                             "xsec": 0.497718,
                             "xsecerror": 0.00737266
@@ -1426,7 +1438,6 @@
                     },
                     "ELNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00051",
                             "xsec": 7.6431,
                             "xsecerror": 0.00144401
@@ -1441,7 +1452,6 @@
                     },
                     "MUMU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00058",
                             "xsec": 0.546624,
                             "xsecerror": 0.00882092
@@ -1449,7 +1459,6 @@
                     },
                     "MUNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00065",
                             "xsec": 7.6471,
                             "xsecerror": 0.00143507
@@ -1464,7 +1473,6 @@
                     },
                     "TLTL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00072",
                             "xsec": 0.538801,
                             "xsecerror": 0.00684358
@@ -1474,7 +1482,6 @@
                 "0PHf05ph0": {
                     "ELEL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00080",
                             "xsec": 0.676727,
                             "xsecerror": 0.00201654
@@ -1489,7 +1496,6 @@
                     },
                     "ELNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00052",
                             "xsec": 9.29236,
                             "xsecerror": 0.00148674
@@ -1504,7 +1510,6 @@
                     },
                     "MUMU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00059",
                             "xsec": 0.701965,
                             "xsecerror": 0.00316176
@@ -1512,7 +1517,6 @@
                     },
                     "MUNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00066",
                             "xsec": 9.28998,
                             "xsecerror": 0.00148355
@@ -1527,7 +1531,6 @@
                     },
                     "TLTL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00073",
                             "xsec": 0.671735,
                             "xsecerror": 0.00147903
@@ -1537,7 +1540,6 @@
                 "0PL1": {
                     "ELEL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00081",
                             "xsec": 4.06854e-09,
                             "xsecerror": 2.52845e-11
@@ -1552,7 +1554,6 @@
                     },
                     "ELNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00053",
                             "xsec": 5.76338e-08,
                             "xsecerror": 1.10173e-11
@@ -1567,7 +1568,6 @@
                     },
                     "MUMU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00060",
                             "xsec": 4.12788e-09,
                             "xsecerror": 3.53651e-11
@@ -1575,7 +1575,6 @@
                     },
                     "MUNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00067",
                             "xsec": 5.76436e-08,
                             "xsecerror": 1.11623e-11
@@ -1590,7 +1589,6 @@
                     },
                     "TLTL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00074",
                             "xsec": 4.02059e-09,
                             "xsecerror": 4.19484e-11
@@ -1600,7 +1598,6 @@
                 "0PL1f05ph0": {
                     "ELEL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00082",
                             "xsec": 0.122667,
                             "xsecerror": 8.76593e-05
@@ -1615,7 +1612,6 @@
                     },
                     "ELNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00054",
                             "xsec": 1.48138,
                             "xsecerror": 0.000306032
@@ -1630,7 +1626,6 @@
                     },
                     "MUMU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00061",
                             "xsec": 0.123156,
                             "xsecerror": 9.24128e-05
@@ -1638,7 +1633,6 @@
                     },
                     "MUNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00068",
                             "xsec": 1.48165,
                             "xsecerror": 0.000297363
@@ -1653,7 +1647,6 @@
                     },
                     "TLTL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00075",
                             "xsec": 0.123221,
                             "xsecerror": 8.51163e-05
@@ -1663,7 +1656,6 @@
                 "0PM": {
                     "ELEL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00078",
                             "xsec": 0.450313,
                             "xsecerror": 0.00120025
@@ -1678,7 +1670,6 @@
                     },
                     "ELNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00050",
                             "xsec": 5.98802,
                             "xsecerror": 0.000952925
@@ -1693,7 +1684,6 @@
                     },
                     "MUMU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00057",
                             "xsec": 0.444592,
                             "xsecerror": 0.00115453
@@ -1701,7 +1691,6 @@
                     },
                     "MUNU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00064",
                             "xsec": 5.98771,
                             "xsecerror": 0.000943887
@@ -1716,7 +1705,6 @@
                     },
                     "TLTL": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00071",
                             "xsec": 0.4521,
                             "xsecerror": 0.00109126
@@ -1902,7 +1890,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00256",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.16123971653635,
                             "xsec": 3.29188,
                             "xsecerror": 0.00126743
                         },
@@ -1919,7 +1910,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00431",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.960191346768655,
                             "xsec": 17.7263,
                             "xsecerror": 0.00235295
                         },
@@ -1936,7 +1930,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00429",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.374032245365713,
                             "xsec": 3.29395,
                             "xsecerror": 0.00129616
                         },
@@ -1954,6 +1951,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00257",
+                            "sizeperevent": 97.55347636909228,
+                            "timeperevent": 46.17274146035147,
                             "xsec": 1.59718,
                             "xsecerror": 0.0128174
                         },
@@ -1977,7 +1976,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00432",
+                            "sizeperevent": 96,
+                            "timeperevent": 4.47381253830702,
                             "xsec": 17.7274,
                             "xsecerror": 0.00235895
                         },
@@ -1994,7 +1996,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00430",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.46607235079425,
                             "xsec": 3.29493,
                             "xsecerror": 0.00120547
                         },
@@ -2133,7 +2138,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00426",
+                            "sizeperevent": 101,
+                            "timeperevent": 20.846927267155458,
                             "xsec": 1.67722,
                             "xsecerror": 0.00643371
                         },
@@ -2157,7 +2165,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00378",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.6023910769214753,
                             "xsec": 3.42,
                             "xsecerror": 0.001115
                         },
@@ -2174,7 +2185,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00272",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.936775387280279,
                             "xsec": 18.5561,
                             "xsecerror": 0.00264926
                         },
@@ -2201,7 +2215,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00353",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.548313841262632,
                             "xsec": 3.41945,
                             "xsecerror": 0.0011519
                         },
@@ -2242,7 +2259,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00281",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.053670598727147,
                             "xsec": 18.5508,
                             "xsecerror": 0.00261504
                         },
@@ -2259,7 +2279,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00366",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.2125314426514953,
                             "xsec": 3.4174,
                             "xsecerror": 0.00110955
                         },
@@ -2302,7 +2325,9 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00289",
+                            "sizeperevent": 97.31276799999999,
                             "xsec": 2.04931,
                             "xsecerror": 0.0120442
                         },
@@ -2326,7 +2351,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00380",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.0785144320756577,
                             "xsec": 4.04435,
                             "xsecerror": 0.00127831
                         },
@@ -2343,7 +2371,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00393",
+                            "sizeperevent": 96,
+                            "timeperevent": 2.824659275474896,
                             "xsec": 22.9828,
                             "xsecerror": 0.0042824
                         },
@@ -2360,7 +2391,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00355",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.696611685728861,
                             "xsec": 4.0442,
                             "xsecerror": 0.00127771
                         },
@@ -2378,6 +2412,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00275",
+                            "sizeperevent": 97,
+                            "timeperevent": 11.70132599426167,
                             "xsec": 2.03009,
                             "xsecerror": 0.00756155
                         },
@@ -2403,7 +2439,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00283",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.3103076697614675,
                             "xsec": 22.9876,
                             "xsecerror": 0.00426518
                         },
@@ -2420,7 +2459,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00270",
+                            "sizeperevent": 95,
+                            "timeperevent": 3.2254318853294457,
                             "xsec": 4.04121,
                             "xsecerror": 0.00127815
                         },
@@ -2438,6 +2480,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00419",
+                            "sizeperevent": 101,
+                            "timeperevent": 12.970286370952785,
                             "xsec": 2.02841,
                             "xsecerror": 0.0100353
                         },
@@ -2487,7 +2531,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00371",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.360813727841616,
                             "xsec": 3.16847,
                             "xsecerror": 0.00103952
                         },
@@ -2504,7 +2551,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00384",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.25789200282724,
                             "xsec": 16.8592,
                             "xsecerror": 0.00244292
                         },
@@ -2521,7 +2571,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00267",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.220353074738233,
                             "xsec": 3.16765,
                             "xsecerror": 0.00103754
                         },
@@ -2558,7 +2611,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00276",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.5322957803194606,
                             "xsec": 16.8626,
                             "xsecerror": 0.00248784
                         },
@@ -2575,7 +2631,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00358",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.1785284049190907,
                             "xsec": 3.16776,
                             "xsecerror": 0.00104547
                         },
@@ -2592,7 +2651,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00409",
+                            "sizeperevent": 100,
+                            "timeperevent": 44.61377851935792,
                             "xsec": 1.55197,
                             "xsecerror": 0.00771575
                         },
@@ -2618,7 +2680,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00423",
+                            "sizeperevent": 100,
+                            "timeperevent": 35.16471150870678,
                             "xsec": 2.08628,
                             "xsecerror": 0.00762507
                         },
@@ -2642,7 +2707,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00373",
+                            "sizeperevent": 95,
+                            "timeperevent": 4.335686165692583,
                             "xsec": 4.12677,
                             "xsecerror": 0.00132425
                         },
@@ -2659,7 +2727,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00386",
+                            "sizeperevent": 96,
+                            "timeperevent": 4.007052412245552,
                             "xsec": 23.6014,
                             "xsecerror": 0.00445231
                         },
@@ -2676,7 +2747,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00268",
+                            "sizeperevent": 96,
+                            "timeperevent": 4.053177691309987,
                             "xsec": 4.12608,
                             "xsecerror": 0.00129198
                         },
@@ -2694,6 +2768,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00395",
+                            "sizeperevent": 94,
+                            "timeperevent": 8.313450331290996,
                             "xsec": 2.08819,
                             "xsecerror": 0.00812256
                         },
@@ -2717,7 +2793,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00407",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.6225715186182064,
                             "xsec": 23.6055,
                             "xsecerror": 0.00444438
                         },
@@ -2734,7 +2813,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00360",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.8738935509828716,
                             "xsec": 4.12496,
                             "xsecerror": 0.00130426
                         },
@@ -2751,7 +2833,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00411",
+                            "sizeperevent": 103,
+                            "timeperevent": 50.341314109663514,
                             "xsec": 2.08201,
                             "xsecerror": 0.00899665
                         },
@@ -2801,7 +2886,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00375",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.651274112101418,
                             "xsec": 3.82475,
                             "xsecerror": 0.00125666
                         },
@@ -2818,7 +2906,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00388",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.838069803671128,
                             "xsec": 21.3047,
                             "xsecerror": 0.00336488
                         },
@@ -2835,7 +2926,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00349",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.7919235236308406,
                             "xsec": 3.82217,
                             "xsecerror": 0.00123544
                         },
@@ -2876,7 +2970,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00278",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.8889774711535097,
                             "xsec": 21.3092,
                             "xsecerror": 0.00337846
                         },
@@ -2893,7 +2990,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00362",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.4546081586265975,
                             "xsec": 3.82366,
                             "xsecerror": 0.00123972
                         },
@@ -2936,7 +3036,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00288",
+                            "sizeperevent": 98,
+                            "timeperevent": 22.851240708114247,
                             "xsec": 1.73882,
                             "xsecerror": 0.00587488
                         },
@@ -2962,7 +3065,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00376",
+                            "sizeperevent": 99,
+                            "timeperevent": 4.259651304944177,
                             "xsec": 3.50341,
                             "xsecerror": 0.00117075
                         },
@@ -2979,7 +3085,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00390",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.7939577428986597,
                             "xsec": 19.2022,
                             "xsecerror": 0.0033285
                         },
@@ -2996,7 +3105,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00351",
+                            "sizeperevent": 96,
+                            "timeperevent": 4.210366765048904,
                             "xsec": 3.50408,
                             "xsecerror": 0.00114153
                         },
@@ -3013,7 +3125,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00399",
+                            "sizeperevent": 100,
+                            "timeperevent": 22.549337951437746,
                             "xsec": 1.75111,
                             "xsecerror": 0.00700478
                         },
@@ -3037,7 +3152,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00279",
+                            "sizeperevent": 98,
+                            "timeperevent": 6.432109088570142,
                             "xsec": 19.2051,
                             "xsecerror": 0.00335201
                         },
@@ -3054,7 +3172,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00364",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.2231856026500374,
                             "xsec": 3.50421,
                             "xsecerror": 0.00114691
                         },
@@ -3071,7 +3192,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00415",
+                            "sizeperevent": 99,
+                            "timeperevent": 31.744217790729415,
                             "xsec": 1.75876,
                             "xsecerror": 0.00705702
                         },
@@ -3098,6 +3222,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00421",
+                            "sizeperevent": 96,
+                            "timeperevent": 10.990242862386774,
                             "xsec": 1.97463,
                             "xsecerror": 0.00662611
                         },
@@ -3121,7 +3247,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00369",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.198536349766347,
                             "xsec": 3.91448,
                             "xsecerror": 0.00125965
                         },
@@ -3138,7 +3267,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00382",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.5701258847658357,
                             "xsec": 22.1585,
                             "xsecerror": 0.00412551
                         },
@@ -3155,7 +3287,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00266",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.438529409742041,
                             "xsec": 3.91488,
                             "xsecerror": 0.00124876
                         },
@@ -3172,7 +3307,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00274",
+                            "sizeperevent": 99,
+                            "timeperevent": 37.55332572252598,
                             "xsec": 1.98143,
                             "xsecerror": 0.00860203
                         },
@@ -3198,7 +3336,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00404",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.9584677563008914,
                             "xsec": 22.1478,
                             "xsecerror": 0.00412952
                         },
@@ -3215,7 +3356,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00269",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.8207020922164654,
                             "xsec": 3.91545,
                             "xsecerror": 0.00125209
                         },
@@ -3232,7 +3376,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00285",
+                            "sizeperevent": 98,
+                            "timeperevent": 42.445722532311805,
                             "xsec": 1.97522,
                             "xsecerror": 0.00655063
                         },
@@ -3262,7 +3409,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00427",
+                            "sizeperevent": 101,
+                            "timeperevent": 18.082724849642144,
                             "xsec": 2.13965,
                             "xsecerror": 0.0100127
                         },
@@ -3286,7 +3436,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00379",
+                            "sizeperevent": 100,
+                            "timeperevent": 4.843224812809361,
                             "xsec": 4.41311,
                             "xsecerror": 0.0013224
                         },
@@ -3303,7 +3456,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00392",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.8957556908838713,
                             "xsec": 25.0538,
                             "xsecerror": 0.00343017
                         },
@@ -3320,7 +3476,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00354",
+                            "sizeperevent": 100,
+                            "timeperevent": 4.3133381355164575,
                             "xsec": 4.41423,
                             "xsecerror": 0.0013302
                         },
@@ -3337,7 +3496,9 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00402",
+                            "sizeperevent": 96.32896000000001,
                             "xsec": 2.15228,
                             "xsecerror": 0.0160142
                         },
@@ -3361,7 +3522,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00282",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.57165817802573,
                             "xsec": 25.0595,
                             "xsecerror": 0.00353139
                         },
@@ -3378,7 +3542,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00367",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.8180445025587844,
                             "xsec": 4.41539,
                             "xsecerror": 0.00131975
                         },
@@ -3421,7 +3588,9 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00428",
+                            "sizeperevent": 97.783296,
                             "xsec": 2.75654,
                             "xsecerror": 0.0167335
                         },
@@ -3449,7 +3618,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00381",
+                            "sizeperevent": 100,
+                            "timeperevent": 3.032646438914919,
                             "xsec": 5.57428,
                             "xsecerror": 0.00160679
                         },
@@ -3466,7 +3638,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00273",
+                            "sizeperevent": 96,
+                            "timeperevent": 4.9791374142343585,
                             "xsec": 32.9608,
                             "xsecerror": 0.00555631
                         },
@@ -3483,7 +3658,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00356",
+                            "sizeperevent": 99,
+                            "timeperevent": 5.240568287225067,
                             "xsec": 5.57266,
                             "xsecerror": 0.0016023
                         },
@@ -3501,6 +3679,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00403",
+                            "sizeperevent": 105,
+                            "timeperevent": 17.308015168744493,
                             "xsec": 2.77478,
                             "xsecerror": 0.0228459
                         },
@@ -3524,7 +3704,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00284",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.421667941580923,
                             "xsec": 32.9514,
                             "xsecerror": 0.00552961
                         },
@@ -3541,7 +3724,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00368",
+                            "sizeperevent": 99,
+                            "timeperevent": 4.351439673816082,
                             "xsec": 5.57743,
                             "xsecerror": 0.00159879
                         },
@@ -3604,7 +3790,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00372",
+                            "sizeperevent": 99,
+                            "timeperevent": 4.294112342567106,
                             "xsec": 3.5991,
                             "xsecerror": 0.00116103
                         },
@@ -3621,7 +3810,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00385",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.471908786012374,
                             "xsec": 19.5229,
                             "xsecerror": 0.00279265
                         },
@@ -3638,7 +3830,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00347",
+                            "sizeperevent": 96,
+                            "timeperevent": 2.661478557797999,
                             "xsec": 3.59673,
                             "xsecerror": 0.00114245
                         },
@@ -3679,7 +3874,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00406",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.2480609076381404,
                             "xsec": 19.5195,
                             "xsecerror": 0.00278982
                         },
@@ -3696,7 +3894,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00359",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.872748181246742,
                             "xsec": 3.59788,
                             "xsecerror": 0.00114851
                         },
@@ -3763,7 +3964,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00374",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.637554108617366,
                             "xsec": 5.7,
                             "xsecerror": 0.00165598
                         },
@@ -3780,7 +3984,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00387",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.782591756219526,
                             "xsec": 33.7638,
                             "xsecerror": 0.00571789
                         },
@@ -3797,7 +4004,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00348",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.8366801973588296,
                             "xsec": 5.70065,
                             "xsecerror": 0.00162592
                         },
@@ -3814,7 +4024,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00396",
+                            "sizeperevent": 95.006208,
+                            "timeperevent": 44.0928772366112,
                             "xsec": 2.82009,
                             "xsecerror": 0.0199931
                         },
@@ -3838,7 +4051,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00277",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.093294365170977,
                             "xsec": 33.7505,
                             "xsecerror": 0.0057159
                         },
@@ -3855,7 +4071,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00361",
+                            "sizeperevent": 100,
+                            "timeperevent": 3.282692332943787,
                             "xsec": 5.69861,
                             "xsecerror": 0.00162974
                         },
@@ -3898,7 +4117,9 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00424",
+                            "sizeperevent": 99.08582399999999,
                             "xsec": 2.59623,
                             "xsecerror": 0.0171153
                         },
@@ -3922,7 +4143,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00271",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.2606852656154217,
                             "xsec": 5.39421,
                             "xsecerror": 0.00159407
                         },
@@ -3939,7 +4163,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00389",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.8979516264203156,
                             "xsec": 31.6495,
                             "xsecerror": 0.00479643
                         },
@@ -3956,7 +4183,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00350",
+                            "sizeperevent": 99,
+                            "timeperevent": 4.773429183791343,
                             "xsec": 5.39443,
                             "xsecerror": 0.0016207
                         },
@@ -3997,7 +4227,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00408",
+                            "sizeperevent": 97,
+                            "timeperevent": 5.780881468806363,
                             "xsec": 31.6482,
                             "xsecerror": 0.004782
                         },
@@ -4014,7 +4247,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00363",
+                            "sizeperevent": 99,
+                            "timeperevent": 6.325950948576345,
                             "xsec": 5.39735,
                             "xsecerror": 0.00160329
                         },
@@ -4081,7 +4317,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00377",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.401823377330249,
                             "xsec": 3.54012,
                             "xsecerror": 0.00118435
                         },
@@ -4098,7 +4337,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00391",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.195000463275067,
                             "xsec": 19.4551,
                             "xsecerror": 0.00356101
                         },
@@ -4115,7 +4357,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00352",
+                            "sizeperevent": 101,
+                            "timeperevent": 3.046310004691317,
                             "xsec": 3.54234,
                             "xsecerror": 0.00118773
                         },
@@ -4132,7 +4377,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00400",
+                            "sizeperevent": 100,
+                            "timeperevent": 9.016400833115437,
                             "xsec": 1.76558,
                             "xsecerror": 0.00571422
                         },
@@ -4156,7 +4404,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00280",
+                            "sizeperevent": 99,
+                            "timeperevent": 5.818588061421016,
                             "xsec": 19.4474,
                             "xsecerror": 0.00355394
                         },
@@ -4173,7 +4424,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00365",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.492690186029469,
                             "xsec": 3.54006,
                             "xsecerror": 0.00120479
                         },
@@ -4190,7 +4444,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00416",
+                            "sizeperevent": 107,
+                            "timeperevent": 51.67638182645004,
                             "xsec": 1.7693,
                             "xsecerror": 0.00664596
                         },
@@ -4236,7 +4493,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00370",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.208624783417827,
                             "xsec": 4.45344,
                             "xsecerror": 0.00134554
                         },
@@ -4253,7 +4513,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00383",
+                            "sizeperevent": 100,
+                            "timeperevent": 5.292853589084019,
                             "xsec": 25.6235,
                             "xsecerror": 0.00449216
                         },
@@ -4270,7 +4533,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00346",
+                            "sizeperevent": 97,
+                            "timeperevent": 5.087401558779838,
                             "xsec": 4.45421,
                             "xsecerror": 0.00134158
                         },
@@ -4307,7 +4573,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00405",
+                            "sizeperevent": 96,
+                            "timeperevent": 4.578985205298801,
                             "xsec": 25.622,
                             "xsecerror": 0.00449354
                         },
@@ -4324,7 +4593,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00357",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.082243503401256,
                             "xsec": 4.4524,
                             "xsecerror": 0.00134347
                         },
@@ -5119,6 +5391,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00344",
+                            "sizeperevent": 98,
+                            "timeperevent": 9.929599142082633,
                             "xsec": 0.422582,
                             "xsecerror": 0.00560207
                         },
@@ -5144,7 +5418,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00309",
+                            "sizeperevent": 99,
+                            "timeperevent": 2.1729021715984302,
                             "xsec": 0.934811,
                             "xsecerror": 0.00018311
                         },
@@ -5161,7 +5438,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00316",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.5387798623981315,
                             "xsec": 6.17283,
                             "xsecerror": 0.00118126
                         },
@@ -5178,7 +5458,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00295",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.3162106324345295,
                             "xsec": 0.934993,
                             "xsecerror": 0.000181971
                         },
@@ -5195,7 +5478,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00323",
+                            "sizeperevent": 99,
+                            "timeperevent": 11.641294465379373,
                             "xsec": 0.432652,
                             "xsecerror": 0.00539467
                         },
@@ -5221,7 +5507,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00330",
+                            "sizeperevent": 99,
+                            "timeperevent": 2.0921640089209874,
                             "xsec": 6.17124,
                             "xsecerror": 0.00117784
                         },
@@ -5238,7 +5527,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00302",
+                            "sizeperevent": 99,
+                            "timeperevent": 1.9940497555294998,
                             "xsec": 0.934944,
                             "xsecerror": 0.000188445
                         },
@@ -5255,7 +5547,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00337",
+                            "sizeperevent": 102,
+                            "timeperevent": 24.519900351124974,
                             "xsec": 0.429634,
                             "xsecerror": 0.00782704
                         },
@@ -5283,7 +5578,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00345",
+                            "sizeperevent": 98,
+                            "timeperevent": 40.004320466610395,
                             "xsec": 0.513525,
                             "xsecerror": 0.00185254
                         },
@@ -5307,7 +5605,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00310",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.264790212482618,
                             "xsec": 0.98395,
                             "xsecerror": 0.000181235
                         },
@@ -5324,7 +5625,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00317",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.0692452221127824,
                             "xsec": 6.81686,
                             "xsecerror": 0.00115281
                         },
@@ -5341,7 +5645,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00296",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.414472583492391,
                             "xsec": 0.983754,
                             "xsecerror": 0.000176958
                         },
@@ -5358,7 +5665,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00324",
+                            "sizeperevent": 95,
+                            "timeperevent": 4.160426027625229,
                             "xsec": 0.512918,
                             "xsecerror": 0.00216456
                         },
@@ -5384,7 +5694,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00331",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.339734491107957,
                             "xsec": 6.81596,
                             "xsecerror": 0.00114409
                         },
@@ -5401,7 +5714,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00303",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.3134745757095803,
                             "xsec": 0.98412,
                             "xsecerror": 0.000182578
                         },
@@ -5417,7 +5733,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00338",
+                            "sizeperevent": 100,
+                            "timeperevent": 6.951589133275866,
                             "xsec": 0.501621,
                             "xsecerror": 0.00180893
                         },
@@ -5446,6 +5765,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00340",
+                            "sizeperevent": 98,
+                            "timeperevent": 22.34716771996317,
                             "xsec": 0.497718,
                             "xsecerror": 0.00737266
                         },
@@ -5469,7 +5790,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00305",
+                            "sizeperevent": 100,
+                            "timeperevent": 2.4085822603099363,
                             "xsec": 1.15258,
                             "xsecerror": 0.00023089
                         },
@@ -5486,7 +5810,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00312",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.4154414339992707,
                             "xsec": 7.6431,
                             "xsecerror": 0.00144401
                         },
@@ -5503,7 +5830,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00291",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.2092838162235715,
                             "xsec": 1.15207,
                             "xsecerror": 0.000219999
                         },
@@ -5544,7 +5874,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00326",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.2415192120611667,
                             "xsec": 7.6471,
                             "xsecerror": 0.00143507
                         },
@@ -5561,7 +5894,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00298",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.429814799515981,
                             "xsec": 1.15228,
                             "xsecerror": 0.000229238
                         },
@@ -5578,7 +5914,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00333",
+                            "sizeperevent": 101,
+                            "timeperevent": 14.335725488059772,
                             "xsec": 0.538801,
                             "xsecerror": 0.00684358
                         },
@@ -5606,7 +5945,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00341",
+                            "sizeperevent": 97,
+                            "timeperevent": 5.067370693368332,
                             "xsec": 0.676727,
                             "xsecerror": 0.00201654
                         },
@@ -5632,7 +5974,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00306",
+                            "sizeperevent": 95,
+                            "timeperevent": 2.0604749394735484,
                             "xsec": 1.34235,
                             "xsecerror": 0.000234326
                         },
@@ -5649,7 +5994,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00313",
+                            "sizeperevent": 95,
+                            "timeperevent": 2.237431786298415,
                             "xsec": 9.29236,
                             "xsecerror": 0.00148674
                         },
@@ -5666,7 +6014,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00292",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.175621389715433,
                             "xsec": 1.34234,
                             "xsecerror": 0.000234108
                         },
@@ -5683,7 +6034,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00320",
+                            "sizeperevent": 96,
+                            "timeperevent": 6.526733500417711,
                             "xsec": 0.701965,
                             "xsecerror": 0.00316176
                         },
@@ -5709,7 +6063,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00327",
+                            "sizeperevent": 96,
+                            "timeperevent": 2.1625362224817266,
                             "xsec": 9.28998,
                             "xsecerror": 0.00148355
                         },
@@ -5726,7 +6083,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00299",
+                            "sizeperevent": 96,
+                            "timeperevent": 2.49180197151372,
                             "xsec": 1.34253,
                             "xsecerror": 0.000236379
                         },
@@ -5743,7 +6103,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00334",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.326288693244501,
                             "xsec": 0.671735,
                             "xsecerror": 0.00147903
                         },
@@ -5771,7 +6134,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00342",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.6598666344598407,
                             "xsec": 4.06854e-09,
                             "xsecerror": 2.52845e-11
                         },
@@ -5797,7 +6163,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00307",
+                            "sizeperevent": 96,
+                            "timeperevent": 2.544386828218268,
                             "xsec": 8.43478e-09,
                             "xsecerror": 1.7913e-12
                         },
@@ -5814,7 +6183,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00314",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.2265037927552083,
                             "xsec": 5.76338e-08,
                             "xsecerror": 1.10173e-11
                         },
@@ -5831,7 +6203,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00293",
+                            "sizeperevent": 100,
+                            "timeperevent": 3.1287447163323603,
                             "xsec": 8.4354e-09,
                             "xsecerror": 1.75371e-12
                         },
@@ -5848,7 +6223,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00321",
+                            "sizeperevent": 100,
+                            "timeperevent": 14.428223914492575,
                             "xsec": 4.12788e-09,
                             "xsecerror": 3.53651e-11
                         },
@@ -5874,7 +6252,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00328",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.198853530894527,
                             "xsec": 5.76436e-08,
                             "xsecerror": 1.11623e-11
                         },
@@ -5891,7 +6272,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00300",
+                            "sizeperevent": 96,
+                            "timeperevent": 2.5005751322804244,
                             "xsec": 8.43343e-09,
                             "xsecerror": 1.74008e-12
                         },
@@ -5908,7 +6292,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00335",
+                            "sizeperevent": 95,
+                            "timeperevent": 10.433730162870528,
                             "xsec": 4.02059e-09,
                             "xsecerror": 4.19484e-11
                         },
@@ -5934,7 +6321,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00343",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.406168571282593,
                             "xsec": 0.122667,
                             "xsecerror": 8.76593e-05
                         },
@@ -5960,7 +6350,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00308",
+                            "sizeperevent": 95,
+                            "timeperevent": 3.4951103406334543,
                             "xsec": 0.210133,
                             "xsecerror": 4.32739e-05
                         },
@@ -5977,7 +6370,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00315",
+                            "sizeperevent": 96,
+                            "timeperevent": 5.4428285291300185,
                             "xsec": 1.48138,
                             "xsecerror": 0.000306032
                         },
@@ -5994,7 +6390,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00294",
+                            "sizeperevent": 95,
+                            "timeperevent": 3.163195586709518,
                             "xsec": 0.210098,
                             "xsecerror": 5.11487e-05
                         },
@@ -6011,7 +6410,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00322",
+                            "sizeperevent": 94,
+                            "timeperevent": 4.067686300032541,
                             "xsec": 0.123156,
                             "xsecerror": 9.24128e-05
                         },
@@ -6037,7 +6439,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00329",
+                            "sizeperevent": 94,
+                            "timeperevent": 3.7017705568573445,
                             "xsec": 1.48165,
                             "xsecerror": 0.000297363
                         },
@@ -6054,7 +6459,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00301",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.933879355787917,
                             "xsec": 0.210085,
                             "xsecerror": 5.29559e-05
                         },
@@ -6071,7 +6479,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00336",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.268112697598264,
                             "xsec": 0.123221,
                             "xsecerror": 8.51163e-05
                         },
@@ -6099,7 +6510,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00339",
+                            "sizeperevent": 101,
+                            "timeperevent": 13.173043737139817,
                             "xsec": 0.450313,
                             "xsecerror": 0.00120025
                         },
@@ -6125,7 +6539,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00304",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.5814951309573697,
                             "xsec": 0.858123,
                             "xsecerror": 0.00014791
                         },
@@ -6142,7 +6559,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00311",
+                            "sizeperevent": 95,
+                            "timeperevent": 2.4969100737836927,
                             "xsec": 5.98802,
                             "xsecerror": 0.000952925
                         },
@@ -6159,7 +6579,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00290",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.0484087306426044,
                             "xsec": 0.858515,
                             "xsecerror": 0.000152716
                         },
@@ -6176,7 +6599,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00318",
+                            "sizeperevent": 96,
+                            "timeperevent": 4.719073551480373,
                             "xsec": 0.444592,
                             "xsecerror": 0.00115453
                         },
@@ -6202,7 +6628,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00325",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.24647919331485,
                             "xsec": 5.98771,
                             "xsecerror": 0.000943887
                         },
@@ -6219,7 +6648,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00297",
+                            "sizeperevent": 95,
+                            "timeperevent": 4.222241926017877,
                             "xsec": 0.858162,
                             "xsecerror": 0.000150844
                         },
@@ -6236,7 +6668,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00332",
+                            "sizeperevent": 97,
+                            "timeperevent": 5.211156042856547,
                             "xsec": 0.4521,
                             "xsecerror": 0.00109126
                         },
@@ -8207,6 +8642,7 @@
                         "RunIIFall17DRPremix_nonsubmitted": {
                             "filterefficiency": 0.15198969072164947,
                             "filterefficiencyerror": 0.0011527145220925966,
+                            "finished": true,
                             "nthreads": 4,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03123",
                             "sizeperevent": 608,
@@ -10261,7 +10697,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00114",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.890740849423871,
                             "xsec": 3.29188,
                             "xsecerror": 0.00126743
                         },
@@ -10278,7 +10717,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00201",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.201115816360826,
                             "xsec": 17.7263,
                             "xsecerror": 0.00235295
                         },
@@ -10295,7 +10737,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00199",
+                            "sizeperevent": 99,
+                            "timeperevent": 4.0032506395192895,
                             "xsec": 3.29395,
                             "xsecerror": 0.00129616
                         },
@@ -10337,7 +10782,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00203",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.380585246188891,
                             "xsec": 17.7274,
                             "xsecerror": 0.00235895
                         },
@@ -10355,7 +10803,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00200",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.199333985629879,
                             "xsec": 3.29493,
                             "xsecerror": 0.00120547
                         },
@@ -10499,7 +10950,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00196",
+                            "sizeperevent": 98,
+                            "timeperevent": 31.19209966499685,
                             "xsec": 1.67722,
                             "xsecerror": 0.00643371
                         },
@@ -10513,7 +10967,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00148",
+                            "sizeperevent": 99,
+                            "timeperevent": 5.193699004367901,
                             "xsec": 3.42,
                             "xsecerror": 0.001115
                         },
@@ -10527,7 +10984,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00012",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.8199869356446805,
                             "xsec": 18.5561,
                             "xsecerror": 0.00264926
                         },
@@ -10543,7 +11003,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00123",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.30261125477052,
                             "xsec": 3.41945,
                             "xsecerror": 0.0011519
                         },
@@ -10571,7 +11034,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00021",
+                            "sizeperevent": 99,
+                            "timeperevent": 4.596940276551927,
                             "xsec": 18.5508,
                             "xsecerror": 0.00261504
                         },
@@ -10587,7 +11053,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00136",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.897878752752985,
                             "xsec": 3.4174,
                             "xsecerror": 0.00110955
                         },
@@ -10631,7 +11100,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00150",
+                            "sizeperevent": 101,
+                            "timeperevent": 3.43321706171551,
                             "xsec": 4.04435,
                             "xsecerror": 0.00127831
                         },
@@ -10645,7 +11117,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00163",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.5049226638814215,
                             "xsec": 22.9828,
                             "xsecerror": 0.0042824
                         },
@@ -10659,7 +11134,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00125",
+                            "sizeperevent": 99,
+                            "timeperevent": 4.039832750924112,
                             "xsec": 4.0442,
                             "xsecerror": 0.00127771
                         },
@@ -10674,6 +11152,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00015",
+                            "sizeperevent": 100,
+                            "timeperevent": 10.611813495255458,
                             "xsec": 2.03009,
                             "xsecerror": 0.00756155
                         },
@@ -10689,7 +11169,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00023",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.032076335553824,
                             "xsec": 22.9876,
                             "xsecerror": 0.00426518
                         },
@@ -10705,7 +11188,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00010",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.1458115092659877,
                             "xsec": 4.04121,
                             "xsecerror": 0.00127815
                         },
@@ -10720,6 +11206,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00189",
+                            "sizeperevent": 100,
+                            "timeperevent": 12.032318808319145,
                             "xsec": 2.02841,
                             "xsecerror": 0.0100353
                         },
@@ -10749,7 +11237,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00141",
+                            "sizeperevent": 97,
+                            "timeperevent": 5.225452132245742,
                             "xsec": 3.16847,
                             "xsecerror": 0.00103952
                         },
@@ -10763,7 +11254,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00154",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.0575429584785665,
                             "xsec": 16.8592,
                             "xsecerror": 0.00244292
                         },
@@ -10777,7 +11271,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00007",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.720681033456364,
                             "xsec": 3.16765,
                             "xsecerror": 0.00103754
                         },
@@ -10797,7 +11294,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00016",
+                            "sizeperevent": 99,
+                            "timeperevent": 5.028916268544129,
                             "xsec": 16.8626,
                             "xsecerror": 0.00248784
                         },
@@ -10813,7 +11313,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00128",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.375237903561006,
                             "xsec": 3.16776,
                             "xsecerror": 0.00104547
                         },
@@ -10827,7 +11330,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00179",
+                            "sizeperevent": 99,
+                            "timeperevent": 33.38875867273006,
                             "xsec": 1.55197,
                             "xsecerror": 0.00771575
                         },
@@ -10843,7 +11349,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00193",
+                            "sizeperevent": 99,
+                            "timeperevent": 16.070039660857883,
                             "xsec": 2.08628,
                             "xsecerror": 0.00762507
                         },
@@ -10857,7 +11366,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00143",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.744392771824193,
                             "xsec": 4.12677,
                             "xsecerror": 0.00132425
                         },
@@ -10871,7 +11383,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00156",
+                            "sizeperevent": 98,
+                            "timeperevent": 5.256186531547631,
                             "xsec": 23.6014,
                             "xsecerror": 0.00445231
                         },
@@ -10885,7 +11400,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00008",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.976064094153198,
                             "xsec": 4.12608,
                             "xsecerror": 0.00129198
                         },
@@ -10902,6 +11420,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00165",
+                            "sizeperevent": 98,
+                            "timeperevent": 8.785956527087103,
                             "xsec": 2.08819,
                             "xsecerror": 0.00812256
                         },
@@ -10915,7 +11435,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00177",
+                            "sizeperevent": 94,
+                            "timeperevent": 3.5028723553313714,
                             "xsec": 23.6055,
                             "xsecerror": 0.00444438
                         },
@@ -10929,7 +11452,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00130",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.4595731578637827,
                             "xsec": 4.12496,
                             "xsecerror": 0.00130426
                         },
@@ -10943,7 +11469,9 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00181",
+                            "sizeperevent": 97.207296,
                             "xsec": 2.08201,
                             "xsecerror": 0.00899665
                         },
@@ -10973,7 +11501,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00145",
+                            "sizeperevent": 100,
+                            "timeperevent": 3.374980593861585,
                             "xsec": 3.82475,
                             "xsecerror": 0.00125666
                         },
@@ -10987,7 +11518,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00158",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.8771431119755326,
                             "xsec": 21.3047,
                             "xsecerror": 0.00336488
                         },
@@ -11001,7 +11535,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00119",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.5909466531998895,
                             "xsec": 3.82217,
                             "xsecerror": 0.00123544
                         },
@@ -11029,7 +11566,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00018",
+                            "sizeperevent": 98,
+                            "timeperevent": 5.18341514490237,
                             "xsec": 21.3092,
                             "xsecerror": 0.00337846
                         },
@@ -11045,7 +11585,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00132",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.326157679795113,
                             "xsec": 3.82366,
                             "xsecerror": 0.00123972
                         },
@@ -11076,6 +11619,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00028",
+                            "sizeperevent": 98,
+                            "timeperevent": 9.861057697048585,
                             "xsec": 1.73882,
                             "xsecerror": 0.00587488
                         },
@@ -11089,7 +11634,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00146",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.380182303187459,
                             "xsec": 3.50341,
                             "xsecerror": 0.00117075
                         },
@@ -11103,7 +11651,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00160",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.972254818114919,
                             "xsec": 19.2022,
                             "xsecerror": 0.0033285
                         },
@@ -11117,7 +11668,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00121",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.142313316294618,
                             "xsec": 3.50408,
                             "xsecerror": 0.00114153
                         },
@@ -11131,7 +11685,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00169",
+                            "sizeperevent": 94,
+                            "timeperevent": 24.10730644243657,
                             "xsec": 1.75111,
                             "xsecerror": 0.00700478
                         },
@@ -11145,7 +11702,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00019",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.3736598136390317,
                             "xsec": 19.2051,
                             "xsecerror": 0.00335201
                         },
@@ -11162,7 +11722,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00134",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.2026851312140097,
                             "xsec": 3.50421,
                             "xsecerror": 0.00114691
                         },
@@ -11177,6 +11740,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00185",
+                            "sizeperevent": 100,
+                            "timeperevent": 16.264473348220747,
                             "xsec": 1.75876,
                             "xsecerror": 0.00705702
                         },
@@ -11192,7 +11757,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00191",
+                            "sizeperevent": 95,
+                            "timeperevent": 21.55334992941278,
                             "xsec": 1.97463,
                             "xsecerror": 0.00662611
                         },
@@ -11206,7 +11774,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00139",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.341559140718615,
                             "xsec": 3.91448,
                             "xsecerror": 0.00125965
                         },
@@ -11220,7 +11791,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00152",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.018226676203258,
                             "xsec": 22.1585,
                             "xsecerror": 0.00412551
                         },
@@ -11234,7 +11808,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00006",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.67058372955452,
                             "xsec": 3.91488,
                             "xsecerror": 0.00124876
                         },
@@ -11250,7 +11827,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00014",
+                            "sizeperevent": 99,
+                            "timeperevent": 46.72700680812489,
                             "xsec": 1.98143,
                             "xsecerror": 0.00860203
                         },
@@ -11264,7 +11844,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00174",
+                            "sizeperevent": 97,
+                            "timeperevent": 5.252073255917774,
                             "xsec": 22.1478,
                             "xsecerror": 0.00412952
                         },
@@ -11278,7 +11861,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00009",
+                            "sizeperevent": 96,
+                            "timeperevent": 5.579267442184841,
                             "xsec": 3.91545,
                             "xsecerror": 0.00125209
                         },
@@ -11294,7 +11880,9 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00025",
+                            "sizeperevent": 98.427904,
                             "xsec": 1.97522,
                             "xsecerror": 0.00655063
                         },
@@ -11312,7 +11900,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00197",
+                            "sizeperevent": 96,
+                            "timeperevent": 14.549369648559976,
                             "xsec": 2.13965,
                             "xsecerror": 0.0100127
                         },
@@ -11326,7 +11917,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00149",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.342332092873799,
                             "xsec": 4.41311,
                             "xsecerror": 0.0013224
                         },
@@ -11340,7 +11934,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00162",
+                            "sizeperevent": 99,
+                            "timeperevent": 5.3930451290016395,
                             "xsec": 25.0538,
                             "xsecerror": 0.00343017
                         },
@@ -11354,7 +11951,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00124",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.595386959218685,
                             "xsec": 4.41423,
                             "xsecerror": 0.0013302
                         },
@@ -11368,7 +11968,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00172",
+                            "sizeperevent": 96.457216,
+                            "timeperevent": 33.10753991113936,
                             "xsec": 2.15228,
                             "xsecerror": 0.0160142
                         },
@@ -11382,7 +11985,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00022",
+                            "sizeperevent": 98,
+                            "timeperevent": 5.169027189083015,
                             "xsec": 25.0595,
                             "xsecerror": 0.00353139
                         },
@@ -11398,7 +12004,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00137",
+                            "sizeperevent": 101,
+                            "timeperevent": 4.7314656661193935,
                             "xsec": 4.41539,
                             "xsecerror": 0.00131975
                         },
@@ -11428,7 +12037,9 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00198",
+                            "sizeperevent": 97.76768,
                             "xsec": 2.75654,
                             "xsecerror": 0.0167335
                         },
@@ -11442,7 +12053,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00151",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.267176452013468,
                             "xsec": 5.57428,
                             "xsecerror": 0.00160679
                         },
@@ -11456,7 +12070,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00013",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.2683156408513305,
                             "xsec": 32.9608,
                             "xsecerror": 0.00555631
                         },
@@ -11472,7 +12089,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00126",
+                            "sizeperevent": 98,
+                            "timeperevent": 5.443124789078914,
                             "xsec": 5.57266,
                             "xsecerror": 0.0016023
                         },
@@ -11487,6 +12107,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00173",
+                            "sizeperevent": 101,
+                            "timeperevent": 16.370229101356273,
                             "xsec": 2.77478,
                             "xsecerror": 0.0228459
                         },
@@ -11500,7 +12122,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00024",
+                            "sizeperevent": 96,
+                            "timeperevent": 4.493513613099491,
                             "xsec": 32.9514,
                             "xsecerror": 0.00552961
                         },
@@ -11516,7 +12141,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00138",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.8388767132620965,
                             "xsec": 5.57743,
                             "xsecerror": 0.00159879
                         },
@@ -11552,7 +12180,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00142",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.839170179097688,
                             "xsec": 3.5991,
                             "xsecerror": 0.00116103
                         },
@@ -11566,7 +12197,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00155",
+                            "sizeperevent": 95,
+                            "timeperevent": 3.611946875485355,
                             "xsec": 19.5229,
                             "xsecerror": 0.00279265
                         },
@@ -11580,7 +12214,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00117",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.995628824778319,
                             "xsec": 3.59673,
                             "xsecerror": 0.00114245
                         },
@@ -11608,7 +12245,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00176",
+                            "sizeperevent": 100,
+                            "timeperevent": 3.7445049390020144,
                             "xsec": 19.5195,
                             "xsecerror": 0.00278982
                         },
@@ -11622,7 +12262,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00129",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.7669039816175087,
                             "xsec": 3.59788,
                             "xsecerror": 0.00114851
                         },
@@ -11666,7 +12309,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00144",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.18559600908532,
                             "xsec": 5.7,
                             "xsecerror": 0.00165598
                         },
@@ -11680,7 +12326,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00157",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.0924423800673533,
                             "xsec": 33.7638,
                             "xsecerror": 0.00571789
                         },
@@ -11694,7 +12343,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00118",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.477037275812358,
                             "xsec": 5.70065,
                             "xsecerror": 0.00162592
                         },
@@ -11708,7 +12360,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00166",
+                            "sizeperevent": 97.6256,
+                            "timeperevent": 46.7809994292718,
                             "xsec": 2.82009,
                             "xsecerror": 0.0199931
                         },
@@ -11722,7 +12377,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00017",
+                            "sizeperevent": 96,
+                            "timeperevent": 4.620282114425907,
                             "xsec": 33.7505,
                             "xsecerror": 0.0057159
                         },
@@ -11738,7 +12396,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00131",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.663108753372162,
                             "xsec": 5.69861,
                             "xsecerror": 0.00162974
                         },
@@ -11769,6 +12430,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00194",
+                            "sizeperevent": 96,
+                            "timeperevent": 17.17348482636748,
                             "xsec": 2.59623,
                             "xsecerror": 0.0171153
                         },
@@ -11782,7 +12445,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00011",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.280052387841227,
                             "xsec": 5.39421,
                             "xsecerror": 0.00159407
                         },
@@ -11798,7 +12464,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00159",
+                            "sizeperevent": 99,
+                            "timeperevent": 4.1157005745518,
                             "xsec": 31.6495,
                             "xsecerror": 0.00479643
                         },
@@ -11812,7 +12481,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00120",
+                            "sizeperevent": 99,
+                            "timeperevent": 4.283535801792231,
                             "xsec": 5.39443,
                             "xsecerror": 0.0016207
                         },
@@ -11840,7 +12512,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00178",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.276464825511866,
                             "xsec": 31.6482,
                             "xsecerror": 0.004782
                         },
@@ -11854,7 +12529,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00133",
+                            "sizeperevent": 98,
+                            "timeperevent": 5.173011365105969,
                             "xsec": 5.39735,
                             "xsecerror": 0.00160329
                         },
@@ -11898,7 +12576,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00147",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.154704579730859,
                             "xsec": 3.54012,
                             "xsecerror": 0.00118435
                         },
@@ -11912,7 +12593,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00161",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.3897385833604514,
                             "xsec": 19.4551,
                             "xsecerror": 0.00356101
                         },
@@ -11926,7 +12610,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00122",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.086954034027979,
                             "xsec": 3.54234,
                             "xsecerror": 0.00118773
                         },
@@ -11941,6 +12628,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00170",
+                            "sizeperevent": 96,
+                            "timeperevent": 5.05806660462105,
                             "xsec": 1.76558,
                             "xsecerror": 0.00571422
                         },
@@ -11954,7 +12643,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00020",
+                            "sizeperevent": 98,
+                            "timeperevent": 5.54557352321377,
                             "xsec": 19.4474,
                             "xsecerror": 0.00355394
                         },
@@ -11970,7 +12662,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00135",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.17384916543886,
                             "xsec": 3.54006,
                             "xsecerror": 0.00120479
                         },
@@ -11984,7 +12679,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00186",
+                            "sizeperevent": 98,
+                            "timeperevent": 26.16232677269386,
                             "xsec": 1.7693,
                             "xsecerror": 0.00664596
                         },
@@ -12006,7 +12704,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00140",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.221867458816479,
                             "xsec": 4.45344,
                             "xsecerror": 0.00134554
                         },
@@ -12020,7 +12721,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00153",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.6692534903773826,
                             "xsec": 25.6235,
                             "xsecerror": 0.00449216
                         },
@@ -12034,7 +12738,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00116",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.056367279718975,
                             "xsec": 4.45421,
                             "xsecerror": 0.00134158
                         },
@@ -12054,7 +12761,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00175",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.973031065129898,
                             "xsec": 25.622,
                             "xsecerror": 0.00449354
                         },
@@ -12068,7 +12778,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00127",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.586954962193495,
                             "xsec": 4.4524,
                             "xsecerror": 0.00134347
                         },
@@ -12724,7 +13437,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00084",
+                            "sizeperevent": 100,
+                            "timeperevent": 14.368311550973022,
                             "xsec": 0.422582,
                             "xsecerror": 0.00560207
                         },
@@ -12738,7 +13454,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00049",
+                            "sizeperevent": 99,
+                            "timeperevent": 2.8689382920062774,
                             "xsec": 0.934811,
                             "xsecerror": 0.00018311
                         },
@@ -12752,7 +13471,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00056",
+                            "sizeperevent": 100,
+                            "timeperevent": 3.5160260467209543,
                             "xsec": 6.17283,
                             "xsecerror": 0.00118126
                         },
@@ -12768,7 +13490,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00035",
+                            "sizeperevent": 102,
+                            "timeperevent": 3.7458655009533226,
                             "xsec": 0.934993,
                             "xsecerror": 0.000181971
                         },
@@ -12782,7 +13507,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00063",
+                            "sizeperevent": 101,
+                            "timeperevent": 9.785023043729268,
                             "xsec": 0.432652,
                             "xsecerror": 0.00539467
                         },
@@ -12796,7 +13524,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00070",
+                            "sizeperevent": 97,
+                            "timeperevent": 1.9461462412131498,
                             "xsec": 6.17124,
                             "xsecerror": 0.00117784
                         },
@@ -12810,7 +13541,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00042",
+                            "sizeperevent": 99,
+                            "timeperevent": 2.729019299624487,
                             "xsec": 0.934944,
                             "xsecerror": 0.000188445
                         },
@@ -12824,7 +13558,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00077",
+                            "sizeperevent": 101,
+                            "timeperevent": 16.378111636484537,
                             "xsec": 0.429634,
                             "xsecerror": 0.00782704
                         },
@@ -12841,6 +13578,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00085",
+                            "sizeperevent": 99,
+                            "timeperevent": 17.73540199062152,
                             "xsec": 0.513525,
                             "xsecerror": 0.00185254
                         },
@@ -12854,7 +13593,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00050",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.66426535143969,
                             "xsec": 0.98395,
                             "xsecerror": 0.000181235
                         },
@@ -12868,7 +13610,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00057",
+                            "sizeperevent": 95,
+                            "timeperevent": 2.9340054161739983,
                             "xsec": 6.81686,
                             "xsecerror": 0.00115281
                         },
@@ -12884,7 +13629,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00036",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.482209392215173,
                             "xsec": 0.983754,
                             "xsecerror": 0.000176958
                         },
@@ -12900,7 +13648,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00064",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.716297824107624,
                             "xsec": 0.512918,
                             "xsecerror": 0.00216456
                         },
@@ -12916,7 +13667,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00071",
+                            "sizeperevent": 96,
+                            "timeperevent": 2.9650362920442146,
                             "xsec": 6.81596,
                             "xsecerror": 0.00114409
                         },
@@ -12932,7 +13686,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00043",
+                            "sizeperevent": 97,
+                            "timeperevent": 5.067909993918508,
                             "xsec": 0.98412,
                             "xsecerror": 0.000182578
                         },
@@ -12946,7 +13703,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00078",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.382938488029472,
                             "xsec": 0.501621,
                             "xsecerror": 0.00180893
                         },
@@ -12965,6 +13725,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00080",
+                            "sizeperevent": 100,
+                            "timeperevent": 22.61701478021916,
                             "xsec": 0.497718,
                             "xsecerror": 0.00737266
                         },
@@ -12978,7 +13740,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00045",
+                            "sizeperevent": 100,
+                            "timeperevent": 3.3065284096920964,
                             "xsec": 1.15258,
                             "xsecerror": 0.00023089
                         },
@@ -12992,7 +13757,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00052",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.4026506041464946,
                             "xsec": 7.6431,
                             "xsecerror": 0.00144401
                         },
@@ -13008,15 +13776,18 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00031",
+                            "sizeperevent": 99,
+                            "timeperevent": 3.4781761835364007,
                             "xsec": 1.15207,
                             "xsecerror": 0.000219999
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
                         "prepid": "HIG-RunIIFall18wmLHEGS-02047",
-                        "sizeperevent": 659.19232,
-                        "timeperevent": 5.203319717980071,
+                        "sizeperevent": 641,
+                        "timeperevent": 3.8016887101250374,
                         "xsec": 1.15207,
                         "xsecerror": 0.000219999
                     },
@@ -13038,7 +13809,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00066",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.922643472568068,
                             "xsec": 7.6471,
                             "xsecerror": 0.00143507
                         },
@@ -13054,7 +13828,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00038",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.533550543066559,
                             "xsec": 1.15228,
                             "xsecerror": 0.000229238
                         },
@@ -13068,7 +13845,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00073",
+                            "sizeperevent": 97,
+                            "timeperevent": 10.572847447556034,
                             "xsec": 0.538801,
                             "xsecerror": 0.00684358
                         },
@@ -13084,7 +13864,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00081",
+                            "sizeperevent": 96,
+                            "timeperevent": 4.7482028052382175,
                             "xsec": 0.676727,
                             "xsecerror": 0.00201654
                         },
@@ -13098,7 +13881,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00046",
+                            "sizeperevent": 95,
+                            "timeperevent": 3.2730760040978915,
                             "xsec": 1.34235,
                             "xsecerror": 0.000234326
                         },
@@ -13112,7 +13898,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00053",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.9175188252902204,
                             "xsec": 9.29236,
                             "xsecerror": 0.00148674
                         },
@@ -13126,7 +13915,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00032",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.5141926173247984,
                             "xsec": 1.34234,
                             "xsecerror": 0.000234108
                         },
@@ -13142,7 +13934,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00060",
+                            "sizeperevent": 97,
+                            "timeperevent": 6.098453432209591,
                             "xsec": 0.701965,
                             "xsecerror": 0.00316176
                         },
@@ -13156,7 +13951,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00067",
+                            "sizeperevent": 98,
+                            "timeperevent": 3.492376142880093,
                             "xsec": 9.28998,
                             "xsecerror": 0.00148355
                         },
@@ -13172,7 +13970,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00039",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.2957051947217146,
                             "xsec": 1.34253,
                             "xsecerror": 0.000236379
                         },
@@ -13188,7 +13989,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00074",
+                            "sizeperevent": 99,
+                            "timeperevent": 4.193329251826195,
                             "xsec": 0.671735,
                             "xsecerror": 0.00147903
                         },
@@ -13206,7 +14010,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00082",
+                            "sizeperevent": 98,
+                            "timeperevent": 4.557885141294439,
                             "xsec": 4.06854e-09,
                             "xsecerror": 2.52845e-11
                         },
@@ -13220,7 +14027,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00047",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.4723773639018067,
                             "xsec": 8.43478e-09,
                             "xsecerror": 1.7913e-12
                         },
@@ -13234,7 +14044,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00054",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.7644852113863614,
                             "xsec": 5.76338e-08,
                             "xsecerror": 1.10173e-11
                         },
@@ -13250,7 +14063,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00033",
+                            "sizeperevent": 96,
+                            "timeperevent": 2.072148050833936,
                             "xsec": 8.4354e-09,
                             "xsecerror": 1.75371e-12
                         },
@@ -13267,6 +14083,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00061",
+                            "sizeperevent": 97,
+                            "timeperevent": 9.539072039072039,
                             "xsec": 4.12788e-09,
                             "xsecerror": 3.53651e-11
                         },
@@ -13280,7 +14098,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00068",
+                            "sizeperevent": 97,
+                            "timeperevent": 3.246900833154754,
                             "xsec": 5.76436e-08,
                             "xsecerror": 1.11623e-11
                         },
@@ -13294,7 +14115,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00040",
+                            "sizeperevent": 98,
+                            "timeperevent": 2.8176713073713096,
                             "xsec": 8.43343e-09,
                             "xsecerror": 1.74008e-12
                         },
@@ -13308,7 +14132,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00075",
+                            "sizeperevent": 102,
+                            "timeperevent": 8.626118160566563,
                             "xsec": 4.02059e-09,
                             "xsecerror": 4.19484e-11
                         },
@@ -13324,7 +14151,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00083",
+                            "sizeperevent": 95,
+                            "timeperevent": 5.475701574264202,
                             "xsec": 0.122667,
                             "xsecerror": 8.76593e-05
                         },
@@ -13338,7 +14168,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00048",
+                            "sizeperevent": 97,
+                            "timeperevent": 4.207178287594293,
                             "xsec": 0.210133,
                             "xsecerror": 4.32739e-05
                         },
@@ -13354,7 +14187,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00055",
+                            "sizeperevent": 97,
+                            "timeperevent": 5.512344896395478,
                             "xsec": 1.48138,
                             "xsecerror": 0.000306032
                         },
@@ -13368,7 +14204,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00034",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.2079660212239034,
                             "xsec": 0.210098,
                             "xsecerror": 5.11487e-05
                         },
@@ -13384,7 +14223,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00062",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.6485431367255057,
                             "xsec": 0.123156,
                             "xsecerror": 9.24128e-05
                         },
@@ -13398,7 +14240,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00069",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.822849169486018,
                             "xsec": 1.48165,
                             "xsecerror": 0.000297363
                         },
@@ -13414,7 +14259,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00041",
+                            "sizeperevent": 94,
+                            "timeperevent": 5.143186306780777,
                             "xsec": 0.210085,
                             "xsecerror": 5.29559e-05
                         },
@@ -13430,7 +14278,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00076",
+                            "sizeperevent": 96,
+                            "timeperevent": 3.8180617227858105,
                             "xsec": 0.123221,
                             "xsecerror": 8.51163e-05
                         },
@@ -13448,7 +14299,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00079",
+                            "sizeperevent": 95,
+                            "timeperevent": 12.851306528078178,
                             "xsec": 0.450313,
                             "xsecerror": 0.00120025
                         },
@@ -13462,7 +14316,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00044",
+                            "sizeperevent": 95,
+                            "timeperevent": 2.9593153328046022,
                             "xsec": 0.858123,
                             "xsecerror": 0.00014791
                         },
@@ -13476,7 +14333,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00051",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.237862393841403,
                             "xsec": 5.98802,
                             "xsecerror": 0.000952925
                         },
@@ -13490,7 +14350,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 1,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00030",
+                            "sizeperevent": 97,
+                            "timeperevent": 2.106287478752825,
                             "xsec": 0.858515,
                             "xsecerror": 0.000152716
                         },
@@ -13506,7 +14369,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00058",
+                            "sizeperevent": 97,
+                            "timeperevent": 7.74395390798634,
                             "xsec": 0.444592,
                             "xsecerror": 0.00115453
                         },
@@ -13520,7 +14386,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00065",
+                            "sizeperevent": 96,
+                            "timeperevent": 2.318926615248334,
                             "xsec": 5.98771,
                             "xsecerror": 0.000943887
                         },
@@ -13534,7 +14403,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00037",
+                            "sizeperevent": 94,
+                            "timeperevent": 2.0204142657410475,
                             "xsec": 0.858162,
                             "xsecerror": 0.000150844
                         },
@@ -13550,7 +14422,10 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00072",
+                            "sizeperevent": 99,
+                            "timeperevent": 2.888678978216472,
                             "xsec": 0.4521,
                             "xsecerror": 0.00109126
                         },
