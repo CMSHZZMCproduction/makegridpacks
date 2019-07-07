@@ -1958,9 +1958,9 @@
                         "UltraLegacy": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00257",
                             "sizeperevent": 97.55347636909228,
-                            "timeperevent": 46.17274146035147,
                             "xsec": 1.59718,
                             "xsecerror": 0.0128174
                         },
@@ -3526,7 +3526,8 @@
                             "filterefficiencyerror": 0.0,
                             "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00402",
-                            "sizeperevent": 96.32896000000001,
+                            "sizeperevent": 97.37216000000001,
+                            "timeperevent": 53.998887622914964,
                             "xsec": 2.15228,
                             "xsecerror": 0.0160142
                         },
@@ -3620,7 +3621,8 @@
                             "filterefficiencyerror": 0.0,
                             "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00428",
-                            "sizeperevent": 97.783296,
+                            "sizeperevent": 99.71609600000001,
+                            "timeperevent": 44.331546771998426,
                             "xsec": 2.75654,
                             "xsecerror": 0.0167335
                         },
@@ -4058,8 +4060,8 @@
                             "filterefficiencyerror": 0.0,
                             "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00396",
-                            "sizeperevent": 95.006208,
-                            "timeperevent": 44.0928772366112,
+                            "sizeperevent": 105,
+                            "timeperevent": 42.35080868869191,
                             "xsec": 2.82009,
                             "xsecerror": 0.0199931
                         },
@@ -4153,7 +4155,8 @@
                             "filterefficiencyerror": 0.0,
                             "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL17wmLHEGEN-00424",
-                            "sizeperevent": 99.08582399999999,
+                            "sizeperevent": 98.154496,
+                            "timeperevent": 41.16564644472894,
                             "xsec": 2.59623,
                             "xsecerror": 0.0171153
                         },
@@ -4163,9 +4166,9 @@
                         "morencalls": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIIFall17wmLHEGS-04078",
                             "sizeperevent": 619.69664,
-                            "timeperevent": 39.93099923332481,
                             "xsec": 2.59623,
                             "xsecerror": 0.0171153
                         },
@@ -11146,6 +11149,8 @@
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00029",
+                            "sizeperevent": 98.63296000000001,
+                            "timeperevent": 51.938069046468996,
                             "xsec": 2.04931,
                             "xsecerror": 0.0120442
                         },
@@ -11282,8 +11287,8 @@
                         "filterefficiencyerror": 0.0,
                         "nthreads": 4,
                         "prepid": "HIG-RunIIFall18wmLHEGS-02184",
-                        "sizeperevent": 609.14176,
-                        "timeperevent": 52.733993914497105,
+                        "sizeperevent": 630,
+                        "timeperevent": 36.47784518072948,
                         "xsec": 2.02841,
                         "xsecerror": 0.0100353
                     }
@@ -11566,7 +11571,8 @@
                             "filterefficiencyerror": 0.0,
                             "nthreads": 2,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00181",
-                            "sizeperevent": 97.207296,
+                            "sizeperevent": 100.0522752,
+                            "timeperevent": 68.64925721503694,
                             "xsec": 2.08201,
                             "xsecerror": 0.00899665
                         },
@@ -11872,8 +11878,8 @@
                         "filterefficiencyerror": 0.0,
                         "nthreads": 4,
                         "prepid": "HIG-RunIIFall18wmLHEGS-02180",
-                        "sizeperevent": 609.17248,
-                        "timeperevent": 37.09790508130006,
+                        "sizeperevent": 606,
+                        "timeperevent": 49.1567165279628,
                         "xsec": 1.75876,
                         "xsecerror": 0.00705702
                     }
@@ -12192,7 +12198,8 @@
                             "filterefficiencyerror": 0.0,
                             "nthreads": 4,
                             "prepid": "HIG-RunIISummer19UL18wmLHEGEN-00198",
-                            "sizeperevent": 97.76768,
+                            "sizeperevent": 97.35987200000001,
+                            "timeperevent": 43.99994720006336,
                             "xsec": 2.75654,
                             "xsecerror": 0.0167335
                         },
@@ -12619,9 +12626,9 @@
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
+                        "nthreads": 4,
                         "prepid": "HIG-RunIIFall18wmLHEGS-02189",
                         "sizeperevent": 650.15296,
-                        "timeperevent": 50.99049027356398,
                         "xsec": 2.59623,
                         "xsecerror": 0.0171153
                     },
