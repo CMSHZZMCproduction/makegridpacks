@@ -208,6 +208,12 @@ class MINLOMCSamplePhaseII(MINLOMCSample):
   @property
   def defaultnthreads(self): return 8
 
+  @property
+  def memory(self):
+    if self.nthreads == 1: return 2300
+    if self.nthreads == 8 and self.year >= 2018: return 15900
+    return 4000
+
 class MINLOMCSampleRun2(MINLOMCSample, Run2MCSampleBase):
   @classmethod
   @cacheaslist

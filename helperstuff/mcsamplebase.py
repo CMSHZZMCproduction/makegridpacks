@@ -969,10 +969,9 @@ class MCSampleBase(JsonDict):
       except KeyError:
         pass
 
-  @property
-  def memory(self):
-    if self.nthreads == 1: return 2300
-    return 4000
+  @abc.abstractproperty
+  def memory(self): pass
+
   @property
   def matchefficiency(self): return uncertainties.ufloat(1, 0)
 
@@ -1290,6 +1289,12 @@ class Run2MCSampleBase(MCSampleBase):
   @property
   def defaultnthreads(self): return 8 if self.year >= 2017 else 1
 
+  @property
+  def memory(self):
+    if self.nthreads == 1: return 2300
+    if self.nthreads == 8 and self.year >= 2018: return 15900
+    return 4000
+
 
 class Run2UltraLegacyBase(MCSampleBase):
   @property
@@ -1311,6 +1316,11 @@ class Run2UltraLegacyBase(MCSampleBase):
   def keepoutput(self): return True
 
 
+  @property
+  def memory(self):
+    if self.nthreads == 1: return 2300
+    if self.nthreads == 8: return 15900
+    return 4000
 
   @property
   def cardsurl(self):
