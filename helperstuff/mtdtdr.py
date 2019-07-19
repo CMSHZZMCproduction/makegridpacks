@@ -69,3 +69,9 @@ class MTDTDRSample(POWHEGGridpackOnly):
     return "hroskes"
   @property
   def defaultnthreads(self): return 8
+
+  @property
+  def memory(self):
+    if self.nthreads == 1: return 2300
+    if self.nthreads == 8: return 15900
+    return 4000

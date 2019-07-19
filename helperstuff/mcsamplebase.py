@@ -512,6 +512,9 @@ class MCSampleBase(JsonDict):
   def makegridpack(self, approvalqueue, badrequestqueue, clonequeue, setneedsupdate=False):
     if self.finished: return "finished!"
     if not self.cvmfstarballexists:
+      from . import allsamples
+      for _ in allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball):
+        _.needsupdate = True
       if not os.path.exists(self.eostarball):
         if self.cmsswversion != cmsswversion or self.scramarch != scramarch: return "try again in "+self.cmsswversion+" with scram arch "+self.scramarch
         if not os.path.exists(self.foreostarball):
@@ -523,9 +526,6 @@ class MCSampleBase(JsonDict):
     if os.path.exists(self.foreostarball):
       if filecmp.cmp(self.cvmfstarball, self.foreostarball, shallow=False):
         if self.cvmfstarball.startswith("/cvmfs/"):
-          from . import allsamples
-          for _ in allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball):
-            _.needsupdate = True
           os.remove(self.foreostarball)
       else:
         return "gridpack exists on cvmfs, but it's wrong!"
@@ -969,10 +969,9 @@ class MCSampleBase(JsonDict):
       except KeyError:
         pass
 
-  @property
-  def memory(self):
-    if self.nthreads == 1: return 2300
-    return 4000
+  @abc.abstractproperty
+  def memory(self): pass
+
   @property
   def matchefficiency(self): return uncertainties.ufloat(1, 0)
 
@@ -1154,7 +1153,7 @@ class MCSampleBase(JsonDict):
           pass
         elif key in ("time_event", "size_event") and not validated:
           pass
-        elif key in ("total_events", "generators", "tags", "dataset_name", "fragment", "notes"):
+        elif key in ("total_events", "generators", "tags", "dataset_name", "fragment", "notes", "keep_output"):
           different.add(key)
           setneedsupdate = True
         elif key in ("memory",):
@@ -1175,11 +1174,11 @@ class MCSampleBase(JsonDict):
           assert len(old[key]) == len(new[key]) == 1
           for subkey in set(old[key][0].keys()) | set(new[key][0].keys()):
             if old[key][0].get(subkey) != new[key][0].get(subkey):
-              if subkey in ("filter_efficiency", "filter_efficiency_error", "match_efficiency", "match_efficiency_error"):
+              if subkey in ("filter_efficiency", "filter_efficiency_error", "match_efficiency", "match_efficiency_error", "cross_section"):
                 setneedsupdate = True
                 differentsublist["generator_parameters"].add(subkey)
               else:
-                raise ValueError("Don't know what to do with {} ({} --> {}) in sequences for {}".format(subkey, old[key][0].get(subkey), new[key][0].get(subkey), self.prepid))
+                raise ValueError("Don't know what to do with {} ({} --> {}) in generator_parameters for {}".format(subkey, old[key][0].get(subkey), new[key][0].get(subkey), self.prepid))
         elif key == "validation":
           for subkey in set(old[key].keys()) | set(new[key].keys()):
             if old[key].get(subkey) != new[key].get(subkey):
@@ -1290,16 +1289,22 @@ class Run2MCSampleBase(MCSampleBase):
   @property
   def defaultnthreads(self): return 8 if self.year >= 2017 else 1
 
+  @property
+  def memory(self):
+    if self.nthreads == 1: return 2300
+    if self.nthreads == 8 and self.year >= 2018: return 15900
+    return 4000
+
 
 class Run2UltraLegacyBase(MCSampleBase):
   @property
   def campaign(self):
     if self.year == 2016:
-      return "RunIISummer19UL16wmLHEGS"
+      return "RunIISummer19UL16wmLHEGEN"
     if self.year == 2017:
-      return "RunIISummer19UL17wmLHEGS"
+      return "RunIISummer19UL17wmLHEGEN"
     if self.year == 2018:
-      return "RunIISummer19UL18wmLHEGS"
+      return "RunIISummer19UL18wmLHEGEN"
     assert False, self.year
   @property
   def cmsswversion(self):
@@ -1307,8 +1312,15 @@ class Run2UltraLegacyBase(MCSampleBase):
   @property
   def scramarch(self):
     return "slc7_amd64_gcc630"
+  @property
+  def keepoutput(self): return True
 
 
+  @property
+  def memory(self):
+    if self.nthreads == 1: return 2300
+    if self.nthreads == 8: return 15900
+    return 4000
 
   @property
   def cardsurl(self):
@@ -1328,11 +1340,6 @@ class Run2UltraLegacyBase(MCSampleBase):
   def defaultnthreads(self): return 8
 
 class Run2UltraLegacyStandardPDF(Run2UltraLegacyBase):
-  @property
-  def holdrequest(self):
-    "campaigns are not quite ready yet"
-    return True
-
   @abc.abstractproperty
   def desiredPDForder(self): pass
 

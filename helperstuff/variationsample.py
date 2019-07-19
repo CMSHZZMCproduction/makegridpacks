@@ -362,6 +362,7 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
   def genproductionscommit(self):
     if isinstance(self, POWHEGJHUGenAnomCoupMCSample) and self.productionmode == "ggH": return "7e0e1d97b576734eaef5ec63c821c9ab7fb7faed"
     if isinstance(self, POWHEGJHUGenMassScanMCSample) and self.productionmode == "ggH" and self.mass in (125, 190, 200): return "7e0e1d97b576734eaef5ec63c821c9ab7fb7faed"
+    if isinstance(self, MCFMAnomCoupMCSampleRun2): return "a8ea4bc76df07ee2fa16bd9a67b72e7b648dec64"
     return super(RunIIFall17DRPremix_nonsubmittedBase, self).genproductionscommit
 
   @property
@@ -385,6 +386,8 @@ class RunIIFall17DRPremix_nonsubmittedBase(RedoSampleGlobalBase):
     if isinstance(self, POWHEGJHUGenAnomCoupMCSampleRun2) and self.productionmode == "ggH": v+=1
     if isinstance(self, POWHEGJHUGenAnomCoupMCSampleRun2) and self.productionmode == "ggH" and self.coupling == "L1": v+=1 #corrupt copy
     if isinstance(self, POWHEGJHUGenMassScanMCSampleRun2) and self.productionmode == "ggH" and self.mass == 190: v+=1 #something got messed up
+
+    if isinstance(self, MCFMAnomCoupMCSampleRun2) and self.signalbkgbsi == "BSI" and self.width == 1 and self.coupling == "0M" and self.finalstate == "ELTL": v+=2
 
     return v
 
@@ -539,7 +542,7 @@ class RedoPythiaVariationMINLORun2(MakeRedoSample(PythiaVariationMINLORun2)):
 
   @property
   def tarballversion(self):
-    result = super(RedoPythiaVariationMINLO, self).tarballversion
+    result = super(RedoPythiaVariationMINLORun2, self).tarballversion
     if "HIG-RunIIFall17wmLHEGS-01145" in self.previousprepids and self.pythiavariation == "TuneUp": result += 2  #parallelize the gridpack
     return result
 

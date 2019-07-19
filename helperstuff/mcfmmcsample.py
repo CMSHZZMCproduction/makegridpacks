@@ -175,8 +175,10 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
         match = re.search(r"git checkout ([\w.]*)", line)
         if match: mcfmcommit = match.group(1)
     with cdtemp():
+      wget("http://spin.pha.jhu.edu/Generator/JHUGenerator."+self.JHUGenversion+".tar.gz")
+      subprocess.check_output(["tar", "xvzf", "JHUGenerator."+self.JHUGenversion+".tar.gz"])
       mkdir_p("src/User")
-      with cd("src/User"): wget(os.path.join("https://raw.githubusercontent.com/usarica/MCFM-7.0_JHUGen", mcfmcommit, "src/User/mdata.f"))
+      shutil.move("MCFM-JHUGen/src/User/mdata.f", "src/User/")
       wget(mdatascript)
       subprocess.check_call(["python", os.path.basename(mdatascript), "--coupling", self.coupling, "--mcfmdir", ".", "--bsisigbkg", self.signalbkgbsi])
       with open("src/User/mdata.f") as f:
@@ -203,7 +205,7 @@ class MCFMMCSample(UsesJHUGenLibraries, MCSampleWithXsec):
   def productiongenerators(self):
     return ["MCFM701"] + super(MCFMMCSample, self).productiongenerators
   @property
-  def JHUGenversion(self): return "v7.0.11"
+  def JHUGenversion(self): return "v7.3.0"
 
   @property
   def makegridpackscriptstolink(self):
