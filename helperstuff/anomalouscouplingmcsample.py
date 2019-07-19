@@ -119,6 +119,8 @@ class AnomalousCouplingMCSample(MCSampleBase):
     #else:
     #  raise ValueError("Couldn't find dataset name {}".format(searchfor))
 
+    if self.productionmode == "ggZH": result = result.replace("13TeV", "TuneCP5_13TeV")
+
     return result
 
   @property
