@@ -2286,7 +2286,9 @@
                         "morencalls": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIIFall17wmLHEGS-04060",
+                            "sizeperevent": 563.28192,
                             "xsec": 1.6621,
                             "xsecerror": 0.00899866
                         },
@@ -12397,7 +12399,9 @@
                         },
                         "filterefficiency": 1,
                         "filterefficiencyerror": 0.0,
+                        "nthreads": 4,
                         "prepid": "HIG-RunIIFall18wmLHEGS-02183",
+                        "sizeperevent": 620.5081600000001,
                         "xsec": 2.1664,
                         "xsecerror": 0.0177776
                     }
