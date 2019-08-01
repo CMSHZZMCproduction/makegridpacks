@@ -211,7 +211,6 @@
                     },
                     "MUMU": {
                         "UltraLegacy": {
-                            "needsupdate": true,
                             "prepid": "HIG-RunIISummer19UL16wmLHEGEN-00205",
                             "xsec": 1.55573,
                             "xsecerror": 0.00621073
@@ -3712,9 +3711,9 @@
                         "morencalls": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "nthreads": 4,
                             "prepid": "HIG-RunIIFall17wmLHEGS-04072",
                             "sizeperevent": 598.6483199999999,
-                            "timeperevent": 37.898885772758284,
                             "xsec": 2.1664,
                             "xsecerror": 0.0177776
                         },
@@ -5379,6 +5378,7 @@
                             },
                             "filterefficiency": 1,
                             "filterefficiencyerror": 0.0,
+                            "finished": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03990",
                             "sizeperevent": 576,
                             "timeperevent": 5.876338336056037
