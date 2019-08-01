@@ -516,6 +516,8 @@ class MCSampleBase(JsonDict):
       for _ in allsamples(lambda x: hasattr(x, "cvmfstarball") and x.cvmfstarball == self.cvmfstarball):
         _.needsupdate = True
       if not os.path.exists(self.eostarball):
+        if self.holdrequest and not self.needsupdateiffailed:
+          return "holding request, set holdrequest to false and run again to continue"
         if self.cmsswversion != cmsswversion or self.scramarch != scramarch: return "try again in "+self.cmsswversion+" with scram arch "+self.scramarch
         if not os.path.exists(self.foreostarball):
           if self.needspatch: return self.patchtarball()

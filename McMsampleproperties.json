@@ -1907,6 +1907,7 @@
                         "morencalls": {
                             "filterefficiency": 1.0,
                             "filterefficiencyerror": 0.0,
+                            "finished": true,
                             "prepid": "HIG-RunIIFall17wmLHEGS-03999",
                             "sizeperevent": 602,
                             "timeperevent": 15.242578007703598,
