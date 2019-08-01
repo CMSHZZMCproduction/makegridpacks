@@ -20,3 +20,7 @@ class POWHEGJHUGenMCSample(POWHEGMCSample, JHUGenDecayMCSample):
   @property
   def JHUGenlocationintarball(self):
     return "./JHUGen"
+
+  @property
+  def holdrequest(self): return True
+
