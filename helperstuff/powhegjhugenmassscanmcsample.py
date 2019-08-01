@@ -404,3 +404,6 @@ class POWHEGJHUGenMassScanMCSampleRun2(POWHEGJHUGenMassScanMCSample, Run2MCSampl
     #need these to make extensions
     yield cls(2016, "VBF", "4l", 125)
     yield cls(2016, "ttH", "4l", 125)
+
+  @property
+  def holdrequest(self): return True
