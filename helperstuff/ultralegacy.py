@@ -1,6 +1,5 @@
 import os
 
-from gridpackbysomeoneelse import MadGraphHZZdFromJake, MadGraphHZZdFromJakeRun2
 from madgraphmcsample import MadGraphMCSample
 from mcfmanomalouscouplings import MCFMAnomCoupMCSample, MCFMAnomCoupMCSampleRun2
 from mcsamplebase import Run2MCSampleBase, Run2UltraLegacyBase, Run2UltraLegacyStandardPDF
@@ -73,47 +72,6 @@ def MakeRepeatAsUltraLegacySample(basecls, baseclsrun2, forsubclassing=False):
 
   RepeatAsUltraLegacy.__name__ = basecls.__name__+"UltraLegacy"
   return RepeatAsUltraLegacy
-
-class RepeatHZZdandHZdZdAsUltraLegacy(MakeRepeatAsUltraLegacySample(MadGraphHZZdFromJake, MadGraphHZZdFromJakeRun2, forsubclassing=True), Run2UltraLegacyStandardPDF):
-  @property
-  def desiredPDForder(self): return "NNLO"
-  @property
-  def needPDFtobewellbehavedathighmass(self): return False
-
-  def cvmfstarball_anyversion(self, version):
-    if self.year == 2016 and self.VV == "ZZd":
-      return type(self)(2018, *self.initargs[1:], **self.initkwargs).cvmfstarball_anyversion(version)
-    return super(RepeatHZZdandHZdZdAsUltraLegacy, self).cvmfstarball_anyversion(version)
-
-  @property
-  def genproductionscommit(self):
-    if self.year == 2016 and self.VV == "ZZd":
-      return type(self)(2018, *self.initargs[1:], **self.initkwargs).genproductionscommit
-    return super(RepeatHZZdandHZdZdAsUltraLegacy, self).genproductionscommit
-
-  @property
-  def madgraphcardscript(self):
-    if self.year == 2016 and self.VV == "ZZd":
-      return type(self)(2018, *self.initargs[1:], **self.initkwargs).madgraphcardscript
-    return super(RepeatHZZdandHZdZdAsUltraLegacy, self).madgraphcardscript
-
-  @property
-  def madgraphcards(self):
-    if self.year == 2016 and self.VV == "ZZd":
-      return type(self)(2018, *self.initargs[1:], **self.initkwargs).madgraphcards
-    return super(RepeatHZZdandHZdZdAsUltraLegacy, self).madgraphcards
-
-  @property
-  def datasetname(self):
-    if self.VV == "ZZd":
-      result = "HTo"+self.VV+"To4L_M125_MZd{}_eps1e-2_TuneCP5_13TeV_madgraph_pythia8".format(self.Zdmass)
-      assert result == super(RepeatHZZdandHZdZdAsUltraLegacy, self).datasetname.replace("13TeV", "TuneCP5_13TeV")
-      return result
-    return super(RepeatHZZdandHZdZdAsUltraLegacy, self).datasetname
-
-  @property
-  def holdrequest(self):
-    return True
 
 class RepeatMCFMAsUltraLegacy(MakeRepeatAsUltraLegacySample(MCFMAnomCoupMCSample, MCFMAnomCoupMCSampleRun2, forsubclassing=True), Run2UltraLegacyStandardPDF):
   @property
