@@ -206,6 +206,11 @@ class MadGraphHZZdFromJakeRun2(MadGraphHZZdFromJake, Run2MCSampleBase):
           for VV in "ZdZd",:
             yield cls(year, VV, Zdmass, eps)
 
+  def handle_request_fragment_check_warning(self, line):
+    if line.strip() == "* [WARNING] Dataset name does not have the tune name:" + self.datasetname:
+      return "ok"  #consistent with already submitted ones
+    return super(MadGraphHZZdFromJakeRun2, self).handle_request_fragment_check_warning(line)
+
 class MadGraphHJJFromThomasPlusJHUGen(MadGraphGridpackBySomeoneElse, MadGraphJHUGenMCSample, MadGraphFXFXMCSample):
   def __init__(self, year, coupling, njets):
     self.__coupling = coupling
